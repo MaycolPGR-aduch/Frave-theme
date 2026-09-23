@@ -337,8 +337,9 @@
   }
 
   .hero h1 {
-    max-width: 11ch;
+    max-width: 14ch;
     margin-bottom: 1.5rem;
+    font-size: clamp(3rem, 5.2vw, 4.5rem);
   }
 
   .hero__description {
