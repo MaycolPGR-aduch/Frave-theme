@@ -1,0 +1,33 @@
+{
+  "assets/src/js/app.js": {
+    "file": "js/app-upwki_Dy.js",
+    "name": "app",
+    "src": "assets/src/js/app.js",
+    "isEntry": true,
+    "css": [
+      "css/app-EJB1JmnZ.css"
+    ],
+    "assets": [
+      "fonts/lato-latin-400-normal-BEhtfm5r.woff2",
+      "fonts/lato-latin-400-normal-B11PyLys.woff",
+      "fonts/lato-latin-700-normal-BUGMgin4.woff2",
+      "fonts/lato-latin-700-normal-DAdL7O4w.woff"
+    ]
+  },
+  "node_modules/@fontsource/lato/files/lato-latin-400-normal.woff": {
+    "file": "fonts/lato-latin-400-normal-B11PyLys.woff",
+    "src": "node_modules/@fontsource/lato/files/lato-latin-400-normal.woff"
+  },
+  "node_modules/@fontsource/lato/files/lato-latin-400-normal.woff2": {
+    "file": "fonts/lato-latin-400-normal-BEhtfm5r.woff2",
+    "src": "node_modules/@fontsource/lato/files/lato-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/lato/files/lato-latin-700-normal.woff": {
+    "file": "fonts/lato-latin-700-normal-DAdL7O4w.woff",
+    "src": "node_modules/@fontsource/lato/files/lato-latin-700-normal.woff"
+  },
+  "node_modules/@fontsource/lato/files/lato-latin-700-normal.woff2": {
+    "file": "fonts/lato-latin-700-normal-BUGMgin4.woff2",
+    "src": "node_modules/@fontsource/lato/files/lato-latin-700-normal.woff2"
+  }
+}
