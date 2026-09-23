@@ -8,6 +8,7 @@ Tema clásico personalizado para Frave, una tienda de fragancias, esencias e ins
 - [DESIGN.MD](DESIGN.MD): identidad visual, tokens, componentes y decisiones de diseño.
 - [ARQUITECTURA.MD](ARQUITECTURA.MD): límites del sistema, módulos e integraciones.
 - [GUIA_COMPILACION.MD](GUIA_COMPILACION.MD): desarrollo local, build y validación de assets.
+- [GUIA_DESPLIEGUE_LOCAL.MD](GUIA_DESPLIEGUE_LOCAL.MD): instalación local de WordPress y Frave desde cero en Windows.
 - [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD): entrega del tema y datos por completar al elegir hosting.
 
 ## Requisitos
