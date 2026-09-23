@@ -61,6 +61,8 @@ Objetivo: convertir la base funcional en una experiencia de marca completa y edi
 
 - [ ] Aprobar paleta, tipografía, fotografía, tono de voz y uso del logotipo definitivo.
 - [ ] Completar tokens semánticos y documentar reglas de tipografía, espacios, botones, formularios, tarjetas y mensajes.
+- [ ] Corregir el contraste de texto pequeño sobre el naranja principal y revisar los demás pares de color del tema.
+- [ ] Revisar la organización responsive del CSS para cumplir la estrategia móvil primero sin regresiones.
 - [ ] Sustituir las imágenes de prueba o respaldos visuales por fotografías propias optimizadas, con texto alternativo y tamaños adecuados.
 - [ ] Añadir módulos independientes de portada según contenido real: colecciones, novedades, storytelling, ventajas, contenido educativo y CTA.
 - [ ] Definir campos editoriales controlados en ACF y versionar sus grupos en `acf-json/`; mantener los datos de producto en WooCommerce.

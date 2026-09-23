@@ -2,7 +2,13 @@
 
 Tema clásico personalizado para Frave, una tienda de fragancias, esencias e insumos de perfumería. WordPress administra páginas y medios; WooCommerce conserva el catálogo, inventario, variaciones, precios, carrito, checkout, pagos, pedidos y cuentas. La apariencia se implementa en este tema.
 
-El avance de la primera entrega y las tareas de las siguientes fases se registran en [ROADMAP.md](ROADMAP.md).
+## Documentación del proyecto
+
+- [ROADMAP.md](ROADMAP.md): tareas implementadas y siguientes fases.
+- [DESIGN.MD](DESIGN.MD): identidad visual, tokens, componentes y decisiones de diseño.
+- [ARQUITECTURA.MD](ARQUITECTURA.MD): límites del sistema, módulos e integraciones.
+- [GUIA_COMPILACION.MD](GUIA_COMPILACION.MD): desarrollo local, build y validación de assets.
+- [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD): entrega del tema y datos por completar al elegir hosting.
 
 ## Requisitos
 
