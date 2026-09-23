@@ -22,8 +22,8 @@
 				?>
 			</div>
 			<div class="site-footer__contact">
-				<h2><?php esc_html_e( 'Atención', 'frave' ); ?></h2>
-				<p><?php esc_html_e( 'Escríbenos para recibir orientación sobre nuestros productos.', 'frave' ); ?></p>
+				<h2><?php esc_html_e( 'Tu cuenta', 'frave' ); ?></h2>
+				<p><?php esc_html_e( 'Consulta tu cuenta y el estado de tus pedidos.', 'frave' ); ?></p>
 				<?php if ( class_exists( 'WooCommerce' ) ) : ?>
 					<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Mi cuenta y pedidos', 'frave' ); ?></a>
 				<?php endif; ?>

@@ -17,6 +17,11 @@ get_header();
 			</div>
 		</section>
 	<?php endif; ?>
+	<?php get_template_part( 'template-parts/sections/story' ); ?>
+	<?php get_template_part( 'template-parts/sections/guide' ); ?>
+	<?php if ( class_exists( 'WooCommerce' ) ) : ?>
+		<?php get_template_part( 'template-parts/sections/shop-cta' ); ?>
+	<?php endif; ?>
 </main>
 <?php
 get_footer();

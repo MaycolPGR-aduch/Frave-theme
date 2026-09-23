@@ -2,6 +2,7 @@
   "key": "group_frave_home",
   "title": "Inicio Frave",
   "fields": [
+    { "key": "field_frave_hero_tab", "label": "Portada principal", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
     {
       "key": "field_frave_hero_eyebrow",
       "label": "Texto superior",
@@ -89,7 +90,26 @@
       "wrapper": { "width": "50", "class": "", "id": "" },
       "default_value": "",
       "placeholder": ""
-    }
+    },
+    { "key": "field_frave_story_tab", "label": "Presentación", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+    { "key": "field_frave_story_eyebrow", "label": "Texto superior", "name": "frave_story_eyebrow", "type": "text", "default_value": "ACERCA DE FRAVE", "maxlength": 60 },
+    { "key": "field_frave_story_title", "label": "Título", "name": "frave_story_title", "type": "text", "default_value": "Un espacio para imaginar nuevas esencias", "maxlength": 110 },
+    { "key": "field_frave_story_text", "label": "Descripción", "name": "frave_story_text", "type": "textarea", "default_value": "Explora fragancias, esencias e insumos para dar forma a tus ideas. Frave reúne opciones para quienes disfrutan crear y descubrir el mundo de la perfumería.", "maxlength": 360, "rows": 4, "new_lines": "" },
+    { "key": "field_frave_story_image", "label": "Imagen editorial", "name": "frave_story_image", "type": "image", "instructions": "Fotografía propia. Añade texto alternativo en la biblioteca de medios.", "return_format": "id", "preview_size": "medium", "library": "all" },
+    { "key": "field_frave_guide_tab", "label": "Guía", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+    { "key": "field_frave_guide_eyebrow", "label": "Texto superior", "name": "frave_guide_eyebrow", "type": "text", "default_value": "TU PROCESO CREATIVO", "maxlength": 60 },
+    { "key": "field_frave_guide_title", "label": "Título", "name": "frave_guide_title", "type": "text", "default_value": "Cada creación empieza con una idea", "maxlength": 110 },
+    { "key": "field_frave_guide_1_title", "label": "Paso 1: título", "name": "frave_guide_1_title", "type": "text", "default_value": "Explora aromas", "maxlength": 65 },
+    { "key": "field_frave_guide_1_text", "label": "Paso 1: descripción", "name": "frave_guide_1_text", "type": "textarea", "default_value": "Descubre fragancias y esencias para inspirar tu próxima idea.", "maxlength": 180, "rows": 2, "new_lines": "" },
+    { "key": "field_frave_guide_2_title", "label": "Paso 2: título", "name": "frave_guide_2_title", "type": "text", "default_value": "Elige insumos", "maxlength": 65 },
+    { "key": "field_frave_guide_2_text", "label": "Paso 2: descripción", "name": "frave_guide_2_text", "type": "textarea", "default_value": "Encuentra materias primas y complementos para tu proceso creativo.", "maxlength": 180, "rows": 2, "new_lines": "" },
+    { "key": "field_frave_guide_3_title", "label": "Paso 3: título", "name": "frave_guide_3_title", "type": "text", "default_value": "Crea a tu manera", "maxlength": 65 },
+    { "key": "field_frave_guide_3_text", "label": "Paso 3: descripción", "name": "frave_guide_3_text", "type": "textarea", "default_value": "Combina posibilidades y da forma a un proyecto propio.", "maxlength": 180, "rows": 2, "new_lines": "" },
+    { "key": "field_frave_cta_tab", "label": "Cierre", "name": "", "type": "tab", "placement": "top", "endpoint": 0 },
+    { "key": "field_frave_cta_eyebrow", "label": "Texto superior", "name": "frave_cta_eyebrow", "type": "text", "default_value": "EXPLORA FRAVE", "maxlength": 60 },
+    { "key": "field_frave_cta_title", "label": "Título", "name": "frave_cta_title", "type": "text", "default_value": "Encuentra el comienzo de tu próxima creación", "maxlength": 110 },
+    { "key": "field_frave_cta_text", "label": "Descripción", "name": "frave_cta_text", "type": "textarea", "default_value": "Recorre el catálogo de fragancias, esencias e insumos.", "maxlength": 200, "rows": 2, "new_lines": "" },
+    { "key": "field_frave_cta_button", "label": "Texto del botón", "name": "frave_cta_button", "type": "text", "default_value": "Ir a la tienda", "maxlength": 40 }
   ],
   "location": [[{ "param": "page_type", "operator": "==", "value": "front_page" }]],
   "menu_order": 0,
@@ -99,7 +119,7 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Contenido controlado para el hero de la portada.",
+  "description": "Contenido controlado del hero, presentación, guía y cierre de portada.",
   "show_in_rest": 0,
-  "modified": 1780000000
+  "modified": 1790176478
 }
