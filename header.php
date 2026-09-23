@@ -47,10 +47,7 @@
 					<a class="header-action header-action--account" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" aria-label="<?php esc_attr_e( 'Mi cuenta', 'frave' ); ?>">
 						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.2 20c.5-3.3 2.8-5.2 6.8-5.2s6.3 1.9 6.8 5.2"></path></svg>
 					</a>
-					<a class="header-action header-action--cart" href="<?php echo esc_url( wc_get_cart_url() ); ?>" aria-label="<?php echo esc_attr( sprintf( __( 'Carrito, %d productos', 'frave' ), WC()->cart ? WC()->cart->get_cart_contents_count() : 0 ) ); ?>">
-						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3.5 4h2l2.1 11.2h10.8l2-8H6.2"></path><circle cx="9.5" cy="19" r="1"></circle><circle cx="17.2" cy="19" r="1"></circle></svg>
-						<span class="cart-count"><?php echo esc_html( WC()->cart ? (string) WC()->cart->get_cart_contents_count() : '0' ); ?></span>
-					</a>
+					<?php get_template_part( 'template-parts/components/cart-link' ); ?>
 				<?php endif; ?>
 			</div>
 		</div>
