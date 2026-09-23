@@ -115,13 +115,14 @@ Activa **Frave** en **Apariencia → Temas**. El servidor de PHP (`8080`), MySQL
 
 ## 7. Configurar la tienda mínima
 
-1. Instala y activa [WooCommerce](https://wordpress.org/plugins/woocommerce/) desde **Plugins → Añadir nuevo**. Instala [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/) solo si quieres editar el hero desde WordPress; el tema funciona sin ACF.
+1. Instala y activa [WooCommerce](https://wordpress.org/plugins/woocommerce/) desde **Plugins → Añadir nuevo**. Instala [Advanced Custom Fields](https://wordpress.org/plugins/advanced-custom-fields/) si quieres editar las secciones editoriales de la portada desde WordPress; el tema funciona sin ACF.
 2. Crea una página **Inicio** y selecciónala en **Ajustes → Lectura → Una página estática → Portada**. El tema usará `front-page.php` para mostrar el hero.
 3. Revisa que WooCommerce haya creado y asignado **Tienda**, **Carrito**, **Finalizar compra** y **Mi cuenta**. Para seguir el flujo clásico de este tema, las tres últimas páginas deben contener respectivamente los bloques de shortcode `[woocommerce_cart]`, `[woocommerce_checkout]` y `[woocommerce_my_account]`. Revisa las asignaciones de páginas en los ajustes de WooCommerce.
 4. Asigna menús a **Navegación principal** y **Navegación del pie** desde **Apariencia → Menús**. Si aún no hay menú principal, el tema muestra enlaces básicos de respaldo.
-5. Si activaste ACF, sincroniza el grupo **Inicio Frave** cuando ACF lo ofrezca y edita los campos del hero en la página Inicio. La estructura del grupo está versionada en `acf-json/`.
-6. Para una prueba similar a la instalación actual, configura Perú y moneda PEN, una zona de envío con tarifa plana y **contra entrega solo de prueba**. Revisa las opciones de impuestos en WooCommerce; la instalación local actual los tiene desactivados para el flujo básico.
-7. Crea al menos una categoría con un producto publicado y precio para que aparezca en la portada. Marca productos como destacados si quieres controlar esa sección; si no hay destacados, la portada muestra productos recientes. Crea además uno variable y uno agotado si vas a probar esos estados.
+5. Si activaste ACF, sincroniza el grupo **Inicio Frave** cuando ACF lo ofrezca y edita los campos del hero, presentación, guía y cierre en la página Inicio. La estructura del grupo está versionada en `acf-json/`.
+6. Crea una página **Nosotros** con slug `nosotros` y escribe su contenido desde el editor. La portada mostrará entonces el enlace **Conoce Frave**. Añade esa página a los menús si deseas mostrarla en la navegación.
+7. Para una prueba similar a la instalación actual, configura Perú y moneda PEN, una zona de envío con tarifa plana y **contra entrega solo de prueba**. Revisa las opciones de impuestos en WooCommerce; la instalación local actual los tiene desactivados para el flujo básico.
+8. Crea al menos una categoría con un producto publicado y precio para que aparezca en la portada. Marca productos como destacados si quieres controlar esa sección; si no hay destacados, la portada muestra productos recientes. Crea además uno variable y uno agotado si vas a probar esos estados.
 
 WooCommerce administra los productos y la compra. No es necesario copiar `single-product.php` ni toda la carpeta de plantillas del plugin al tema. Las páginas clásicas y sus shortcodes están descritos por [WooCommerce](https://woocommerce.com/document/woocommerce-shortcodes/page-shortcodes/).
 

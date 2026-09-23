@@ -27,9 +27,11 @@ La recomendación sigue las versiones actuales de WooCommerce y Vite. Comprueba 
 1. Copia la carpeta `frave` a `wp-content/themes/`.
 2. En WordPress, activa **Frave** en **Apariencia → Temas**.
 3. Instala y activa WooCommerce. ACF gratuito es opcional.
-4. Asigna una página estática como portada y crea un menú para las ubicaciones **Navegación principal** y **Navegación del pie**.
+4. Asigna una página estática como portada. Si deseas el enlace institucional de la portada, crea una página publicada con slug `nosotros`; su contenido se edita con el editor de WordPress. Asigna menús a **Navegación principal** y **Navegación del pie**.
 5. Completa los datos de tienda, moneda, envíos, impuestos y pagos en los ajustes de WooCommerce.
 6. En las páginas de carrito y checkout, selecciona las versiones clásicas de WooCommerce con `[woocommerce_cart]` y `[woocommerce_checkout]` si el asistente creó bloques. La cuenta usa `[woocommerce_my_account]`.
+
+La portada incluye hero, categorías y destacados de WooCommerce, presentación de Frave, guía de tres pasos y cierre hacia la tienda. Con ACF gratuito activo, edita los campos del grupo **Inicio Frave** en la página asignada como portada. Si ACF no está disponible, el tema muestra los textos de respaldo. Las imágenes comerciales deben subirse a la biblioteca de medios y a los productos; el tema no incluye fotografías de producto.
 
 ## Desarrollo de assets
 
@@ -80,10 +82,10 @@ Para probar el build de producción, compila con `npm.cmd run build` y cambia `F
 ## Arquitectura
 
 - `inc/`: configuración inicial, helpers, assets, ACF opcional e integración WooCommerce.
-- `template-parts/`: hero, categorías, cards, búsqueda y estados vacíos reutilizables.
+- `template-parts/`: secciones independientes de portada, cards, búsqueda y estados vacíos reutilizables.
 - `assets/src/`: CSS, JavaScript y sistema de diseño de Tailwind.
 - `assets/dist/`: archivos listos para producción generados por Vite y versionados.
-- `acf-json/`: grupo de campos de portada sincronizable con ACF gratuito.
+- `acf-json/`: grupo de campos editoriales de portada sincronizable con ACF gratuito.
 - `woocommerce/`: no contiene overrides por ahora; los wrappers se integran con hooks públicos.
 
 ## WooCommerce

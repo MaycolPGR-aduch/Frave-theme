@@ -54,7 +54,7 @@ npm.cmd ci
    npm.cmd run dev
    ```
 
-4. Abre `http://127.0.0.1:8080`. El servidor Vite escucha en `127.0.0.1:5173`; el puerto es fijo y se permite el origen local configurado en `vite.config.js`.
+4. Abre `http://127.0.0.1:8080`. El servidor Vite escucha en `127.0.0.1:5173`; el puerto es fijo y se permite el origen local configurado en `vite.config.js`. `server.origin` hace que las fuentes de Lato se pidan a Vite y no al servidor PHP. Si cambias el puerto de Vite, cambia también `server.origin` y `FRAVE_VITE_SERVER`.
 
 El modo desarrollo solo carga entradas desde Vite. Si Vite está detenido, inicia el servidor o desactiva `FRAVE_VITE_DEV` para usar el último build de `assets/dist/`.
 
@@ -96,3 +96,4 @@ El proyecto aún no tiene un script de lint o una suite de pruebas automatizadas
 | Fecha | Cambio |
 | --- | --- |
 | 2026-09-23 | Procedimiento inicial basado en Vite, Tailwind y el entorno local actual. |
+| 2026-09-23 | Se documenta el origen de assets en desarrollo tras corregir las peticiones 404 de Lato. |

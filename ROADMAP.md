@@ -60,15 +60,19 @@ Crear una tienda de perfumería con identidad propia, usando un tema clásico pe
 Objetivo: convertir la base funcional en una experiencia de marca completa y editable sin código.
 
 - [ ] Aprobar paleta, tipografía, fotografía, tono de voz y uso del logotipo definitivo.
-- [ ] Completar tokens semánticos y documentar reglas de tipografía, espacios, botones, formularios, tarjetas y mensajes.
-- [ ] Corregir el contraste de texto pequeño sobre el naranja principal y revisar los demás pares de color del tema.
+- [x] Añadir tokens semánticos de acento, primario, fondo, texto y borde; documentar la tipografía y el layout actuales en `DESIGN.MD`.
+- [x] Corregir el contraste de botones, badges, paginación y enlaces del pie afectados por el naranja o por CSS de WooCommerce.
+- [ ] Completar una auditoría de contraste de todos los estados y controles WooCommerce con contenido definitivo.
 - [ ] Revisar la organización responsive del CSS para cumplir la estrategia móvil primero sin regresiones.
 - [ ] Sustituir las imágenes de prueba o respaldos visuales por fotografías propias optimizadas, con texto alternativo y tamaños adecuados.
-- [ ] Añadir módulos independientes de portada según contenido real: colecciones, novedades, storytelling, ventajas, contenido educativo y CTA.
-- [ ] Definir campos editoriales controlados en ACF y versionar sus grupos en `acf-json/`; mantener los datos de producto en WooCommerce.
-- [ ] Crear páginas institucionales necesarias y navegación definitiva desde el administrador.
+- [x] Añadir módulos independientes de presentación, guía de exploración y CTA hacia la tienda; categorías y destacados siguen alimentados por WooCommerce.
+- [x] Definir campos editoriales controlados en ACF gratuito y versionar el grupo en `acf-json/`; mantener los datos de producto en WooCommerce.
+- [x] Crear en el entorno local la página editable `Nosotros` y asignar menús principal y de pie desde WordPress.
+- [ ] Definir con Frave el contenido de colecciones, novedades, ventajas verificables, recursos educativos y canales de contacto antes de añadir esos módulos y páginas.
 
 **Criterio de cierre:** el equipo de Frave puede actualizar textos, imágenes y secciones aprobadas desde WordPress sin alterar el layout; la identidad visual está aprobada en móvil y escritorio.
+
+**Validación de esta iteración (2026-09-23):** lint de los 27 PHP del tema, `npm run build`, manifest con seis archivos presentes, portada HTTP 200 con ACF activo e inactivo, campos ACF cargados, página `Nosotros` visible, Lato servido por Vite con HTTP 200 y portada de producción cargando CSS/JS del manifest. Se inspeccionaron las secciones nuevas a 408px y 1440px; la revisión completa de compra y accesibilidad sigue pendiente.
 
 ## Fase 3 — Experiencia de catálogo y compra
 
