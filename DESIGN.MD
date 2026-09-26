@@ -18,7 +18,7 @@ La portada ofrece hero, categorías, productos destacados y tres módulos editor
 | --- | --- | --- |
 | Tokens y estilos del frontend | `assets/src/css/app.css` | Cambiar aquí los valores y componentes visibles. |
 | Paleta y opciones del editor | `theme.json` | Mantener los valores compartidos alineados con el CSS. |
-| Logotipo de respaldo | `assets/images/frave-logo.png` | Conservar los originales de marca fuera del tema. |
+| Logotipos de respaldo | `assets/images/frave-logo.png` (encabezado) y `assets/images/frave-logo-footer.png` (pie oscuro, fondo transparente) | Conservar los originales de marca fuera del tema. |
 | Contenido editorial de portada | `acf-json/group_frave_home.json` y `template-parts/sections/` | Editar contenido desde la portada; versionar cambios de estructura de campos. |
 | Imágenes, precios, stock y atributos de producto | WooCommerce y la biblioteca de medios | No duplicar estos datos en ACF. |
 

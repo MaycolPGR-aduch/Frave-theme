@@ -6,7 +6,7 @@
 		<div class="container site-footer__main">
 			<div class="site-footer__brand">
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
-					<img src="<?php echo esc_url( frave_asset_url( 'assets/images/frave-logo.png' ) ); ?>" alt="" width="330" height="198" loading="lazy">
+					<img src="<?php echo esc_url( frave_asset_url( 'assets/images/frave-logo-footer.png' ) ); ?>" alt="" width="330" height="198" loading="lazy">
 				</a>
 				<p><?php esc_html_e( 'Fragancias, esencias e insumos para crear con intención.', 'frave' ); ?></p>
 			</div>

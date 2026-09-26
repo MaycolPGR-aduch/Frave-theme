@@ -1315,7 +1315,7 @@
     height: 4rem;
     overflow: hidden;
     border-radius: 0.25rem;
-    background: white;
+    background: transparent;
   }
 
   .site-footer__brand img {
