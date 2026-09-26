@@ -8,13 +8,13 @@ $steps = array(
 ?>
 <section class="section guide-section" aria-labelledby="guide-heading">
 	<div class="container">
-		<div class="section-heading">
+		<div class="section-heading" data-reveal="up">
 			<div>
 				<p class="eyebrow"><?php echo esc_html( frave_field( 'frave_guide_eyebrow', __( 'TU PROCESO CREATIVO', 'frave' ) ) ); ?></p>
 				<h2 id="guide-heading"><?php echo esc_html( frave_field( 'frave_guide_title', __( 'Cada creación empieza con una idea', 'frave' ) ) ); ?></h2>
 			</div>
 		</div>
-		<ol class="guide-grid">
+		<ol class="guide-grid" data-reveal-group>
 			<?php foreach ( $steps as $index => $step ) : ?>
 				<li class="guide-card">
 					<span class="guide-card__number" aria-hidden="true"><?php echo esc_html( sprintf( '%02d', $index + 1 ) ); ?></span>

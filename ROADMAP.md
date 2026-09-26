@@ -60,6 +60,7 @@ Crear una tienda de perfumería con identidad propia, usando un tema clásico pe
 Objetivo: convertir la base funcional en una experiencia de marca completa y editable sin código.
 
 - [ ] Aprobar paleta, tipografía, fotografía, tono de voz y uso del logotipo definitivo.
+- [x] Incorporar a la portada entradas progresivas y escalonadas, con transiciones entre secciones y soporte para movimiento reducido.
 - [x] Añadir tokens semánticos de acento, primario, fondo, texto y borde; documentar la tipografía y el layout actuales en `DESIGN.MD`.
 - [x] Corregir el contraste de botones, badges, paginación y enlaces del pie afectados por el naranja o por CSS de WooCommerce.
 - [ ] Completar una auditoría de contraste de todos los estados y controles WooCommerce con contenido definitivo.
@@ -71,6 +72,8 @@ Objetivo: convertir la base funcional en una experiencia de marca completa y edi
 - [ ] Definir con Frave el contenido de colecciones, novedades, ventajas verificables, recursos educativos y canales de contacto antes de añadir esos módulos y páginas.
 
 **Criterio de cierre:** el equipo de Frave puede actualizar textos, imágenes y secciones aprobadas desde WordPress sin alterar el layout; la identidad visual está aprobada en móvil y escritorio.
+
+**Validación de esta iteración (2026-09-26):** `npm.cmd run build`, comprobación de las seis referencias del manifest, `php -l` en las seis plantillas PHP modificadas y `git diff --check` completados. No se pudo verificar la portada en vivo después del build: los servicios locales de WordPress, Vite y MySQL no estaban activos (puertos 8080, 5173 y 3307 cerrados).
 
 **Validación de esta iteración (2026-09-23):** lint de los 27 PHP del tema, `npm run build`, manifest con seis archivos presentes, portada HTTP 200 con ACF activo e inactivo, campos ACF cargados, página `Nosotros` visible, Lato servido por Vite con HTTP 200 y portada de producción cargando CSS/JS del manifest. Se inspeccionaron las secciones nuevas a 408px y 1440px; la revisión completa de compra y accesibilidad sigue pendiente.
 

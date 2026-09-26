@@ -26,14 +26,14 @@ if ( empty( $products ) ) {
 ?>
 <section class="section featured-section" aria-labelledby="featured-heading">
 	<div class="container">
-		<div class="section-heading">
+		<div class="section-heading" data-reveal="up">
 			<div>
 				<p class="eyebrow"><?php esc_html_e( 'SELECCIÓN FRAVE', 'frave' ); ?></p>
 				<h2 id="featured-heading"><?php esc_html_e( 'Inspírate para crear', 'frave' ); ?></h2>
 			</div>
 			<a class="text-link" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>"><?php esc_html_e( 'Ver todos los productos', 'frave' ); ?><span aria-hidden="true">&rarr;</span></a>
 		</div>
-		<ul class="products frave-products">
+		<ul class="products frave-products" data-reveal-group>
 			<?php
 			$original_product = isset( $GLOBALS['product'] ) ? $GLOBALS['product'] : null;
 			foreach ( $products as $featured_product ) :

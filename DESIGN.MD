@@ -1,12 +1,14 @@
 # Diseño de Frave
 
 - **Estado:** sistema visual inicial, pendiente de aprobación final de marca.
-- **Última revisión:** 23 de septiembre de 2026.
+- **Última revisión:** 26 de septiembre de 2026.
 - **Seguimiento:** [ROADMAP.md](ROADMAP.md).
 
 ## Dirección visual
 
 Frave busca una experiencia elegante, limpia y editorial para fragancias, esencias e insumos de perfumería. La identidad inicial usa el logotipo horizontal naranja disponible en los recursos de marca, fondos claros, amplio espacio en blanco y fotografía de producto administrada desde WordPress y WooCommerce. Las referencias externas sirven para estudiar calidad de composición y experiencia; el diseño de Frave debe mantener una identidad propia.
+
+La portada de [Eurofragance](https://www.eurofragance.com/) sirve como referencia de ritmo editorial: hero amplio, módulos visuales diferenciados, cambios claros de superficie y espacios generosos entre bloques. Frave traslada esa intención a una composición propia, con acentos naranja, formas circulares y contenido centrado en creación de fragancias.
 
 La portada ofrece hero, categorías, productos destacados y tres módulos editoriales: presentación, guía y cierre hacia la tienda. Los textos de los módulos se editan en ACF gratuito. Cuando no se ha cargado una imagen editorial, el hero muestra una composición hecha con CSS y la presentación utiliza un monograma tipográfico. Son respaldos visuales, no fotografías comerciales definitivas.
 
@@ -53,7 +55,9 @@ La paleta se apoya en la guía de marca naranja disponible en `D:/Frave-web/IDEN
 
 La interfaz cubre móvil, tablet y escritorio. El catálogo pasa de dos columnas en móvil a tres en escritorio; las categorías pasan de dos a cuatro. El menú usa una presentación móvil hasta `63.99rem` y el layout estrecho se ajusta por debajo de `47.99rem`. El ancho mínimo de diseño actual es `320px`.
 
-El CSS actual contiene estilos generales y ajustes con `max-width`; todavía no está reorganizado como hoja móvil primero. En esta iteración se verificaron las secciones nuevas a 408px y 1440px: guía en una columna y CTA apilado en móvil, sin desbordamiento horizontal; en escritorio la guía usa tres columnas. Una conversión completa del CSS requiere una ronda de regresión del flujo de compra. Las transiciones son breves y se reducen cuando el sistema indica `prefers-reduced-motion`.
+El CSS actual contiene estilos generales y ajustes con `max-width`; todavía no está reorganizado como hoja móvil primero. En esta iteración se verificaron las secciones nuevas a 408px y 1440px: guía en una columna y CTA apilado en móvil, sin desbordamiento horizontal; en escritorio la guía usa tres columnas. Una conversión completa del CSS requiere una ronda de regresión del flujo de compra.
+
+La portada usa una entrada progresiva de sus módulos cuando llegan al viewport: textos y bloques aparecen con un desplazamiento corto, las imágenes editoriales usan escala sutil y las tarjetas entran escalonadas. Cambios de fondo, curvas y anillos gráficos marcan el paso entre secciones sin reproducir la composición de una web de referencia. El efecto se inicializa con `IntersectionObserver` en `assets/src/js/modules/section-transitions.js`; si JavaScript o esa API no están disponibles, el contenido sigue visible. `prefers-reduced-motion` desactiva los desplazamientos y deja todos los bloques visibles. El hero mantiene un pulso decorativo lento, también reducido por esa preferencia.
 
 ## Componentes y estados actuales
 

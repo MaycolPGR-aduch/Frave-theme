@@ -18,14 +18,14 @@ if ( is_wp_error( $categories ) || empty( $categories ) ) {
 ?>
 <section class="section category-section" aria-labelledby="category-heading">
 	<div class="container">
-		<div class="section-heading">
+		<div class="section-heading" data-reveal="up">
 			<div>
 				<p class="eyebrow"><?php esc_html_e( 'EXPLORA FRAVE', 'frave' ); ?></p>
 				<h2 id="category-heading"><?php esc_html_e( 'Encuentra lo que imaginas', 'frave' ); ?></h2>
 			</div>
 			<a class="text-link" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>"><?php esc_html_e( 'Ver toda la tienda', 'frave' ); ?><span aria-hidden="true">&rarr;</span></a>
 		</div>
-		<div class="category-grid">
+		<div class="category-grid" data-reveal-group>
 			<?php foreach ( $categories as $category ) : ?>
 				<?php get_template_part( 'template-parts/cards/category', null, array( 'category' => $category ) ); ?>
 			<?php endforeach; ?>

@@ -1,12 +1,12 @@
 # Guía de compilación de Frave
 
 - **Estado:** procedimiento local actual.
-- **Última revisión:** 23 de septiembre de 2026.
+- **Última revisión:** 26 de septiembre de 2026.
 - **Configuración de producción:** [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD).
 
 ## Qué se compila
 
-Vite toma `assets/src/js/app.js` como entrada. Ese archivo importa Lato, `assets/src/css/app.css` y el módulo del menú móvil. Tailwind CSS 4 procesa el CSS con detección automática desactivada y examina solo los templates PHP y archivos JS indicados por `@source`; los Markdown no alteran las clases generadas. El resultado se escribe en `assets/dist/`: CSS, JavaScript y fuentes con hash, más `manifest.json`. WordPress lee el manifest desde `inc/enqueue.php`.
+Vite toma `assets/src/js/app.js` como entrada. Ese archivo importa Lato, `assets/src/css/app.css` y los módulos del menú móvil y las transiciones de portada. Tailwind CSS 4 procesa el CSS con detección automática desactivada y examina solo los templates PHP y archivos JS indicados por `@source`; los Markdown no alteran las clases generadas. El resultado se escribe en `assets/dist/`: CSS, JavaScript y fuentes con hash, más `manifest.json`. WordPress lee el manifest desde `inc/enqueue.php`.
 
 La configuración `source(none)` y `@source` sigue la [guía oficial de detección de Tailwind](https://tailwindcss.com/docs/detecting-classes-in-source-files).
 

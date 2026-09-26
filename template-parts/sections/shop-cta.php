@@ -3,7 +3,7 @@
 $shop_url = wc_get_page_permalink( 'shop' );
 ?>
 <section class="section shop-cta" aria-labelledby="shop-cta-heading">
-	<div class="container shop-cta__inner">
+	<div class="container shop-cta__inner" data-reveal="up">
 		<div>
 			<p class="eyebrow"><?php echo esc_html( frave_field( 'frave_cta_eyebrow', __( 'EXPLORA FRAVE', 'frave' ) ) ); ?></p>
 			<h2 id="shop-cta-heading"><?php echo esc_html( frave_field( 'frave_cta_title', __( 'Encuentra el comienzo de tu próxima creación', 'frave' ) ) ); ?></h2>

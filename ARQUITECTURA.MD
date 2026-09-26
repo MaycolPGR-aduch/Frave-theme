@@ -1,7 +1,7 @@
 # Arquitectura del tema Frave
 
 - **Estado:** implementación inicial funcional.
-- **Última revisión:** 23 de septiembre de 2026.
+- **Última revisión:** 26 de septiembre de 2026.
 - **Seguimiento:** [ROADMAP.md](ROADMAP.md).
 
 ## Límites del sistema
@@ -25,7 +25,7 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `template-parts/sections/` | Hero, categorías, destacados, presentación editorial, guía y cierre de la portada. |
 | `template-parts/cards/` y `template-parts/components/` | Tarjeta de categoría, enlace de carrito y estado vacío. |
 | `assets/src/css/app.css` | Tailwind, tokens, estilos de componentes y estilos WooCommerce. |
-| `assets/src/js/app.js`, `assets/src/js/modules/navigation.js` | Entrada de assets y comportamiento del menú móvil. |
+| `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú móvil y revelado progresivo de módulos editoriales. |
 | `assets/dist/` | CSS, JavaScript, fuentes y manifest listos para servir; se versiona en Git. |
 | `acf-json/` | Configuración versionada de los campos editoriales de la portada. |
 | `theme.json`, `style.css` | Ajustes del editor y metadatos necesarios para activar el tema. |
@@ -39,6 +39,8 @@ Actualmente no existe un directorio `woocommerce/` de overrides. Tampoco existen
 3. Para el catálogo y la compra, WooCommerce produce datos y formularios. El tema aporta wrappers y estilos mediante sus hooks públicos.
 4. En la portada, hero, presentación, guía y cierre leen campos ACF cuando están disponibles y usan valores de respaldo en caso contrario. Categorías y productos destacados proceden de WooCommerce.
 5. WordPress encola `assets/src/js/app.js` desde Vite en desarrollo o los archivos con hash indicados por `assets/dist/manifest.json` en producción.
+
+En la portada, los elementos con `data-reveal` y `data-reveal-group` se observan con `IntersectionObserver`. Las clases de preparación se añaden solo desde JavaScript; así el contenido no queda oculto cuando JS no carga. El módulo `assets/src/js/modules/section-transitions.js` omite el efecto cuando el visitante ha solicitado movimiento reducido.
 
 ## Integraciones y decisiones vigentes
 
