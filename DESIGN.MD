@@ -75,7 +75,7 @@ La portada usa una entrada progresiva de sus módulos cuando llegan al viewport:
 
 Las imágenes subidas a WordPress deben tener dimensiones apropiadas, texto alternativo útil cuando comuniquen contenido y versiones responsive generadas por la biblioteca de medios. El tema registra tamaños `frave-card` y `frave-editorial`; las imágenes de categoría usan carga diferida y el hero prioriza la imagen principal cuando existe. La calidad final depende de las fotografías y de la configuración del servidor.
 
-La base incluye HTML semántico, enlace para saltar al contenido, estados `:focus-visible` y navegación móvil con atributos ARIA y cierre por Escape. Queda pendiente una auditoría completa con teclado, lector de pantalla, contraste y contenido definitivo.
+La base incluye HTML semántico, enlace para saltar al contenido, estados `:focus-visible` y navegación móvil con atributos ARIA, cierre por Escape y ciclo de foco dentro del menú abierto. Los focos en la CTA y el footer usan un contorno claro que contrasta sobre su fondo oscuro. `prefers-reduced-motion` elimina también el retraso de transición al cerrar el menú. Queda pendiente la auditoría manual completa con lector de pantalla, estados y contenido definitivos.
 
 ## Registro de cambios y decisiones
 

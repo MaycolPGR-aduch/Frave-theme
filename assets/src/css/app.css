@@ -884,6 +884,11 @@
     flex-shrink: 0;
   }
 
+  .shop-cta :focus-visible,
+  .site-footer :focus-visible {
+    outline-color: #ffab80;
+  }
+
   .frave-products,
   .woocommerce ul.products {
     display: grid;
@@ -1744,6 +1749,7 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
 
   .reveal-ready,

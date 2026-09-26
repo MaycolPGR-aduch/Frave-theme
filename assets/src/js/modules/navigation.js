@@ -37,6 +37,31 @@ export function initializeNavigation() {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
       setMenuState(false, true);
+      return;
+    }
+
+    if (event.key !== 'Tab' || toggle.getAttribute('aria-expanded') !== 'true') return;
+
+    const focusableItems = Array.from(
+      navigation.querySelectorAll('a[href], button:not(:disabled), [tabindex]:not([tabindex="-1"])'),
+    ).filter((item) => item.getClientRects().length > 0);
+
+    if (!focusableItems.length) {
+      event.preventDefault();
+      toggle.focus();
+      return;
+    }
+
+    const firstItem = focusableItems[0];
+    const lastItem = focusableItems[focusableItems.length - 1];
+    const focusIsOutsideNavigation = !navigation.contains(document.activeElement);
+
+    if (event.shiftKey && (document.activeElement === firstItem || focusIsOutsideNavigation)) {
+      event.preventDefault();
+      lastItem.focus();
+    } else if (!event.shiftKey && (document.activeElement === lastItem || focusIsOutsideNavigation)) {
+      event.preventDefault();
+      firstItem.focus();
     }
   });
   window.addEventListener('resize', () => {

@@ -63,6 +63,7 @@ Objetivo: convertir la base funcional en una experiencia de marca completa y edi
 - [x] Incorporar a la portada entradas progresivas y escalonadas, con transiciones entre secciones y soporte para movimiento reducido.
 - [x] Añadir tokens semánticos de acento, primario, fondo, texto y borde; documentar la tipografía y el layout actuales en `DESIGN.MD`.
 - [x] Corregir el contraste de botones, badges, paginación y enlaces del pie afectados por el naranja o por CSS de WooCommerce.
+- [x] Completar el ciclo de foco con Tab/Mayús+Tab en el menú móvil, reforzar el foco visible sobre superficies oscuras y quitar retrasos con movimiento reducido.
 - [ ] Completar una auditoría de contraste de todos los estados y controles WooCommerce con contenido definitivo.
 - [ ] Revisar la organización responsive del CSS para cumplir la estrategia móvil primero sin regresiones.
 - [ ] Sustituir las imágenes de prueba o respaldos visuales por fotografías propias optimizadas, con texto alternativo y tamaños adecuados.
@@ -72,6 +73,8 @@ Objetivo: convertir la base funcional en una experiencia de marca completa y edi
 - [ ] Definir con Frave el contenido de colecciones, novedades, ventajas verificables, recursos educativos y canales de contacto antes de añadir esos módulos y páginas.
 
 **Criterio de cierre:** el equipo de Frave puede actualizar textos, imágenes y secciones aprobadas desde WordPress sin alterar el layout; la identidad visual está aprobada en móvil y escritorio.
+
+**Validación móvil y accesibilidad (2026-09-26):** build de Vite completado; portada y rutas principales respondieron HTTP 200; JavaScript, CSS y logo de footer sirvieron desde local. Se revisaron los breakpoints de 320px, 768px y 1024px, las reglas de foco y `prefers-reduced-motion` en código. La interacción de teclado y la vista por viewport requieren comprobación manual en el navegador; la auditoría con lector de pantalla y contenido final sigue pendiente.
 
 **Validación de esta iteración (2026-09-26):** `npm.cmd run build`, comprobación de las seis referencias del manifest, `php -l` en las seis plantillas PHP modificadas y `git diff --check` completados. No se pudo verificar la portada en vivo después del build: los servicios locales de WordPress, Vite y MySQL no estaban activos (puertos 8080, 5173 y 3307 cerrados).
 
