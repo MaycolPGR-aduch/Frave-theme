@@ -10,6 +10,9 @@ Tema clásico personalizado para Frave, una tienda de fragancias, esencias e ins
 - [GUIA_COMPILACION.MD](GUIA_COMPILACION.MD): desarrollo local, build y validación de assets.
 - [GUIA_DESPLIEGUE_LOCAL.MD](GUIA_DESPLIEGUE_LOCAL.MD): instalación local de WordPress y Frave desde cero en Windows.
 - [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD): entrega del tema y datos por completar al elegir hosting.
+- [GUIA_CATALOGO.md](GUIA_CATALOGO.md): propuesta de categorías y atributos, y preparación del catálogo.
+- [PLAN_CONTENIDO_INSTITUCIONAL.md](PLAN_CONTENIDO_INSTITUCIONAL.md): estructura propuesta para las páginas institucionales.
+- [PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx](PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx): columnas del importador nativo de WooCommerce para preparar productos.
 
 ## Requisitos
 
@@ -75,7 +78,7 @@ npm.cmd run dev
 
 El `wp-config.php` local activa `FRAVE_VITE_DEV` y apunta a `127.0.0.1:5173`. MySQL se ejecuta localmente en el puerto `3307`. La cuenta de administrador y sus credenciales de prueba son solo para este entorno; la contraseña se conserva en un archivo local fuera del tema.
 
-La tienda local está configurada en Perú, con moneda PEN, envío plano de prueba y pago contra entrega de prueba. Los impuestos están desactivados para validar el flujo básico. WordPress usa traducción `es_ES` porque no había paquete de idioma `es_PE` disponible para WooCommerce en la instalación inicial. Esta configuración es solo para pruebas y no está lista para recibir pagos reales.
+La tienda local está configurada en Perú, con moneda PEN, envío plano de prueba y pago contra entrega de prueba. La opción de visibilidad `woocommerce_coming_soon` está en `no` solo en esta base local para poder revisar las fichas y el proceso de compra; cualquier hosting de producción debe conservar su visibilidad configurada de forma deliberada. Los impuestos están desactivados para validar el flujo básico. WordPress usa traducción `es_ES` porque no había paquete de idioma `es_PE` disponible para WooCommerce en la instalación inicial. Esta configuración es solo para pruebas y no está lista para recibir pagos reales.
 
 Para probar el build de producción, compila con `npm.cmd run build` y cambia `FRAVE_VITE_DEV` a `false` en el `wp-config.php` local.
 
@@ -93,3 +96,7 @@ Para probar el build de producción, compila con `npm.cmd run build` y cambia `F
 Las imágenes, variaciones, precios y existencias se administran en WooCommerce. El tema define estilos y wrappers de presentación mediante soporte y hooks públicos. Si un override de plantilla resulta imprescindible en el futuro, registra en este README su motivo y la versión de plantilla de WooCommerce que cubre.
 
 Para las pruebas locales se cargaron productos simples, variables y agotados, un cupón de prueba, una zona de envío peruana de tarifa plana y un método manual de contra entrega. No introduzcas credenciales de pasarela real en el entorno de desarrollo. Antes de vender, configura y valida una pasarela real, impuestos, tarifas y políticas comerciales.
+
+## Preparación del catálogo
+
+La taxonomía propuesta todavía no está creada en WooCommerce. Revísala en [GUIA_CATALOGO.md](GUIA_CATALOGO.md) y confirma nombres, productos y atributos con el catálogo real antes de importarlos. Para preparar datos, abre `PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx`, completa la hoja **Importar a Woo** sin cambiar los nombres de las columnas y expórtala desde Excel o LibreOffice como **CSV UTF-8**. Sube el CSV desde **Productos → Todos los productos → Importar** y valida primero una muestra pequeña en la instalación local. Ajusta los encabezados de peso y dimensiones si la tienda de destino usa unidades distintas de kg y cm. No se incluyen filas de ejemplo para evitar crear productos ficticios.

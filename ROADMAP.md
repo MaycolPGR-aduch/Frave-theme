@@ -71,6 +71,7 @@ Objetivo: convertir la base funcional en una experiencia de marca completa y edi
 - [x] Definir campos editoriales controlados en ACF gratuito y versionar el grupo en `acf-json/`; mantener los datos de producto en WooCommerce.
 - [x] Crear en el entorno local la página editable `Nosotros` y asignar menús principal y de pie desde WordPress.
 - [ ] Definir con Frave el contenido de colecciones, novedades, ventajas verificables, recursos educativos y canales de contacto antes de añadir esos módulos y páginas.
+- [x] Documentar una estructura editorial inicial para páginas institucionales y los datos que Frave debe aportar antes de publicarlas.
 
 **Criterio de cierre:** el equipo de Frave puede actualizar textos, imágenes y secciones aprobadas desde WordPress sin alterar el layout; la identidad visual está aprobada en móvil y escritorio.
 
@@ -80,16 +81,23 @@ Objetivo: convertir la base funcional en una experiencia de marca completa y edi
 
 **Validación de esta iteración (2026-09-23):** lint de los 27 PHP del tema, `npm run build`, manifest con seis archivos presentes, portada HTTP 200 con ACF activo e inactivo, campos ACF cargados, página `Nosotros` visible, Lato servido por Vite con HTTP 200 y portada de producción cargando CSS/JS del manifest. Se inspeccionaron las secciones nuevas a 408px y 1440px; la revisión completa de compra y accesibilidad sigue pendiente.
 
+**Catálogo y compra (2026-09-26):** fichas locales de prueba simple, variable y agotada respondieron HTTP 200. En una sesión aislada se añadió un producto al carrito y se comprobaron el formulario del carrito y los campos del checkout sin enviar pedidos. WooCommerce tenía activo «Próximamente», que ocultaba el catálogo; se desactivó solo en la base local y se documentó en el README. La propuesta de categorías, los atributos y la plantilla se registran sin crear categorías ni productos reales. Los encabezados de la plantilla se contrastaron con el esquema del importador nativo de WooCommerce.
+
+**Revisión técnica (2026-09-26):** `npm.cmd run build` completado; lint de los 27 archivos PHP, sintaxis de los módulos JavaScript, rutas del manifest y paquete XLSX de la plantilla comprobados. La plantilla abre con una hoja y 46 encabezados reconocidos, sin filas de productos de ejemplo. `git diff --check` pasó. La revisión visual manual y el flujo completo de pedido siguen pendientes.
+
 ## Fase 3 — Experiencia de catálogo y compra
 
 Objetivo: facilitar la exploración de un catálogo real y mejorar los flujos de compra.
 
 - [ ] Revisar taxonomía, atributos, subcategorías, nombres y fichas de productos reales.
+- [x] Preparar una propuesta inicial de categorías y atributos, pendiente de validación con el inventario real.
+- [x] Crear una plantilla con los encabezados del importador CSV nativo de WooCommerce, sin filas de productos ficticias.
 - [ ] Diseñar filtros útiles según el catálogo; conservar URLs y consultas compatibles con WooCommerce.
 - [ ] Mejorar galería, selección de variaciones, información de stock y contenido de ficha según los tipos de producto reales.
 - [ ] Evaluar mini-carrito, cross-selling, productos relacionados y navegación ampliada; implementar solo donde reduzcan fricción.
 - [ ] Completar estados de carga, vacío y error para búsqueda, filtros, carrito y formularios.
 - [ ] Probar teclado, foco, lectores de pantalla y viewports pequeños en todos los flujos de compra.
+- [x] Validar con productos temporales las fichas simple, variable y agotada, añadir al carrito, carrito y formulario de checkout sin crear pedidos.
 
 **Criterio de cierre:** un cliente encuentra un producto, elige una variación válida, completa un pedido de prueba y consulta su estado desde la cuenta sin bloqueos en móvil ni escritorio.
 
