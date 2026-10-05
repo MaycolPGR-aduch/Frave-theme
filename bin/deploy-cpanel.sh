@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 # Deploy the committed theme (git archive, without export-ignore files) to the path
-# written in ~/.frave-deploy/frave-theme.path, keeping the previous version for rollback.
+# written in ~/.frave-deploy/<clone folder>.path, keeping the previous version for rollback.
 #
 #   bash bin/deploy-cpanel.sh              deploy HEAD
 #   bash bin/deploy-cpanel.sh --rollback   swap back to the previous version
 set -euo pipefail
 
-NAME="frave-theme"
+# One clone per environment: the clone folder names its settings, e.g. a clone in
+# ~/repositories/frave-theme-staging reads ~/.frave-deploy/frave-theme-staging.path.
+NAME="$(basename "$(git rev-parse --show-toplevel)")"
 REQUIRED_FILES=("style.css" "functions.php" "assets/dist/manifest.json")
 CONFIG_DIR="${FRAVE_DEPLOY_DIR:-$HOME/.frave-deploy}"
 PATH_FILE="$CONFIG_DIR/$NAME.path"
