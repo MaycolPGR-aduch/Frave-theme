@@ -96,9 +96,34 @@ function frave_catalog_price_bounds(): ?array {
  * Attribute counts start from the main tax query, so the stock filter is already included.
  * WooCommerce leaves out the price filter and the sale restriction is ours: add both, or
  * counts would promise products that the listing then hides.
+ *
+ * With the product attributes lookup table enabled, WooCommerce's count query also skips
+ * the other attributes chosen with the "or" query type (the panel's default), so those are
+ * added too. Without the lookup table they already come through the main tax query.
  */
 function frave_catalog_filter_counts_query( array $query ): array {
 	global $wpdb;
+
+	$lookup_table = $wpdb->prefix . 'wc_product_attributes_lookup';
+	if ( str_contains( (string) $query['from'], $lookup_table ) && preg_match( "/\.taxonomy='([^']+)'/", (string) $query['where'], $match ) ) {
+		foreach ( WC_Query::get_layered_nav_chosen_attributes() as $taxonomy => $data ) {
+			// The counted attribute stays open (its own options are alternatives); "and" ones WooCommerce handles.
+			if ( 'or' !== $data['query_type'] || sanitize_title( $taxonomy ) === $match[1] ) {
+				continue;
+			}
+			$term_ids = array();
+			foreach ( $data['terms'] as $slug ) {
+				$term = get_term_by( 'slug', $slug, $taxonomy );
+				if ( $term ) {
+					$term_ids[] = (int) $term->term_id;
+				}
+			}
+			if ( $term_ids ) {
+				$query['where'] .= " AND {$wpdb->posts}.ID IN ( SELECT product_or_parent_id FROM {$lookup_table} WHERE term_id IN (" . implode( ',', $term_ids ) . ') )';
+			}
+		}
+	}
+
 	if ( frave_catalog_on_sale_only() ) {
 		$ids             = frave_catalog_sale_ids();
 		$query['where'] .= $ids ? " AND {$wpdb->posts}.ID IN (" . implode( ',', $ids ) . ')' : ' AND 1=0';
