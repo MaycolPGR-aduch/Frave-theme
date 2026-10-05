@@ -10,7 +10,7 @@ get_header();
 			?>
 			<article <?php post_class( 'page-content' ); ?> id="post-<?php the_ID(); ?>">
 				<header class="page-header">
-					<p class="eyebrow"><?php esc_html_e( 'FRAVE', 'frave' ); ?></p>
+					<p class="eyebrow"><?php echo esc_html( frave_page_eyebrow() ); ?></p>
 					<h1><?php the_title(); ?></h1>
 				</header>
 				<div class="entry-content">

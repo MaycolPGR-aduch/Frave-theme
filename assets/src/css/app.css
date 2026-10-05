@@ -1317,6 +1317,26 @@
     border-bottom-color: #ece8e3;
   }
 
+  /* Section headings inside WooCommerce pages: the global h2 is sized for page sections. */
+  .woocommerce .cart_totals h2,
+  .woocommerce .cross-sells > h2,
+  .woocommerce .related > h2,
+  .woocommerce .upsells > h2,
+  .woocommerce #reviews h2,
+  .woocommerce-account .woocommerce h2,
+  .woocommerce-order-received .woocommerce h2,
+  .woocommerce .woocommerce-column__title,
+  .woocommerce .woocommerce-order-details__title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    letter-spacing: -0.015em;
+  }
+
+  .woocommerce div.product .woocommerce-tabs .panel {
+    margin-bottom: 2.5rem;
+  }
+
   .woocommerce .woocommerce-MyAccount-navigation ul {
     @apply m-0 list-none p-0;
   }
@@ -1324,6 +1344,14 @@
   .woocommerce .woocommerce-MyAccount-navigation li {
     padding: 0.75rem 0;
     border-bottom: 1px solid var(--color-line);
+  }
+
+  .woocommerce .woocommerce-MyAccount-navigation li a {
+    text-decoration: none;
+  }
+
+  .woocommerce .woocommerce-MyAccount-navigation li.is-active a {
+    font-weight: 700;
   }
 
   .site-footer {
@@ -2705,6 +2733,137 @@ html .woocommerce span.onsale {
   font-size: 0.75rem;
   font-weight: 700;
   line-height: 1;
+}
+
+/*
+ * WooCommerce page polish. Each rule repeats what the layered component already intends,
+ * one notch more specific and unlayered, because WooCommerce's own unlayered rules win
+ * over any layered rule (tab skin, olive stock and discount colours, 32px cart images,
+ * coupon field width, lilac payment box).
+ */
+.woocommerce div.product .woocommerce-tabs ul.tabs {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li,
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+  padding: 0.75rem 0;
+  border-bottom: 2px solid transparent;
+  color: var(--color-muted);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-ink);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover {
+  color: var(--color-ink);
+}
+
+.woocommerce div.product p.stock.in-stock,
+.woocommerce div.product .stock.in-stock {
+  color: var(--color-success);
+}
+
+.woocommerce div.product p.stock.out-of-stock,
+.woocommerce div.product .stock.out-of-stock {
+  color: var(--color-error);
+}
+
+.woocommerce div.product p.stock.available-on-backorder,
+.woocommerce div.product .stock.available-on-backorder {
+  color: var(--color-warning);
+}
+
+.woocommerce-cart .cart-collaterals .cart_totals .discount td,
+.woocommerce-checkout .cart-collaterals .cart_totals .discount td {
+  color: var(--color-success);
+}
+
+.woocommerce-cart table.cart td.product-thumbnail img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+  object-fit: cover;
+}
+
+.woocommerce-cart table.cart td.actions .coupon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.woocommerce-cart table.cart td.actions .coupon .input-text {
+  width: 12rem;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+}
+
+/* Account menu colours (the unlayered global link colour from theme.json would win). */
+.woocommerce .woocommerce-MyAccount-navigation li a {
+  color: var(--color-ink);
+}
+
+.woocommerce .woocommerce-MyAccount-navigation li a:hover,
+.woocommerce .woocommerce-MyAccount-navigation li.is-active a {
+  color: var(--color-primary);
+}
+
+/* Notice icons: WooCommerce paints them blue and lime; use the design system's states. */
+.woocommerce .woocommerce-info::before {
+  color: var(--color-primary);
+}
+
+.woocommerce .woocommerce-message::before {
+  color: var(--color-success);
+}
+
+.woocommerce .woocommerce-error::before {
+  color: var(--color-error);
+}
+
+html .woocommerce-checkout #payment {
+  border: 1px solid var(--color-line);
+  border-radius: 0.75rem;
+  background: var(--color-surface);
+}
+
+html .woocommerce-checkout #payment ul.payment_methods {
+  border-bottom-color: var(--color-line);
+}
+
+html .woocommerce-checkout #payment div.payment_box {
+  border-radius: 0.5rem;
+  background: #fff;
+  color: var(--color-ink);
+}
+
+html .woocommerce-checkout #payment div.payment_box::before {
+  border-bottom-color: #fff;
+}
+
+@media (max-width: 47.99rem) {
+  .woocommerce-cart table.cart td.actions .coupon .input-text {
+    flex: 1;
+    width: auto;
+  }
+
+  .woocommerce-account .woocommerce-MyAccount-navigation {
+    margin-bottom: 2rem;
+  }
 }
 
 /* Printing the claim confirmation (or any page) keeps only the content. */

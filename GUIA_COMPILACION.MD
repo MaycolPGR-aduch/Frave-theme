@@ -86,7 +86,7 @@ Después del build, usa `git status` para comprobar si cambiaron los archivos co
 `languages/frave.pot` recoge los textos traducibles del tema. Regénerala cuando añadas o cambies textos con funciones `__()`, `esc_html_e()` y similares. Desde `D:/Frave-web/.local-wordpress/`:
 
 ```powershell
-& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' wp-cli.phar --path=wordpress i18n make-pot ../frave ../frave/languages/frave.pot --domain=frave --exclude=node_modules,assets/dist,acf-json
+& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' wp-cli.phar --path=wordpress i18n make-pot ../frave ../frave/languages/frave.pot --domain=frave --exclude=node_modules,assets/dist,acf-json,vendor
 ```
 
 Los textos con marcadores (`%s`, `%d`) llevan un comentario `/* translators: … */` en la línea anterior. Los textos del menú móvil se pasan desde PHP con atributos `data-label-*`, así que también son traducibles.

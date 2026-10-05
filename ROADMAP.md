@@ -107,6 +107,8 @@ Objetivo: convertir la base funcional en una experiencia de marca completa y edi
 
 **Botones, rendimiento y tabla de atributos (2026-10-05):** en modo producción (`FRAVE_VITE_DEV` en `false`, restaurado después): CSS, JS y las dos fuentes con precarga responden 200, sin script de emojis. Botones del listado, ficha simple y variable (deshabilitada hasta elegir), carrito (cupón, actualizar, finalizar compra), checkout y cuenta: fondo oscuro y texto blanco; los enlaces-botón tenían el texto invisible por el color global de enlaces y se corrigió. Etiqueta de oferta naranja en listado y ficha. Mini-carrito sin cambios. Con la tabla de atributos de WooCommerce activada temporalmente, sus recuentos ignoraban los atributos elegidos con lógica «o»; se completó el filtro de recuentos y 7 combinaciones dan resultados idénticos con y sin la tabla.
 
+**Pulido visual WooCommerce (2026-10-05):** un barrido de capturas encontró los productos destacados de la portada sin estilos (las tarjetas dependen de un contenedor `.woocommerce` que la portada no tenía) y se corrigió. Revisados en escritorio y 390px: ficha simple y variable (pestañas planas, sin título duplicado, stock en verde), carrito lleno y vacío (miniatura de 4rem, campo de cupón legible, títulos a escala), checkout (bloque de pago en la paleta del tema), cuenta sin sesión y con sesión (menú con sección activa, separación en móvil), iconos de aviso según su estado y etiqueta superior «TU COMPRA», «TU PEDIDO», «TU CUENTA». Con enlaces permanentes simples WooCommerce no marca como activo el escritorio de la cuenta; con enlaces bonitos sí.
+
 ## Fase 3 — Experiencia de catálogo y compra
 
 Objetivo: facilitar la exploración de un catálogo real y mejorar los flujos de compra.
@@ -121,6 +123,7 @@ Objetivo: facilitar la exploración de un catálogo real y mejorar los flujos de
 - [ ] Crear los atributos globales reales (familia olfativa, presentación, etc.) al cargar el inventario definitivo, siguiendo `GUIA_CATALOGO.md`.
 - [x] Botones de WooCommerce con el estilo del tema en todo el sitio (listado, ficha, carrito, checkout, cuenta) y etiqueta «¡Oferta!» en el naranja accesible.
 - [x] Rendimiento: precarga de Lato (400 y 700) desde el manifest y sin el script de emojis de WordPress.
+- [x] Pulido visual de las páginas WooCommerce: destacados de la portada con el estilo de la tienda, pestañas de producto, stock, carrito (miniatura, cupón, totales), bloque de pago, cuenta (menú y títulos), iconos de avisos y etiqueta superior según la página.
 - [ ] Mejorar galería, selección de variaciones, información de stock y contenido de ficha según los tipos de producto reales.
 - [x] Mini-carrito lateral: se abre desde el icono del carrito y al añadir un producto (AJAX o formulario de la ficha), con eliminación por AJAX, foco retenido y sin JavaScript sigue enlazando al carrito.
 - [ ] Evaluar cross-selling, productos relacionados y navegación ampliada; implementar solo donde reduzcan fricción.

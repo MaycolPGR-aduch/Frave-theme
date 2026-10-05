@@ -86,3 +86,10 @@ function frave_cart_link_fragment( array $fragments ): array {
 	return $fragments;
 }
 add_filter( 'woocommerce_add_to_cart_fragments', 'frave_cart_link_fragment' );
+
+/**
+ * The product tabs already name their panel ("Descripción", "Información adicional"),
+ * so drop the repeated heading WooCommerce prints inside each panel.
+ */
+add_filter( 'woocommerce_product_description_heading', '__return_empty_string' );
+add_filter( 'woocommerce_product_additional_information_heading', '__return_empty_string' );

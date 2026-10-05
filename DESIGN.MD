@@ -92,5 +92,6 @@ La base incluye HTML semántico, enlace para saltar al contenido, estados `:focu
 | 2026-09-28 | Botones de WhatsApp en verde oscuro accesible; el flotante queda bajo el menú móvil (z-index 60) y en móvil muestra solo el icono. | Implementado |
 | 2026-09-28 | Mini-carrito lateral sobre el header (z-index 95, fondo 90) con «Finalizar compra» como acción principal y «Explorar productos» cuando está vacío. | Implementado |
 | 2026-10-05 | El tema añade la clase `woocommerce-block-theme-has-button-styles` al body para desactivar el estilo gris de botones de WooCommerce; todos los botones usan el estilo oscuro del tema con estados de carga y deshabilitado. Etiqueta «¡Oferta!» en `primary`. | Implementado |
+| 2026-10-05 | Páginas WooCommerce alineadas con el sistema: pestañas planas con subrayado `primary`, stock y descuentos con colores de estado, iconos de aviso por estado (info `primary`, éxito `success`, error `error`), títulos internos a 1,3–1,6rem y etiqueta superior según la página. | Implementado |
 
 Al aprobar una decisión visual, actualiza esta guía y los tokens correspondientes; compila los assets y comprueba portada, catálogo, producto, carrito y checkout en móvil y escritorio. Registra en la tabla qué cambió y por qué.

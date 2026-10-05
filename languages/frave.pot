@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-28T17:17:39+00:00\n"
+"POT-Creation-Date: 2026-10-05T15:36:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: frave\n"
@@ -54,39 +54,39 @@ msgstr ""
 msgid "Descubre Frave"
 msgstr ""
 
-#: footer.php:25
+#: footer.php:27
 msgid "Tu cuenta"
 msgstr ""
 
-#: footer.php:26
+#: footer.php:28
 msgid "Consulta tu cuenta y el estado de tus pedidos."
 msgstr ""
 
-#: footer.php:28
+#: footer.php:30
 msgid "Mi cuenta y pedidos"
 msgstr ""
 
-#: footer.php:33
+#: footer.php:35
 msgid "Escríbenos por WhatsApp"
 msgstr ""
 
-#: footer.php:34
+#: footer.php:36
 #: inc/contact.php:219
-#: page-templates/preguntas-frecuentes.php:40
+#: page-templates/preguntas-frecuentes.php:43
 #: template-parts/components/contact-channels.php:23
 msgid "(se abre en una nueva pestaña)"
 msgstr ""
 
-#: footer.php:41
-#: inc/institutional.php:213
+#: footer.php:43
+#: inc/institutional.php:227
 msgid "Libro de Reclamaciones"
 msgstr ""
 
-#: footer.php:47
+#: footer.php:49
 msgid "Todos los derechos reservados."
 msgstr ""
 
-#: footer.php:49
+#: footer.php:51
 msgid "Diseñado para acompañar tu creatividad."
 msgstr ""
 
@@ -116,68 +116,68 @@ msgid "Cerrar menú"
 msgstr ""
 
 #: header.php:31
-#: inc/setup.php:39
+#: inc/setup.php:46
 msgid "Navegación principal"
 msgstr ""
 
-#: header.php:44
+#: header.php:46
 #: template-parts/components-search.php:10
 msgid "Buscar productos"
 msgstr ""
 
-#: header.php:47
-#: inc/setup.php:62
+#: header.php:49
+#: inc/setup.php:70
 msgid "Mi cuenta"
 msgstr ""
 
 #. translators: 1: minimum price, 2: maximum price.
-#: inc/catalog-filters.php:354
+#: inc/catalog-filters.php:389
 #, php-format
 msgid "Precio: %1$s – %2$s"
 msgstr ""
 
 #. translators: %s: minimum price.
-#: inc/catalog-filters.php:357
+#: inc/catalog-filters.php:392
 #, php-format
 msgid "Precio: desde %s"
 msgstr ""
 
 #. translators: %s: maximum price.
-#: inc/catalog-filters.php:360
+#: inc/catalog-filters.php:395
 #, php-format
 msgid "Precio: hasta %s"
 msgstr ""
 
 #. translators: %d: number of stars.
-#: inc/catalog-filters.php:374
+#: inc/catalog-filters.php:414
 #, php-format
 msgid "Valoración: %d estrella"
 msgid_plural "Valoración: %d estrellas"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/catalog-filters.php:382
+#: inc/catalog-filters.php:422
 #: template-parts/catalog/filters.php:81
 msgid "Solo disponibles"
 msgstr ""
 
-#: inc/catalog-filters.php:388
+#: inc/catalog-filters.php:428
 #: template-parts/catalog/filters.php:84
 msgid "En oferta"
 msgstr ""
 
-#: inc/catalog-filters.php:434
-#: inc/catalog-filters.php:467
+#: inc/catalog-filters.php:474
+#: inc/catalog-filters.php:507
 msgid "producto"
 msgid_plural "productos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/catalog-filters.php:438
+#: inc/catalog-filters.php:478
 msgid "(filtro activo, pulsa para quitarlo)"
 msgstr ""
 
-#: inc/catalog-filters.php:522
+#: inc/catalog-filters.php:562
 msgid "Quitar todos los filtros"
 msgstr ""
 
@@ -269,8 +269,28 @@ msgstr ""
 msgid "Consultar por WhatsApp"
 msgstr ""
 
-#: inc/enqueue.php:57
+#: inc/enqueue.php:108
 msgid "Frave no encuentra los assets compilados. Ejecuta npm run build en la carpeta del tema."
+msgstr ""
+
+#: inc/helpers.php:41
+msgid "TU COMPRA"
+msgstr ""
+
+#: inc/helpers.php:44
+msgid "PEDIDO RECIBIDO"
+msgstr ""
+
+#: inc/helpers.php:44
+msgid "TU PEDIDO"
+msgstr ""
+
+#: inc/helpers.php:47
+msgid "TU CUENTA"
+msgstr ""
+
+#: inc/helpers.php:50
+msgid "FRAVE"
 msgstr ""
 
 #: inc/institutional.php:18
@@ -281,36 +301,36 @@ msgstr ""
 msgid "Frave: páginas institucionales"
 msgstr ""
 
-#: inc/institutional.php:98
+#: inc/institutional.php:101
 msgid "En esta página"
 msgstr ""
 
-#: inc/institutional.php:225
-#: inc/institutional.php:236
+#: inc/institutional.php:242
+#: inc/institutional.php:253
 msgid "Enlaces legales"
 msgstr ""
 
-#: inc/setup.php:40
+#: inc/setup.php:47
 msgid "Navegación del pie"
 msgstr ""
 
-#: inc/setup.php:59
+#: inc/setup.php:67
 msgid "Inicio"
 msgstr ""
 
-#: inc/setup.php:61
+#: inc/setup.php:69
 msgid "Tienda"
 msgstr ""
 
-#: page-templates/contacto.php:17
+#: page-templates/contacto.php:20
 msgid "CONTACTO"
 msgstr ""
 
-#: page-templates/contacto.php:29
+#: page-templates/contacto.php:32
 msgid "Escríbenos"
 msgstr ""
 
-#: page-templates/contacto.php:34
+#: page-templates/contacto.php:37
 msgid "Activa el plugin Frave Perú para mostrar el formulario de contacto."
 msgstr ""
 
@@ -318,22 +338,22 @@ msgstr ""
 msgid "Política o texto legal"
 msgstr ""
 
-#: page-templates/politica.php:17
+#: page-templates/politica.php:20
 msgid "INFORMACIÓN LEGAL"
 msgstr ""
 
 #. translators: %s: date the page was last modified.
-#: page-templates/politica.php:22
+#: page-templates/politica.php:25
 #, php-format
 msgid "Última actualización: %s"
 msgstr ""
 
 #. translators: %s: date the page was last modified.
-#: page-templates/politica.php:22
+#: page-templates/politica.php:25
 msgid "j \\d\\e F \\d\\e Y"
 msgstr ""
 
-#: page-templates/politica.php:32
+#: page-templates/politica.php:35
 msgid "Otras políticas"
 msgstr ""
 
@@ -341,29 +361,25 @@ msgstr ""
 msgid "Preguntas frecuentes"
 msgstr ""
 
-#: page-templates/preguntas-frecuentes.php:18
+#: page-templates/preguntas-frecuentes.php:21
 msgid "AYUDA"
 msgstr ""
 
-#: page-templates/preguntas-frecuentes.php:30
+#: page-templates/preguntas-frecuentes.php:33
 msgid "¿No encontraste tu respuesta?"
 msgstr ""
 
-#: page-templates/preguntas-frecuentes.php:31
+#: page-templates/preguntas-frecuentes.php:34
 msgid "Escríbenos y te ayudamos a elegir o a resolver tu consulta."
 msgstr ""
 
-#: page-templates/preguntas-frecuentes.php:34
+#: page-templates/preguntas-frecuentes.php:37
 msgid "Ir a contacto"
 msgstr ""
 
-#: page-templates/preguntas-frecuentes.php:39
+#: page-templates/preguntas-frecuentes.php:42
 #: template-parts/components/contact-channels.php:22
 msgid "Escribir por WhatsApp"
-msgstr ""
-
-#: page.php:10
-msgid "FRAVE"
 msgstr ""
 
 #: patterns/cambios-devoluciones.php
@@ -574,60 +590,60 @@ msgstr ""
 msgid "por WhatsApp (se abre en una nueva pestaña)"
 msgstr ""
 
-#: template-parts/sections/categories.php:24
+#: template-parts/sections/categories.php:26
 #: template-parts/sections/shop-cta.php:8
 msgid "EXPLORA FRAVE"
 msgstr ""
 
-#: template-parts/sections/categories.php:25
+#: template-parts/sections/categories.php:27
 msgid "Encuentra lo que imaginas"
 msgstr ""
 
-#: template-parts/sections/categories.php:27
+#: template-parts/sections/categories.php:29
 msgid "Ver toda la tienda"
 msgstr ""
 
-#: template-parts/sections/featured-products.php:36
+#: template-parts/sections/featured-products.php:49
 msgid "SELECCIÓN FRAVE"
 msgstr ""
 
-#: template-parts/sections/featured-products.php:37
+#: template-parts/sections/featured-products.php:50
 msgid "Inspírate para crear"
 msgstr ""
 
-#: template-parts/sections/featured-products.php:39
+#: template-parts/sections/featured-products.php:52
 msgid "Ver todos los productos"
 msgstr ""
 
-#: template-parts/sections/guide.php:4
+#: template-parts/sections/guide.php:5
 msgid "Explora aromas"
 msgstr ""
 
-#: template-parts/sections/guide.php:4
+#: template-parts/sections/guide.php:6
 msgid "Descubre fragancias y esencias para inspirar tu próxima idea."
 msgstr ""
 
-#: template-parts/sections/guide.php:5
+#: template-parts/sections/guide.php:9
 msgid "Elige insumos"
 msgstr ""
 
-#: template-parts/sections/guide.php:5
+#: template-parts/sections/guide.php:10
 msgid "Encuentra materias primas y complementos para tu proceso creativo."
 msgstr ""
 
-#: template-parts/sections/guide.php:6
+#: template-parts/sections/guide.php:13
 msgid "Crea a tu manera"
 msgstr ""
 
-#: template-parts/sections/guide.php:6
+#: template-parts/sections/guide.php:14
 msgid "Combina posibilidades y da forma a un proyecto propio."
 msgstr ""
 
-#: template-parts/sections/guide.php:13
+#: template-parts/sections/guide.php:22
 msgid "TU PROCESO CREATIVO"
 msgstr ""
 
-#: template-parts/sections/guide.php:14
+#: template-parts/sections/guide.php:23
 msgid "Cada creación empieza con una idea"
 msgstr ""
 
@@ -669,7 +685,7 @@ msgstr ""
 msgid "Explora fragancias, esencias e insumos para dar forma a tus ideas. Frave reúne opciones para quienes disfrutan crear y descubrir el mundo de la perfumería."
 msgstr ""
 
-#: template-parts/sections/story.php:29
+#: template-parts/sections/story.php:41
 msgid "Conoce Frave"
 msgstr ""
 
