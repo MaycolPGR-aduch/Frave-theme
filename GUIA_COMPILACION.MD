@@ -97,9 +97,27 @@ Los textos con marcadores (`%s`, `%d`) llevan un comentario `/* translators: …
 - [ ] Con `FRAVE_VITE_DEV` en `false` o sin definir, portada, tienda, producto, carrito y checkout cargan CSS y JS sin errores 404.
 - [ ] Los PHP modificados pasan `php -l` usando el ejecutable de PHP del entorno; la activación del tema no genera errores.
 - [ ] El menú móvil y el contador del carrito funcionan tras el cambio.
-- [ ] `assets/dist/` queda incluido en el commit y `node_modules/` permanece fuera de Git.
+- [ ] `assets/dist/` queda incluido en el commit y `node_modules/` y `vendor/` permanecen fuera de Git.
+- [ ] Los linters pasan (ver abajo).
 
-El proyecto aún no tiene un script de lint o una suite de pruebas automatizadas. Estas comprobaciones se realizan con PHP, build y recorridos funcionales; las ampliaciones se registran en [ROADMAP.md](ROADMAP.md).
+## Linters e integración continua
+
+La primera vez, instala las herramientas de PHP con Composer (Laragon lo incluye):
+
+```powershell
+& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' 'C:\laragon\bin\composer\composer.phar' install
+```
+
+Comprobaciones disponibles:
+
+| Comando | Qué revisa |
+| --- | --- |
+| `npm.cmd run lint:js` | ESLint sobre `assets/src/js` y los archivos de configuración. |
+| `vendor/bin/phpcs` (con el PHP de Laragon) | Estándar WordPress-Extra, dominio de traducción `frave`, prefijos y compatibilidad con PHP 8.1+. `vendor/bin/phpcbf` corrige el formato automáticamente. |
+
+GitHub Actions (`.github/workflows/ci.yml`) ejecuta en cada pull request y en cada push a `main`: `php -l` con PHP 8.1 y 8.3, PHPCS, ESLint, el build y una comprobación de que el `assets/dist/` del commit coincide con el código fuente. Si esa última falla, ejecuta `npm.cmd run build` y haz commit de `assets/dist/`.
+
+Aún no hay pruebas automatizadas de los recorridos (catálogo, carrito, checkout); se validan manualmente o con navegador sin interfaz y se registran en [ROADMAP.md](ROADMAP.md).
 
 ## Registro de cambios de la guía
 
@@ -108,3 +126,4 @@ El proyecto aún no tiene un script de lint o una suite de pruebas automatizadas
 | 2026-09-23 | Procedimiento inicial basado en Vite, Tailwind y el entorno local actual. |
 | 2026-09-23 | Se documenta el origen de assets en desarrollo tras corregir las peticiones 404 de Lato. |
 | 2026-09-28 | Se añade la generación de `languages/frave.pot` con WP-CLI. |
+| 2026-10-05 | Se añaden PHPCS, ESLint y el flujo de GitHub Actions. |
