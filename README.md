@@ -17,11 +17,12 @@ Tema clásico personalizado para Frave, una tienda de fragancias, esencias e ins
 ## Requisitos
 
 - WordPress 6.9 o superior (validado con 7.1.2).
-- PHP 8.3 o superior (validado con 8.3.30).
+- PHP 8.1 o superior (validado con 8.3.30; el código no usa sintaxis posterior a 8.1).
 - WooCommerce 10.8 o superior (flujo validado con 11.1.2).
 - Node.js 22.12 o superior y npm.
 - MySQL 8.0+ o MariaDB 10.6+.
 - Advanced Custom Fields gratuito es opcional (validado con 6.8.10); sin ACF, la portada utiliza contenido de respaldo.
+- Plugin **Frave Perú** (`D:/Frave-web/frave-peru/`, fuera de este repositorio) para pedir boleta o factura con DNI, CE, pasaporte o RUC en el checkout. Consulta su `README.md`.
 
 La recomendación sigue las versiones actuales de WooCommerce y Vite. Comprueba los requisitos del hosting antes de desplegar.
 
@@ -33,6 +34,18 @@ La recomendación sigue las versiones actuales de WooCommerce y Vite. Comprueba 
 4. Asigna una página estática como portada. Si deseas el enlace institucional de la portada, crea una página publicada con slug `nosotros`; su contenido se edita con el editor de WordPress. Asigna menús a **Navegación principal** y **Navegación del pie**.
 5. Completa los datos de tienda, moneda, envíos, impuestos y pagos en los ajustes de WooCommerce.
 6. En las páginas de carrito y checkout, selecciona las versiones clásicas de WooCommerce con `[woocommerce_cart]` y `[woocommerce_checkout]` si el asistente creó bloques. La cuenta usa `[woocommerce_my_account]`.
+7. Para las páginas de contacto, preguntas frecuentes y políticas, sigue [PLAN_CONTENIDO_INSTITUCIONAL.md](PLAN_CONTENIDO_INSTITUCIONAL.md): cada una usa una plantilla del tema y parte de un patrón de «Frave: páginas institucionales».
+8. Para los canales de contacto y WhatsApp, abre **Apariencia → Personalizar → Contacto** e introduce el número de WhatsApp Business de Frave (para un celular de Perú bastan los 9 dígitos; se añade el 51). Sin número no se muestra ningún botón.
+
+### Contacto por WhatsApp
+
+Con un número configurado, el tema muestra:
+
+- un **botón flotante** en todas las páginas excepto el checkout, donde taparía «Realizar pedido» en móvil. En móvil solo muestra el icono;
+- **«Consultar por WhatsApp»** en cada ficha de producto, bajo el botón de compra, con un mensaje que incluye el nombre y el enlace del producto;
+- un enlace **«Escríbenos por WhatsApp»** en el pie.
+
+El mensaje inicial general, el botón flotante y el de las fichas se ajustan en la misma sección del Personalizador. Los enlaces llevan `data-frave-whatsapp="floating|product|footer"` para medir clics cuando se configure analítica. El filtro `frave_show_whatsapp_floating` permite ocultar el botón flotante en otras páginas.
 
 La portada incluye hero, categorías y destacados de WooCommerce, presentación de Frave, guía de tres pasos y cierre hacia la tienda. Con ACF gratuito activo, edita los campos del grupo **Inicio Frave** en la página asignada como portada. Si ACF no está disponible, el tema muestra los textos de respaldo. Las imágenes comerciales deben subirse a la biblioteca de medios y a los productos; el tema no incluye fotografías de producto.
 
@@ -95,8 +108,8 @@ Para probar el build de producción, compila con `npm.cmd run build` y cambia `F
 
 Las imágenes, variaciones, precios y existencias se administran en WooCommerce. El tema define estilos y wrappers de presentación mediante soporte y hooks públicos. Si un override de plantilla resulta imprescindible en el futuro, registra en este README su motivo y la versión de plantilla de WooCommerce que cubre.
 
-Para las pruebas locales se cargaron productos simples, variables y agotados, un cupón de prueba, una zona de envío peruana de tarifa plana y un método manual de contra entrega. No introduzcas credenciales de pasarela real en el entorno de desarrollo. Antes de vender, configura y valida una pasarela real, impuestos, tarifas y políticas comerciales.
+Para las pruebas locales se cargaron productos simples, variables y agotados, cuatro categorías de muestra, un cupón de prueba, una zona de envío peruana de tarifa plana y un método manual de contra entrega. Los cinco productos publicados están rotulados `[MUESTRA]`, usan precios ficticios y no tienen fotografías comerciales. No migres esos datos de demostración a producción. No introduzcas credenciales de pasarela real en el entorno de desarrollo. Antes de vender, configura y valida una pasarela real, impuestos, tarifas y políticas comerciales.
 
 ## Preparación del catálogo
 
-La taxonomía propuesta todavía no está creada en WooCommerce. Revísala en [GUIA_CATALOGO.md](GUIA_CATALOGO.md) y confirma nombres, productos y atributos con el catálogo real antes de importarlos. Para preparar datos, abre `PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx`, completa la hoja **Importar a Woo** sin cambiar los nombres de las columnas y expórtala desde Excel o LibreOffice como **CSV UTF-8**. Sube el CSV desde **Productos → Todos los productos → Importar** y valida primero una muestra pequeña en la instalación local. Ajusta los encabezados de peso y dimensiones si la tienda de destino usa unidades distintas de kg y cm. No se incluyen filas de ejemplo para evitar crear productos ficticios.
+La taxonomía no está aprobada para producción. La base local contiene cuatro categorías y cinco productos publicados para revisar el diseño; los productos llevan `[MUESTRA]` en el nombre y sus descripciones aclaran que son ficticios. No migres esos datos al hosting. Revisa [GUIA_CATALOGO.md](GUIA_CATALOGO.md) y confirma categorías, productos y atributos con el catálogo real. Para preparar una importación real, abre `PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx`, completa la hoja **Importar a Woo** sin cambiar los nombres de las columnas y expórtala desde Excel o LibreOffice como **CSV UTF-8**. Sube el CSV desde **Productos → Todos los productos → Importar** y valida primero una muestra pequeña en la instalación local. Ajusta los encabezados de peso y dimensiones si la tienda de destino usa unidades distintas de kg y cm. La plantilla no incluye filas de ejemplo.

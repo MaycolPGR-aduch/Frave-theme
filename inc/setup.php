@@ -12,30 +12,41 @@ function frave_setup(): void {
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'responsive-embeds' );
 	add_theme_support( 'align-wide' );
-	add_theme_support( 'custom-logo', array(
-		'height'      => 96,
-		'width'       => 320,
-		'flex-height' => true,
-		'flex-width'  => true,
-	) );
+	add_theme_support(
+		'custom-logo',
+		array(
+			'height'      => 96,
+			'width'       => 320,
+			'flex-height' => true,
+			'flex-width'  => true,
+		)
+	);
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
-	add_theme_support( 'woocommerce', array(
-		'thumbnail_image_width' => 640,
-		'single_image_width'    => 900,
-		'product_grid'          => array(
-			'default_rows'    => 3,
-			'min_rows'        => 1,
-			'max_rows'        => 8,
-			'default_columns' => 3,
-			'min_columns'     => 2,
-			'max_columns'     => 4,
-		),
-	) );
+	add_theme_support(
+		'woocommerce',
+		array(
+			'thumbnail_image_width' => 640,
+			'single_image_width'    => 900,
+			'product_grid'          => array(
+				'default_rows'    => 3,
+				'min_rows'        => 1,
+				'max_rows'        => 8,
+				'default_columns' => 3,
+				'min_columns'     => 2,
+				'max_columns'     => 4,
+			),
+		)
+	);
+	add_theme_support( 'wc-product-gallery-zoom' );
+	add_theme_support( 'wc-product-gallery-lightbox' );
+	add_theme_support( 'wc-product-gallery-slider' );
 
-	register_nav_menus( array(
-		'primary' => __( 'Navegación principal', 'frave' ),
-		'footer'  => __( 'Navegación del pie', 'frave' ),
-	) );
+	register_nav_menus(
+		array(
+			'primary' => __( 'Navegación principal', 'frave' ),
+			'footer'  => __( 'Navegación del pie', 'frave' ),
+		)
+	);
 
 	add_image_size( 'frave-card', 720, 900, true );
 	add_image_size( 'frave-editorial', 1200, 850, true );

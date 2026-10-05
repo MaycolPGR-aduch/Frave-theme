@@ -38,13 +38,36 @@ function frave_loop_columns(): int {
 }
 add_filter( 'loop_shop_columns', 'frave_loop_columns' );
 
-/** Refresh the custom header count after classic cart updates, only on the cart page. */
+/**
+ * WooCommerce skips its own button skin (grey background, purple .alt) when the body has
+ * this class, which it normally adds for block themes that style buttons. The theme styles
+ * every WooCommerce button, so it opts out the same way instead of fighting the
+ * unlayered rules with !important.
+ */
+function frave_woocommerce_button_styles_class( array $classes ): array {
+	if ( class_exists( 'WooCommerce' ) && ! in_array( 'woocommerce-block-theme-has-button-styles', $classes, true ) ) {
+		$classes[] = 'woocommerce-block-theme-has-button-styles';
+	}
+	return $classes;
+}
+add_filter( 'body_class', 'frave_woocommerce_button_styles_class' );
+
+/**
+ * Refresh the header count and mini-cart on every page. With full-page caching the
+ * HTML may hold another visitor's cart; fragments replace it from the visitor's session
+ * (one request per session, then cached in sessionStorage).
+ */
 function frave_enqueue_cart_fragments(): void {
-	if ( class_exists( 'WooCommerce' ) && is_cart() ) {
+	if ( class_exists( 'WooCommerce' ) ) {
 		wp_enqueue_script( 'wc-cart-fragments' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'frave_enqueue_cart_fragments', 20 );
+
+/** The drawer duplicates the cart and checkout pages, so it is left out there. */
+function frave_show_mini_cart(): bool {
+	return class_exists( 'WooCommerce' ) && ! is_cart() && ! is_checkout();
+}
 
 /** Keep the custom header cart link in sync with WooCommerce AJAX fragments. */
 function frave_cart_link_fragment( array $fragments ): array {
@@ -63,3 +86,10 @@ function frave_cart_link_fragment( array $fragments ): array {
 	return $fragments;
 }
 add_filter( 'woocommerce_add_to_cart_fragments', 'frave_cart_link_fragment' );
+
+/**
+ * The product tabs already name their panel ("Descripción", "Información adicional"),
+ * so drop the repeated heading WooCommerce prints inside each panel.
+ */
+add_filter( 'woocommerce_product_description_heading', '__return_empty_string' );
+add_filter( 'woocommerce_product_additional_information_heading', '__return_empty_string' );

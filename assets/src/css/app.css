@@ -2,6 +2,7 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 @source "../../../**/*.php";
 @source "../js/**/*.js";
+@source not "../../../tests";
 
 @theme {
   --font-sans: "Lato", Arial, sans-serif;
@@ -20,6 +21,9 @@
   --color-warning: #9c6b1b;
   --color-error: #b42318;
   --color-white: #ffffff;
+  /* WhatsApp's dark green: 5:1 with white text (the light brand green is only 2:1). */
+  --color-whatsapp: #0f7d6f;
+  --color-whatsapp-dark: #075e54;
   --container-max: 80rem;
 }
 
@@ -957,6 +961,29 @@
     color: #fff;
   }
 
+  /*
+   * States WooCommerce stops drawing once the theme opts out of its button skin
+   * (body.woocommerce-block-theme-has-button-styles, see inc/woocommerce.php).
+   */
+  .woocommerce a.button.loading,
+  .woocommerce button.button.loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .woocommerce a.button.added::after {
+    content: "✓";
+    margin-left: 0.45rem;
+  }
+
+  .woocommerce a.button.disabled,
+  .woocommerce a.button:disabled,
+  .woocommerce button.button.disabled,
+  .woocommerce button.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   .single-product .woocommerce div.product form.cart .button,
   .woocommerce button.button.alt {
     background-color: var(--color-ink) !important;
@@ -1291,6 +1318,26 @@
     border-bottom-color: #ece8e3;
   }
 
+  /* Section headings inside WooCommerce pages: the global h2 is sized for page sections. */
+  .woocommerce .cart_totals h2,
+  .woocommerce .cross-sells > h2,
+  .woocommerce .related > h2,
+  .woocommerce .upsells > h2,
+  .woocommerce #reviews h2,
+  .woocommerce-account .woocommerce h2,
+  .woocommerce-order-received .woocommerce h2,
+  .woocommerce .woocommerce-column__title,
+  .woocommerce .woocommerce-order-details__title {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+    letter-spacing: -0.015em;
+  }
+
+  .woocommerce div.product .woocommerce-tabs .panel {
+    margin-bottom: 2.5rem;
+  }
+
   .woocommerce .woocommerce-MyAccount-navigation ul {
     @apply m-0 list-none p-0;
   }
@@ -1298,6 +1345,14 @@
   .woocommerce .woocommerce-MyAccount-navigation li {
     padding: 0.75rem 0;
     border-bottom: 1px solid var(--color-line);
+  }
+
+  .woocommerce .woocommerce-MyAccount-navigation li a {
+    text-decoration: none;
+  }
+
+  .woocommerce .woocommerce-MyAccount-navigation li.is-active a {
+    font-weight: 700;
   }
 
   .site-footer {
@@ -1393,6 +1448,1440 @@
   .woocommerce nav.woocommerce-pagination ul li a:hover {
     background: var(--color-brand-orange-dark);
     color: white;
+  }
+
+  /* Mini-cart drawer shell. Hidden without JS: the header link then opens the cart page. */
+  .mini-cart {
+    display: none;
+  }
+
+  html.js .mini-cart {
+    position: fixed;
+    z-index: 95; /* Above the sticky header (80). */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    width: min(100vw, 26rem);
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+    visibility: hidden;
+    transform: translateX(105%);
+    transition: transform 240ms ease, visibility 0s linear 240ms;
+  }
+
+  html.js .mini-cart.is-open {
+    visibility: visible;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  .mini-cart-backdrop {
+    position: fixed;
+    z-index: 90;
+    inset: 0;
+    background: rgb(32 35 41 / 45%);
+  }
+
+  .mini-cart-backdrop[hidden] {
+    display: none;
+  }
+
+  html.mini-cart-is-open {
+    overflow: hidden;
+  }
+
+  .mini-cart__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .mini-cart__title {
+    margin: 0;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+  }
+
+  .mini-cart__close {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+  }
+
+  .mini-cart__close:hover {
+    border-color: var(--color-ink);
+  }
+
+  .mini-cart__close svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 1.8;
+  }
+
+  /* Stays rendered while empty so screen readers announce the message when it is set. */
+  .mini-cart__status {
+    margin: 0;
+    padding: 0.75rem 1.5rem;
+    background: var(--color-surface);
+    color: var(--color-success);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .mini-cart__status:empty {
+    padding: 0;
+  }
+
+  .mini-cart__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem 1.5rem 1.5rem;
+  }
+
+  .mini-cart__empty-cta {
+    display: none;
+    margin: 1.25rem 0 0;
+  }
+
+  .mini-cart:has(.woocommerce-mini-cart__empty-message) .mini-cart__empty-cta {
+    display: block;
+  }
+
+  /* Catalog filters: sidebar from 64rem, drawer below (with JS), in flow without JS. */
+  .catalog-layout {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .catalog-layout__main {
+    min-width: 0;
+  }
+
+  .catalog-filters {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+  }
+
+  .catalog-filters__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .catalog-filters__heading {
+    margin: 0;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+
+  .catalog-filters__close,
+  .catalog-filters__footer,
+  .catalog-toolbar__filters {
+    display: none;
+  }
+
+  .catalog-filters__close {
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+  }
+
+  .catalog-filters__close svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 1.8;
+  }
+
+  .catalog-filter {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .catalog-filter__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    color: var(--color-ink);
+    font-size: 0.95rem;
+    font-weight: 700;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .catalog-filter__title::-webkit-details-marker {
+    display: none;
+  }
+
+  .catalog-filter__title::after {
+    content: "";
+    width: 0.55rem;
+    height: 0.55rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-25%) rotate(45deg);
+    transition: transform 160ms ease;
+  }
+
+  .catalog-filter[open] > .catalog-filter__title::after {
+    transform: translateY(25%) rotate(-135deg);
+  }
+
+  .catalog-filter__content {
+    padding-bottom: 1.1rem;
+  }
+
+  .catalog-categories {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .catalog-categories .catalog-categories {
+    margin-left: 0.9rem;
+    padding-left: 0.75rem;
+    border-left: 1px solid var(--color-line);
+  }
+
+  .catalog-categories__link {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+    color: var(--color-ink);
+    font-size: 0.93rem;
+  }
+
+  .catalog-categories__link:hover {
+    color: var(--color-primary);
+  }
+
+  .catalog-categories__link.is-current {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .catalog-categories__count,
+  .catalog-option__count {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  .catalog-options {
+    display: grid;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .catalog-option {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.4rem 0;
+    color: var(--color-ink);
+    font-size: 0.93rem;
+  }
+
+  .catalog-option__label {
+    flex: 1;
+  }
+
+  .catalog-option__box {
+    position: relative;
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 1.5px solid var(--color-muted);
+    border-radius: 0.3rem;
+    background: #fff;
+  }
+
+  .catalog-option:hover .catalog-option__box {
+    border-color: var(--color-ink);
+  }
+
+  .catalog-option.is-selected .catalog-option__box {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+  }
+
+  .catalog-option.is-selected .catalog-option__box::after {
+    content: "";
+    position: absolute;
+    top: 0.12rem;
+    left: 0.33rem;
+    width: 0.3rem;
+    height: 0.55rem;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(45deg);
+  }
+
+  .catalog-option.is-selected .catalog-option__label {
+    font-weight: 700;
+  }
+
+  .catalog-option.is-disabled {
+    color: var(--color-muted);
+  }
+
+  .catalog-price {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .catalog-price__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .catalog-price__field {
+    display: grid;
+    gap: 0.3rem;
+    margin: 0;
+  }
+
+  .catalog-price__field label {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .catalog-price__field input {
+    width: 100%;
+    min-height: 2.75rem;
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.5rem;
+    background: #fff;
+    color: var(--color-ink);
+  }
+
+  .catalog-price__submit {
+    min-height: 2.75rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-ink);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .catalog-price__submit:hover {
+    background: var(--color-surface);
+  }
+
+  .catalog-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .catalog-toolbar__filters {
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-ink);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .catalog-toolbar__filters svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-width: 1.8;
+  }
+
+  .catalog-toolbar__count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.4rem;
+    height: 1.4rem;
+    padding: 0 0.35rem;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.78rem;
+  }
+
+  .catalog-active-filters ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .catalog-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.25rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-size: 0.88rem;
+  }
+
+  .catalog-chip:hover {
+    border-color: var(--color-ink);
+  }
+
+  .catalog-chip__remove {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .catalog-active-filters__clear,
+  .catalog-filters__clear {
+    color: var(--color-primary);
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .catalog-no-results {
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .catalog-layout {
+      grid-template-columns: 15.5rem minmax(0, 1fr);
+      align-items: start;
+      gap: 3rem;
+    }
+
+    .catalog-filters {
+      position: sticky;
+      top: calc(var(--header-height) + 1.5rem);
+      max-height: calc(100vh - var(--header-height) - 3rem);
+      overflow-y: auto;
+      padding-right: 0.25rem;
+      scrollbar-width: thin;
+    }
+  }
+
+  @media (max-width: 63.99rem) {
+    .catalog-toolbar__filters {
+      display: none;
+    }
+
+    html.js .catalog-toolbar__filters {
+      display: inline-flex;
+    }
+
+    html.js .catalog-filters {
+      position: fixed;
+      z-index: 95;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: min(92vw, 24rem);
+      box-shadow: var(--shadow-soft);
+      visibility: hidden;
+      transform: translateX(-105%);
+      transition: transform 240ms ease, visibility 0s linear 240ms;
+    }
+
+    html.js .catalog-filters.is-open {
+      visibility: visible;
+      transform: none;
+      transition-delay: 0s;
+    }
+
+    html.js .catalog-filters__header {
+      padding: 1.1rem 1.25rem;
+    }
+
+    html.js .catalog-filters__close {
+      display: grid;
+    }
+
+    html.js .catalog-filters__body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 1.25rem;
+    }
+
+    html.js .catalog-filters__footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border-top: 1px solid var(--color-line);
+    }
+
+    /* Not a .button: WooCommerce's unlayered button.button rules would restyle it on shop pages. */
+    html.js .catalog-filters__results {
+      flex: 1;
+      min-height: 3rem;
+      padding: 0.75rem 1.25rem;
+      border: 0;
+      border-radius: 999px;
+      background: var(--color-primary);
+      color: #fff;
+      font-weight: 700;
+    }
+  }
+
+  .catalog-filters-backdrop {
+    position: fixed;
+    z-index: 90;
+    inset: 0;
+    background: rgb(32 35 41 / 45%);
+  }
+
+  .catalog-filters-backdrop[hidden] {
+    display: none;
+  }
+
+  html.catalog-filters-is-open {
+    overflow: hidden;
+  }
+
+  /* Institutional pages: contact, FAQ and legal texts. */
+  .contact-grid {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .contact-channels,
+  .contact-form-section {
+    padding: 1.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+  }
+
+  .contact-channels h2,
+  .contact-form-section h2,
+  .faq-help h2,
+  .legal-page__others h2 {
+    margin-bottom: 1rem;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+  }
+
+  .contact-channels__list {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+  }
+
+  .contact-channels__item dt {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .contact-channels__item dd {
+    margin: 0.2rem 0 0;
+    color: var(--color-ink);
+  }
+
+  .contact-channels__item dd a:not(.whatsapp-button) {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .contact-channels__empty,
+  .contact-channels__claims {
+    margin: 1.25rem 0 0;
+    color: var(--color-muted);
+    font-size: 0.92rem;
+  }
+
+  .contact-channels__claims a {
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .page-index {
+    margin: 0 0 2.5rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  .page-index__title {
+    margin-bottom: 0.6rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .page-index ol {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+
+  .page-index a {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--color-line);
+    text-underline-offset: 0.2em;
+  }
+
+  .page-index a:hover {
+    color: var(--color-primary);
+    text-decoration-color: currentColor;
+  }
+
+  .faq-page .entry-content h2,
+  .legal-page .entry-content h2 {
+    margin: 2.75rem 0 1rem;
+    font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+    letter-spacing: -0.02em;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+  }
+
+  .faq-page .wp-block-details {
+    margin: 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .faq-page .wp-block-details summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0;
+    color: var(--color-ink);
+    font-weight: 700;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .faq-page .wp-block-details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-page .wp-block-details summary::after {
+    content: "+";
+    flex: none;
+    color: var(--color-primary);
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .faq-page .wp-block-details[open] summary::after {
+    content: "−";
+  }
+
+  .faq-page .wp-block-details > :not(summary) {
+    margin: 0 0 1rem;
+  }
+
+  .faq-help {
+    margin-top: 3rem;
+    padding: 1.75rem;
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  .faq-help .button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .legal-page__updated {
+    margin: 0.75rem 0 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .legal-page__content {
+    max-width: 46rem;
+    line-height: 1.75;
+  }
+
+  .legal-page__others {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .legal-page__others ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .legal-page__others a {
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .legal-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 64rem) {
+    .contact-grid {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      align-items: start;
+    }
+  }
+
+  /* WhatsApp: floating button, product page button and footer link. */
+  .whatsapp-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    flex: none;
+    fill: currentColor;
+  }
+
+  .whatsapp-float {
+    position: fixed;
+    z-index: 60; /* Below the mobile menu backdrop (70) and drawer (80). */
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 3.5rem;
+    padding: 0 1.25rem 0 1rem;
+    border-radius: 999px;
+    background: var(--color-whatsapp);
+    box-shadow: 0 0.75rem 2rem rgb(32 35 41 / 22%);
+    color: #fff !important; /* The unlayered global link color from theme.json otherwise wins. */
+    font-size: 0.92rem;
+    font-weight: 700;
+    transition: background-color 160ms ease, transform 160ms ease;
+  }
+
+  .whatsapp-float:hover {
+    background: var(--color-whatsapp-dark);
+    transform: translateY(-2px);
+  }
+
+  .whatsapp-float:focus-visible {
+    outline-color: var(--color-ink);
+  }
+
+  /* Not a .button: WooCommerce's unlayered a.button rules would restyle it. */
+  .whatsapp-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.7rem 1.35rem;
+    border: 1px solid var(--color-whatsapp);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-whatsapp) !important; /* Unlayered global link color otherwise wins. */
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.2;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .whatsapp-button:hover {
+    background: var(--color-whatsapp);
+    color: #fff !important;
+  }
+
+  .product-whatsapp {
+    clear: both;
+    margin: 0 0 1.5rem;
+  }
+
+  .footer-whatsapp {
+    display: block;
+    margin-top: 0.65rem;
+  }
+
+  /* Libro de Reclamaciones: footer link and the form rendered by the frave-peru plugin. */
+  .claims-book-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.25rem;
+    padding: 0.55rem 0.9rem;
+    border: 1px solid rgb(255 255 255 / 40%);
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .claims-book-link svg {
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+  }
+
+  .frave-claims {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .frave-claims__provider {
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius-card);
+    background: var(--color-surface);
+  }
+
+  .frave-claims__provider dl {
+    display: grid;
+    gap: 0.5rem 1.5rem;
+    margin: 0 0 1rem;
+  }
+
+  .frave-claims__provider dt {
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .frave-claims__provider dd {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  .frave-claims__form {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .frave-claims__section {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 1.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+  }
+
+  .frave-claims__section > legend {
+    padding-inline: 0.5rem;
+    color: var(--color-ink);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .frave-claims__grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .frave-claims__field {
+    display: grid;
+    align-content: start; /* Keep inputs at their height when a sibling field has help text. */
+    gap: 0.35rem;
+    margin: 0;
+  }
+
+  .frave-claims__field label,
+  .frave-claims__choice legend {
+    color: var(--color-ink);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  .frave-claims__field input,
+  .frave-claims__field select,
+  .frave-claims__field textarea {
+    width: 100%;
+    min-height: 3rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.5rem;
+    background: #fff;
+    color: var(--color-ink);
+  }
+
+  .frave-claims__field textarea {
+    min-height: 8rem;
+    resize: vertical;
+  }
+
+  .frave-claims__required {
+    color: var(--color-brand-orange-dark);
+  }
+
+  .frave-claims__help {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+
+  .frave-claims__error {
+    color: var(--color-error);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .frave-claims .has-error input,
+  .frave-claims .has-error select,
+  .frave-claims .has-error textarea {
+    border-color: var(--color-error);
+  }
+
+  .frave-claims__choice {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .frave-claims__option {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+
+  .frave-claims__option:has(input:checked) {
+    border-color: var(--color-brand-orange-dark);
+    background: var(--color-surface);
+  }
+
+  .frave-claims__option input,
+  .frave-claims__checkbox input {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.25rem;
+    accent-color: var(--color-brand-orange-dark);
+  }
+
+  .frave-claims__option-description {
+    display: block;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+  }
+
+  .frave-claims__checkbox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
+    align-items: flex-start;
+    margin: 0;
+  }
+
+  .frave-claims__checkbox label {
+    flex: 1;
+    min-width: 12rem;
+  }
+
+  .frave-claims__checkbox .frave-claims__error {
+    flex-basis: 100%;
+  }
+
+  .frave-claims__notes {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+
+  .frave-claims__notice {
+    padding: 1.1rem 1.25rem;
+    border-left: 4px solid var(--color-success);
+    border-radius: 0.5rem;
+    background: var(--color-surface);
+    color: var(--color-ink);
+  }
+
+  .frave-claims__notice--error {
+    border-left-color: var(--color-error);
+  }
+
+  .frave-claims__notice h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+  }
+
+  .frave-claims__notice ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.1rem;
+  }
+
+  .frave-claims__actions {
+    margin: 0;
+  }
+
+  .frave-claim-sheet th,
+  .frave-claim-sheet td {
+    font-size: 0.92rem;
+  }
+
+  @media (min-width: 40rem) {
+    .frave-claims__provider dl,
+    .frave-claims__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .frave-claims__field--wide {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+/*
+ * Mini-cart contents rendered by WooCommerce (woocommerce_mini_cart()).
+ * Unlayered and scoped by ID on purpose: WooCommerce's unlayered rules for
+ * .woocommerce ul.cart_list and a.remove (with !important) apply on shop pages
+ * only, and would otherwise make the drawer look different from page to page.
+ */
+#mini-cart .woocommerce-mini-cart {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#mini-cart .woocommerce-mini-cart-item {
+  position: relative;
+  min-height: 6rem;
+  margin: 0;
+  padding: 1rem 2.5rem 1rem 5rem;
+  border-bottom: 1px solid var(--color-line);
+  list-style: none;
+}
+
+#mini-cart .woocommerce-mini-cart-item > a:not(.remove) {
+  display: block;
+  color: var(--color-ink);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+#mini-cart .woocommerce-mini-cart-item img {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  float: none;
+  width: 4rem;
+  height: 4rem;
+  margin: 0;
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+  box-shadow: none;
+  object-fit: cover;
+}
+
+#mini-cart .woocommerce-mini-cart-item .quantity {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+#mini-cart .woocommerce-mini-cart-item dl.variation {
+  margin: 0.35rem 0 0;
+  padding-left: 0.6rem;
+  border-left: 2px solid var(--color-line);
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+#mini-cart .woocommerce-mini-cart-item dl.variation dt,
+#mini-cart .woocommerce-mini-cart-item dl.variation dd,
+#mini-cart .woocommerce-mini-cart-item dl.variation p {
+  display: inline;
+  float: none;
+  margin: 0;
+  padding: 0;
+}
+
+#mini-cart .woocommerce-mini-cart-item a.remove {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+  left: auto;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted) !important;
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+#mini-cart .woocommerce-mini-cart-item a.remove:hover {
+  background: var(--color-error);
+  color: #fff !important;
+}
+
+#mini-cart .woocommerce-mini-cart__total {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0;
+  padding: 1.1rem 0;
+  border-top: 0;
+  color: var(--color-ink);
+  font-size: 1.05rem;
+}
+
+#mini-cart .woocommerce-mini-cart__buttons {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+#mini-cart .woocommerce-mini-cart__buttons a.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  margin: 0;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--color-ink);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-ink) !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+#mini-cart .woocommerce-mini-cart__buttons a.button:hover {
+  background: var(--color-surface);
+}
+
+/* Checkout is the main action: first and filled. */
+#mini-cart .woocommerce-mini-cart__buttons a.checkout {
+  order: -1;
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff !important;
+}
+
+#mini-cart .woocommerce-mini-cart__buttons a.checkout:hover {
+  box-shadow: 0 0.5rem 1.5rem rgb(252 76 2 / 20%);
+}
+
+#mini-cart .woocommerce-mini-cart__empty-message {
+  margin: 1rem 0 0;
+  color: var(--color-muted);
+}
+
+/*
+ * WooCommerce markup inside the catalog filters and toolbar (layered nav, rating filter,
+ * result count, sorting). Unlayered and scoped, like the mini-cart, because WooCommerce's
+ * unlayered floats, margins and the "chosen" icon would otherwise override the layer.
+ */
+#catalog-filters .woocommerce-widget-layered-nav-list,
+#catalog-filters .catalog-filter--rating ul {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+
+#catalog-filters .woocommerce-widget-layered-nav-list__item {
+  padding: 0;
+  list-style: none;
+}
+
+#catalog-filters .woocommerce-widget-layered-nav-list__item::before,
+#catalog-filters .woocommerce-widget-layered-nav-list__item::after,
+#catalog-filters .woocommerce-widget-layered-nav-list__item--chosen a::before {
+  content: none;
+}
+
+#catalog-filters .woocommerce-widget-layered-nav-list__item a,
+#catalog-filters .woocommerce-widget-layered-nav-list__item > span {
+  padding: 0.4rem 0;
+}
+
+#catalog-filters .wc-layered-nav-rating {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#catalog-filters .wc-layered-nav-rating a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+#catalog-filters .wc-layered-nav-rating.chosen a {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+#catalog-filters .wc-layered-nav-rating .star-rating {
+  float: none;
+  margin: 0;
+  color: var(--color-brand-orange-dark);
+}
+
+.catalog-toolbar .woocommerce-result-count,
+.catalog-toolbar .woocommerce-ordering {
+  float: none;
+  margin: 0;
+}
+
+.catalog-toolbar .woocommerce-result-count {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.catalog-toolbar .woocommerce-ordering {
+  margin-left: auto;
+}
+
+/*
+ * Link buttons ("Leer más", "Finalizar compra"…) on the theme's dark button background.
+ * The unlayered global link colour from theme.json would otherwise paint their text dark.
+ */
+.woocommerce a.button,
+.woocommerce a.button:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* WooCommerce's unlayered loop rule sets display: inline-block, which drops the flex centring. */
+.woocommerce ul.products li.product .button {
+  display: inline-flex;
+}
+
+/*
+ * Sale badge. WooCommerce's unlayered .woocommerce span.onsale (olive circle) would win over
+ * the layered component, so this unlayered rule is one element more specific.
+ */
+html .woocommerce span.onsale {
+  top: 0.75rem;
+  left: 0.75rem;
+  display: grid;
+  place-items: center;
+  min-width: 2rem;
+  min-height: 2rem;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/*
+ * WooCommerce page polish. Each rule repeats what the layered component already intends,
+ * one notch more specific and unlayered, because WooCommerce's own unlayered rules win
+ * over any layered rule (tab skin, olive stock and discount colours, 32px cart images,
+ * coupon field width, lilac payment box).
+ */
+.woocommerce div.product .woocommerce-tabs ul.tabs {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li,
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+  padding: 0.75rem 0;
+  border-bottom: 2px solid transparent;
+  color: var(--color-muted);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+  border-bottom-color: var(--color-primary);
+  color: var(--color-ink);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a:hover {
+  color: var(--color-ink);
+}
+
+.woocommerce div.product p.stock.in-stock,
+.woocommerce div.product .stock.in-stock {
+  color: var(--color-success);
+}
+
+.woocommerce div.product p.stock.out-of-stock,
+.woocommerce div.product .stock.out-of-stock {
+  color: var(--color-error);
+}
+
+.woocommerce div.product p.stock.available-on-backorder,
+.woocommerce div.product .stock.available-on-backorder {
+  color: var(--color-warning);
+}
+
+.woocommerce-cart .cart-collaterals .cart_totals .discount td,
+.woocommerce-checkout .cart-collaterals .cart_totals .discount td {
+  color: var(--color-success);
+}
+
+.woocommerce-cart table.cart td.product-thumbnail img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+  object-fit: cover;
+}
+
+.woocommerce-cart table.cart td.actions .coupon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.woocommerce-cart table.cart td.actions .coupon .input-text {
+  width: 12rem;
+  min-height: 2.75rem;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+}
+
+/* Account menu colours (the unlayered global link colour from theme.json would win). */
+.woocommerce .woocommerce-MyAccount-navigation li a {
+  color: var(--color-ink);
+}
+
+.woocommerce .woocommerce-MyAccount-navigation li a:hover,
+.woocommerce .woocommerce-MyAccount-navigation li.is-active a {
+  color: var(--color-primary);
+}
+
+/* Notice icons: WooCommerce paints them blue and lime; use the design system's states. */
+.woocommerce .woocommerce-info::before {
+  color: var(--color-primary);
+}
+
+.woocommerce .woocommerce-message::before {
+  color: var(--color-success);
+}
+
+.woocommerce .woocommerce-error::before {
+  color: var(--color-error);
+}
+
+html .woocommerce-checkout #payment {
+  border: 1px solid var(--color-line);
+  border-radius: 0.75rem;
+  background: var(--color-surface);
+}
+
+html .woocommerce-checkout #payment ul.payment_methods {
+  border-bottom-color: var(--color-line);
+}
+
+html .woocommerce-checkout #payment div.payment_box {
+  border-radius: 0.5rem;
+  background: #fff;
+  color: var(--color-ink);
+}
+
+html .woocommerce-checkout #payment div.payment_box::before {
+  border-bottom-color: #fff;
+}
+
+@media (max-width: 47.99rem) {
+  .woocommerce-cart table.cart td.actions .coupon .input-text {
+    flex: 1;
+    width: auto;
+  }
+
+  .woocommerce-account .woocommerce-MyAccount-navigation {
+    margin-bottom: 2rem;
+  }
+}
+
+/* Printing the claim confirmation (or any page) keeps only the content. */
+@media print {
+  .site-header,
+  .site-footer,
+  .search-strip,
+  .skip-link,
+  .mobile-menu-backdrop,
+  .mini-cart,
+  .mini-cart-backdrop,
+  .catalog-filters,
+  .catalog-filters-backdrop,
+  .catalog-toolbar,
+  .whatsapp-float,
+  .frave-claims__actions {
+    display: none !important;
   }
 }
 
@@ -1557,6 +3046,33 @@
 @media (max-width: 47.99rem) {
   :root {
     --site-gutter: 1.25rem;
+  }
+
+  /* Icon-only on phones; the label stays available to screen readers. */
+  .whatsapp-float {
+    width: 3.5rem;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .whatsapp-float .whatsapp-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .whatsapp-float__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  /* Room so the floating button never covers the last footer line. */
+  body:has(.whatsapp-float) .site-footer__bottom {
+    padding-bottom: 5.5rem;
   }
 
   .site-header__inner {

@@ -4,14 +4,17 @@ if ( ! class_exists( 'WooCommerce' ) ) {
 	return;
 }
 
-$categories = get_terms( array(
-	'taxonomy'   => 'product_cat',
-	'hide_empty' => true,
-	'parent'     => 0,
-	'number'     => 4,
-	'orderby'    => 'menu_order',
-	'order'      => 'ASC',
-) );
+$categories = get_terms(
+	array(
+		'taxonomy'   => 'product_cat',
+		'hide_empty' => true,
+		'parent'     => 0,
+		'exclude'    => array( absint( get_option( 'default_product_cat' ) ) ),
+		'number'     => 4,
+		'orderby'    => 'menu_order',
+		'order'      => 'ASC',
+	)
+);
 if ( is_wp_error( $categories ) || empty( $categories ) ) {
 	return;
 }

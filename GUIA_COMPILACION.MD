@@ -81,15 +81,55 @@ if ($fraveMissing) { throw "Faltan archivos del build: $($fraveMissing -join ', 
 
 Después del build, usa `git status` para comprobar si cambiaron los archivos compilados y versiona `assets/dist/` junto con el cambio de código. El servidor de producción sirve estos archivos directamente y no necesita Node.js, npm ni Tailwind.
 
+## Plantilla de traducción
+
+`languages/frave.pot` recoge los textos traducibles del tema. Regénerala cuando añadas o cambies textos con funciones `__()`, `esc_html_e()` y similares. Desde `D:/Frave-web/.local-wordpress/`:
+
+```powershell
+& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' wp-cli.phar --path=wordpress i18n make-pot ../frave ../frave/languages/frave.pot --domain=frave --exclude=node_modules,assets/dist,acf-json,vendor
+```
+
+Los textos con marcadores (`%s`, `%d`) llevan un comentario `/* translators: … */` en la línea anterior. Los textos del menú móvil se pasan desde PHP con atributos `data-label-*`, así que también son traducibles.
+
 ## Comprobación antes de entregar
 
 - [ ] `npm.cmd run build` termina sin errores y el manifest apunta a archivos existentes.
 - [ ] Con `FRAVE_VITE_DEV` en `false` o sin definir, portada, tienda, producto, carrito y checkout cargan CSS y JS sin errores 404.
 - [ ] Los PHP modificados pasan `php -l` usando el ejecutable de PHP del entorno; la activación del tema no genera errores.
 - [ ] El menú móvil y el contador del carrito funcionan tras el cambio.
-- [ ] `assets/dist/` queda incluido en el commit y `node_modules/` permanece fuera de Git.
+- [ ] `assets/dist/` queda incluido en el commit y `node_modules/` y `vendor/` permanecen fuera de Git.
+- [ ] Los linters pasan (ver abajo).
 
-El proyecto aún no tiene un script de lint o una suite de pruebas automatizadas. Estas comprobaciones se realizan con PHP, build y recorridos funcionales; las ampliaciones se registran en [ROADMAP.md](ROADMAP.md).
+## Linters e integración continua
+
+La primera vez, instala las herramientas de PHP con Composer (Laragon lo incluye):
+
+```powershell
+& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' 'C:\laragon\bin\composer\composer.phar' install
+```
+
+Comprobaciones disponibles:
+
+| Comando | Qué revisa |
+| --- | --- |
+| `npm.cmd run lint:js` | ESLint sobre `assets/src/js` y los archivos de configuración. |
+| `vendor/bin/phpcs` (con el PHP de Laragon) | Estándar WordPress-Extra, dominio de traducción `frave`, prefijos y compatibilidad con PHP 8.1+. `vendor/bin/phpcbf` corrige el formato automáticamente. |
+
+GitHub Actions (`.github/workflows/ci.yml`) ejecuta en cada pull request y en cada push a `main`: `php -l` con PHP 8.1 y 8.3, PHPCS, ESLint, el build y una comprobación de que el `assets/dist/` del commit coincide con el código fuente. Si esa última falla, ejecuta `npm.cmd run build` y haz commit de `assets/dist/`.
+
+## Pruebas de principio a fin (Playwright)
+
+`tests/e2e/` recorre la tienda como un cliente: portada, filtros del catálogo, mini-carrito (producto simple y variable), checkout con boleta y factura (validación de DNI y RUC y pedido real), Libro de Reclamaciones, formulario de contacto, 404 y, en un móvil emulado, menú, panel de filtros y ausencia de desbordamiento.
+
+**En local**, con MySQL, PHP y Vite en marcha y el WordPress de Laragon:
+
+```powershell
+npm.cmd run test:e2e
+```
+
+Usa el Chrome instalado (no descarga navegadores) y la URL `http://127.0.0.1:8080`; otra URL se indica con `FRAVE_E2E_URL`. Las pruebas encuentran productos y páginas navegando, así que funcionan con los datos de muestra locales. Crean pedidos y hojas de reclamación de prueba en la base local. La prueba de contacto se omite si la página Contacto no está publicada.
+
+**En CI**, el trabajo «E2E» crea con `@wordpress/env` (Docker) un WordPress efímero con la última versión de WooCommerce y el plugin `frave-peru`, carga una tienda mínima con `tests/e2e/fixtures/seed.php` y ejecuta las pruebas en Chromium. Falla también si el tema o el plugin escriben errores o avisos en el registro de PHP. Si falla, descarga el artefacto `playwright-report` del run para ver capturas y trazas. Con Docker instalado se puede reproducir en local: `npm.cmd run env:start`, `npm.cmd run env:seed` y `$env:FRAVE_E2E_URL='http://localhost:8888'; npm.cmd run test:e2e`.
 
 ## Registro de cambios de la guía
 
@@ -97,3 +137,6 @@ El proyecto aún no tiene un script de lint o una suite de pruebas automatizadas
 | --- | --- |
 | 2026-09-23 | Procedimiento inicial basado en Vite, Tailwind y el entorno local actual. |
 | 2026-09-23 | Se documenta el origen de assets en desarrollo tras corregir las peticiones 404 de Lato. |
+| 2026-09-28 | Se añade la generación de `languages/frave.pot` con WP-CLI. |
+| 2026-10-05 | Se añaden PHPCS, ESLint y el flujo de GitHub Actions. |
+| 2026-10-05 | Se añaden las pruebas de principio a fin con Playwright y el entorno efímero de CI con wp-env. |

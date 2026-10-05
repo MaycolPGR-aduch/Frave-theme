@@ -14,7 +14,8 @@ export function initializeNavigation() {
     const hidden = mobileViewport.matches && !open;
 
     toggle.setAttribute('aria-expanded', String(open));
-    if (toggleLabel) toggleLabel.textContent = open ? 'Cerrar menú' : 'Abrir menú';
+    const label = open ? toggle.dataset.labelClose : toggle.dataset.labelOpen;
+    if (toggleLabel && label) toggleLabel.textContent = label;
     navigation.classList.toggle('is-open', open);
     navigation.inert = hidden;
     navigation.setAttribute('aria-hidden', String(hidden));
@@ -64,7 +65,9 @@ export function initializeNavigation() {
       firstItem.focus();
     }
   });
-  window.addEventListener('resize', () => {
+  // Only react when the breakpoint is crossed: mobile browsers fire `resize`
+  // while scrolling as the address bar shows and hides.
+  mobileViewport.addEventListener('change', () => {
     const focusInMenu = navigation.contains(document.activeElement);
     setMenuState(false, focusInMenu && mobileViewport.matches);
   });

@@ -10,3 +10,7 @@ desktop.ini
 *.swp
 /.vscode/
 /.idea/
+/vendor/
+/playwright-report/
+/test-results/
+/blob-report/

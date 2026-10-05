@@ -1,6 +1,6 @@
 # Propuesta de catálogo de Frave
 
-Estado: borrador para validar con el inventario real. Esta guía no crea categorías ni atributos en WooCommerce.
+Estado: borrador para validar con el inventario real. La base local usa cuatro categorías y cinco productos de demostración; no representan el catálogo final. Solo en local existen los atributos globales de prueba «Familia olfativa» y «Presentación», creados por `seed-catalog-filters.php` para revisar los filtros; en producción no se han creado atributos ni aplicado una taxonomía.
 
 ## Categorías candidatas
 
@@ -28,6 +28,30 @@ Los atributos globales de WooCommerce deben ser reutilizables y consistentes en 
 | Uso o aplicación | Segmentar insumos | Incorporarlo solo si ayuda a encontrar productos y sus valores están definidos. |
 
 Para variaciones, cada producto padre debe declarar todos los valores disponibles. Cada fila de variación usa un único valor y referencia el SKU del padre. El nombre y valor del atributo deben coincidir exactamente. Un atributo global usa `Attribute N global = 1` cuando ya existe en WooCommerce; uno local usa `0`.
+
+## Filtros del catálogo
+
+La tienda, las categorías y la búsqueda de productos muestran un panel de filtros (barra lateral en escritorio y botón «Filtrar» con panel lateral en móvil y tablet). Casi todo aparece solo a partir de los datos de WooCommerce:
+
+| Filtro | De dónde sale | Qué hace falta |
+| --- | --- | --- |
+| Categorías | Categorías de producto | Nada: muestra las de primer nivel y despliega las subcategorías de la categoría abierta. Se ordenan como en **Productos → Categorías** (arrastrando). |
+| Precio | Precios de los productos | Nada: el rango sugerido se calcula con los productos de la vista actual. |
+| Solo disponibles | Estado de inventario | Se oculta si WooCommerce ya esconde los agotados (**Ajustes → Productos → Inventario**). |
+| En oferta | Precio rebajado | Aparece cuando algún producto tiene precio rebajado vigente. |
+| Un filtro por atributo | **Atributos globales** (**Productos → Atributos**) | Crear el atributo global, sus valores y asignarlos a los productos. Cada atributo aparece como una sección con casillas y recuentos cuando algún producto de la vista lo usa. |
+| Valoración | Reseñas aprobadas | Aparece cuando hay productos valorados. |
+
+Reglas para que los atributos funcionen como filtro:
+
+- Solo los **atributos globales** se pueden filtrar. Los atributos «personalizados» creados dentro de un producto (como el `Volumen` del producto variable de muestra) no aparecen en los filtros.
+- El orden de los valores se define en el atributo (orden personalizado arrastrando los términos). El orden de las secciones sigue el de **Productos → Atributos**.
+- Dentro de un mismo atributo, marcar varios valores muestra productos con **cualquiera** de ellos (p. ej., Cítrica o Floral). Entre atributos distintos se combinan (Cítrica **y** 50 ml).
+- Un atributo que solo sea informativo puede ocultarse de los filtros con el filtro de PHP `frave_catalog_filter_attributes`.
+
+Las URL usan los parámetros propios de WooCommerce (`filter_{atributo}`, `min_price`, `max_price`, `rating_filter`, `orderby`), más `filter_stock_status=instock` y `on_sale=1`. Las páginas filtradas se marcan `noindex, follow` para que los buscadores no indexen cada combinación.
+
+Para probar los filtros en local, `D:/Frave-web/.local-wordpress/seed-catalog-filters.php` crea los atributos candidatos «Familia olfativa» y «Presentación», una subcategoría «Esencias cítricas», una oferta y una reseña, todo sobre los productos `[MUESTRA]`. No lo ejecutes en producción.
 
 ## Datos que pertenecen a WooCommerce
 

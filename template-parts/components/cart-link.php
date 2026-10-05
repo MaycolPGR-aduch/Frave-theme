@@ -1,12 +1,17 @@
 <?php
 /** Accessible cart link, reused in the site header and WooCommerce fragments. */
 
-if ( ! defined( 'ABSPATH' ) || ! class_exists( 'WooCommerce' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+// Skip rendering without stopping the rest of the page.
+if ( ! class_exists( 'WooCommerce' ) ) {
+	return;
 }
 
 $cart_count = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
 $cart_label = sprintf(
+	/* translators: %d: number of products in the cart. */
 	_n( 'Carrito, %d producto', 'Carrito, %d productos', $cart_count, 'frave' ),
 	$cart_count
 );

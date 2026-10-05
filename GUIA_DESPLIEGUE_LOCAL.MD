@@ -26,7 +26,7 @@ En otro equipo, adapta rutas, versión de PHP y puerto de MySQL. No crees una se
 
 ## 1. Instalar herramientas
 
-Instala Git, Node.js 22.12 o superior y un entorno con PHP 8.3 o superior y MySQL 8.0 o superior. En Windows se utiliza [Laragon](https://laragon.org/download) para PHP y MySQL. Comprueba que las herramientas responden:
+Instala Git, Node.js 22.12 o superior y un entorno con PHP 8.1 o superior (este equipo usa 8.3) y MySQL 8.0 o superior. En Windows se utiliza [Laragon](https://laragon.org/download) para PHP y MySQL. Comprueba que las herramientas responden:
 
 ```powershell
 git --version

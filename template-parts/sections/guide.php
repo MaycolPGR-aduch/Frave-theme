@@ -1,9 +1,18 @@
 <?php
 /** Three editorial steps, independently editable with ACF Free. */
 $steps = array(
-	array( 'title' => __( 'Explora aromas', 'frave' ), 'text' => __( 'Descubre fragancias y esencias para inspirar tu próxima idea.', 'frave' ) ),
-	array( 'title' => __( 'Elige insumos', 'frave' ), 'text' => __( 'Encuentra materias primas y complementos para tu proceso creativo.', 'frave' ) ),
-	array( 'title' => __( 'Crea a tu manera', 'frave' ), 'text' => __( 'Combina posibilidades y da forma a un proyecto propio.', 'frave' ) ),
+	array(
+		'title' => __( 'Explora aromas', 'frave' ),
+		'text'  => __( 'Descubre fragancias y esencias para inspirar tu próxima idea.', 'frave' ),
+	),
+	array(
+		'title' => __( 'Elige insumos', 'frave' ),
+		'text'  => __( 'Encuentra materias primas y complementos para tu proceso creativo.', 'frave' ),
+	),
+	array(
+		'title' => __( 'Crea a tu manera', 'frave' ),
+		'text'  => __( 'Combina posibilidades y da forma a un proyecto propio.', 'frave' ),
+	),
 );
 ?>
 <section class="section guide-section" aria-labelledby="guide-heading">

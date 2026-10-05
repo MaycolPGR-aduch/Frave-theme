@@ -13,7 +13,7 @@
 <div class="site-shell">
 	<header class="site-header">
 		<div class="container site-header__inner">
-			<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
+			<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle data-label-open="<?php esc_attr_e( 'Abrir menú', 'frave' ); ?>" data-label-close="<?php esc_attr_e( 'Cerrar menú', 'frave' ); ?>">
 				<span class="menu-toggle__icon" aria-hidden="true"><span></span><span></span></span>
 				<span class="screen-reader-text" data-menu-toggle-label><?php esc_html_e( 'Abrir menú', 'frave' ); ?></span>
 			</button>
@@ -30,12 +30,14 @@
 
 			<nav class="primary-navigation" id="primary-navigation" aria-label="<?php esc_attr_e( 'Navegación principal', 'frave' ); ?>" data-primary-navigation>
 				<?php
-				wp_nav_menu( array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'menu_class'     => 'menu-list',
-					'fallback_cb'    => 'frave_primary_menu_fallback',
-				) );
+				wp_nav_menu(
+					array(
+						'theme_location' => 'primary',
+						'container'      => false,
+						'menu_class'     => 'menu-list',
+						'fallback_cb'    => 'frave_primary_menu_fallback',
+					)
+				);
 				?>
 			</nav>
 

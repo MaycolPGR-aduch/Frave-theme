@@ -4,21 +4,39 @@ if ( ! class_exists( 'WooCommerce' ) ) {
 	return;
 }
 
-$products = wc_get_products( array(
-	'status'  => 'publish',
-	'limit'   => 4,
-	'featured' => true,
-	'orderby' => 'menu_order',
-	'order'   => 'DESC',
-) );
+// Respect catalog visibility and the "hide out of stock items" setting, as the shop does.
+$query_args = array(
+	'status'     => 'publish',
+	'limit'      => 4,
+	'visibility' => 'catalog',
+);
+if ( 'yes' === get_option( 'woocommerce_hide_out_of_stock_items' ) ) {
+	$query_args['stock_status'] = 'instock';
+}
+
+$products = wc_get_products(
+	array_merge(
+		$query_args,
+		array(
+			'featured' => true,
+			'orderby'  => array(
+				'menu_order' => 'ASC',
+				'date'       => 'DESC',
+			),
+		)
+	)
+);
 
 if ( empty( $products ) ) {
-	$products = wc_get_products( array(
-		'status'  => 'publish',
-		'limit'   => 4,
-		'orderby' => 'date',
-		'order'   => 'DESC',
-	) );
+	$products = wc_get_products(
+		array_merge(
+			$query_args,
+			array(
+				'orderby' => 'date',
+				'order'   => 'DESC',
+			)
+		)
+	);
 }
 if ( empty( $products ) ) {
 	return;
@@ -33,6 +51,8 @@ if ( empty( $products ) ) {
 			</div>
 			<a class="text-link" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>"><?php esc_html_e( 'Ver todos los productos', 'frave' ); ?><span aria-hidden="true">&rarr;</span></a>
 		</div>
+		<?php // Product cards are styled under .woocommerce, as WooCommerce's own [products] shortcode wraps them. ?>
+		<div class="woocommerce">
 		<ul class="products frave-products" data-reveal-group>
 			<?php
 			$original_product = isset( $GLOBALS['product'] ) ? $GLOBALS['product'] : null;
@@ -41,7 +61,8 @@ if ( empty( $products ) ) {
 				if ( ! $featured_post instanceof WP_Post ) {
 					continue;
 				}
-				$GLOBALS['post']    = $featured_post;
+				// WooCommerce's product template reads the global post and product; restored after the loop.
+				$GLOBALS['post']    = $featured_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				$GLOBALS['product'] = $featured_product;
 				setup_postdata( $featured_post );
 				wc_get_template_part( 'content', 'product' );
@@ -50,5 +71,6 @@ if ( empty( $products ) ) {
 			$GLOBALS['product'] = $original_product;
 			?>
 		</ul>
+		</div>
 	</div>
 </section>
