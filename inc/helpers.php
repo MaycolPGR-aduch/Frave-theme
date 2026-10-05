@@ -22,12 +22,12 @@ function frave_asset_url( string $path ): string {
 }
 
 /** Render a reusable button with an optional URL. */
-function frave_button( string $label, string $url, string $class = 'button button--primary' ): void {
+function frave_button( string $label, string $url, string $classes = 'button button--primary' ): void {
 	if ( '' === $label || '' === $url ) {
 		return;
 	}
 	?>
-	<a class="<?php echo esc_attr( $class ); ?>" href="<?php echo esc_url( $url ); ?>">
+	<a class="<?php echo esc_attr( $classes ); ?>" href="<?php echo esc_url( $url ); ?>">
 		<?php echo esc_html( $label ); ?>
 		<span aria-hidden="true">&rarr;</span>
 	</a>

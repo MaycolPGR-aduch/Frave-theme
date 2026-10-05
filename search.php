@@ -13,10 +13,13 @@ get_header();
 		</header>
 		<?php if ( have_posts() ) : ?>
 			<div class="post-list">
-				<?php while ( have_posts() ) : the_post(); ?>
-					<?php $result_type = get_post_type_object( get_post_type() ); ?>
+				<?php
+				while ( have_posts() ) :
+					the_post();
+					?>
+					<?php $frave_result_type = get_post_type_object( get_post_type() ); ?>
 					<article <?php post_class( 'post-card' ); ?> id="post-<?php the_ID(); ?>">
-						<p class="eyebrow"><?php echo esc_html( $result_type ? $result_type->labels->singular_name : '' ); ?></p>
+						<p class="eyebrow"><?php echo esc_html( $frave_result_type ? $frave_result_type->labels->singular_name : '' ); ?></p>
 						<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 						<div class="post-card__excerpt"><?php the_excerpt(); ?></div>
 					</article>

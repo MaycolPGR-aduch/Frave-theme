@@ -56,7 +56,10 @@ function frave_page_sections( WP_Post $post ): array {
 					if ( '' === $anchor ) {
 						$anchor = frave_heading_anchor( $text, $used );
 					}
-					$sections[] = array( 'text' => $text, 'anchor' => $anchor );
+					$sections[] = array(
+						'text'   => $text,
+						'anchor' => $anchor,
+					);
 				}
 			}
 			if ( ! empty( $block['innerBlocks'] ) ) {
@@ -121,7 +124,10 @@ function frave_faq_items( WP_Post $post ): array {
 				$question = preg_match( '#<summary[^>]*>(.*?)</summary>#s', $block['innerHTML'], $match ) ? trim( wp_strip_all_tags( $match[1] ) ) : '';
 				$answer   = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( implode( ' ', array_map( 'render_block', $block['innerBlocks'] ) ) ) ) );
 				if ( '' !== $question && '' !== $answer ) {
-					$items[] = array( 'question' => $question, 'answer' => $answer );
+					$items[] = array(
+						'question' => $question,
+						'answer'   => $answer,
+					);
 				}
 			} elseif ( ! empty( $block['innerBlocks'] ) ) {
 				$walk( $block['innerBlocks'] );
@@ -151,7 +157,10 @@ function frave_faq_structured_data(): void {
 				static fn( $item ) => array(
 					'@type'          => 'Question',
 					'name'           => $item['question'],
-					'acceptedAnswer' => array( '@type' => 'Answer', 'text' => $item['answer'] ),
+					'acceptedAnswer' => array(
+						'@type' => 'Answer',
+						'text'  => $item['answer'],
+					),
 				),
 				$items
 			)
@@ -183,7 +192,7 @@ function frave_page_with_template( string $template ): ?WP_Post {
  * @return array<int, array{title: string, url: string, id: int}>
  */
 function frave_legal_links(): array {
-	$ids = array_filter(
+	$ids       = array_filter(
 		array(
 			(int) get_option( 'wp_page_for_privacy_policy' ),
 			function_exists( 'wc_terms_and_conditions_page_id' ) ? (int) wc_terms_and_conditions_page_id() : 0,
@@ -197,7 +206,7 @@ function frave_legal_links(): array {
 			'sort_column' => 'menu_order,post_title',
 		)
 	);
-	$pages = array_filter(
+	$pages     = array_filter(
 		array_map( 'get_post', array_unique( array_merge( $ids, wp_list_pluck( $templated, 'ID' ) ) ) ),
 		static fn( $page ) => $page instanceof WP_Post && 'publish' === $page->post_status
 	);
@@ -206,11 +215,19 @@ function frave_legal_links(): array {
 
 	$links = array();
 	foreach ( $pages as $page ) {
-		$links[] = array( 'title' => get_the_title( $page ), 'url' => (string) get_permalink( $page ), 'id' => (int) $page->ID );
+		$links[] = array(
+			'title' => get_the_title( $page ),
+			'url'   => (string) get_permalink( $page ),
+			'id'    => (int) $page->ID,
+		);
 	}
 	$claims = function_exists( 'frave_peru_claims_page_url' ) ? frave_peru_claims_page_url() : '';
 	if ( $claims ) {
-		$links[] = array( 'title' => __( 'Libro de Reclamaciones', 'frave' ), 'url' => $claims, 'id' => 0 );
+		$links[] = array(
+			'title' => __( 'Libro de Reclamaciones', 'frave' ),
+			'url'   => $claims,
+			'id'    => 0,
+		);
 	}
 	return $links;
 }
@@ -220,11 +237,11 @@ function frave_legal_menu(): void {
 	if ( has_nav_menu( 'legal' ) ) {
 		wp_nav_menu(
 			array(
-				'theme_location' => 'legal',
+				'theme_location'       => 'legal',
 				'container'            => 'nav',
 				'container_aria_label' => __( 'Enlaces legales', 'frave' ),
-				'menu_class'     => 'legal-menu',
-				'depth'          => 1,
+				'menu_class'           => 'legal-menu',
+				'depth'                => 1,
 			)
 		);
 		return;

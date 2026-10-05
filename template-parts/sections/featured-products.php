@@ -14,16 +14,29 @@ if ( 'yes' === get_option( 'woocommerce_hide_out_of_stock_items' ) ) {
 	$query_args['stock_status'] = 'instock';
 }
 
-$products = wc_get_products( array_merge( $query_args, array(
-	'featured' => true,
-	'orderby'  => array( 'menu_order' => 'ASC', 'date' => 'DESC' ),
-) ) );
+$products = wc_get_products(
+	array_merge(
+		$query_args,
+		array(
+			'featured' => true,
+			'orderby'  => array(
+				'menu_order' => 'ASC',
+				'date'       => 'DESC',
+			),
+		)
+	)
+);
 
 if ( empty( $products ) ) {
-	$products = wc_get_products( array_merge( $query_args, array(
-		'orderby' => 'date',
-		'order'   => 'DESC',
-	) ) );
+	$products = wc_get_products(
+		array_merge(
+			$query_args,
+			array(
+				'orderby' => 'date',
+				'order'   => 'DESC',
+			)
+		)
+	);
 }
 if ( empty( $products ) ) {
 	return;
@@ -46,7 +59,8 @@ if ( empty( $products ) ) {
 				if ( ! $featured_post instanceof WP_Post ) {
 					continue;
 				}
-				$GLOBALS['post']    = $featured_post;
+				// WooCommerce's product template reads the global post and product; restored after the loop.
+				$GLOBALS['post']    = $featured_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 				$GLOBALS['product'] = $featured_product;
 				setup_postdata( $featured_post );
 				wc_get_template_part( 'content', 'product' );

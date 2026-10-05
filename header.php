@@ -30,12 +30,14 @@
 
 			<nav class="primary-navigation" id="primary-navigation" aria-label="<?php esc_attr_e( 'Navegación principal', 'frave' ); ?>" data-primary-navigation>
 				<?php
-				wp_nav_menu( array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'menu_class'     => 'menu-list',
-					'fallback_cb'    => 'frave_primary_menu_fallback',
-				) );
+				wp_nav_menu(
+					array(
+						'theme_location' => 'primary',
+						'container'      => false,
+						'menu_class'     => 'menu-list',
+						'fallback_cb'    => 'frave_primary_menu_fallback',
+					)
+				);
 				?>
 			</nav>
 

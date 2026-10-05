@@ -1,21 +1,21 @@
 <?php
 /** Homepage hero with editable ACF fields and safe defaults. */
-$eyebrow   = frave_field( 'frave_hero_eyebrow', __( 'FRAGANCIAS Y ENVASES', 'frave' ) );
-$title     = frave_field( 'frave_hero_title', __( "El arte de crear\ntu propia esencia", 'frave' ) );
-$copy      = frave_field( 'frave_hero_text', __( 'Encuentra fragancias, esencias e insumos seleccionados para crear con intención.', 'frave' ) );
-$image     = frave_field( 'frave_hero_image' );
-$button    = frave_field( 'frave_hero_cta_label', __( 'Explorar productos', 'frave' ) );
-$shop_url  = class_exists( 'WooCommerce' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
+$eyebrow    = frave_field( 'frave_hero_eyebrow', __( 'FRAGANCIAS Y ENVASES', 'frave' ) );
+$heading    = frave_field( 'frave_hero_title', __( "El arte de crear\ntu propia esencia", 'frave' ) );
+$copy       = frave_field( 'frave_hero_text', __( 'Encuentra fragancias, esencias e insumos seleccionados para crear con intención.', 'frave' ) );
+$image      = frave_field( 'frave_hero_image' );
+$button     = frave_field( 'frave_hero_cta_label', __( 'Explorar productos', 'frave' ) );
+$shop_url   = class_exists( 'WooCommerce' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
 $button_url = frave_field( 'frave_hero_cta_url', $shop_url );
-$image_id  = is_array( $image ) ? absint( $image['ID'] ?? 0 ) : ( is_numeric( $image ) ? absint( $image ) : 0 );
-$image_url = $image_id ? wp_get_attachment_image_url( $image_id, 'frave-editorial' ) : ( is_array( $image ) ? ( $image['url'] ?? '' ) : '' );
-$image_alt = is_array( $image ) ? ( $image['alt'] ?? '' ) : '';
+$image_id   = is_array( $image ) ? absint( $image['ID'] ?? 0 ) : ( is_numeric( $image ) ? absint( $image ) : 0 );
+$image_url  = $image_id ? wp_get_attachment_image_url( $image_id, 'frave-editorial' ) : ( is_array( $image ) ? ( $image['url'] ?? '' ) : '' );
+$image_alt  = is_array( $image ) ? ( $image['alt'] ?? '' ) : '';
 ?>
 <section class="hero" aria-labelledby="hero-title">
 	<div class="container hero__inner">
 		<div class="hero__copy">
 			<p class="eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
-			<h1 id="hero-title"><?php echo nl2br( esc_html( $title ), false ); ?></h1>
+			<h1 id="hero-title"><?php echo nl2br( esc_html( $heading ), false ); ?></h1>
 			<p class="hero__description"><?php echo nl2br( esc_html( wp_strip_all_tags( (string) $copy ) ), false ); ?></p>
 			<?php frave_button( (string) $button, (string) $button_url ); ?>
 		</div>

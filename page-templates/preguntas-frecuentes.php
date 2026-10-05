@@ -12,7 +12,10 @@ get_header();
 ?>
 <main id="primary" class="site-main section">
 	<div class="container content-container">
-		<?php while ( have_posts() ) : the_post(); ?>
+		<?php
+		while ( have_posts() ) :
+			the_post();
+			?>
 			<article <?php post_class( 'page-content faq-page' ); ?> id="post-<?php the_ID(); ?>">
 				<header class="page-header">
 					<p class="eyebrow"><?php esc_html_e( 'AYUDA', 'frave' ); ?></p>

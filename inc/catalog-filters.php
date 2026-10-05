@@ -79,13 +79,17 @@ function frave_catalog_price_bounds(): ?array {
 	$max = isset( $args['max_price'] ) ? (float) $args['max_price'] : (float) PHP_INT_MAX;
 
 	if ( wc_tax_enabled() && 'incl' === get_option( 'woocommerce_tax_display_shop' ) && ! wc_prices_include_tax() ) {
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce's own hook, applied as its price filter does.
 		$rates = WC_Tax::get_rates( apply_filters( 'woocommerce_price_filter_widget_tax_class', '' ) );
 		if ( $rates ) {
 			$min -= WC_Tax::get_tax_total( WC_Tax::calc_inclusive_tax( $min, $rates ) );
 			$max -= WC_Tax::get_tax_total( WC_Tax::calc_inclusive_tax( $max, $rates ) );
 		}
 	}
-	return array( 'min' => $min, 'max' => $max );
+	return array(
+		'min' => $min,
+		'max' => $max,
+	);
 }
 
 /**
@@ -200,9 +204,15 @@ function frave_catalog_normalize_price_args(): void {
 	}
 
 	$clean = static fn( $value ) => null === $value || '' === $value || ! is_numeric( $value ) ? null : (string) max( 0, (float) $value );
-	$new   = array( 'min_price' => $clean( $min ), 'max_price' => $clean( $max ) );
+	$new   = array(
+		'min_price' => $clean( $min ),
+		'max_price' => $clean( $max ),
+	);
 	if ( null !== $new['min_price'] && null !== $new['max_price'] && (float) $new['min_price'] > (float) $new['max_price'] ) {
-		$new = array( 'min_price' => $new['max_price'], 'max_price' => $new['min_price'] );
+		$new = array(
+			'min_price' => $new['max_price'],
+			'max_price' => $new['min_price'],
+		);
 	}
 
 	if ( $new['min_price'] !== $min || $new['max_price'] !== $max ) {
@@ -287,7 +297,7 @@ function frave_catalog_price_range(): ?array {
  *
  * @return array<int, array{term: WP_Term, current: bool, children: array}>
  */
-function frave_catalog_category_tree( int $parent = 0 ): array {
+function frave_catalog_category_tree( int $parent_id = 0 ): array {
 	$current   = is_product_category() ? get_queried_object() : null;
 	$current   = $current instanceof WP_Term ? $current : null;
 	$ancestors = $current ? array_merge( array( $current->term_id ), get_ancestors( $current->term_id, 'product_cat', 'taxonomy' ) ) : array();
@@ -295,7 +305,7 @@ function frave_catalog_category_tree( int $parent = 0 ): array {
 	$terms = get_terms(
 		array(
 			'taxonomy'   => 'product_cat',
-			'parent'     => $parent,
+			'parent'     => $parent_id,
 			'hide_empty' => true,
 			'exclude'    => array( absint( get_option( 'default_product_cat' ) ) ),
 			'orderby'    => 'menu_order',
@@ -361,7 +371,12 @@ function frave_catalog_active_filters(): array {
 		}
 		$filters[] = array(
 			'label' => $label,
-			'url'   => frave_catalog_url( array( 'min_price' => null, 'max_price' => null ) ),
+			'url'   => frave_catalog_url(
+				array(
+					'min_price' => null,
+					'max_price' => null,
+				)
+			),
 		);
 	}
 

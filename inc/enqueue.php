@@ -20,6 +20,7 @@ function frave_enqueue_theme_assets(): void {
 		return;
 	}
 
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local file in the theme, not a remote URL.
 	$manifest = json_decode( (string) file_get_contents( $manifest_path ), true );
 	$entry    = is_array( $manifest ) ? ( $manifest['assets/src/js/app.js'] ?? null ) : null;
 	if ( ! is_array( $entry ) || empty( $entry['file'] ) ) {

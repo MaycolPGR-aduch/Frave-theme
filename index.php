@@ -6,7 +6,10 @@ get_header();
 	<div class="container content-container">
 		<?php if ( have_posts() ) : ?>
 			<div class="post-list">
-				<?php while ( have_posts() ) : the_post(); ?>
+				<?php
+				while ( have_posts() ) :
+					the_post();
+					?>
 					<article <?php post_class( 'post-card' ); ?> id="post-<?php the_ID(); ?>">
 						<?php if ( has_post_thumbnail() ) : ?>
 							<a class="post-card__image" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true"><?php the_post_thumbnail( 'frave-card', array( 'loading' => 'lazy' ) ); ?></a>
