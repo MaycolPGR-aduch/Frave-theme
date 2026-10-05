@@ -960,6 +960,29 @@
     color: #fff;
   }
 
+  /*
+   * States WooCommerce stops drawing once the theme opts out of its button skin
+   * (body.woocommerce-block-theme-has-button-styles, see inc/woocommerce.php).
+   */
+  .woocommerce a.button.loading,
+  .woocommerce button.button.loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .woocommerce a.button.added::after {
+    content: "✓";
+    margin-left: 0.45rem;
+  }
+
+  .woocommerce a.button.disabled,
+  .woocommerce a.button:disabled,
+  .woocommerce button.button.disabled,
+  .woocommerce button.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   .single-product .woocommerce div.product form.cart .button,
   .woocommerce button.button.alt {
     background-color: var(--color-ink) !important;
@@ -2646,6 +2669,37 @@
 
 .catalog-toolbar .woocommerce-ordering {
   margin-left: auto;
+}
+
+/*
+ * Link buttons ("Leer más", "Finalizar compra"…) on the theme's dark button background.
+ * The unlayered global link colour from theme.json would otherwise paint their text dark.
+ */
+.woocommerce a.button,
+.woocommerce a.button:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/*
+ * Sale badge. WooCommerce's unlayered .woocommerce span.onsale (olive circle) would win over
+ * the layered component, so this unlayered rule is one element more specific.
+ */
+html .woocommerce span.onsale {
+  top: 0.75rem;
+  left: 0.75rem;
+  display: grid;
+  place-items: center;
+  min-width: 2rem;
+  min-height: 2rem;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
 }
 
 /* Printing the claim confirmation (or any page) keeps only the content. */

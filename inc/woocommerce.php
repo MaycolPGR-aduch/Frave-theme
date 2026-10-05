@@ -39,6 +39,20 @@ function frave_loop_columns(): int {
 add_filter( 'loop_shop_columns', 'frave_loop_columns' );
 
 /**
+ * WooCommerce skips its own button skin (grey background, purple .alt) when the body has
+ * this class, which it normally adds for block themes that style buttons. The theme styles
+ * every WooCommerce button, so it opts out the same way instead of fighting the
+ * unlayered rules with !important.
+ */
+function frave_woocommerce_button_styles_class( array $classes ): array {
+	if ( class_exists( 'WooCommerce' ) && ! in_array( 'woocommerce-block-theme-has-button-styles', $classes, true ) ) {
+		$classes[] = 'woocommerce-block-theme-has-button-styles';
+	}
+	return $classes;
+}
+add_filter( 'body_class', 'frave_woocommerce_button_styles_class' );
+
+/**
  * Refresh the header count and mini-cart on every page. With full-page caching the
  * HTML may hold another visitor's cart; fragments replace it from the visitor's session
  * (one request per session, then cached in sessionStorage).
