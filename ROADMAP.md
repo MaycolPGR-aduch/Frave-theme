@@ -105,6 +105,8 @@ Objetivo: convertir la base funcional en una experiencia de marca completa y edi
 
 **Páginas institucionales (2026-09-28):** lint PHP, build, tema a la versión 1.1.0 (necesario para que WordPress registre los patrones nuevos). Con las páginas publicadas temporalmente y datos de contacto ficticios (todo revertido después): canales del Personalizador y un solo formulario en Contacto; errores de validación con datos conservados, campo trampa rechazado, envío válido guardado en «Mensajes» y capturado en Mailpit con Reply-To del remitente; FAQ con índice de 5 grupos y acordeones; extracción de preguntas para `FAQPage` que omite las respuestas `[PENDIENTE]`; política con fecha en español, 9 secciones cuyas anclas coinciden con el índice y «Otras políticas»; enlaces legales del pie en orden de página; sin desbordamiento a 390px; casilla de términos en el checkout con la página publicada y oculta en borrador. El Libro de Reclamaciones repitió su prueba tras mover su antispam a `includes/antispam.php`.
 
+**Botones, rendimiento y tabla de atributos (2026-10-05):** en modo producción (`FRAVE_VITE_DEV` en `false`, restaurado después): CSS, JS y las dos fuentes con precarga responden 200, sin script de emojis. Botones del listado, ficha simple y variable (deshabilitada hasta elegir), carrito (cupón, actualizar, finalizar compra), checkout y cuenta: fondo oscuro y texto blanco; los enlaces-botón tenían el texto invisible por el color global de enlaces y se corrigió. Etiqueta de oferta naranja en listado y ficha. Mini-carrito sin cambios. Con la tabla de atributos de WooCommerce activada temporalmente, sus recuentos ignoraban los atributos elegidos con lógica «o»; se completó el filtro de recuentos y 7 combinaciones dan resultados idénticos con y sin la tabla.
+
 ## Fase 3 — Experiencia de catálogo y compra
 
 Objetivo: facilitar la exploración de un catálogo real y mejorar los flujos de compra.
@@ -117,7 +119,8 @@ Objetivo: facilitar la exploración de un catálogo real y mejorar los flujos de
 - [ ] Configurar el número de WhatsApp Business de Frave y el horario de atención que se comunicará.
 - [x] Filtros del catálogo con parámetros de WooCommerce: categorías, precio, disponibilidad, oferta, un filtro por cada atributo global (automático), valoración, chips de filtros activos, cajón en móvil y `noindex` en vistas filtradas.
 - [ ] Crear los atributos globales reales (familia olfativa, presentación, etc.) al cargar el inventario definitivo, siguiendo `GUIA_CATALOGO.md`.
-- [ ] Estilizar los botones «Añadir al carrito» del listado y la etiqueta «¡Oferta!», que aún usan los colores por defecto de WooCommerce.
+- [x] Botones de WooCommerce con el estilo del tema en todo el sitio (listado, ficha, carrito, checkout, cuenta) y etiqueta «¡Oferta!» en el naranja accesible.
+- [x] Rendimiento: precarga de Lato (400 y 700) desde el manifest y sin el script de emojis de WordPress.
 - [ ] Mejorar galería, selección de variaciones, información de stock y contenido de ficha según los tipos de producto reales.
 - [x] Mini-carrito lateral: se abre desde el icono del carrito y al añadir un producto (AJAX o formulario de la ficha), con eliminación por AJAX, foco retenido y sin JavaScript sigue enlazando al carrito.
 - [ ] Evaluar cross-selling, productos relacionados y navegación ampliada; implementar solo donde reduzcan fricción.
