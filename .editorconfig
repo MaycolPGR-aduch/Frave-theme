@@ -8,5 +8,12 @@ indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true
 
+# WordPress coding standards indent PHP with tabs.
+[*.php]
+indent_style = tab
+
 [*.{js,json,css,yml,yaml}]
 indent_size = 2
+
+[*.{xml,xml.dist}]
+indent_style = tab

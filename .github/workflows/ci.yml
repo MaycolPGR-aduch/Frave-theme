@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  php:
+    name: PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.1', '8.3']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+          coverage: none
+
+      - name: Syntax check
+        run: |
+          git ls-files '*.php' | xargs -n1 -P4 php -l > /dev/null
+
+      - name: Install coding standards
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: WordPress coding standards and PHP compatibility
+        run: vendor/bin/phpcs
+
+  assets:
+    name: JavaScript and build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: ESLint
+        run: npm run lint:js
+
+      - name: Build
+        run: npm run build
+
+      # The server serves assets/dist without Node, so the committed build must match the sources.
+      - name: Committed build is up to date
+        run: |
+          if [ -n "$(git status --porcelain -- assets/dist)" ]; then
+            git status --short -- assets/dist
+            echo "::error::assets/dist no coincide con el código fuente. Ejecuta npm run build y haz commit de assets/dist."
+            exit 1
+          fi
