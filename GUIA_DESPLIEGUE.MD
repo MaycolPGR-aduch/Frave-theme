@@ -1,70 +1,272 @@
-# Guía de despliegue de Frave
+# Guía de despliegue en hosting con cPanel
 
-- **Estado:** guía base; falta seleccionar y configurar el hosting.
-- **Última revisión:** 23 de septiembre de 2026.
-- **Compilación:** [GUIA_COMPILACION.MD](GUIA_COMPILACION.MD).
+- **Estado:** procedimiento listo; falta contratar el hosting y completar la tabla [Datos de este hosting](#datos-de-este-hosting).
+- **Última revisión:** 5 de octubre de 2026.
+- **Relacionadas:** [GUIA_COMPILACION.MD](GUIA_COMPILACION.MD) (build, linters y pruebas), [PLAN_CONTENIDO_INSTITUCIONAL.md](PLAN_CONTENIDO_INSTITUCIONAL.md), [GUIA_CATALOGO.md](GUIA_CATALOGO.md).
 
-## Alcance del despliegue
+Los nombres de ejemplo de esta guía son `USUARIO` (usuario de cPanel), `frave.pe` (dominio) y `staging.frave.pe` (subdominio de pruebas). Sustitúyelos por los reales. **No registres contraseñas ni claves en este repositorio.**
 
-Este repositorio contiene el **tema** `frave`, no una instalación completa de WordPress. El destino del tema en cualquier instalación estándar es `wp-content/themes/frave/`. El código, `assets/dist/`, `acf-json/`, `theme.json`, `style.css` y el logotipo deben llegar juntos. WordPress, WooCommerce, ACF opcional, la base de datos, los medios y `wp-config.php` se administran por separado.
+## 1. Qué se despliega
 
-La fuente versionada actual es la rama `main` de [Frave-theme](https://github.com/MaycolPGR-aduch/Frave-theme). Cada entrega debe identificar el commit desplegado para facilitar la reversión.
+| Pieza | Origen | Destino en el hosting |
+| --- | --- | --- |
+| Tema Frave | [MaycolPGR-aduch/Frave-theme](https://github.com/MaycolPGR-aduch/Frave-theme), rama `main` | `public_html/wp-content/themes/frave` |
+| Plugin Frave Perú | [MaycolPGR-aduch/frave-peru](https://github.com/MaycolPGR-aduch/frave-peru), rama `main` | `public_html/wp-content/plugins/frave-peru` |
+| WordPress, WooCommerce y demás plugins | Instaladores del hosting y de WordPress | El propio sitio |
+| Base de datos, medios (`uploads`), `wp-config.php` | Se crean en cada entorno | No están en Git |
 
-La instalación actual en `D:/Frave-web/.local-wordpress/wordpress/` es de desarrollo. Usa PEN, envío plano y contra entrega de prueba, con impuestos desactivados. Esa configuración no define las condiciones de una tienda real.
+Solo se publican los archivos que el sitio necesita. Las reglas `export-ignore` de `.gitattributes` dejan fuera las herramientas de desarrollo, las fuentes (`assets/src`), las pruebas y la documentación interna. Esto importa porque, por ejemplo, el README menciona datos del entorno local. Los assets compilados (`assets/dist`) sí van en el repositorio: **el servidor no necesita Node.js ni Composer**.
 
-## Antes de publicar en staging
+Los datos de prueba locales (productos `[MUESTRA]`, pedidos, hojas de reclamación y mensajes) **no se migran**.
 
-1. Confirma que el servidor cumple los requisitos de WordPress, PHP, base de datos y WooCommerce indicados en [README.md](README.md). El proveedor y sus versiones disponibles siguen pendientes de confirmar.
-2. Prepara un sitio de staging con HTTPS, WordPress, WooCommerce y, si se editará el hero, ACF gratuito.
-3. Haz una copia de seguridad recuperable del sitio y de la base de datos antes de reemplazar un tema existente. Guarda una copia del tema anterior si aplica.
-4. Ejecuta el build descrito en [GUIA_COMPILACION.MD](GUIA_COMPILACION.MD) y confirma que `assets/dist/manifest.json` y sus archivos con hash están en el mismo commit.
-5. Define en el `wp-config.php` del destino `FRAVE_VITE_DEV` como `false` o deja la constante sin definir. El servidor Vite local no se usa en staging ni en producción.
+## 2. Requisitos al contratar el hosting
 
-## Entrega del tema
+Pide al proveedor que confirme cada punto antes de contratar:
 
-El método concreto de entrega (Git, archivo ZIP, SFTP o herramienta del proveedor) se definirá cuando se conozca el hosting. En todos los casos, copia la carpeta `frave` completa dentro de `wp-content/themes/`, con la estructura interna intacta. Excluye `.git/`, `node_modules/`, archivos `.env`, configuraciones locales y recursos originales ajenos al tema. No ejecutes `npm install` en el servidor si los assets compilados ya están incluidos.
+- [ ] **PHP 8.1 o superior**, idealmente 8.3, seleccionable en *MultiPHP Manager*, con las extensiones `mysqli`, `curl`, `gd` o `imagick`, `intl`, `mbstring`, `xml`, `zip`, `openssl` y `sodium`.
+- [ ] **MySQL 8.0+ o MariaDB 10.6+**.
+- [ ] Límites ajustables en *MultiPHP INI Editor*: `memory_limit` ≥ 256M, `max_execution_time` ≥ 120, `upload_max_filesize` y `post_max_size` ≥ 64M.
+- [ ] **SSL gratuito automático** (*AutoSSL* / Let's Encrypt) para el dominio y los subdominios.
+- [ ] **Acceso SSH o Terminal** en cPanel y la herramienta **Git™ Version Control**. Sin ellas, usa el despliegue por ZIP ([sección 5](#5-alternativa-sin-git-subir-un-zip)).
+- [ ] **Cron Jobs** (tareas programadas), necesarios para WooCommerce.
+- [ ] **Correo con SMTP autenticado** y la herramienta *Email Deliverability* (SPF y DKIM).
+- [ ] **Copias de seguridad automáticas** (por ejemplo, JetBackup) con restauración de archivos y bases de datos.
+- [ ] Recomendable: servidor **LiteSpeed** (permite LiteSpeed Cache), caché de objetos (Redis o Memcached), centro de datos en América y subdominios ilimitados para staging.
 
-Tras copiar los archivos, activa **Frave** en **Apariencia → Temas**. Si el tema ya estaba activo, limpia la caché del sitio o CDN según el proveedor y verifica que el navegador solicita las rutas nuevas del manifest. Una ausencia del manifest deja la página sin los estilos y scripts del tema; el administrador recibe un aviso cuando está en modo producción.
+## 3. Preparar el entorno de pruebas (staging)
 
-## Configuración en WordPress
+Todo se prueba primero en `staging.frave.pe`. Producción se prepara igual cuando staging esté validado ([sección 11](#11-paso-a-producción)).
 
-- Asigna una página estática como portada y los menús **Navegación principal** y **Navegación del pie**.
-- Instala y activa WooCommerce. Configura las páginas de carrito y checkout con `[woocommerce_cart]` y `[woocommerce_checkout]` si fueron creadas como bloques. La cuenta usa `[woocommerce_my_account]`.
-- Si ACF está activo, sincroniza el grupo `Inicio Frave` desde `acf-json/` cuando el administrador muestre la opción; edita el hero en la portada. Sin ACF, el tema muestra contenido de respaldo.
-- Carga categorías, productos, imágenes, precios, stock, atributos y variaciones en WooCommerce. Los datos locales de prueba no se copian automáticamente al nuevo sitio.
-- Configura moneda, zonas y tarifas de envío, impuestos, cupones, correos y métodos de pago según las decisiones comerciales aprobadas.
+1. **Subdominio:** *Domains* → crear `staging.frave.pe`. Anota su carpeta raíz, por ejemplo `/home/USUARIO/staging.frave.pe`.
+2. **HTTPS:** *SSL/TLS Status* → *Run AutoSSL*. Confirma el candado en el navegador antes de seguir.
+3. **PHP:** *MultiPHP Manager* → PHP 8.3 para el subdominio. *MultiPHP INI Editor* → límites de la sección 2.
+4. **WordPress:** *Softaculous* → WordPress en `https://staging.frave.pe`, idioma Español.
+   - Usuario administrador distinto de `admin`, con contraseña larga y el correo de Frave.
+   - Desactiva los plugins de ejemplo que ofrezca el instalador.
+5. **`wp-config.php`:** en *File Manager*, añade antes de la línea `/* That's all, stop editing! */`:
 
-## Validación en staging
+   ```php
+   define( 'WP_ENVIRONMENT_TYPE', 'staging' );          // 'production' en el sitio real.
+   define( 'WP_DEBUG', true );                           // false en producción.
+   define( 'WP_DEBUG_DISPLAY', false );                  // Nunca mostrar errores al visitante.
+   define( 'WP_DEBUG_LOG', '/home/USUARIO/logs/staging-debug.log' ); // Fuera de la carpeta pública.
+   define( 'DISALLOW_FILE_EDIT', true );                 // Sin editor de código en el administrador.
+   define( 'FORCE_SSL_ADMIN', true );
+   define( 'WP_MEMORY_LIMIT', '256M' );
+   define( 'DISABLE_WP_CRON', true );                    // Lo sustituye el cron real del paso 6.
+   ```
 
-- [ ] La portada, categorías, búsqueda, ordenamiento y ficha de producto cargan sin errores PHP o JavaScript.
-- [ ] No hay errores 404 de CSS, JS, fuentes ni imágenes; el manifest apunta a los archivos entregados.
-- [ ] Menú, búsqueda y carrito funcionan en móvil y escritorio; el contador del header refleja los cambios.
-- [ ] Producto simple, variable y agotado muestran los estados correctos.
-- [ ] Carrito, cupón, envío, checkout de prueba, confirmación, correo y cuenta completan el flujo esperado.
-- [ ] Se revisan foco, teclado, contraste, imágenes responsive y rendimiento con contenido representativo.
-- [ ] HTTPS, caché, copias de seguridad, registros y actualizaciones funcionan en el entorno elegido.
+   No definas `FRAVE_VITE_DEV`: solo existe en el entorno local. Crea la carpeta `/home/USUARIO/logs` si no existe.
+6. **Cron real:** *Cron Jobs* → cada 5 minutos:
 
-## Paso a producción y reversión
+   ```bash
+   /usr/local/bin/php /home/USUARIO/staging.frave.pe/wp-cron.php >/dev/null 2>&1
+   ```
 
-La publicación de ventas reales requiere pasarela configurada, impuestos, tarifas, políticas comerciales y pruebas de pedidos aprobados y rechazados. Antes de activar campañas o recibir pedidos, realiza un pedido real controlado de bajo importe y revisa el estado del pedido, inventario, email, cobro y reembolso.
+   Si el hosting tiene varias versiones de PHP, usa la ruta de la 8.3 (por ejemplo `/opt/cpanel/ea-php83/root/usr/bin/php`). En *WooCommerce → Estado → Acciones programadas*, las acciones pendientes deben ir completándose.
+7. **Plugins del repositorio de WordPress:** WooCommerce (sin el asistente de temas ni plugins extra), un plugin SMTP ([sección 7](#7-correo-smtp-y-dns)) y ACF gratuito si se editará el hero. La caché y el SEO se añaden después ([sección 8](#8-caché-y-rendimiento)).
+8. **Visibilidad:** *Ajustes → Lectura* → marca «Pedir a los motores de búsqueda que no indexen este sitio». **Solo en staging.**
 
-Si una versión del tema falla, conserva el commit anterior y su `assets/dist/` para restaurar **código y assets juntos**. No sustituyas una base de datos de producción activa por una copia anterior sin un plan que preserve los pedidos nuevos. Si el fallo involucra plugins o esquema de datos, evalúa la reversión con la copia de seguridad del sitio completo.
+## 4. Desplegar el tema y el plugin con Git (recomendado)
 
-## Datos que faltan cuando se elija hosting
+Cada entorno usa su propio clon de cada repositorio. El nombre de la carpeta del clon elige el destino: un clon en `~/repositories/frave-theme-staging` despliega donde indique `~/.frave-deploy/frave-theme-staging.path`.
 
-| Decisión pendiente | Información a registrar aquí |
+### 4.1 Indicar los destinos (una sola vez por entorno)
+
+En *Terminal* (o por SSH):
+
+```bash
+mkdir -p ~/.frave-deploy
+echo "/home/USUARIO/staging.frave.pe/wp-content/themes/frave"      > ~/.frave-deploy/frave-theme-staging.path
+echo "/home/USUARIO/staging.frave.pe/wp-content/plugins/frave-peru" > ~/.frave-deploy/frave-peru-staging.path
+```
+
+Sin Terminal, crea esos archivos con *File Manager* (muestra los archivos ocultos). Cada archivo contiene una sola línea con la ruta. El script rechaza destinos que no estén dentro de `wp-content/themes` o `wp-content/plugins`.
+
+### 4.2 Clonar los repositorios
+
+*Git™ Version Control* → *Create* → activa *Clone a Repository*:
+
+| Clone URL | Repository Path | Repository Name |
+| --- | --- | --- |
+| `https://github.com/MaycolPGR-aduch/Frave-theme.git` | `repositories/frave-theme-staging` | Frave tema (staging) |
+| `https://github.com/MaycolPGR-aduch/frave-peru.git` | `repositories/frave-peru-staging` | Frave Perú (staging) |
+
+Los clones van en `repositories/`, **nunca dentro de una carpeta pública**.
+
+### 4.3 Desplegar
+
+En cada repositorio: *Manage* → pestaña *Pull or Deploy* → **Deploy HEAD Commit**. cPanel ejecuta `.cpanel.yml`, que llama a `bin/deploy-cpanel.sh`. El script:
+
+1. extrae el commit actual (sin los archivos `export-ignore`) junto al sitio;
+2. comprueba que estén los archivos imprescindibles (por ejemplo, `assets/dist/manifest.json`);
+3. sustituye la carpeta publicada por la nueva de una sola vez;
+4. guarda la versión anterior en `~/.frave-deploy/<clon>.previous` para poder revertir;
+5. escribe el commit desplegado en el archivo `REVISION` del tema o plugin.
+
+El registro del despliegue aparece en *Pull or Deploy* → *Last Deployment Information*. Debe terminar con `Desplegado <commit> en <ruta>`.
+
+La primera vez, activa en WordPress el tema **Frave** (*Apariencia → Temas*) y el plugin **Frave Perú** (*Plugins*).
+
+### 4.4 Actualizar a una versión nueva
+
+1. Fusiona los cambios en `main` en GitHub, con el CI en verde.
+2. En cPanel, para cada repositorio: *Pull or Deploy* → **Update from Remote** y luego **Deploy HEAD Commit**.
+3. Si hay caché, vacíala ([sección 8](#8-caché-y-rendimiento)).
+4. Comprueba que `https://staging.frave.pe/wp-content/themes/frave/REVISION` muestra el commit esperado.
+
+Si se añadieron o cambiaron patrones del tema, el commit debe subir `Version` en `style.css`. Si no, WordPress sigue usando los patrones guardados en caché.
+
+### 4.5 Revertir
+
+Si una versión falla, en *Terminal*:
+
+```bash
+cd ~/repositories/frave-theme-staging && bash bin/deploy-cpanel.sh --rollback
+```
+
+Esto restaura la versión anterior. Repetir el comando vuelve a la más nueva. Para el plugin, usa su carpeta de repositorio. Después corrige el error en GitHub y despliega de nuevo. Revertir el código no deshace cambios en la base de datos (pedidos, ajustes).
+
+## 5. Alternativa sin Git: subir un ZIP
+
+Si el plan no incluye Git o Terminal, genera los paquetes en un equipo con el repositorio. Solo incluyen lo commiteado, sin archivos de desarrollo:
+
+```bash
+npm.cmd run package
+```
+
+Esto crea `frave.zip` en la carpeta del tema. Para el plugin, desde la carpeta `frave-peru`:
+
+```bash
+git archive --format=zip --prefix=frave-peru/ -o frave-peru.zip HEAD
+```
+
+Súbelos en *Apariencia → Temas → Añadir → Subir tema* y en *Plugins → Añadir → Subir plugin*. Al actualizar, WordPress pregunta si quieres sustituir la versión instalada: confirma. Guarda el ZIP anterior por si necesitas revertir. **No uses el botón «Download ZIP» de GitHub**, que incluye todos los archivos de desarrollo.
+
+## 6. Configurar WordPress y WooCommerce
+
+En este orden, en el administrador de staging:
+
+1. **Generales:** título, descripción, zona horaria **America/Lima**, formato de fecha `j \d\e F \d\e Y`.
+2. **Enlaces permanentes:** «Nombre de la entrada» (`/%postname%/`).
+3. **WooCommerce → Ajustes:**
+   - País Perú, moneda Sol (PEN).
+   - Impuestos, envíos y métodos de pago según lo que apruebe Frave.
+   - Desactivar el modo «Próximamente» solo cuando la tienda deba verse.
+4. **Páginas de WooCommerce:** carrito con `[woocommerce_cart]`, finalizar compra con `[woocommerce_checkout]` y mi cuenta con `[woocommerce_my_account]`. Si el asistente creó versiones con bloques, sustitúyelas por el shortcode. Los campos de boleta y factura solo existen en el checkout clásico; el plugin avisa si detecta el bloque.
+5. **Portada y menús:** *Ajustes → Lectura* → portada estática. *Apariencia → Menús* → **Navegación principal** y **Navegación del pie** (el menú **Enlaces legales del pie** es opcional).
+6. **Contacto:** *Apariencia → Personalizar → Contacto* (WhatsApp, correo, teléfono, horario, dirección).
+7. **Frave Perú:**
+   - *Reclamaciones → Ajustes*: razón social, RUC, domicilio y página del libro.
+   - *Mensajes → Ajustes*: correo que recibe los mensajes de contacto.
+8. **Páginas institucionales:** créalas desde los patrones de «Frave: páginas institucionales» con el texto aprobado ([PLAN_CONTENIDO_INSTITUCIONAL.md](PLAN_CONTENIDO_INSTITUCIONAL.md)).
+   - Asigna la política de privacidad en *Ajustes → Privacidad*.
+   - Asigna los términos en *WooCommerce → Ajustes → Avanzado*.
+9. **Catálogo:** atributos globales y productos según [GUIA_CATALOGO.md](GUIA_CATALOGO.md).
+10. **ACF** (si está activo): sincroniza el grupo «Inicio Frave» cuando el administrador lo ofrezca y edita el hero.
+
+## 7. Correo (SMTP y DNS)
+
+El cliente debe recibir la confirmación de pedido, la constancia del Libro de Reclamaciones (obligatoria) y las respuestas a sus mensajes. El correo de PHP sin autenticar suele acabar en spam.
+
+1. **Cuenta de envío:** *Email Accounts* → crea una cuenta, por ejemplo `tienda@frave.pe`.
+2. **Registros de autenticación:** *Email Deliverability* → instala o repara SPF y DKIM. Si el DNS del dominio está en otro proveedor, copia allí esos registros y añade DMARC (`v=DMARC1; p=none; rua=mailto:...`).
+3. **Plugin SMTP:** instala uno (por ejemplo WP Mail SMTP o FluentSMTP) con el servidor SMTP de cPanel, puerto 465 (SSL), y esa cuenta. Envía el correo de prueba del plugin.
+4. **Remitente:** en *WooCommerce → Ajustes → Correos electrónicos*, remitente `tienda@frave.pe` y color base naranja Frave (`#c43b00`).
+5. **Prueba completa:** haz un pedido de prueba y registra una hoja en el Libro de Reclamaciones. Comprueba que llegan los correos al cliente y a la tienda y que no van a spam.
+
+## 8. Caché y rendimiento
+
+- **Servidor LiteSpeed:** instala **LiteSpeed Cache**. Excluye de la caché carrito, finalizar compra, mi cuenta, Libro de Reclamaciones y Contacto.
+  - LiteSpeed Cache ya excluye las páginas de WooCommerce.
+  - Frave Perú marca sus páginas como no cacheables (`DONOTCACHEPAGE` y cabeceras `no-cache`).
+- **Contador del carrito:** el tema actualiza el contador y el mini-carrito por AJAX aunque la página venga de la caché.
+- **Caché de objetos:** si el hosting ofrece Redis o Memcached, actívala desde el plugin de caché.
+- **Al desplegar:** vacía la caché de página (y la de Cloudflare, si se usa). El CSS y el JS tienen nombres con hash, así que nunca se sirven versiones antiguas.
+- **Sin optimizar dos veces:** no actives la minificación ni la combinación de CSS y JS del plugin de caché. El tema ya entrega sus archivos minificados y precarga sus fuentes. Si se activan, prueba de nuevo el mini-carrito y los filtros.
+
+## 9. Seguridad y copias de seguridad
+
+- **Actualizaciones:**
+  - WordPress y los plugins de terceros: actualizaciones menores automáticas; las mayores, primero en staging.
+  - Tema y Frave Perú: solo desde Git ([sección 4.4](#44-actualizar-a-una-versión-nueva)).
+- **Acceso:** usuarios administradores nominales con contraseñas largas y doble factor (por ejemplo, Two Factor o Wordfence Login Security); el rol «Gestor de la tienda» para quien solo administra pedidos.
+- **Copias de seguridad:**
+  - Diarias en el hosting (JetBackup) y una copia externa semanal (por ejemplo, UpdraftPlus a Google Drive) con archivos y base de datos.
+  - **Prueba una restauración en staging** antes de abrir la tienda.
+- **Permisos:** carpetas 755 y archivos 644; `wp-config.php` 600 o 640 si el hosting lo permite.
+- **Registros:** revisa `/home/USUARIO/logs/staging-debug.log` tras cada despliegue en staging. En producción, `WP_DEBUG` va en `false`.
+
+## 10. Validar staging
+
+- [ ] El tema y el plugin muestran en `REVISION` el commit esperado.
+- [ ] Portada, tienda, filtros, categorías, búsqueda y fichas cargan sin errores; no hay archivos 404 en la consola del navegador.
+- [ ] Menú móvil, mini-carrito y WhatsApp funcionan en móvil y en escritorio.
+- [ ] Carrito, cupón, envío y checkout con boleta (DNI) y factura (RUC) completan pedidos; los correos llegan.
+- [ ] Libro de Reclamaciones: la constancia llega al cliente, y la respuesta desde el administrador también.
+- [ ] Formulario de contacto: el mensaje queda en *Mensajes* y llega al correo configurado.
+- [ ] Pasarela real en modo prueba: pagos aprobados, rechazados y un reembolso.
+- [ ] Copia de seguridad restaurada con éxito.
+- [ ] **Pruebas automáticas contra staging**, desde el equipo de desarrollo:
+
+  ```powershell
+  $env:FRAVE_E2E_URL='https://staging.frave.pe'; npm.cmd run test:e2e
+  ```
+
+  Las pruebas crean pedidos, hojas de reclamación y mensajes de prueba: bórralos después. **Nunca las ejecutes contra producción.**
+
+## 11. Paso a producción
+
+Producción se monta limpia, sin los pedidos ni las hojas de prueba de staging:
+
+1. Repite las secciones 3 y 4 para `frave.pe`, con `WP_ENVIRONMENT_TYPE` en `production`, `WP_DEBUG` en `false` y clones en `repositories/frave-theme` y `repositories/frave-peru`:
+
+   ```bash
+   echo "/home/USUARIO/public_html/wp-content/themes/frave"      > ~/.frave-deploy/frave-theme.path
+   echo "/home/USUARIO/public_html/wp-content/plugins/frave-peru" > ~/.frave-deploy/frave-peru.path
+   ```
+
+2. Despliega **el mismo commit** que se validó en staging.
+3. Configura producción como en las secciones 6 y 7. Para pasar el contenido de staging (páginas, productos, medios) usa un plugin de migración **solo si staging no tiene pedidos reales**. Antes, borra en staging los pedidos, hojas de reclamación y mensajes de prueba.
+4. *Ajustes → Lectura*: **desmarca** «Pedir a los motores de búsqueda que no indexen este sitio».
+5. Pasarela de pago en modo real y cron real activo.
+6. **Pedido real de bajo importe** de principio a fin: cobro, correo, comprobante, cambio de estado, inventario y reembolso.
+7. Plugin de SEO, mapa del sitio y alta en Google Search Console.
+8. Redirecciones: `http://` → `https://` y una sola forma del dominio (con o sin `www`).
+
+Después de abrir la tienda, **nunca sustituyas la base de datos de producción** por la de staging: se perderían los pedidos reales.
+
+## 12. Operación habitual
+
+| Tarea | Cómo |
 | --- | --- |
-| Proveedor y entorno | Panel, versión de PHP y base de datos, límites y ubicación del sitio. |
-| Método de entrega | Git, ZIP, SFTP o pipeline; ubicación exacta y responsable del despliegue. |
-| Dominio y HTTPS | Dominio final, certificados, redirecciones y entorno staging. |
-| Operación | Backups, recuperación, logs, correo transaccional, caché y tareas programadas. |
-| Comercio | Pasarela, moneda, impuestos, envíos y políticas aprobadas para Perú. |
-| Verificación | Checklist y fecha de salida a producción, resultado del pedido real controlado. |
+| Publicar una mejora del tema o del plugin | PR en GitHub con CI en verde → fusionar → staging (4.4) → validar → producción (4.4) |
+| Revertir una versión | `bash bin/deploy-cpanel.sh --rollback` en el clon afectado (4.5) |
+| Saber qué versión está publicada | `https://frave.pe/wp-content/themes/frave/REVISION` |
+| Actualizar WordPress, WooCommerce o plugins | Primero en staging; revisar tienda y checkout; luego producción |
+| Revisar errores | Registro de PHP de staging; *WooCommerce → Estado → Registros* |
 
-Actualiza esta sección con rutas y comandos específicos solo después de confirmar el proveedor. No registres contraseñas, claves de pago ni datos de clientes en este repositorio.
+## Datos de este hosting
+
+Complétala al contratar. **Sin contraseñas.**
+
+| Dato | Valor |
+| --- | --- |
+| Proveedor y plan | |
+| Usuario de cPanel (`USUARIO`) | |
+| Servidor web (Apache, LiteSpeed, Nginx) | |
+| PHP / MySQL o MariaDB | |
+| Ruta de producción | `/home/USUARIO/public_html` |
+| Ruta de staging | `/home/USUARIO/staging.frave.pe` |
+| Ruta del binario PHP para cron | |
+| SMTP (servidor y puerto) | |
+| Copias de seguridad (frecuencia y retención) | |
+| Responsable de los despliegues | |
+| Commit en producción y fecha de salida | |
 
 ## Registro de cambios de la guía
 
 | Fecha | Cambio |
 | --- | --- |
 | 2026-09-23 | Guía inicial independiente del proveedor; configuración del hosting pendiente. |
+| 2026-10-05 | Guía para cPanel: requisitos, staging, despliegue con Git (`.cpanel.yml`, `bin/deploy-cpanel.sh`) o ZIP, configuración, correo, caché, seguridad, validación y paso a producción. |

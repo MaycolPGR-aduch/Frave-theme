@@ -35,6 +35,7 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `assets/dist/` | CSS, JavaScript, fuentes y manifest listos para servir; se versiona en Git. |
 | `acf-json/` | Configuración versionada de los campos editoriales de la portada. |
 | `theme.json`, `style.css` | Ajustes del editor y metadatos necesarios para activar el tema. |
+| `.cpanel.yml`, `bin/deploy-cpanel.sh`, `.gitattributes` | Despliegue en cPanel con reversión y lista de archivos que no se publican (`export-ignore`). |
 
 Actualmente no existe un directorio `woocommerce/` de overrides. Tampoco existen módulos separados para SEO, rendimiento o seguridad; se incorporarán solo cuando haya una necesidad concreta que corresponda al tema.
 

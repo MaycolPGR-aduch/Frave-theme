@@ -28,7 +28,7 @@ La recomendación sigue las versiones actuales de WooCommerce y Vite. Comprueba 
 
 ## Instalación del tema
 
-1. Copia la carpeta `frave` a `wp-content/themes/`.
+1. Despliega el tema en `wp-content/themes/frave` con Git o con el paquete `frave.zip` (`npm run package`), como explica [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD). No copies la carpeta del repositorio tal cual: incluye herramientas y documentación interna.
 2. En WordPress, activa **Frave** en **Apariencia → Temas**.
 3. Instala y activa WooCommerce. ACF gratuito es opcional.
 4. Asigna una página estática como portada. Si deseas el enlace institucional de la portada, crea una página publicada con slug `nosotros`; su contenido se edita con el editor de WordPress. Asigna menús a **Navegación principal** y **Navegación del pie**.
