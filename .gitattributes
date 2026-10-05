@@ -10,3 +10,27 @@
 *.webp binary
 *.woff binary
 *.woff2 binary
+*.xlsx binary
+
+# Not deployed: development tooling, sources and internal documentation.
+# git archive (npm run package, bin/deploy-cpanel.sh) leaves these out of the theme.
+/.cpanel.yml export-ignore
+/.editorconfig export-ignore
+/.gitattributes export-ignore
+/.github export-ignore
+/.gitignore export-ignore
+/.wp-env.json export-ignore
+/bin export-ignore
+/tests export-ignore
+/assets/src export-ignore
+/composer.json export-ignore
+/composer.lock export-ignore
+/eslint.config.js export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore
+/phpcs.xml.dist export-ignore
+/playwright.config.js export-ignore
+/vite.config.js export-ignore
+/*.md export-ignore
+/*.MD export-ignore
+/PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx export-ignore
