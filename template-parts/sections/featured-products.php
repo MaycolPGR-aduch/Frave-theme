@@ -51,6 +51,8 @@ if ( empty( $products ) ) {
 			</div>
 			<a class="text-link" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>"><?php esc_html_e( 'Ver todos los productos', 'frave' ); ?><span aria-hidden="true">&rarr;</span></a>
 		</div>
+		<?php // Product cards are styled under .woocommerce, as WooCommerce's own [products] shortcode wraps them. ?>
+		<div class="woocommerce">
 		<ul class="products frave-products" data-reveal-group>
 			<?php
 			$original_product = isset( $GLOBALS['product'] ) ? $GLOBALS['product'] : null;
@@ -69,5 +71,6 @@ if ( empty( $products ) ) {
 			$GLOBALS['product'] = $original_product;
 			?>
 		</ul>
+		</div>
 	</div>
 </section>

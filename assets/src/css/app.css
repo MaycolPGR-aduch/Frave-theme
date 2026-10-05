@@ -2681,6 +2681,11 @@
   text-decoration: none;
 }
 
+/* WooCommerce's unlayered loop rule sets display: inline-block, which drops the flex centring. */
+.woocommerce ul.products li.product .button {
+  display: inline-flex;
+}
+
 /*
  * Sale badge. WooCommerce's unlayered .woocommerce span.onsale (olive circle) would win over
  * the layered component, so this unlayered rule is one element more specific.
