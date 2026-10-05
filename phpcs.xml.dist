@@ -6,6 +6,8 @@
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/vendor/*</exclude-pattern>
 	<exclude-pattern>/assets/dist/*</exclude-pattern>
+	<!-- E2E fixtures run only through WP-CLI in the disposable CI site. -->
+	<exclude-pattern>/tests/*</exclude-pattern>
 
 	<arg name="extensions" value="php"/>
 	<arg name="colors"/>

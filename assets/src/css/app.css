@@ -2,6 +2,7 @@
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
 @source "../../../**/*.php";
 @source "../js/**/*.js";
+@source not "../../../tests";
 
 @theme {
   --font-sans: "Lato", Arial, sans-serif;

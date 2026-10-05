@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/wp-env.json",
+  "core": null,
+  "phpVersion": "8.3",
+  "plugins": [
+    "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip",
+    "https://github.com/MaycolPGR-aduch/frave-peru/archive/refs/heads/main.zip"
+  ],
+  "mappings": {
+    "wp-content/themes/frave": "."
+  },
+  "config": {
+    "WP_DEBUG": true,
+    "WP_DEBUG_LOG": true,
+    "WP_DEBUG_DISPLAY": false
+  }
+}

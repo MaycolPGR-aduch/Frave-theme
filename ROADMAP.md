@@ -53,7 +53,7 @@ Crear una tienda de perfumería con identidad propia, usando un tema clásico pe
 - [ ] Repetir una ronda documentada de pruebas después de futuros cambios: activación con y sin ACF, PHP lint, build, navegación móvil y escritorio, producto simple y variable, agotado, carrito, cupón, pedido de prueba y cuenta.
 - [ ] Medir Core Web Vitals y auditar accesibilidad con contenido e imágenes definitivos.
 - [x] Linters e integración continua: PHPCS (WordPress-Extra, PHP 8.1+), ESLint y GitHub Actions con build verificado (2026-10-05). Ver `GUIA_COMPILACION.MD`.
-- [ ] Añadir pruebas automatizadas de los recorridos principales (catálogo, carrito, checkout, formularios).
+- [x] Pruebas automatizadas de los recorridos principales con Playwright (18 pruebas: catálogo, mini-carrito, checkout con boleta y factura, Libro de Reclamaciones, contacto, móvil), en local y en CI con un WordPress efímero (wp-env).
 
 **Estado actual:** hay una tienda básica para desarrollo y pruebas. El pago de prueba y la configuración comercial local no habilitan ventas reales.
 

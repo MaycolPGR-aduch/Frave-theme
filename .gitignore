@@ -11,3 +11,6 @@ desktop.ini
 /.vscode/
 /.idea/
 /vendor/
+/playwright-report/
+/test-results/
+/blob-report/
