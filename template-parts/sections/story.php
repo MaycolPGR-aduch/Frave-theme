@@ -5,7 +5,12 @@ $title   = frave_field( 'frave_story_title', __( 'Un espacio para imaginar nueva
 $copy    = frave_field( 'frave_story_text', __( 'Explora fragancias, esencias e insumos para dar forma a tus ideas. Frave reúne opciones para quienes disfrutan crear y descubrir el mundo de la perfumería.', 'frave' ) );
 $image   = frave_field( 'frave_story_image' );
 $image_id = is_array( $image ) ? absint( $image['ID'] ?? 0 ) : ( is_numeric( $image ) ? absint( $image ) : 0 );
-$about   = get_page_by_path( 'nosotros' );
+// Page chosen in ACF; falls back to a published page with the slug "nosotros".
+$about_id = absint( frave_field( 'frave_story_page', 0 ) );
+$about    = $about_id ? get_post( $about_id ) : null;
+if ( ! $about instanceof WP_Post || 'page' !== $about->post_type ) {
+	$about = get_page_by_path( 'nosotros' );
+}
 ?>
 <section class="section story-section" aria-labelledby="story-heading">
 	<div class="container story-section__inner">

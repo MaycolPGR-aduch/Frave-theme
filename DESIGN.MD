@@ -39,6 +39,7 @@ La portada ofrece hero, categorías, productos destacados y tres módulos editor
 | `warning` | `#9c6b1b` | Avisos. |
 | `error` | `#b42318` | Errores y agotados. |
 | `white` | `#ffffff` | Fondo y texto sobre superficies oscuras. |
+| `whatsapp` / `whatsapp-dark` | `#0f7d6f` / `#075e54` | Botones de WhatsApp. El verde claro de la marca (`#25d366`) da 1,98:1 con blanco; `#0f7d6f` da 5,02:1. |
 
 La paleta se apoya en la guía de marca naranja disponible en `D:/Frave-web/IDENTIDAD DE MARCA FRAVE/`, pero la aplicación final sigue pendiente de aprobación. El naranja de marca `#fc4c02` con blanco da aproximadamente **3,40:1**; por eso los botones, badges y paginación con texto pequeño usan `primary` (`#c43b00`), que da aproximadamente **5,29:1** con blanco. WooCommerce incluye reglas CSS sin capas que sobrescriben colores de enlaces; el botón primario y los enlaces del pie tienen una regla explícita para conservar el contraste.
 
@@ -69,7 +70,12 @@ La portada usa una entrada progresiva de sus módulos cuando llegan al viewport:
 | Tarjeta de categoría y estado vacío | Inicial | `template-parts/cards/`, `template-parts/components/` |
 | Enlace y contador del carrito | Inicial | `template-parts/components/cart-link.php` |
 | Formularios, mensajes y páginas WooCommerce | Estilos base | `assets/src/css/app.css` |
-| Filtros avanzados, mini-carrito, modal y drawer genéricos | Pendiente | Fases posteriores, según necesidad real |
+| Botón flotante, botón de ficha y enlace de pie de WhatsApp | Inicial | `inc/contact.php`, `template-parts/components/whatsapp-button.php` |
+| Enlace del pie y formulario del Libro de Reclamaciones | Inicial | `footer.php`, `assets/src/css/app.css`; el formulario lo genera el plugin `frave-peru` |
+| Mini-carrito lateral (cajón de 26rem, pantalla completa en móvil) | Inicial | `template-parts/components/mini-cart.php`, `assets/src/js/modules/mini-cart.js` |
+| Filtros del catálogo: barra lateral fija desde 64rem, cajón izquierdo en móvil, secciones plegables, casillas, chips | Inicial | `template-parts/catalog/`, `assets/src/js/modules/catalog-filters.js` |
+| Páginas institucionales: canales de contacto, índice «En esta página», acordeones de FAQ, texto legal de lectura cómoda (46rem), enlaces legales del pie | Inicial | `page-templates/`, `template-parts/components/contact-channels.php`, `assets/src/css/app.css` |
+| Modal genérico | Pendiente | Fases posteriores, según necesidad real |
 
 ## Imágenes y accesibilidad
 
@@ -83,5 +89,7 @@ La base incluye HTML semántico, enlace para saltar al contenido, estados `:focu
 | --- | --- | --- |
 | 2026-09-23 | Se documenta el sistema visual inicial observado en el tema. | Base provisional |
 | 2026-09-23 | Se usa `primary` oscuro para texto blanco y se añaden secciones editoriales controladas. | Implementado; revisión de marca pendiente |
+| 2026-09-28 | Botones de WhatsApp en verde oscuro accesible; el flotante queda bajo el menú móvil (z-index 60) y en móvil muestra solo el icono. | Implementado |
+| 2026-09-28 | Mini-carrito lateral sobre el header (z-index 95, fondo 90) con «Finalizar compra» como acción principal y «Explorar productos» cuando está vacío. | Implementado |
 
 Al aprobar una decisión visual, actualiza esta guía y los tokens correspondientes; compila los assets y comprueba portada, catálogo, producto, carrito y checkout en móvil y escritorio. Registra en la tabla qué cambió y por qué.

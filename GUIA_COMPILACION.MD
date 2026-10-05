@@ -81,6 +81,16 @@ if ($fraveMissing) { throw "Faltan archivos del build: $($fraveMissing -join ', 
 
 Después del build, usa `git status` para comprobar si cambiaron los archivos compilados y versiona `assets/dist/` junto con el cambio de código. El servidor de producción sirve estos archivos directamente y no necesita Node.js, npm ni Tailwind.
 
+## Plantilla de traducción
+
+`languages/frave.pot` recoge los textos traducibles del tema. Regénerala cuando añadas o cambies textos con funciones `__()`, `esc_html_e()` y similares. Desde `D:/Frave-web/.local-wordpress/`:
+
+```powershell
+& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' wp-cli.phar --path=wordpress i18n make-pot ../frave ../frave/languages/frave.pot --domain=frave --exclude=node_modules,assets/dist,acf-json
+```
+
+Los textos con marcadores (`%s`, `%d`) llevan un comentario `/* translators: … */` en la línea anterior. Los textos del menú móvil se pasan desde PHP con atributos `data-label-*`, así que también son traducibles.
+
 ## Comprobación antes de entregar
 
 - [ ] `npm.cmd run build` termina sin errores y el manifest apunta a archivos existentes.
@@ -97,3 +107,4 @@ El proyecto aún no tiene un script de lint o una suite de pruebas automatizadas
 | --- | --- |
 | 2026-09-23 | Procedimiento inicial basado en Vite, Tailwind y el entorno local actual. |
 | 2026-09-23 | Se documenta el origen de assets en desarrollo tras corregir las peticiones 404 de Lato. |
+| 2026-09-28 | Se añade la generación de `languages/frave.pot` con WP-CLI. |

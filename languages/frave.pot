@@ -1,0 +1,779 @@
+# Copyright (C) 2026 Frave
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Frave 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/frave\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-28T17:17:39+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: frave\n"
+
+#. Theme Name of the theme
+#. Author of the theme
+#: style.css
+msgid "Frave"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Tema clásico personalizado para Frave, una tienda de fragancias e insumos de perfumería."
+msgstr ""
+
+#: 404.php:8
+msgid "Esta esencia aún no existe."
+msgstr ""
+
+#: 404.php:9
+msgid "La página que buscas pudo cambiar de lugar. Vuelve al inicio o explora la tienda."
+msgstr ""
+
+#: 404.php:11
+msgid "Volver al inicio"
+msgstr ""
+
+#: 404.php:13
+#: template-parts/sections/shop-cta.php:12
+msgid "Ir a la tienda"
+msgstr ""
+
+#: archive.php:8
+msgid "JOURNAL FRAVE"
+msgstr ""
+
+#: footer.php:11
+msgid "Fragancias, esencias e insumos para crear con intención."
+msgstr ""
+
+#: footer.php:14
+msgid "Descubre Frave"
+msgstr ""
+
+#: footer.php:25
+msgid "Tu cuenta"
+msgstr ""
+
+#: footer.php:26
+msgid "Consulta tu cuenta y el estado de tus pedidos."
+msgstr ""
+
+#: footer.php:28
+msgid "Mi cuenta y pedidos"
+msgstr ""
+
+#: footer.php:33
+msgid "Escríbenos por WhatsApp"
+msgstr ""
+
+#: footer.php:34
+#: inc/contact.php:219
+#: page-templates/preguntas-frecuentes.php:40
+#: template-parts/components/contact-channels.php:23
+msgid "(se abre en una nueva pestaña)"
+msgstr ""
+
+#: footer.php:41
+#: inc/institutional.php:213
+msgid "Libro de Reclamaciones"
+msgstr ""
+
+#: footer.php:47
+msgid "Todos los derechos reservados."
+msgstr ""
+
+#: footer.php:49
+msgid "Diseñado para acompañar tu creatividad."
+msgstr ""
+
+#: front-page.php:14
+msgid "CREA A TU MANERA"
+msgstr ""
+
+#: front-page.php:15
+msgid "Tu idea empieza con buenos ingredientes."
+msgstr ""
+
+#: front-page.php:16
+msgid "Fragancias, esencias y materias primas para acompañar cada proyecto."
+msgstr ""
+
+#: header.php:12
+msgid "Saltar al contenido"
+msgstr ""
+
+#: header.php:16
+#: header.php:18
+msgid "Abrir menú"
+msgstr ""
+
+#: header.php:16
+msgid "Cerrar menú"
+msgstr ""
+
+#: header.php:31
+#: inc/setup.php:39
+msgid "Navegación principal"
+msgstr ""
+
+#: header.php:44
+#: template-parts/components-search.php:10
+msgid "Buscar productos"
+msgstr ""
+
+#: header.php:47
+#: inc/setup.php:62
+msgid "Mi cuenta"
+msgstr ""
+
+#. translators: 1: minimum price, 2: maximum price.
+#: inc/catalog-filters.php:354
+#, php-format
+msgid "Precio: %1$s – %2$s"
+msgstr ""
+
+#. translators: %s: minimum price.
+#: inc/catalog-filters.php:357
+#, php-format
+msgid "Precio: desde %s"
+msgstr ""
+
+#. translators: %s: maximum price.
+#: inc/catalog-filters.php:360
+#, php-format
+msgid "Precio: hasta %s"
+msgstr ""
+
+#. translators: %d: number of stars.
+#: inc/catalog-filters.php:374
+#, php-format
+msgid "Valoración: %d estrella"
+msgid_plural "Valoración: %d estrellas"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/catalog-filters.php:382
+#: template-parts/catalog/filters.php:81
+msgid "Solo disponibles"
+msgstr ""
+
+#: inc/catalog-filters.php:388
+#: template-parts/catalog/filters.php:84
+msgid "En oferta"
+msgstr ""
+
+#: inc/catalog-filters.php:434
+#: inc/catalog-filters.php:467
+msgid "producto"
+msgid_plural "productos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/catalog-filters.php:438
+msgid "(filtro activo, pulsa para quitarlo)"
+msgstr ""
+
+#: inc/catalog-filters.php:522
+msgid "Quitar todos los filtros"
+msgstr ""
+
+#: inc/contact.php:27
+msgid "Escribe el número con código de país, por ejemplo 51 999 888 777."
+msgstr ""
+
+#. Template Name of the theme
+#: inc/contact.php:36
+msgid "Contacto"
+msgstr ""
+
+#: inc/contact.php:37
+msgid "Canales que se muestran en la página de contacto. Los botones de WhatsApp aparecen cuando hay un número configurado. Deja vacío lo que Frave aún no haya confirmado."
+msgstr ""
+
+#: inc/contact.php:53
+msgid "Número de WhatsApp"
+msgstr ""
+
+#: inc/contact.php:54
+msgid "Con código de país. Para un celular de Perú basta con los 9 dígitos."
+msgstr ""
+
+#: inc/contact.php:63
+#: inc/contact.php:188
+msgid "Hola, tengo una consulta sobre los productos de Frave."
+msgstr ""
+
+#: inc/contact.php:70
+msgid "Mensaje inicial"
+msgstr ""
+
+#: inc/contact.php:71
+msgid "En las fichas de producto se usa un mensaje con el nombre y el enlace del producto."
+msgstr ""
+
+#: inc/contact.php:78
+msgid "Mostrar el botón flotante (no aparece en el checkout)"
+msgstr ""
+
+#: inc/contact.php:79
+msgid "Mostrar «Consultar por WhatsApp» en las fichas de producto"
+msgstr ""
+
+#: inc/contact.php:100
+msgid "Correo de atención"
+msgstr ""
+
+#: inc/contact.php:101
+msgid "Teléfono de atención"
+msgstr ""
+
+#: inc/contact.php:102
+msgid "Horario de atención"
+msgstr ""
+
+#: inc/contact.php:103
+msgid "Dirección o zona de cobertura"
+msgstr ""
+
+#: inc/contact.php:137
+msgid "WhatsApp"
+msgstr ""
+
+#: inc/contact.php:142
+msgid "Correo"
+msgstr ""
+
+#: inc/contact.php:147
+msgid "Teléfono"
+msgstr ""
+
+#: inc/contact.php:152
+msgid "Horario"
+msgstr ""
+
+#: inc/contact.php:157
+msgid "Dirección"
+msgstr ""
+
+#. translators: 1: product name, 2: product URL.
+#: inc/contact.php:185
+#, php-format
+msgid "Hola, quiero consultar por este producto: %1$s %2$s"
+msgstr ""
+
+#: inc/contact.php:218
+msgid "Consultar por WhatsApp"
+msgstr ""
+
+#: inc/enqueue.php:57
+msgid "Frave no encuentra los assets compilados. Ejecuta npm run build en la carpeta del tema."
+msgstr ""
+
+#: inc/institutional.php:18
+msgid "Enlaces legales del pie"
+msgstr ""
+
+#: inc/institutional.php:19
+msgid "Frave: páginas institucionales"
+msgstr ""
+
+#: inc/institutional.php:98
+msgid "En esta página"
+msgstr ""
+
+#: inc/institutional.php:225
+#: inc/institutional.php:236
+msgid "Enlaces legales"
+msgstr ""
+
+#: inc/setup.php:40
+msgid "Navegación del pie"
+msgstr ""
+
+#: inc/setup.php:59
+msgid "Inicio"
+msgstr ""
+
+#: inc/setup.php:61
+msgid "Tienda"
+msgstr ""
+
+#: page-templates/contacto.php:17
+msgid "CONTACTO"
+msgstr ""
+
+#: page-templates/contacto.php:29
+msgid "Escríbenos"
+msgstr ""
+
+#: page-templates/contacto.php:34
+msgid "Activa el plugin Frave Perú para mostrar el formulario de contacto."
+msgstr ""
+
+#. Template Name of the theme
+msgid "Política o texto legal"
+msgstr ""
+
+#: page-templates/politica.php:17
+msgid "INFORMACIÓN LEGAL"
+msgstr ""
+
+#. translators: %s: date the page was last modified.
+#: page-templates/politica.php:22
+#, php-format
+msgid "Última actualización: %s"
+msgstr ""
+
+#. translators: %s: date the page was last modified.
+#: page-templates/politica.php:22
+msgid "j \\d\\e F \\d\\e Y"
+msgstr ""
+
+#: page-templates/politica.php:32
+msgid "Otras políticas"
+msgstr ""
+
+#. Template Name of the theme
+msgid "Preguntas frecuentes"
+msgstr ""
+
+#: page-templates/preguntas-frecuentes.php:18
+msgid "AYUDA"
+msgstr ""
+
+#: page-templates/preguntas-frecuentes.php:30
+msgid "¿No encontraste tu respuesta?"
+msgstr ""
+
+#: page-templates/preguntas-frecuentes.php:31
+msgid "Escríbenos y te ayudamos a elegir o a resolver tu consulta."
+msgstr ""
+
+#: page-templates/preguntas-frecuentes.php:34
+msgid "Ir a contacto"
+msgstr ""
+
+#: page-templates/preguntas-frecuentes.php:39
+#: template-parts/components/contact-channels.php:22
+msgid "Escribir por WhatsApp"
+msgstr ""
+
+#: page.php:10
+msgid "FRAVE"
+msgstr ""
+
+#: patterns/cambios-devoluciones.php
+msgctxt "Pattern title"
+msgid "Cambios y devoluciones (estructura)"
+msgstr ""
+
+#: patterns/cambios-devoluciones.php
+msgctxt "Pattern description"
+msgid "Secciones de una política de cambios y devoluciones para perfumería. No es texto legal: completa cada [PENDIENTE] con las condiciones revisadas por Frave y su asesoría legal."
+msgstr ""
+
+#: patterns/politica-envios.php
+msgctxt "Pattern title"
+msgid "Política de envíos (estructura)"
+msgstr ""
+
+#: patterns/politica-envios.php
+msgctxt "Pattern description"
+msgid "Secciones de una política de envíos. Completa cada [PENDIENTE] con las condiciones operativas confirmadas por Frave."
+msgstr ""
+
+#: patterns/politica-privacidad.php
+msgctxt "Pattern title"
+msgid "Política de privacidad (estructura)"
+msgstr ""
+
+#: patterns/politica-privacidad.php
+msgctxt "Pattern description"
+msgid "Secciones habituales de una política de privacidad en Perú (Ley 29733). No es texto legal: completa cada [PENDIENTE] con el texto revisado por la asesoría legal de Frave."
+msgstr ""
+
+#: patterns/preguntas-frecuentes.php
+msgctxt "Pattern title"
+msgid "Preguntas frecuentes (estructura)"
+msgstr ""
+
+#: patterns/preguntas-frecuentes.php
+msgctxt "Pattern description"
+msgid "Grupos de preguntas con bloques Detalles. Sustituye cada [PENDIENTE] por la respuesta aprobada por Frave y usa la plantilla «Preguntas frecuentes»."
+msgstr ""
+
+#: patterns/terminos-condiciones.php
+msgctxt "Pattern title"
+msgid "Términos y condiciones (estructura)"
+msgstr ""
+
+#: patterns/terminos-condiciones.php
+msgctxt "Pattern description"
+msgid "Secciones habituales de los términos de una tienda en línea en Perú. No es texto legal: completa cada [PENDIENTE] con el texto revisado por la asesoría legal de Frave."
+msgstr ""
+
+#: search.php:11
+msgid "BÚSQUEDA"
+msgstr ""
+
+#. translators: %s: search query.
+#: search.php:12
+#, php-format
+msgid "Resultados para “%s”"
+msgstr ""
+
+#: template-parts/catalog/active-filters.php:14
+msgid "Filtros activos"
+msgstr ""
+
+#: template-parts/catalog/active-filters.php:21
+msgid "(quitar filtro)"
+msgstr ""
+
+#: template-parts/catalog/active-filters.php:26
+msgid "Quitar todos"
+msgstr ""
+
+#: template-parts/catalog/filters.php:29
+msgid "Filtrar productos"
+msgstr ""
+
+#: template-parts/catalog/filters.php:32
+msgid "Cerrar filtros"
+msgstr ""
+
+#: template-parts/catalog/filters.php:39
+msgid "Categorías"
+msgstr ""
+
+#: template-parts/catalog/filters.php:42
+msgid "Todos los productos"
+msgstr ""
+
+#: template-parts/catalog/filters.php:51
+msgid "Precio"
+msgstr ""
+
+#. translators: %s: currency symbol.
+#: template-parts/catalog/filters.php:60
+#, php-format
+msgid "Desde (%s)"
+msgstr ""
+
+#. translators: %s: currency symbol.
+#: template-parts/catalog/filters.php:65
+#, php-format
+msgid "Hasta (%s)"
+msgstr ""
+
+#: template-parts/catalog/filters.php:69
+msgid "Aplicar precio"
+msgstr ""
+
+#: template-parts/catalog/filters.php:77
+msgid "Disponibilidad y ofertas"
+msgstr ""
+
+#: template-parts/catalog/filters.php:107
+msgid "Valoración"
+msgstr ""
+
+#. translators: %s: number of products.
+#: template-parts/catalog/filters.php:115
+#, php-format
+msgid "Ver %s producto"
+msgid_plural "Ver %s productos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/catalog/filters.php:119
+msgid "Quitar filtros"
+msgstr ""
+
+#: template-parts/catalog/toolbar.php:13
+msgid "Filtrar"
+msgstr ""
+
+#: template-parts/catalog/toolbar.php:17
+msgid "filtro activo"
+msgid_plural "filtros activos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/components-search.php:11
+msgid "Busca fragancias, esencias e insumos"
+msgstr ""
+
+#: template-parts/components-search.php:14
+msgid "Buscar"
+msgstr ""
+
+#. translators: %d: number of products in the cart.
+#: template-parts/components/cart-link.php:15
+#, php-format
+msgid "Carrito, %d producto"
+msgid_plural "Carrito, %d productos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/components/contact-channels.php:12
+msgid "Canales de atención"
+msgstr ""
+
+#: template-parts/components/contact-channels.php:35
+msgid "Escríbenos mediante el formulario y te responderemos por correo."
+msgstr ""
+
+#: template-parts/components/contact-channels.php:39
+msgid "¿Quieres registrar un reclamo o una queja?"
+msgstr ""
+
+#: template-parts/components/contact-channels.php:40
+msgid "Usa el Libro de Reclamaciones"
+msgstr ""
+
+#: template-parts/components/empty-state.php:2
+msgid "SIN RESULTADOS"
+msgstr ""
+
+#: template-parts/components/empty-state.php:3
+msgid "Todavía no hay contenido aquí."
+msgstr ""
+
+#: template-parts/components/empty-state.php:4
+msgid "Prueba otra búsqueda o vuelve a la tienda para seguir explorando."
+msgstr ""
+
+#: template-parts/components/empty-state.php:6
+#: template-parts/components/mini-cart.php:31
+#: template-parts/sections/hero.php:7
+msgid "Explorar productos"
+msgstr ""
+
+#: template-parts/components/mini-cart.php:19
+msgid "Producto añadido al carrito."
+msgstr ""
+
+#: template-parts/components/mini-cart.php:21
+msgid "Tu carrito"
+msgstr ""
+
+#: template-parts/components/mini-cart.php:24
+msgid "Cerrar carrito"
+msgstr ""
+
+#: template-parts/components/whatsapp-button.php:13
+msgid "¿Dudas? Escríbenos"
+msgstr ""
+
+#: template-parts/components/whatsapp-button.php:14
+msgid "por WhatsApp (se abre en una nueva pestaña)"
+msgstr ""
+
+#: template-parts/sections/categories.php:24
+#: template-parts/sections/shop-cta.php:8
+msgid "EXPLORA FRAVE"
+msgstr ""
+
+#: template-parts/sections/categories.php:25
+msgid "Encuentra lo que imaginas"
+msgstr ""
+
+#: template-parts/sections/categories.php:27
+msgid "Ver toda la tienda"
+msgstr ""
+
+#: template-parts/sections/featured-products.php:36
+msgid "SELECCIÓN FRAVE"
+msgstr ""
+
+#: template-parts/sections/featured-products.php:37
+msgid "Inspírate para crear"
+msgstr ""
+
+#: template-parts/sections/featured-products.php:39
+msgid "Ver todos los productos"
+msgstr ""
+
+#: template-parts/sections/guide.php:4
+msgid "Explora aromas"
+msgstr ""
+
+#: template-parts/sections/guide.php:4
+msgid "Descubre fragancias y esencias para inspirar tu próxima idea."
+msgstr ""
+
+#: template-parts/sections/guide.php:5
+msgid "Elige insumos"
+msgstr ""
+
+#: template-parts/sections/guide.php:5
+msgid "Encuentra materias primas y complementos para tu proceso creativo."
+msgstr ""
+
+#: template-parts/sections/guide.php:6
+msgid "Crea a tu manera"
+msgstr ""
+
+#: template-parts/sections/guide.php:6
+msgid "Combina posibilidades y da forma a un proyecto propio."
+msgstr ""
+
+#: template-parts/sections/guide.php:13
+msgid "TU PROCESO CREATIVO"
+msgstr ""
+
+#: template-parts/sections/guide.php:14
+msgid "Cada creación empieza con una idea"
+msgstr ""
+
+#: template-parts/sections/hero.php:3
+msgid "FRAGANCIAS Y ENVASES"
+msgstr ""
+
+#: template-parts/sections/hero.php:4
+msgid ""
+"El arte de crear\n"
+"tu propia esencia"
+msgstr ""
+
+#: template-parts/sections/hero.php:5
+msgid "Encuentra fragancias, esencias e insumos seleccionados para crear con intención."
+msgstr ""
+
+#: template-parts/sections/hero.php:49
+msgid "Encuentra tu próxima creación"
+msgstr ""
+
+#: template-parts/sections/shop-cta.php:9
+msgid "Encuentra el comienzo de tu próxima creación"
+msgstr ""
+
+#: template-parts/sections/shop-cta.php:10
+msgid "Recorre el catálogo de fragancias, esencias e insumos."
+msgstr ""
+
+#: template-parts/sections/story.php:3
+msgid "ACERCA DE FRAVE"
+msgstr ""
+
+#: template-parts/sections/story.php:4
+msgid "Un espacio para imaginar nuevas esencias"
+msgstr ""
+
+#: template-parts/sections/story.php:5
+msgid "Explora fragancias, esencias e insumos para dar forma a tus ideas. Frave reúne opciones para quienes disfrutan crear y descubrir el mundo de la perfumería."
+msgstr ""
+
+#: template-parts/sections/story.php:29
+msgid "Conoce Frave"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Naranja Frave"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Primario accesible"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Tinta"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Texto secundario"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Superficie"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Borde"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Éxito"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Aviso"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Error"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Blanco"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "XS"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "S"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "M"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "L"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "XL"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "2XL"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Lato"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Pequeño"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Mediano"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Grande"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra grande"
+msgstr ""

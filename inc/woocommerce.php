@@ -38,13 +38,22 @@ function frave_loop_columns(): int {
 }
 add_filter( 'loop_shop_columns', 'frave_loop_columns' );
 
-/** Refresh the custom header count after classic cart updates, only on the cart page. */
+/**
+ * Refresh the header count and mini-cart on every page. With full-page caching the
+ * HTML may hold another visitor's cart; fragments replace it from the visitor's session
+ * (one request per session, then cached in sessionStorage).
+ */
 function frave_enqueue_cart_fragments(): void {
-	if ( class_exists( 'WooCommerce' ) && is_cart() ) {
+	if ( class_exists( 'WooCommerce' ) ) {
 		wp_enqueue_script( 'wc-cart-fragments' );
 	}
 }
 add_action( 'wp_enqueue_scripts', 'frave_enqueue_cart_fragments', 20 );
+
+/** The drawer duplicates the cart and checkout pages, so it is left out there. */
+function frave_show_mini_cart(): bool {
+	return class_exists( 'WooCommerce' ) && ! is_cart() && ! is_checkout();
+}
 
 /** Keep the custom header cart link in sync with WooCommerce AJAX fragments. */
 function frave_cart_link_fragment( array $fragments ): array {

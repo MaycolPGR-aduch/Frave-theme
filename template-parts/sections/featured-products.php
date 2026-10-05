@@ -4,21 +4,26 @@ if ( ! class_exists( 'WooCommerce' ) ) {
 	return;
 }
 
-$products = wc_get_products( array(
-	'status'  => 'publish',
-	'limit'   => 4,
+// Respect catalog visibility and the "hide out of stock items" setting, as the shop does.
+$query_args = array(
+	'status'     => 'publish',
+	'limit'      => 4,
+	'visibility' => 'catalog',
+);
+if ( 'yes' === get_option( 'woocommerce_hide_out_of_stock_items' ) ) {
+	$query_args['stock_status'] = 'instock';
+}
+
+$products = wc_get_products( array_merge( $query_args, array(
 	'featured' => true,
-	'orderby' => 'menu_order',
-	'order'   => 'DESC',
-) );
+	'orderby'  => array( 'menu_order' => 'ASC', 'date' => 'DESC' ),
+) ) );
 
 if ( empty( $products ) ) {
-	$products = wc_get_products( array(
-		'status'  => 'publish',
-		'limit'   => 4,
+	$products = wc_get_products( array_merge( $query_args, array(
 		'orderby' => 'date',
 		'order'   => 'DESC',
-	) );
+	) ) );
 }
 if ( empty( $products ) ) {
 	return;

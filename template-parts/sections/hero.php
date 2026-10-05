@@ -13,13 +13,13 @@ $image_alt = is_array( $image ) ? ( $image['alt'] ?? '' ) : '';
 ?>
 <section class="hero" aria-labelledby="hero-title">
 	<div class="container hero__inner">
-		<div class="hero__copy" data-reveal="up">
+		<div class="hero__copy">
 			<p class="eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
 			<h1 id="hero-title"><?php echo nl2br( esc_html( $title ), false ); ?></h1>
-			<p class="hero__description"><?php echo esc_html( $copy ); ?></p>
+			<p class="hero__description"><?php echo nl2br( esc_html( wp_strip_all_tags( (string) $copy ) ), false ); ?></p>
 			<?php frave_button( (string) $button, (string) $button_url ); ?>
 		</div>
-		<div class="hero__visual<?php echo $image_url ? ' hero__visual--image' : ''; ?>" data-reveal="scale" data-reveal-delay="1">
+		<div class="hero__visual<?php echo $image_url ? ' hero__visual--image' : ''; ?>">
 			<?php if ( $image_id ) : ?>
 				<?php
 				echo wp_get_attachment_image(
