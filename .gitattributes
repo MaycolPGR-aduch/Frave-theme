@@ -13,8 +13,7 @@
 *.xlsx binary
 
 # Not deployed: development tooling, sources and internal documentation.
-# git archive (npm run package, bin/deploy-cpanel.sh) leaves these out of the theme.
-/.cpanel.yml export-ignore
+# git archive (npm run package, bin/deploy.sh) leaves these out of the theme.
 /.editorconfig export-ignore
 /.gitattributes export-ignore
 /.github export-ignore
