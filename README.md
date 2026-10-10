@@ -9,7 +9,7 @@ Tema clásico personalizado para Frave, una tienda de fragancias, esencias e ins
 - [ARQUITECTURA.MD](ARQUITECTURA.MD): límites del sistema, módulos e integraciones.
 - [GUIA_COMPILACION.MD](GUIA_COMPILACION.MD): desarrollo local, build y validación de assets.
 - [GUIA_DESPLIEGUE_LOCAL.MD](GUIA_DESPLIEGUE_LOCAL.MD): instalación local de WordPress y Frave desde cero en Windows.
-- [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD): entrega del tema y datos por completar al elegir hosting.
+- [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD): despliegue en Hostinger y flujo de trabajo entre local y la web real.
 - [GUIA_CATALOGO.md](GUIA_CATALOGO.md): propuesta de categorías y atributos, y preparación del catálogo.
 - [PLAN_CONTENIDO_INSTITUCIONAL.md](PLAN_CONTENIDO_INSTITUCIONAL.md): estructura propuesta para las páginas institucionales.
 - [PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx](PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx): columnas del importador nativo de WooCommerce para preparar productos.
@@ -77,7 +77,7 @@ El build genera CSS, módulos JavaScript, fuentes y `assets/dist/manifest.json`.
 
 El repositorio contiene solo el tema. La instalación local de WordPress está en `D:/Frave-web/.local-wordpress/wordpress/`, fuera del repositorio del tema. Está conectada a MySQL local por el puerto `3307`; el servidor PHP atiende `http://127.0.0.1:8080`. No subas `wp-config.php`, contraseñas ni datos de clientes.
 
-El entorno de desarrollo usa PHP 8.3 de Laragon y tiene WooCommerce y ACF Free instalados. La cuenta local de WordPress es `fraveadmin`; la contraseña de desarrollo se guarda fuera del tema en `D:/Frave-web/.local-wordpress/local-admin-password.txt`. Para volver a iniciar el servidor PHP desde PowerShell:
+El entorno de desarrollo usa PHP 8.3 de Laragon y tiene WooCommerce y ACF Free instalados. La cuenta local de WordPress es `fraveadmin`; la contraseña de desarrollo se guarda fuera del tema en `D:/Frave-web/.local-wordpress/local-admin-password.txt`. Para arrancar todo de una vez, abre `D:/Frave-web/Iniciar Frave.cmd`; para apagarlo, `Detener Frave.cmd` (ver [GUIA_DESPLIEGUE_LOCAL.MD](GUIA_DESPLIEGUE_LOCAL.MD#arranque-diario)). Para volver a iniciar solo el servidor PHP desde PowerShell:
 
 ```powershell
 & 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' -S 127.0.0.1:8080 -t 'D:\Frave-web\.local-wordpress\wordpress'

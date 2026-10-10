@@ -139,16 +139,45 @@ Este checklist verifica el entorno **local**. La pasarela real, las tarifas, los
 
 ## Arranque diario
 
-Cuando la instalación ya existe, no repitas la descarga ni el asistente. Inicia la instancia MySQL de Frave en el puerto `3307` con tu configuración local y abre dos terminales:
+Cuando la instalación ya existe, no repitas la descarga ni el asistente.
+
+### Con doble clic (este equipo)
+
+En `D:\Frave-web` hay dos accesos:
+
+- **`Iniciar Frave.cmd`** arranca, en este orden, MySQL (`3307`), Mailpit (`8025`), el servidor PHP de WordPress (`8080`) y Vite (`5173`). Después abre la web en el navegador. Los servicios que ya estaban en marcha no se tocan, y si alguno falla, la ventana muestra las últimas líneas de su registro.
+- **`Detener Frave.cmd`** los apaga. MySQL se cierra de forma ordenada con `mysqladmin shutdown`. Solo se detiene el programa esperado en cada puerto.
+
+Los servicios funcionan sin ventanas propias y escriben su salida en `D:\Frave-web\.local-wordpress\logs\`. Los scripts que usan estos accesos están en `.local-wordpress\bin\`, fuera de Git, porque contienen las rutas de este equipo. En otro equipo, cambia las rutas que aparecen al principio de `iniciar-frave.ps1`.
+
+El servidor PHP se inicia con `SMTP=127.0.0.1` y `smtp_port=1025`, así que los correos de WordPress y WooCommerce no salen a Internet: se ven en `http://127.0.0.1:8025/`.
+
+### A mano
+
+Abre una ventana de **Windows PowerShell** por servicio y déjala abierta mientras uses la web. Arranca primero MySQL y espera el mensaje `ready for connections`:
 
 ```powershell
-& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' -S 127.0.0.1:8080 -t 'D:\Frave-web\.local-wordpress\wordpress'
+& 'C:\laragon\bin\mysql\mysql-8.4.3-winx64\bin\mysqld.exe' --datadir=D:/Frave-web/.local-wordpress/db-data --port=3307 --bind-address=127.0.0.1 --mysqlx=OFF --console
+```
+
+```powershell
+& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' -d SMTP=127.0.0.1 -d smtp_port=1025 -S 127.0.0.1:8080 -t 'D:\Frave-web\.local-wordpress\wordpress'
 ```
 
 ```powershell
 cd D:\Frave-web\frave
 npm.cmd run dev
 ```
+
+Mailpit es opcional; arráncalo si vas a revisar correos:
+
+```powershell
+& 'C:\laragon\bin\mailpit\1.22.3\mailpit.exe' --listen 127.0.0.1:8025 --smtp 127.0.0.1:1025
+```
+
+Para apagar, pulsa `Ctrl + C` en cada ventana. Detén MySQL en último lugar.
+
+No uses **Start All** de Laragon para esta instalación: arranca otra instancia MySQL con otros datos.
 
 Abre `http://127.0.0.1:8080/` para ver la web y `http://127.0.0.1:8080/wp-admin/` para editarla.
 
@@ -170,3 +199,4 @@ Para reproducir **exactamente** el contenido de otra instalación se necesita ta
 | Fecha | Cambio |
 | --- | --- |
 | 2026-09-23 | Guía inicial para reconstruir el entorno local Frave en Windows. |
+| 2026-10-07 | Accesos `Iniciar Frave` y `Detener Frave`, arranque manual de MySQL y correos de prueba en Mailpit. |
