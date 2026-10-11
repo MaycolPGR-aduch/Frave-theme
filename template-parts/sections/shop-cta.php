@@ -9,6 +9,6 @@ $shop_url = frave_catalog_shop_url();
 			<h2 id="shop-cta-heading"><?php echo esc_html( frave_field( 'frave_cta_title', __( 'Encuentra el comienzo de tu próxima creación', 'frave' ) ) ); ?></h2>
 			<p><?php echo esc_html( frave_field( 'frave_cta_text', __( 'Recorre el catálogo de sabores, fragancias y envases.', 'frave' ) ) ); ?></p>
 		</div>
-		<?php frave_button( (string) frave_field( 'frave_cta_button', __( 'Ver el catálogo', 'frave' ) ), $shop_url, 'button button--light' ); ?>
+		<?php frave_button( (string) frave_field( 'frave_cta_button', __( 'Ver el catálogo', 'frave' ) ), $shop_url, 'btn btn--light' ); ?>
 	</div>
 </section>

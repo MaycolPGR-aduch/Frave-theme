@@ -1,5 +1,17 @@
+/*
+ * Layer order, fixed before any import: the design system files below open "components"
+ * before this file opens "base", and the first mention would otherwise set the order.
+ */
+@layer theme, utilities, base, components;
 @import "tailwindcss/theme.css" layer(theme);
 @import "tailwindcss/utilities.css" layer(utilities) source(none);
+/* Design system (fase 2): typography, buttons, surfaces, shapes, motion and carousel. */
+@import "./system/typography.css";
+@import "./system/buttons.css";
+@import "./system/surfaces.css";
+@import "./system/shapes.css";
+@import "./system/motion.css";
+@import "./system/carousel.css";
 @source "../../../**/*.php";
 @source "../js/**/*.js";
 @source not "../../../tests";
@@ -21,6 +33,15 @@
   --color-warning: #9c6b1b;
   --color-error: #b42318;
   --color-white: #ffffff;
+  /* Corporate dark surfaces: the brand orange reads 5.4:1 on night, so it works as text there. */
+  --color-night: #121418;
+  --color-night-2: #1c1f25;
+  --color-on-dark: #f4f2ef;
+  --color-on-dark-muted: #a9a7a3;
+  --color-primary-hover: #a83200;
+  --color-orange-soft: #fff1ea;
+  --color-orange-tint: #ffe1d1;
+  --color-surface-2: #efebe6;
   /* WhatsApp's dark green: 5:1 with white text (the light brand green is only 2:1). */
   --color-whatsapp: #0f7d6f;
   --color-whatsapp-dark: #075e54;
@@ -31,9 +52,25 @@
   :root {
     color-scheme: light;
     --site-gutter: clamp(1.125rem, 5vw, 4.5rem);
-    --header-height: 5.25rem;
+    --header-height: 6rem;
     --radius-card: 1.15rem;
+    --radius-sm: 0.75rem;
+    --radius-md: 1.25rem;
+    --radius-lg: 2rem;
+    --radius-xl: clamp(2rem, 4vw, 3.25rem);
     --shadow-soft: 0 1rem 3rem rgb(32 35 41 / 8%);
+    --shadow-lift: 0 1.5rem 3.5rem rgb(18 20 24 / 14%);
+    --shadow-header: 0 0.75rem 2.25rem rgb(18 20 24 / 10%);
+    --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+    --duration-fast: 160ms;
+    --duration: 320ms;
+    --duration-slow: 750ms;
+    --section-space: clamp(4.5rem, 9vw, 8rem);
+    --text-display: clamp(3rem, 7vw, 6.25rem);
+    --text-h1: clamp(2.6rem, 5.4vw, 4.6rem);
+    --text-h2: clamp(2.1rem, 4vw, 3.4rem);
+    --text-h3: clamp(1.3rem, 2vw, 1.6rem);
+    --text-lead: clamp(1.1rem, 1.6vw, 1.3rem);
   }
 
   *,
@@ -56,6 +93,8 @@
     min-width: 320px;
     font-size: 1rem;
     line-height: 1.6;
+    /* Decorations bleed to the edges without a horizontal scrollbar; clip keeps sticky working. */
+    overflow-x: clip;
   }
 
   img,
@@ -111,12 +150,29 @@
     letter-spacing: -0.035em;
   }
 
+  /* Large titles are light, as in the reference; <strong> or a pill carries the emphasis. */
+  h1,
+  h2 {
+    font-weight: 300;
+    line-height: 1.06;
+  }
+
   h1 {
-    font-size: clamp(2.75rem, 6.5vw, 5.75rem);
+    font-size: var(--text-h1);
   }
 
   h2 {
-    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-size: var(--text-h2);
+  }
+
+  h1 strong,
+  h2 strong {
+    font-weight: 700;
+  }
+
+  /* Small headings of panels, forms, WooCommerce and the footer stay bold. */
+  :where(.site-footer, .catalog-filters, .mini-cart, .woocommerce, .contact-channels, .contact-form-section, .faq-help, .legal-page__others, .page-index, .product-inquiry, .frave-claims, .empty-state) h2 {
+    font-weight: 700;
   }
 
   p:last-child {
@@ -138,6 +194,8 @@
 
   .site-content {
     flex: 1;
+    /* The floating header overlays the page; content starts below it. */
+    padding-top: var(--header-height);
   }
 
   .skip-link {
@@ -161,17 +219,49 @@
     border: 0;
   }
 
+  /*
+   * Floating header: a transparent sticky band holding a frosted capsule. It overlays the
+   * top of the page (negative margin) so dark page heroes run behind it.
+   */
   .site-header {
-    @apply sticky top-0 z-80 bg-white;
-    border-bottom: 1px solid var(--color-line);
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    height: var(--header-height);
+    margin-bottom: calc(-1 * var(--header-height));
+    padding-top: 0.75rem;
+    pointer-events: none;
   }
 
   .site-header__inner {
-    min-height: var(--header-height);
+    position: relative;
+    min-height: 4.5rem;
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 1rem;
+    padding: 0.4rem 0.55rem 0.4rem 1.35rem;
+    border: 1px solid rgb(229 225 220 / 80%);
+    border-radius: 1.35rem;
+    /* Solid white: the logo file has a white background that a translucent bar would show. */
+    background: #fff;
+    box-shadow: 0 0.5rem 1.75rem rgb(18 20 24 / 7%);
+    pointer-events: auto;
+    transition:
+      box-shadow var(--duration) var(--ease-out),
+      border-color var(--duration) ease;
+  }
+
+  .site-header.is-scrolled .site-header__inner {
+    border-color: transparent;
+    box-shadow: var(--shadow-lift);
+  }
+
+  /* WordPress's toolbar for signed-in users is fixed above the page from 783px. */
+  @media (min-width: 783px) {
+    .admin-bar .site-header {
+      top: 32px;
+    }
   }
 
   .site-branding {
@@ -329,14 +419,43 @@
   }
 
   .sub-menu a {
-    display: block;
-    padding: 0.7rem 0.9rem;
-    border-radius: 0.65rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.6rem 0.75rem;
+    border-radius: 0.8rem;
     color: var(--color-ink);
     font-size: 0.92rem;
     font-weight: 700;
     line-height: 1.3;
     transition: background-color 140ms ease, color 140ms ease;
+  }
+
+  .menu-item__icon {
+    display: grid;
+    flex: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border-radius: 0.8rem;
+    background: var(--color-orange-soft);
+    color: var(--color-primary);
+    transition: background-color 140ms ease, color 140ms ease;
+  }
+
+  .menu-item__icon svg {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .sub-menu a:hover .menu-item__icon,
+  .sub-menu a:focus-visible .menu-item__icon {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .menu-item__text {
+    display: block;
   }
 
   .sub-menu a:hover,
@@ -422,9 +541,9 @@
   .mobile-menu-backdrop {
     position: fixed;
     z-index: 70;
-    inset: var(--header-height) 0 0;
-    background: rgb(32 35 41 / 45%);
-    backdrop-filter: blur(2px);
+    inset: 0;
+    background: rgb(18 20 24 / 50%);
+    backdrop-filter: blur(3px);
   }
 
   .search-strip {
@@ -433,10 +552,27 @@
   }
 
   .product-search {
-    @apply flex items-center gap-3 rounded-full bg-white p-1.5 pl-5;
+    @apply flex items-center gap-3 rounded-full bg-white;
     max-width: 44rem;
     margin-inline: auto;
+    padding: 0.4rem 0.4rem 0.4rem 1.35rem;
     border: 1px solid var(--color-line);
+    transition:
+      border-color var(--duration-fast) ease,
+      box-shadow var(--duration-fast) ease;
+  }
+
+  /* The field has no outline of its own; the whole pill shows the focus. */
+  .product-search:focus-within {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgb(252 76 2 / 16%);
+  }
+
+  .page-hero__search .product-search {
+    max-width: none;
+    margin-inline: 0;
+    border-color: transparent;
+    box-shadow: var(--shadow-lift);
   }
 
   .product-search input[type="search"] {
@@ -452,12 +588,13 @@
   }
 
   .product-search__submit {
-    @apply inline-flex shrink-0 items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-bold text-white transition-colors;
+    @apply inline-flex shrink-0 items-center gap-2 rounded-full bg-primary px-5 text-sm font-bold text-white transition-colors;
+    min-height: 2.9rem;
     border: 0;
   }
 
   .product-search__submit:hover {
-    background: var(--color-brand-orange-dark);
+    background: var(--color-primary-hover);
   }
 
   .hero {
@@ -501,7 +638,19 @@
 
   .eyebrow {
     @apply mb-4 text-xs font-bold uppercase tracking-[0.2em];
-    color: var(--color-brand-orange-dark);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--color-primary);
+  }
+
+  .eyebrow::before {
+    flex: none;
+    width: 1.6rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-brand-orange);
+    content: "";
   }
 
   .hero h1 {
@@ -537,8 +686,8 @@
   }
 
   .button--primary:hover {
-    background: var(--color-brand-orange-dark);
-    box-shadow: 0 0.5rem 1.5rem rgb(252 76 2 / 20%);
+    background: var(--color-primary-hover);
+    box-shadow: 0 0.75rem 1.75rem rgb(196 59 0 / 28%);
   }
 
   .button--secondary {
@@ -692,7 +841,7 @@
   }
 
   .section {
-    padding-block: clamp(4rem, 8vw, 7.5rem);
+    padding-block: var(--section-space);
   }
 
   .reveal-ready {
@@ -1068,6 +1217,35 @@
     object-fit: cover;
   }
 
+  /* Image frame of product cards (inc/woocommerce.php), for the hover zoom. */
+  .product-card__media {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .woocommerce ul.products li.product .product-card__media img {
+    margin: 0 !important;
+    border-radius: 0;
+    transition: transform 700ms var(--ease-out);
+  }
+
+  .woocommerce ul.products li.product:hover .product-card__media img {
+    transform: scale(1.05);
+  }
+
+  .product-card__category {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
   .woocommerce ul.products li.product .woocommerce-loop-product__title {
     padding: 0 !important;
     color: var(--color-ink);
@@ -1166,17 +1344,13 @@
     min-height: 35vh;
   }
 
-  .content-container {
+  /* Interior pages: aligned with the header and page hero, with a readable measure. */
+  .content-container > * {
     max-width: 58rem;
   }
 
-  .page-header {
-    margin-bottom: 2.5rem;
-  }
-
-  .page-header h1 {
-    margin-bottom: 0;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
+  .content-container > .contact-page {
+    max-width: none;
   }
 
   .entry-content {
@@ -1269,13 +1443,18 @@
     padding-block: clamp(2.5rem, 6vw, 5rem);
   }
 
-  .woocommerce .woocommerce-products-header {
-    margin-bottom: 2rem;
+  /* Catalog pages start with the page hero, which needs the top of the page. */
+  .frave-woocommerce--catalog {
+    padding-block: 0;
   }
 
-  .woocommerce .woocommerce-products-header__title {
-    margin-bottom: 0.75rem;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
+  .catalog-section {
+    padding-block: clamp(2.5rem, 5vw, 4rem) clamp(4rem, 8vw, 6rem);
+  }
+
+  /* Title and description moved to the page hero (inc/woocommerce.php); the header stays empty. */
+  .woocommerce .woocommerce-products-header {
+    display: none;
   }
 
   .woocommerce .woocommerce-result-count {
@@ -1500,9 +1679,54 @@
   }
 
   .site-footer {
-    padding-top: clamp(3rem, 6vw, 5rem);
-    background: #202329;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-top: clamp(3.5rem, 7vw, 6rem);
+    background: var(--color-night);
+    color: var(--color-on-dark);
+  }
+
+  .site-footer__decor {
+    position: absolute;
+    z-index: -1;
+    top: -2.5rem;
+    right: -4rem;
+    width: clamp(16rem, 30vw, 28rem);
+    color: rgb(255 255 255 / 4.5%);
+    pointer-events: none;
+  }
+
+  .site-footer__decor .isotype {
+    width: 100%;
+    height: auto;
+    stroke-width: 1.2;
+  }
+
+  .site-footer__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    border-bottom: 1px solid rgb(255 255 255 / 12%);
+  }
+
+  .site-footer__cta-title {
+    max-width: 36rem;
+    margin: 0;
     color: #fff;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+
+  .site-footer__cta-title strong {
+    color: var(--color-brand-orange);
+    font-weight: 700;
   }
 
   .site-footer__main {
@@ -1536,7 +1760,7 @@
   .site-footer__contact p {
     max-width: 22rem;
     margin-top: 1.25rem;
-    color: #c4c2be;
+    color: var(--color-on-dark-muted);
   }
 
   .site-footer__links h2,
@@ -1552,12 +1776,17 @@
     gap: 0.65rem;
   }
 
-  .site-footer a {
+  .site-footer a:not(.btn) {
     color: #fff !important; /* WooCommerce's unlayered link rule also targets this menu. */
   }
 
-  .site-footer a:hover {
+  .site-footer a:not(.btn):hover {
     color: #ffab80 !important;
+  }
+
+  .site-footer a.link-arrow {
+    display: inline-flex;
+    color: var(--color-brand-orange) !important;
   }
 
   .site-footer__bottom {
@@ -2279,12 +2508,6 @@
     margin-top: 1rem;
   }
 
-  .legal-page__updated {
-    margin: 0.75rem 0 0;
-    color: var(--color-muted);
-    font-size: 0.9rem;
-  }
-
   .legal-page__content {
     max-width: 46rem;
     line-height: 1.75;
@@ -2432,11 +2655,24 @@
 
   .footer-channels {
     display: grid;
-    gap: 0.5rem;
+    gap: 0.65rem;
     margin: 0 0 1rem;
     padding: 0;
     list-style: none;
-    color: #c4c2be;
+    color: var(--color-on-dark-muted);
+  }
+
+  .footer-channels li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .footer-channels .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin-top: 0.2rem;
+    color: var(--color-brand-orange);
   }
 
   .footer-link,
@@ -2451,11 +2687,16 @@
     align-items: center;
     gap: 0.6rem;
     margin-top: 1.25rem;
-    padding: 0.55rem 0.9rem;
-    border: 1px solid rgb(255 255 255 / 40%);
-    border-radius: 0.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid rgb(255 255 255 / 28%);
+    border-radius: 999px;
     font-size: 0.9rem;
     font-weight: 700;
+    transition: border-color var(--duration-fast) ease;
+  }
+
+  .claims-book-link:hover {
+    border-color: var(--color-brand-orange);
   }
 
   .claims-book-link svg {
@@ -3100,11 +3341,18 @@ html .woocommerce-checkout #payment div.payment_box::before {
 
 @media (max-width: 63.99rem) {
   :root {
-    --header-height: 4.75rem;
+    --header-height: 5.25rem;
+  }
+
+  .site-header {
+    padding-top: 0.6rem;
   }
 
   .site-header__inner {
+    min-height: 4rem;
     grid-template-columns: 3rem 1fr auto;
+    padding: 0.3rem 0.4rem;
+    border-radius: 1.15rem;
   }
 
   .menu-toggle {
@@ -3157,25 +3405,32 @@ html .woocommerce-checkout #payment div.payment_box::before {
     width: clamp(8.5rem, 38vw, 12rem);
   }
 
+  /* The menu drops down as a card under the capsule. */
   html.js .primary-navigation {
     position: fixed;
     z-index: 80;
     top: var(--header-height);
-    bottom: 0;
-    left: 0;
-    width: min(88vw, 24rem);
-    padding: 2rem var(--site-gutter);
+    right: var(--site-gutter);
+    left: var(--site-gutter);
+    max-height: calc(100dvh - var(--header-height) - 1rem);
+    padding: 0.75rem 1.25rem 1.5rem;
     overflow-y: auto;
     visibility: hidden;
-    background: white;
-    box-shadow: var(--shadow-soft);
-    transform: translateX(-105%);
-    transition: transform 220ms ease, visibility 0s linear 220ms;
+    opacity: 0;
+    border-radius: 1.35rem;
+    background: #fff;
+    box-shadow: var(--shadow-lift);
+    transform: translateY(-0.75rem);
+    transition:
+      transform 220ms var(--ease-out),
+      opacity 180ms ease,
+      visibility 0s linear 220ms;
   }
 
   html.js .primary-navigation.is-open {
     visibility: visible;
-    transform: translateX(0);
+    opacity: 1;
+    transform: none;
     transition-delay: 0s;
   }
 
@@ -3254,7 +3509,6 @@ html .woocommerce-checkout #payment div.payment_box::before {
   .sub-menu a {
     padding: 0.65rem 0.75rem;
     font-size: 0.98rem;
-    font-weight: 400;
   }
 
   .header-cta {

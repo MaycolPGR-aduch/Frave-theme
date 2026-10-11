@@ -11,7 +11,7 @@
 <?php wp_body_open(); ?>
 <a class="skip-link" href="#primary"><?php esc_html_e( 'Saltar al contenido', 'frave' ); ?></a>
 <div class="site-shell">
-	<header class="site-header">
+	<header class="site-header" data-site-header>
 		<div class="container site-header__inner">
 			<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle data-label-open="<?php esc_attr_e( 'Abrir menú', 'frave' ); ?>" data-label-close="<?php esc_attr_e( 'Cerrar menú', 'frave' ); ?>">
 				<span class="menu-toggle__icon" aria-hidden="true"><span></span><span></span></span>
@@ -47,7 +47,7 @@
 			<div class="header-actions">
 				<?php if ( class_exists( 'WooCommerce' ) ) : ?>
 					<a class="header-action header-action--search" href="<?php echo esc_url( frave_catalog_shop_url() ); ?>#frave-product-search" aria-label="<?php esc_attr_e( 'Buscar productos', 'frave' ); ?>">
-						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.8" cy="10.8" r="6.4"></circle><path d="m16 16 4.2 4.2"></path></svg>
+						<?php echo frave_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
 					</a>
 				<?php endif; ?>
 				<?php if ( frave_shop_enabled() ) : ?>
@@ -63,8 +63,8 @@
 	<div class="mobile-menu-backdrop" data-menu-backdrop hidden></div>
 	<div class="site-content">
 		<?php
-		// A corporate site keeps the product search to the catalog; a store shows it everywhere.
-		if ( class_exists( 'WooCommerce' ) && ( frave_shop_enabled() || is_woocommerce() || is_search() ) ) {
+		// Catalog pages have the search in their page hero; product pages and a store keep the bar.
+		if ( class_exists( 'WooCommerce' ) && ! frave_is_catalog_archive() && ( frave_shop_enabled() || is_product() ) ) {
 			get_template_part( 'template-parts/components', 'search' );
 		}
 		?>

@@ -38,7 +38,7 @@ if ( ! $about instanceof WP_Post || 'page' !== $about->post_type ) {
 			<h2 id="story-heading"><?php echo esc_html( $heading ); ?></h2>
 			<p><?php echo esc_html( $copy ); ?></p>
 			<?php if ( $about instanceof WP_Post && 'publish' === $about->post_status ) : ?>
-				<?php frave_button( __( 'Conoce Frave', 'frave' ), get_permalink( $about ), 'button button--secondary' ); ?>
+				<?php frave_button( __( 'Conoce Frave', 'frave' ), get_permalink( $about ), 'btn btn--outline' ); ?>
 			<?php endif; ?>
 		</div>
 	</div>

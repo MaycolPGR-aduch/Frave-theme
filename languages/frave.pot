@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Frave 1.2.0\n"
+"Project-Id-Version: Frave 1.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/frave\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-11T03:50:43+00:00\n"
+"POT-Creation-Date: 2026-10-11T05:43:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: frave\n"
@@ -41,62 +41,70 @@ msgstr ""
 #: template-parts/components/empty-state.php:6
 #: template-parts/sections/hero.php:7
 #: template-parts/sections/shop-cta.php:12
+#: template-parts/style-guide.php:119
+#: template-parts/style-guide.php:126
 msgid "Ver el catálogo"
 msgstr ""
 
-#: archive.php:8
-msgid "JOURNAL FRAVE"
+#: archive.php:11
+msgid "BLOG"
 msgstr ""
 
-#: footer.php:11
-msgid "Sabores, fragancias y envases para dar vida a tus productos."
+#: footer.php:23
+msgid "Hablemos"
 msgstr ""
 
-#: footer.php:14
-msgid "Descubre Frave"
+#: footer.php:24
+msgid "¿Tienes un proyecto en mente? <strong>Te asesoramos.</strong>"
 msgstr ""
 
-#. Template Name of the theme
-#: footer.php:28
-#: inc/contact.php:36
-#: inc/navigation.php:111
-msgid "Contacto"
-msgstr ""
-
-#: footer.php:46
-msgid "Escríbenos o solicita una cotización"
-msgstr ""
-
-#: footer.php:49
-msgid "Mi cuenta y pedidos"
-msgstr ""
-
-#: footer.php:54
-msgid "Escríbenos por WhatsApp"
-msgstr ""
-
-#: footer.php:55
+#: footer.php:30
+#: footer.php:38
 #: inc/contact.php:220
 #: inc/contact.php:262
-#: inc/navigation.php:167
-#: inc/navigation.php:280
-#: page-templates/preguntas-frecuentes.php:43
+#: inc/navigation.php:176
+#: inc/navigation.php:332
+#: page-templates/preguntas-frecuentes.php:48
 #: template-parts/components/contact-channels.php:23
 msgid "(se abre en una nueva pestaña)"
 msgstr ""
 
-#: footer.php:62
+#: footer.php:37
+msgid "Escríbenos por WhatsApp"
+msgstr ""
+
+#: footer.php:52
+msgid "Sabores, fragancias y envases para dar vida a tus productos."
+msgstr ""
+
+#: footer.php:55
+msgid "Explora"
+msgstr ""
+
+#. Template Name of the theme
+#: footer.php:69
+#: inc/contact.php:36
+#: inc/navigation.php:115
+#: inc/navigation.php:120
+msgid "Contacto"
+msgstr ""
+
+#: footer.php:90
+msgid "Escríbenos o solicita una cotización"
+msgstr ""
+
+#: footer.php:93
+msgid "Mi cuenta y pedidos"
+msgstr ""
+
+#: footer.php:99
 #: inc/institutional.php:227
-#: inc/navigation.php:97
+#: inc/navigation.php:99
 msgid "Libro de Reclamaciones"
 msgstr ""
 
-#: footer.php:68
+#: footer.php:105
 msgid "Todos los derechos reservados."
-msgstr ""
-
-#: footer.php:70
-msgid "Diseñado para acompañar tu creatividad."
 msgstr ""
 
 #: front-page.php:14
@@ -130,12 +138,12 @@ msgid "Navegación principal"
 msgstr ""
 
 #: header.php:49
-#: template-parts/components-search.php:10
+#: template-parts/components/product-search-form.php:9
 msgid "Buscar productos"
 msgstr ""
 
 #: header.php:54
-#: inc/navigation.php:119
+#: inc/navigation.php:128
 msgid "Mi cuenta"
 msgstr ""
 
@@ -244,7 +252,7 @@ msgid "Dirección o zona de cobertura"
 msgstr ""
 
 #: inc/contact.php:137
-#: inc/navigation.php:89
+#: inc/navigation.php:90
 msgid "WhatsApp"
 msgstr ""
 
@@ -287,27 +295,27 @@ msgstr ""
 msgid "Solicitar cotización"
 msgstr ""
 
-#: inc/enqueue.php:108
+#: inc/enqueue.php:109
 msgid "Frave no encuentra los assets compilados. Ejecuta npm run build en la carpeta del tema."
 msgstr ""
 
-#: inc/helpers.php:41
+#: inc/helpers.php:46
 msgid "TU COMPRA"
 msgstr ""
 
-#: inc/helpers.php:44
+#: inc/helpers.php:49
 msgid "PEDIDO RECIBIDO"
 msgstr ""
 
-#: inc/helpers.php:44
+#: inc/helpers.php:49
 msgid "TU PEDIDO"
 msgstr ""
 
-#: inc/helpers.php:47
+#: inc/helpers.php:52
 msgid "TU CUENTA"
 msgstr ""
 
-#: inc/helpers.php:50
+#: inc/helpers.php:55
 msgid "FRAVE"
 msgstr ""
 
@@ -329,14 +337,17 @@ msgid "Enlaces legales"
 msgstr ""
 
 #: inc/navigation.php:17
+#: template-parts/style-guide.php:22
 msgid "Sabores"
 msgstr ""
 
 #: inc/navigation.php:18
+#: template-parts/style-guide.php:23
 msgid "Fragancias"
 msgstr ""
 
 #: inc/navigation.php:19
+#: template-parts/style-guide.php:24
 msgid "Envases"
 msgstr ""
 
@@ -348,34 +359,36 @@ msgstr ""
 msgid "Nosotros"
 msgstr ""
 
-#: inc/navigation.php:71
+#: inc/navigation.php:72
 msgid "Soluciones"
 msgstr ""
 
-#: inc/navigation.php:78
+#: inc/navigation.php:79
 msgid "Catálogo"
 msgstr ""
 
-#: inc/navigation.php:78
+#: inc/navigation.php:79
 msgid "Tienda"
 msgstr ""
 
-#: inc/navigation.php:105
+#: inc/navigation.php:108
 msgid "Formulario de contacto"
 msgstr ""
 
 #. translators: %s: menu item label.
-#: inc/navigation.php:211
+#: inc/navigation.php:223
 #, php-format
 msgid "Mostrar el submenú de %s"
 msgstr ""
 
-#: inc/navigation.php:253
+#: inc/navigation.php:305
+#: template-parts/style-guide.php:118
+#: template-parts/style-guide.php:125
 msgid "Solicitar asesoría"
 msgstr ""
 
-#: inc/navigation.php:261
-#: page-templates/contacto.php:32
+#: inc/navigation.php:313
+#: page-templates/contacto.php:37
 msgid "Escríbenos"
 msgstr ""
 
@@ -383,15 +396,36 @@ msgstr ""
 msgid "Navegación del pie"
 msgstr ""
 
-#: inc/woocommerce.php:131
+#: inc/style-guide.php:24
+msgid "Sistema visual"
+msgstr ""
+
+#: inc/woocommerce.php:59
+#: search.php:14
+msgid "BÚSQUEDA"
+msgstr ""
+
+#: inc/woocommerce.php:64
+msgid "CATÁLOGO"
+msgstr ""
+
+#: inc/woocommerce.php:68
+msgid "NUESTROS PRODUCTOS"
+msgstr ""
+
+#: inc/woocommerce.php:69
+msgid "Explora nuestras líneas de sabores, fragancias y envases, y solicita una cotización de lo que necesites."
+msgstr ""
+
+#: inc/woocommerce.php:183
 msgid "Ver detalles"
 msgstr ""
 
 #: page-templates/contacto.php:20
-msgid "CONTACTO"
+msgid "ATENCIÓN AL CLIENTE"
 msgstr ""
 
-#: page-templates/contacto.php:37
+#: page-templates/contacto.php:42
 msgid "Activa el plugin Frave Perú para mostrar el formulario de contacto."
 msgstr ""
 
@@ -399,22 +433,21 @@ msgstr ""
 msgid "Política o texto legal"
 msgstr ""
 
-#: page-templates/politica.php:20
-msgid "INFORMACIÓN LEGAL"
-msgstr ""
-
 #. translators: %s: date the page was last modified.
-#: page-templates/politica.php:25
+#: page-templates/politica.php:18
 #, php-format
 msgid "Última actualización: %s"
 msgstr ""
 
-#. translators: %s: date the page was last modified.
-#: page-templates/politica.php:25
+#: page-templates/politica.php:19
 msgid "j \\d\\e F \\d\\e Y"
 msgstr ""
 
-#: page-templates/politica.php:35
+#: page-templates/politica.php:25
+msgid "INFORMACIÓN LEGAL"
+msgstr ""
+
+#: page-templates/politica.php:40
 msgid "Otras políticas"
 msgstr ""
 
@@ -426,19 +459,19 @@ msgstr ""
 msgid "AYUDA"
 msgstr ""
 
-#: page-templates/preguntas-frecuentes.php:33
+#: page-templates/preguntas-frecuentes.php:38
 msgid "¿No encontraste tu respuesta?"
 msgstr ""
 
-#: page-templates/preguntas-frecuentes.php:34
+#: page-templates/preguntas-frecuentes.php:39
 msgid "Escríbenos y te ayudamos a elegir o a resolver tu consulta."
 msgstr ""
 
-#: page-templates/preguntas-frecuentes.php:37
+#: page-templates/preguntas-frecuentes.php:42
 msgid "Ir a contacto"
 msgstr ""
 
-#: page-templates/preguntas-frecuentes.php:42
+#: page-templates/preguntas-frecuentes.php:47
 #: template-parts/components/contact-channels.php:22
 msgid "Escribir por WhatsApp"
 msgstr ""
@@ -493,12 +526,8 @@ msgctxt "Pattern description"
 msgid "Secciones habituales de los términos de una tienda en línea en Perú. No es texto legal: completa cada [PENDIENTE] con el texto revisado por la asesoría legal de Frave."
 msgstr ""
 
-#: search.php:11
-msgid "BÚSQUEDA"
-msgstr ""
-
 #. translators: %s: search query.
-#: search.php:12
+#: search.php:16
 #, php-format
 msgid "Resultados para “%s”"
 msgstr ""
@@ -585,14 +614,6 @@ msgid_plural "filtros activos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: template-parts/components-search.php:11
-msgid "Busca sabores, fragancias y envases"
-msgstr ""
-
-#: template-parts/components-search.php:14
-msgid "Buscar"
-msgstr ""
-
 #. translators: %d: number of products in the cart.
 #: template-parts/components/cart-link.php:15
 #, php-format
@@ -643,6 +664,14 @@ msgstr ""
 
 #: template-parts/components/mini-cart.php:31
 msgid "Explorar productos"
+msgstr ""
+
+#: template-parts/components/product-search-form.php:10
+msgid "Busca sabores, fragancias y envases"
+msgstr ""
+
+#: template-parts/components/product-search-form.php:13
+msgid "Buscar"
 msgstr ""
 
 #: template-parts/components/whatsapp-button.php:13
@@ -749,7 +778,331 @@ msgid "Explora fragancias, esencias e insumos para dar forma a tus ideas. Frave 
 msgstr ""
 
 #: template-parts/sections/story.php:41
+#: template-parts/style-guide.php:120
+#: template-parts/style-guide.php:127
 msgid "Conoce Frave"
+msgstr ""
+
+#: template-parts/style-guide.php:12
+msgid "Superficies oscuras: banda de páginas, pie, secciones de impacto."
+msgstr ""
+
+#: template-parts/style-guide.php:12
+msgid "Blanco 18,4:1 · naranja 5,4:1"
+msgstr ""
+
+#: template-parts/style-guide.php:13
+msgid "Texto principal y botón oscuro."
+msgstr ""
+
+#: template-parts/style-guide.php:13
+msgid "Sobre blanco 15,9:1"
+msgstr ""
+
+#: template-parts/style-guide.php:14
+msgid "Acento: líneas, iconos, píldoras y títulos grandes. Texto solo sobre oscuro."
+msgstr ""
+
+#: template-parts/style-guide.php:14
+msgid "Sobre blanco 3,4:1 (solo texto grande)"
+msgstr ""
+
+#: template-parts/style-guide.php:15
+msgid "Botones con texto blanco, enlaces y textos de acento sobre claro."
+msgstr ""
+
+#: template-parts/style-guide.php:15
+msgid "Blanco 5,3:1"
+msgstr ""
+
+#: template-parts/style-guide.php:16
+msgid "Fondos de iconos y píldoras suaves."
+msgstr ""
+
+#: template-parts/style-guide.php:16
+msgid "Primario encima 4,8:1"
+msgstr ""
+
+#: template-parts/style-guide.php:17
+msgid "Secciones alternas y fondos de imagen."
+msgstr ""
+
+#: template-parts/style-guide.php:17
+msgid "Texto secundario encima 4,9:1"
+msgstr ""
+
+#: template-parts/style-guide.php:18
+msgid "Bordes y divisores."
+msgstr ""
+
+#: template-parts/style-guide.php:19
+msgid "Descripciones y datos auxiliares."
+msgstr ""
+
+#: template-parts/style-guide.php:19
+msgid "Sobre blanco 5,4:1"
+msgstr ""
+
+#: template-parts/style-guide.php:22
+msgid "Alimentos, bebidas y repostería"
+msgstr ""
+
+#: template-parts/style-guide.php:23
+msgid "Perfumería, cuidado personal y hogar"
+msgstr ""
+
+#: template-parts/style-guide.php:24
+msgid "Frascos, atomizadores y accesorios"
+msgstr ""
+
+#: template-parts/style-guide.php:25
+msgid "Desarrollo a medida"
+msgstr ""
+
+#: template-parts/style-guide.php:25
+msgid "Fórmulas pensadas para tu producto"
+msgstr ""
+
+#: template-parts/style-guide.php:26
+msgid "Calidad"
+msgstr ""
+
+#: template-parts/style-guide.php:26
+msgid "Insumos seleccionados y controlados"
+msgstr ""
+
+#: template-parts/style-guide.php:27
+msgid "Despacho"
+msgstr ""
+
+#: template-parts/style-guide.php:27
+msgid "Entregas coordinadas a todo el Perú"
+msgstr ""
+
+#: template-parts/style-guide.php:62
+msgid "Uso interno"
+msgstr ""
+
+#: template-parts/style-guide.php:63
+msgid "Sistema visual <strong>Frave</strong>"
+msgstr ""
+
+#: template-parts/style-guide.php:64
+msgid "Colores, tipografía, componentes y movimiento de la web corporativa, para revisarlos y aprobarlos. Solo lo ve el equipo con acceso al tema."
+msgstr ""
+
+#: template-parts/style-guide.php:72
+msgid "01 · Color"
+msgstr ""
+
+#: template-parts/style-guide.php:73
+msgid "Base corporativa, <strong>acento naranja</strong>"
+msgstr ""
+
+#: template-parts/style-guide.php:74
+msgid "Tinta y noche dan la seriedad; el naranja de marca guía la mirada. Sobre blanco, el naranja de marca solo va en títulos grandes y en elementos sin texto; los botones usan el primario accesible."
+msgstr ""
+
+#: template-parts/style-guide.php:97
+msgid "02 · Tipografía"
+msgstr ""
+
+#: template-parts/style-guide.php:98
+msgid "Lato ligera para titular, <strong>negrita para subrayar</strong>"
+msgstr ""
+
+#: template-parts/style-guide.php:100
+msgid "Sabores y fragancias que <span class=\"pill\">conectan</span> con tu marca"
+msgstr ""
+
+#: template-parts/style-guide.php:101
+msgid "Título de página con <span class=\"pill pill--soft\">píldora suave</span>"
+msgstr ""
+
+#: template-parts/style-guide.php:102
+msgid "Título de sección con <span class=\"mark\">marcador</span>"
+msgstr ""
+
+#: template-parts/style-guide.php:103
+msgid "Subtítulo de tarjeta o bloque"
+msgstr ""
+
+#: template-parts/style-guide.php:104
+msgid "Párrafo de entrada: presenta la sección en una o dos frases, con un tamaño intermedio entre el título y el texto."
+msgstr ""
+
+#: template-parts/style-guide.php:105
+msgid "Texto de lectura a 16 px con interlineado 1,6. Frave acompaña a marcas y emprendedores con sabores, fragancias y envases seleccionados, y con asesoría para elegir lo que mejor funciona en cada producto."
+msgstr ""
+
+#: template-parts/style-guide.php:106
+msgid "Rótulo de sección"
+msgstr ""
+
+#: template-parts/style-guide.php:113
+msgid "03 · Botones"
+msgstr ""
+
+#: template-parts/style-guide.php:114
+msgid "Una acción principal por bloque"
+msgstr ""
+
+#: template-parts/style-guide.php:115
+msgid "Píldora con icono que avanza al pasar el puntero. El primario lleva a contactar; los demás acompañan."
+msgstr ""
+
+#: template-parts/style-guide.php:121
+msgid "Pequeño"
+msgstr ""
+
+#: template-parts/style-guide.php:122
+#: template-parts/style-guide.php:128
+msgid "Enlace con flecha"
+msgstr ""
+
+#: template-parts/style-guide.php:136
+msgid "04 · Iconos e isotipo"
+msgstr ""
+
+#: template-parts/style-guide.php:137
+msgid "El trazo del <strong>isotipo</strong>"
+msgstr ""
+
+#: template-parts/style-guide.php:138
+msgid "Iconos de línea con el mismo grosor y remates redondeados que el frasco de Frave."
+msgstr ""
+
+#: template-parts/style-guide.php:144
+msgid "isotipo"
+msgstr ""
+
+#: template-parts/style-guide.php:152
+msgid "05 · Formas"
+msgstr ""
+
+#: template-parts/style-guide.php:153
+msgid "La gota y el frasco como marcos"
+msgstr ""
+
+#: template-parts/style-guide.php:154
+msgid "Las fotografías se recortan con las siluetas del isotipo: así la web se reconoce como Frave aunque cambien las imágenes."
+msgstr ""
+
+#: template-parts/style-guide.php:157
+msgid "Gota · .shape-drop"
+msgstr ""
+
+#: template-parts/style-guide.php:158
+msgid "Frasco · .shape-bottle"
+msgstr ""
+
+#: template-parts/style-guide.php:159
+msgid "Arco · .shape-arch"
+msgstr ""
+
+#: template-parts/style-guide.php:168
+msgid "06 · Tarjetas y cifras"
+msgstr ""
+
+#: template-parts/style-guide.php:169
+msgid "Razones para elegirnos"
+msgstr ""
+
+#: template-parts/style-guide.php:170
+msgid "Acción de la sección"
+msgstr ""
+
+#: template-parts/style-guide.php:182
+msgid "Asesoría cercana"
+msgstr ""
+
+#: template-parts/style-guide.php:183
+msgid "Tarjeta oscura para destacar un bloque."
+msgstr ""
+
+#: template-parts/style-guide.php:187
+msgid "años de experiencia (ejemplo)"
+msgstr ""
+
+#: template-parts/style-guide.php:187
+msgid "referencias en catálogo (ejemplo)"
+msgstr ""
+
+#: template-parts/style-guide.php:187
+msgid "para responder una cotización (ejemplo)"
+msgstr ""
+
+#: template-parts/style-guide.php:200
+msgid "07 · Movimiento"
+msgstr ""
+
+#: template-parts/style-guide.php:201
+msgid "Carrusel, apilado y telón"
+msgstr ""
+
+#: template-parts/style-guide.php:202
+msgid "Todo funciona sin JavaScript y se detiene si el sistema pide movimiento reducido."
+msgstr ""
+
+#: template-parts/style-guide.php:206
+msgid "Líneas de Frave (ejemplo)"
+msgstr ""
+
+#: template-parts/style-guide.php:208
+msgid "diapositiva"
+msgstr ""
+
+#. translators: 1: slide number, 2: total.
+#: template-parts/style-guide.php:208
+#, php-format
+msgid "%1$d de %2$d"
+msgstr ""
+
+#: template-parts/style-guide.php:218
+msgid "Anterior"
+msgstr ""
+
+#: template-parts/style-guide.php:219
+msgid "Siguiente"
+msgstr ""
+
+#: template-parts/style-guide.php:224
+msgid "Asesoría"
+msgstr ""
+
+#: template-parts/style-guide.php:224
+msgid "Selección o desarrollo"
+msgstr ""
+
+#: template-parts/style-guide.php:224
+msgid "Entrega"
+msgstr ""
+
+#. translators: %d: step number.
+#: template-parts/style-guide.php:226
+#, php-format
+msgid "Paso %d"
+msgstr ""
+
+#: template-parts/style-guide.php:236
+msgid "Hero fijo"
+msgstr ""
+
+#: template-parts/style-guide.php:237
+msgid "La sección siguiente <span class=\"pill\">sube</span> por encima"
+msgstr ""
+
+#: template-parts/style-guide.php:240
+#: template-parts/style-guide.php:243
+msgid "Telón"
+msgstr ""
+
+#: template-parts/style-guide.php:244
+msgid "Esquinas redondeadas y sombra al cubrir el hero"
+msgstr ""
+
+#: template-parts/style-guide.php:245
+msgid "Al final de la página, en pantallas grandes, el contenido se despega y descubre el pie."
 msgstr ""
 
 #: theme.json
@@ -764,7 +1117,17 @@ msgstr ""
 
 #: theme.json
 msgctxt "Color name"
+msgid "Noche"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
 msgid "Tinta"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Naranja suave"
 msgstr ""
 
 #: theme.json

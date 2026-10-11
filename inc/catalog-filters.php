@@ -566,7 +566,7 @@ function frave_catalog_layout_end(): void {
 function frave_catalog_no_results_actions(): void {
 	if ( frave_is_filterable_catalog() && frave_catalog_active_filter_count() > 0 ) {
 		echo '<p class="catalog-no-results">';
-		frave_button( __( 'Quitar todos los filtros', 'frave' ), frave_catalog_clear_url(), 'button button--secondary' );
+		frave_button( __( 'Quitar todos los filtros', 'frave' ), frave_catalog_clear_url(), 'btn btn--outline' );
 		echo '</p>';
 	}
 }

@@ -10,7 +10,7 @@ get_header();
 		<div class="button-row">
 			<?php frave_button( __( 'Volver al inicio', 'frave' ), home_url( '/' ) ); ?>
 			<?php if ( class_exists( 'WooCommerce' ) ) : ?>
-				<?php frave_button( __( 'Ver el catálogo', 'frave' ), frave_catalog_shop_url(), 'button button--secondary' ); ?>
+				<?php frave_button( __( 'Ver el catálogo', 'frave' ), frave_catalog_shop_url(), 'btn btn--outline' ); ?>
 			<?php endif; ?>
 		</div>
 	</div>

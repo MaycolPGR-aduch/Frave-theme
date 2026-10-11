@@ -61,8 +61,9 @@ function frave_enqueue_theme_assets(): void {
 add_action( 'wp_enqueue_scripts', 'frave_enqueue_theme_assets' );
 
 /**
- * Preload the Lato WOFF2 files (400 for text, 700 for headings): both are used above the
- * fold, and without a preload the browser only discovers them after parsing the CSS.
+ * Preload the Lato WOFF2 files (300 for large titles, 400 for text, 700 for emphasis): all
+ * are used above the fold, and without a preload the browser only discovers them after
+ * parsing the CSS.
  */
 function frave_preload_fonts( array $resources ): array {
 	$entry = frave_vite_dev_enabled() ? null : frave_vite_entry();

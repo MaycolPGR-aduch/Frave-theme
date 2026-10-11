@@ -1,0 +1,180 @@
+/*
+ * Buttons of the design system. Not .button: on shop pages the body has the .woocommerce
+ * class and WooCommerce's button rules would restyle anything called .button.
+ * Colours carry !important where the unlayered link colours of WordPress and WooCommerce
+ * would otherwise win over these layered rules.
+ */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    min-height: 3.25rem;
+    padding: 0.45rem 1.6rem;
+    border: 0;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) ease,
+      color var(--duration-fast) ease,
+      box-shadow var(--duration) var(--ease-out),
+      transform var(--duration) var(--ease-out);
+  }
+
+  .btn:has(.btn__icon) {
+    padding-right: 0.45rem;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn__icon {
+    display: grid;
+    flex: none;
+    width: 2.35rem;
+    height: 2.35rem;
+    place-items: center;
+    border-radius: 50%;
+    transition:
+      transform var(--duration) var(--ease-out),
+      background-color var(--duration-fast) ease,
+      color var(--duration-fast) ease;
+  }
+
+  .btn__icon .icon {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  .btn:hover .btn__icon {
+    transform: translateX(3px);
+  }
+
+  .btn--primary {
+    background: var(--color-primary);
+    color: #fff !important;
+  }
+
+  .btn--primary .btn__icon {
+    background: rgb(255 255 255 / 18%);
+  }
+
+  .btn--primary:hover {
+    background: var(--color-primary-hover);
+    box-shadow: 0 0.75rem 1.75rem rgb(196 59 0 / 28%);
+  }
+
+  .btn--dark {
+    background: var(--color-ink);
+    color: #fff !important;
+  }
+
+  .btn--dark .btn__icon {
+    background: rgb(255 255 255 / 12%);
+  }
+
+  .btn--dark:hover {
+    background: var(--color-night);
+  }
+
+  .btn--dark:hover .btn__icon {
+    background: var(--color-primary);
+  }
+
+  .btn--light {
+    background: #fff;
+    color: var(--color-ink) !important;
+  }
+
+  .btn--light .btn__icon {
+    background: var(--color-orange-soft);
+    color: var(--color-primary);
+  }
+
+  .btn--light:hover .btn__icon {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .btn--outline {
+    background: transparent;
+    box-shadow: inset 0 0 0 1.5px var(--color-line);
+    color: var(--color-ink) !important;
+  }
+
+  .btn--outline .btn__icon {
+    background: var(--color-surface);
+  }
+
+  .btn--outline:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-ink);
+  }
+
+  .on-dark .btn--outline,
+  .section--dark .btn--outline {
+    box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 28%);
+    color: #fff !important;
+  }
+
+  .on-dark .btn--outline .btn__icon,
+  .section--dark .btn--outline .btn__icon {
+    background: rgb(255 255 255 / 10%);
+  }
+
+  .on-dark .btn--outline:hover,
+  .section--dark .btn--outline:hover {
+    box-shadow: inset 0 0 0 1.5px #fff;
+  }
+
+  .btn--sm {
+    min-height: 2.75rem;
+    padding-inline: 1.15rem;
+    font-size: 0.85rem;
+  }
+
+  .btn--sm .btn__icon {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  /* Text link with a moving arrow, for secondary actions. */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-primary) !important;
+    font-size: 0.92rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .link-arrow .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    transition: transform var(--duration) var(--ease-out);
+  }
+
+  .link-arrow:hover .icon {
+    transform: translateX(4px);
+  }
+
+  .on-dark .link-arrow,
+  .section--dark .link-arrow {
+    color: var(--color-brand-orange) !important;
+  }
+}

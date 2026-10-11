@@ -1,13 +1,22 @@
+import '@fontsource/lato/latin-300.css';
 import '@fontsource/lato/latin-400.css';
 import '@fontsource/lato/latin-700.css';
 import '../css/app.css';
+import { initializeCarousels } from './modules/carousel.js';
 import { initializeCatalogFilters } from './modules/catalog-filters.js';
+import { initializeCounters } from './modules/counter.js';
+import { initializeHeaderScroll } from './modules/header-scroll.js';
 import { initializeMiniCart } from './modules/mini-cart.js';
 import { initializeNavigation } from './modules/navigation.js';
 import { initializeSectionTransitions } from './modules/section-transitions.js';
+import { initializeStacks } from './modules/stack.js';
 
 document.documentElement.classList.add('js');
 initializeNavigation();
+initializeHeaderScroll();
 initializeMiniCart();
 initializeCatalogFilters();
 initializeSectionTransitions();
+initializeCarousels();
+initializeStacks();
+initializeCounters();

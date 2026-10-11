@@ -21,15 +21,20 @@ function frave_asset_url( string $path ): string {
 	return FRAVE_THEME_URI . '/' . ltrim( $path, '/' );
 }
 
-/** Render a reusable button with an optional URL. */
-function frave_button( string $label, string $url, string $classes = 'button button--primary' ): void {
+/**
+ * Render a design system button (.btn) with its arrow icon. Variants: btn--primary,
+ * btn--dark, btn--light, btn--outline, plus btn--sm.
+ */
+function frave_button( string $label, string $url, string $classes = 'btn btn--primary', string $icon = 'arrow-right' ): void {
 	if ( '' === $label || '' === $url ) {
 		return;
 	}
 	?>
 	<a class="<?php echo esc_attr( $classes ); ?>" href="<?php echo esc_url( $url ); ?>">
-		<?php echo esc_html( $label ); ?>
-		<span aria-hidden="true">&rarr;</span>
+		<span><?php echo esc_html( $label ); ?></span>
+		<?php if ( $icon ) : ?>
+			<span class="btn__icon"><?php echo frave_icon( $icon ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></span>
+		<?php endif; ?>
 	</a>
 	<?php
 }

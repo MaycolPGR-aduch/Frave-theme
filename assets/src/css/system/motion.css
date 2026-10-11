@@ -1,0 +1,98 @@
+/*
+ * Motion of the design system. Everything here is progressive: content is visible
+ * without JavaScript, and prefers-reduced-motion turns the movement off (see the
+ * reduced motion block at the end of app.css and of this file).
+ *
+ * - Reveal: [data-reveal="up|left|right|scale|fade|clip"] and [data-reveal-group]
+ *   (section-transitions.js adds .reveal-ready and .is-revealed).
+ * - Pinned hero: .pin stays while the next .curtain slides over it.
+ * - Stack: .stack__item cards stick and shrink as the next one covers them (stack.js).
+ * - Footer reveal: on large screens the content lifts off the footer at the end.
+ */
+@layer components {
+  .reveal-ready[data-reveal="fade"] {
+    transform: none;
+  }
+
+  .reveal-ready[data-reveal="clip"] {
+    opacity: 1;
+    clip-path: inset(0 0 100% 0 round var(--radius-lg));
+    transition: clip-path 1.1s var(--ease-out);
+  }
+
+  .reveal-ready[data-reveal="clip"].is-revealed {
+    clip-path: inset(0 0 0 0 round var(--radius-lg));
+  }
+
+  .reveal-ready[data-reveal-group].is-revealed > :nth-child(5) {
+    transition-delay: 320ms;
+  }
+
+  .reveal-ready[data-reveal-group].is-revealed > :nth-child(6) {
+    transition-delay: 400ms;
+  }
+
+  .reveal-ready[data-reveal-group].is-revealed > :nth-child(n + 7) {
+    transition-delay: 480ms;
+  }
+
+  /* ---------- Pinned hero and curtain ---------- */
+
+  .pin {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+  }
+
+  .curtain {
+    position: relative;
+    z-index: 1;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background: #fff;
+    box-shadow: 0 -1.5rem 3rem rgb(18 20 24 / 14%);
+  }
+
+  /* ---------- Stack ---------- */
+
+  .stack {
+    display: grid;
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+
+  .stack__item {
+    position: sticky;
+    top: calc(var(--header-height) + 1rem + var(--stack-index, 0) * 1.1rem);
+    transform: scale(calc(1 - var(--stack-progress, 0) * 0.05));
+    transform-origin: 50% 0;
+    filter: brightness(calc(1 - var(--stack-progress, 0) * 0.12));
+  }
+
+  /* ---------- Footer reveal ---------- */
+
+  @media (min-width: 64rem) and (min-height: 46rem) {
+    .site-content {
+      position: relative;
+      z-index: 1;
+      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+      background: #fff;
+      box-shadow: 0 2rem 3.5rem rgb(18 20 24 / 22%);
+    }
+
+    .site-footer {
+      position: sticky;
+      bottom: 0;
+      z-index: 0;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready[data-reveal="clip"] {
+    clip-path: none !important;
+  }
+
+  .stack__item {
+    transform: none !important;
+    filter: none !important;
+  }
+}

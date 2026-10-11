@@ -13,7 +13,9 @@
       "palette": [
         { "slug": "brand-orange", "name": "Naranja Frave", "color": "#fc4c02" },
         { "slug": "primary", "name": "Primario accesible", "color": "#c43b00" },
+        { "slug": "night", "name": "Noche", "color": "#121418" },
         { "slug": "ink", "name": "Tinta", "color": "#202329" },
+        { "slug": "orange-soft", "name": "Naranja suave", "color": "#fff1ea" },
         { "slug": "muted", "name": "Texto secundario", "color": "#6b6b68" },
         { "slug": "surface", "name": "Superficie", "color": "#f6f4f1" },
         { "slug": "line", "name": "Borde", "color": "#e5e1dc" },

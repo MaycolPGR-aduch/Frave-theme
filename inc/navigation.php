@@ -63,6 +63,7 @@ function frave_primary_menu_fallback_items(): array {
 				$lines[] = array(
 					'label' => $label,
 					'url'   => $link,
+					'icon'  => frave_product_line_icon( $slug ),
 				);
 			}
 		}
@@ -89,6 +90,7 @@ function frave_primary_menu_fallback_items(): array {
 				'label'    => __( 'WhatsApp', 'frave' ),
 				'url'      => $whatsapp,
 				'external' => true,
+				'icon'     => 'whatsapp',
 			);
 		}
 		$claims = function_exists( 'frave_peru_claims_page_url' ) ? frave_peru_claims_page_url() : '';
@@ -96,6 +98,7 @@ function frave_primary_menu_fallback_items(): array {
 			$children[] = array(
 				'label' => __( 'Libro de Reclamaciones', 'frave' ),
 				'url'   => $claims,
+				'icon'  => 'book',
 			);
 		}
 		if ( $children ) {
@@ -104,6 +107,7 @@ function frave_primary_menu_fallback_items(): array {
 				array(
 					'label' => __( 'Formulario de contacto', 'frave' ),
 					'url'   => $contact,
+					'icon'  => 'mail',
 				)
 			);
 		}
@@ -165,11 +169,12 @@ function frave_primary_menu_fallback(): void {
 			foreach ( $children as $child ) {
 				$external = ! empty( $child['external'] );
 				printf(
-					'<li class="menu-item"><a href="%1$s"%3$s>%2$s%4$s</a></li>',
+					'<li class="menu-item"><a href="%1$s"%3$s>%5$s<span class="menu-item__text">%2$s%4$s</span></a></li>',
 					esc_url( $child['url'] ),
 					esc_html( $child['label'] ),
 					$external ? ' target="_blank" rel="noopener"' : '',
-					$external ? '<span class="screen-reader-text"> ' . esc_html__( '(se abre en una nueva pestaña)', 'frave' ) . '</span>' : ''
+					$external ? '<span class="screen-reader-text"> ' . esc_html__( '(se abre en una nueva pestaña)', 'frave' ) . '</span>' : '',
+					frave_menu_icon_html( $child['icon'] ?? '' ) // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG.
 				);
 			}
 			echo '</ul>';
@@ -220,17 +225,57 @@ function frave_submenu_toggle( string $label, bool $is_label ): void {
 	);
 }
 
-/** Submenu toggles and descriptions for menus assigned in Apariencia → Menús. */
+/** Icon of a submenu entry, in its tile; '' without an icon. */
+function frave_menu_icon_html( string $name ): string {
+	$svg = 'whatsapp' === $name ? frave_whatsapp_icon() : frave_icon( $name );
+	return '' === $svg ? '' : '<span class="menu-item__icon">' . $svg . '</span>';
+}
+
+/**
+ * Icon for an entry of a menu assigned in Apariencia → Menús: product lines by category,
+ * the contact page, WhatsApp, the Libro de Reclamaciones, or a CSS class frave-icon-NAME.
+ */
+function frave_menu_item_icon_name( $item ): string {
+	foreach ( (array) $item->classes as $class_name ) {
+		if ( str_starts_with( (string) $class_name, 'frave-icon-' ) ) {
+			return substr( $class_name, strlen( 'frave-icon-' ) );
+		}
+	}
+	if ( 'product_cat' === $item->object ) {
+		$term = get_term( (int) $item->object_id, 'product_cat' );
+		return $term instanceof WP_Term ? frave_product_line_icon( $term->slug ) : '';
+	}
+	$url = (string) $item->url;
+	if ( str_contains( $url, 'wa.me/' ) ) {
+		return 'whatsapp';
+	}
+	if ( 'page' === $item->object ) {
+		if ( FRAVE_TEMPLATE_CONTACT === get_page_template_slug( (int) $item->object_id ) ) {
+			return 'mail';
+		}
+		$claims = function_exists( 'frave_peru_claims_page_url' ) ? frave_peru_claims_page_url() : '';
+		if ( $claims && untrailingslashit( $claims ) === untrailingslashit( $url ) ) {
+			return 'book';
+		}
+	}
+	return '';
+}
+
+/** Submenu toggles, icons and descriptions for menus assigned in Apariencia → Menús. */
 function frave_nav_menu_item_output( string $item_output, $item, int $depth, $args ): string {
 	if ( ! isset( $args->theme_location ) || 'primary' !== $args->theme_location ) {
 		return $item_output;
 	}
-	if ( 1 === $depth && '' !== trim( (string) $item->description ) ) {
-		$item_output = str_replace(
-			'</a>',
-			'<span class="menu-item__description">' . esc_html( $item->description ) . '</span></a>',
-			$item_output
-		);
+	if ( 1 === $depth ) {
+		$open  = strpos( $item_output, '>', (int) strpos( $item_output, '<a' ) );
+		$close = strrpos( $item_output, '</a>' );
+		if ( false !== $open && false !== $close ) {
+			$description = '' !== trim( (string) $item->description ) ? '<span class="menu-item__description">' . esc_html( $item->description ) . '</span>' : '';
+			$item_output = substr( $item_output, 0, $open + 1 )
+				. frave_menu_icon_html( frave_menu_item_icon_name( $item ) )
+				. '<span class="menu-item__text">' . substr( $item_output, $open + 1, $close - $open - 1 ) . $description . '</span>'
+				. substr( $item_output, $close );
+		}
 	}
 	if ( 0 !== $depth || ! in_array( 'menu-item-has-children', (array) $item->classes, true ) ) {
 		return $item_output;

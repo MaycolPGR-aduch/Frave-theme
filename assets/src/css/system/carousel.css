@@ -1,0 +1,100 @@
+/*
+ * Carousel on native scroll snapping: swipe, trackpad and keyboard work without
+ * JavaScript; carousel.js adds the previous and next buttons' state and hides them when
+ * everything fits.
+ */
+@layer components {
+  .carousel {
+    --carousel-item: min(82%, 22rem);
+    --carousel-gap: clamp(0.85rem, 2vw, 1.25rem);
+    position: relative;
+  }
+
+  .carousel__track {
+    display: grid;
+    grid-auto-columns: var(--carousel-item);
+    grid-auto-flow: column;
+    gap: var(--carousel-gap);
+    margin: 0;
+    padding: 0.25rem 0.25rem 0.5rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    list-style: none;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .carousel__track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel__track > * {
+    scroll-snap-align: start;
+  }
+
+  .carousel__track:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: var(--radius-md);
+  }
+
+  .carousel__controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .carousel[data-carousel-static] .carousel__controls {
+    display: none;
+  }
+
+  .carousel__button {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border: 1.5px solid var(--color-line);
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-ink);
+    transition:
+      background-color var(--duration-fast) ease,
+      border-color var(--duration-fast) ease,
+      color var(--duration-fast) ease;
+  }
+
+  .carousel__button .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .carousel__button[data-carousel-prev] .icon {
+    transform: rotate(180deg);
+  }
+
+  .carousel__button:hover:not(:disabled) {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  .carousel__button:disabled {
+    cursor: default;
+    opacity: 0.35;
+  }
+
+  .section--dark .carousel__button,
+  .on-dark .carousel__button {
+    border-color: rgb(255 255 255 / 22%);
+    background: transparent;
+    color: #fff;
+  }
+
+  .section--dark .carousel__button:hover:not(:disabled),
+  .on-dark .carousel__button:hover:not(:disabled) {
+    border-color: #fff;
+    background: #fff;
+    color: var(--color-ink);
+  }
+}

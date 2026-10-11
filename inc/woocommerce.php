@@ -37,12 +37,59 @@ function frave_woocommerce_setup(): void {
 	remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 	add_action( 'woocommerce_before_main_content', 'frave_woocommerce_wrapper_start', 10 );
 	add_action( 'woocommerce_after_main_content', 'frave_woocommerce_wrapper_end', 10 );
+
+	// Catalog pages print their title, description and breadcrumb in the page hero.
+	if ( frave_is_catalog_archive() ) {
+		remove_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20 );
+		remove_action( 'woocommerce_archive_description', 'woocommerce_taxonomy_archive_description', 10 );
+		remove_action( 'woocommerce_archive_description', 'woocommerce_product_archive_description', 10 );
+		add_filter( 'woocommerce_show_page_title', '__return_false' );
+	}
 }
 add_action( 'wp', 'frave_woocommerce_setup' );
 
+/** Shop, product categories, attributes and product searches. */
+function frave_is_catalog_archive(): bool {
+	return class_exists( 'WooCommerce' ) && ( is_shop() || is_product_taxonomy() || ( is_search() && 'product' === get_query_var( 'post_type' ) ) );
+}
+
+/** Page hero of catalog pages: breadcrumb, title, description and product search. */
+function frave_catalog_hero(): void {
+	if ( is_search() ) {
+		$eyebrow = __( 'BÚSQUEDA', 'frave' );
+		$lead    = '';
+	} elseif ( is_product_taxonomy() ) {
+		$term    = get_queried_object();
+		$parent  = $term instanceof WP_Term && $term->parent ? get_term( $term->parent, $term->taxonomy ) : null;
+		$eyebrow = $parent instanceof WP_Term ? $parent->name : __( 'CATÁLOGO', 'frave' );
+		$lead    = $term instanceof WP_Term ? term_description( $term ) : '';
+	} else {
+		$shop    = get_post( wc_get_page_id( 'shop' ) );
+		$eyebrow = __( 'NUESTROS PRODUCTOS', 'frave' );
+		$lead    = $shop instanceof WP_Post && '' !== trim( $shop->post_content ) ? $shop->post_content : __( 'Explora nuestras líneas de sabores, fragancias y envases, y solicita una cotización de lo que necesites.', 'frave' );
+	}
+	get_template_part(
+		'template-parts/components/page-hero',
+		null,
+		array(
+			'eyebrow'    => $eyebrow,
+			'title'      => woocommerce_page_title( false ),
+			'lead'       => $lead,
+			'breadcrumb' => true,
+			'search'     => true,
+		)
+	);
+}
+
 function frave_woocommerce_wrapper_start(): void {
 	?>
-	<main id="primary" class="site-main frave-woocommerce">
+	<main id="primary" class="site-main frave-woocommerce<?php echo frave_is_catalog_archive() ? ' frave-woocommerce--catalog' : ''; ?>">
+		<?php
+		if ( frave_is_catalog_archive() ) {
+			frave_catalog_hero();
+			echo '<div class="section catalog-section">';
+		}
+		?>
 		<div class="container">
 	<?php
 }
@@ -50,6 +97,11 @@ function frave_woocommerce_wrapper_start(): void {
 function frave_woocommerce_wrapper_end(): void {
 	?>
 		</div>
+		<?php
+		if ( frave_is_catalog_archive() ) {
+			echo '</div>';
+		}
+		?>
 	</main>
 	<?php
 }
@@ -132,3 +184,29 @@ function frave_catalog_mode_loop_button(): void {
 	);
 }
 add_action( 'woocommerce_after_shop_loop_item', 'frave_catalog_mode_loop_button', 10 );
+
+/** Product cards: the image sits in a frame (for the hover zoom), with the category above the title. */
+function frave_product_card_media_open(): void {
+	echo '<div class="product-card__media">';
+}
+add_action( 'woocommerce_before_shop_loop_item_title', 'frave_product_card_media_open', 9 );
+
+function frave_product_card_media_close(): void {
+	echo '</div>';
+}
+add_action( 'woocommerce_before_shop_loop_item_title', 'frave_product_card_media_close', 11 );
+
+function frave_product_card_category(): void {
+	global $product;
+	if ( ! $product instanceof WC_Product ) {
+		return;
+	}
+	$default = (int) get_option( 'default_product_cat' );
+	foreach ( (array) get_the_terms( $product->get_id(), 'product_cat' ) as $term ) {
+		if ( $term instanceof WP_Term && $default !== $term->term_id ) {
+			echo '<span class="product-card__category">' . esc_html( $term->name ) . '</span>';
+			return;
+		}
+	}
+}
+add_action( 'woocommerce_shop_loop_item_title', 'frave_product_card_category', 5 );
