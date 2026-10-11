@@ -66,7 +66,20 @@ Con un número configurado, el tema muestra:
 
 El mensaje inicial general, el botón flotante y el de las fichas se ajustan en la misma sección del Personalizador. Los enlaces llevan `data-frave-whatsapp="floating|product|footer"` para medir clics cuando se configure analítica. El filtro `frave_show_whatsapp_floating` permite ocultar el botón flotante en otras páginas.
 
-La portada incluye hero, categorías y destacados de WooCommerce, presentación de Frave, guía de tres pasos y cierre hacia la tienda. Con ACF gratuito activo, edita los campos del grupo **Inicio Frave** en la página asignada como portada. Si ACF no está disponible, el tema muestra los textos de respaldo. Las imágenes comerciales deben subirse a la biblioteca de medios y a los productos; el tema no incluye fotografías de producto.
+### Portada
+
+La portada (`front-page.php`, `template-parts/home/`) tiene estas secciones:
+
+1. **Hero** con vídeo a pantalla completa. Se reproduce una vez y se queda en el último fotograma; tiene botón de pausa. Con movimiento reducido o ahorro de datos se muestra la imagen fija. En escritorio queda fijo mientras sube la sección siguiente.
+2. **Nuestras soluciones:** Sabores, Fragancias y Envases en tarjetas con forma de frasco. Usa la imagen y la descripción de cada categoría de producto.
+3. **Cómo trabajamos:** tres pasos que se apilan al hacer scroll.
+4. **Productos destacados:** la estrella de WooCommerce.
+5. **Razones para elegirnos:** cuatro tarjetas con icono.
+6. **Catálogo:** buscador y accesos a cada línea.
+7. **Tendencias:** solo con entradas publicadas fuera de la categoría por defecto.
+8. **Dónde estamos:** solo con dirección en el Personalizador; el mapa de Google se carga al pedirlo.
+
+Todos los textos, el vídeo y su imagen fija se editan en el grupo ACF **Inicio Frave** de la página de portada. Una palabra entre `*asteriscos*` se resalta: en el hero sobre fondo naranja, en las demás secciones en negrita. Los campos vacíos muestran los textos por defecto de `inc/home.php`; sin ACF, también. El vídeo por defecto está en `assets/media/` (MP4 y WebM sin sonido, más el último fotograma en JPG). Si el administrador de ACF ofrece **Sincronización disponible** para «Inicio Frave», sincronízalo para editar los campos nuevos.
 
 ## Desarrollo de assets
 
@@ -117,7 +130,8 @@ Para probar el build de producción, compila con `npm.cmd run build` y cambia `F
 ## Arquitectura
 
 - `inc/`: configuración inicial, helpers, assets, ACF opcional, integración WooCommerce y modo catálogo, contacto y navegación.
-- `template-parts/`: secciones independientes de portada, banda de cabecera, cards, búsqueda, estados vacíos y la guía del sistema visual.
+- `template-parts/`: secciones de la portada (`home/`), banda de cabecera, búsqueda, catálogo, estados vacíos y la guía del sistema visual.
+- `assets/media/`: vídeo por defecto del hero y su imagen fija.
 - `assets/src/`: CSS (con el sistema de diseño en `css/system/`) y JavaScript nativo por módulos.
 - `assets/dist/`: archivos listos para producción generados por Vite y versionados.
 - `acf-json/`: grupo de campos editoriales de portada sincronizable con ACF gratuito.

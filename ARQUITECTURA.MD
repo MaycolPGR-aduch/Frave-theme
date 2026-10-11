@@ -31,9 +31,12 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `inc/contact.php` | Ajustes de WhatsApp en el Personalizador, enlaces `wa.me`, botón de consulta en la ficha y, en modo catálogo, bloque «¿Te interesa este producto?» con el enlace de cotización (`?producto=ID`). |
 | `front-page.php`, `page.php`, `single.php`, `archive.php`, `search.php`, `index.php`, `404.php` | Jerarquía de templates clásicos. |
 | `header.php`, `footer.php` | Estructura global, navegación, búsqueda, carrito y pie. |
-| `template-parts/sections/` | Hero, categorías, destacados, presentación editorial, guía y cierre de la portada. |
+| `front-page.php`, `template-parts/home/` | Portada: hero con vídeo, soluciones, cómo trabajamos, destacados, razones, catálogo, tendencias y ubicación. |
+| `inc/home.php` | Textos por defecto de la portada (única fuente, también para los valores por defecto de ACF), resaltado con `*asteriscos*`, vídeo del hero y precarga de su imagen fija, datos de las tres líneas e iconos de las razones. |
+| `assets/media/` | Vídeo por defecto del hero (MP4 y WebM sin sonido) y su último fotograma. |
 | `template-parts/cards/` y `template-parts/components/` | Tarjeta de categoría, banda de cabecera de páginas interiores (`page-hero.php`), formulario de búsqueda, enlace de carrito y estado vacío. |
-| `assets/src/css/app.css` | Orden de capas, tokens, cabecera, menús, pie, secciones de la portada, WooCommerce y páginas institucionales. |
+| `assets/src/css/app.css` | Orden de capas, tokens, cabecera, menús, pie, WooCommerce y páginas institucionales. |
+| `assets/src/css/pages/home.css` | Estilos de la portada. |
 | `assets/src/css/system/` | Sistema de diseño: tipografía, botones, superficies, formas, movimiento y carrusel (ver [DESIGN.MD](DESIGN.MD)). |
 | `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú con submenús, estado de la cabecera al hacer scroll, aparición progresiva, carrusel, apilado y contadores. |
 | `assets/dist/` | CSS, JavaScript, fuentes y manifest listos para servir; se versiona en Git. |
@@ -48,7 +51,7 @@ Actualmente no existe un directorio `woocommerce/` de overrides. Tampoco existen
 1. WordPress resuelve la URL y selecciona un template del tema o de WooCommerce.
 2. El tema imprime header, contenido y footer; las secciones reutilizables se cargan con `get_template_part()`.
 3. Para el catálogo y la compra, WooCommerce produce datos y formularios. El tema aporta wrappers y estilos mediante sus hooks públicos.
-4. En la portada, hero, presentación, guía y cierre leen campos ACF cuando están disponibles y usan valores de respaldo en caso contrario. Categorías y productos destacados proceden de WooCommerce.
+4. En la portada, cada sección lee sus campos ACF con `frave_home_text()`, que usa los textos por defecto de `inc/home.php` cuando faltan. Las líneas toman imagen y descripción de sus categorías de producto y los destacados proceden de WooCommerce.
 5. WordPress encola `assets/src/js/app.js` desde Vite en desarrollo o los archivos con hash indicados por `assets/dist/manifest.json` en producción.
 
 En la portada, los elementos con `data-reveal` y `data-reveal-group` se observan con `IntersectionObserver`. Las clases de preparación se añaden solo desde JavaScript; así el contenido no queda oculto cuando JS no carga. El módulo `assets/src/js/modules/section-transitions.js` omite el efecto cuando el visitante ha solicitado movimiento reducido.
@@ -64,7 +67,8 @@ En la portada, los elementos con `data-reveal` y `data-reveal-group` se observan
 - **Mini-carrito:** `template-parts/components/mini-cart.php` muestra el cajón con `woocommerce_mini_cart()` en todas las páginas salvo carrito y checkout. WooCommerce mantiene su contenido con el fragmento `div.widget_shopping_cart_content` y elimina productos por AJAX. `assets/src/js/modules/mini-cart.js` lo abre desde el enlace del carrito, tras `added_to_cart` y al cargar una página que añadió un producto (`did_action( 'woocommerce_add_to_cart' )`, p. ej. el formulario de la ficha). Es un diálogo modal: retiene el foco, se cierra con Escape o el fondo y devuelve el foco al enlace. `wc-cart-fragments` se carga en todas las páginas para que el contador y el cajón sean correctos aunque haya caché de página completa. Los estilos del contenido de WooCommerce van sin capa y con `#mini-cart` porque las reglas sin capa de WooCommerce solo aplican en páginas de tienda.
 - **Páginas clásicas de comercio:** la instalación local usa los shortcodes `[woocommerce_cart]`, `[woocommerce_checkout]` y `[woocommerce_my_account]`. El tema les aplica estilos, pero su contenido y estado permanecen en WooCommerce.
 - **Búsqueda de productos:** el formulario envía `s` y `post_type=product` a WordPress.
-- **ACF:** el grupo `Inicio Frave` se guarda en `acf-json/group_frave_home.json`. Sus campos de texto e imágenes pertenecen a secciones editoriales; precio, stock y catálogo siguen en WooCommerce. Los datos editados viven en la base de datos de WordPress; el JSON versiona la estructura del grupo. `frave_field()` evita dependencia obligatoria de ACF.
+- **ACF:** el grupo `Inicio Frave` se guarda en `acf-json/group_frave_home.json`, con un campo por texto de la portada (prefijo `frave_home_`), el vídeo y su imagen fija. Los valores por defecto se inyectan desde `frave_home_defaults()` con `acf/load_field`, así no se duplican en el JSON. Precio, stock y catálogo siguen en WooCommerce. Los datos editados viven en la base de datos; el JSON versiona la estructura. `frave_field()` evita dependencia obligatoria de ACF.
+- **Vídeo del hero:** se sirve con `preload="none"` y la imagen fija precargada (es el elemento más grande al cargar). `hero-video.js` lo carga y reproduce una sola vez si no hay movimiento reducido ni ahorro de datos, y muestra el botón de pausa (WCAG 2.2.2). La capa de texto del hero deja pasar los clics fuera del bloque de texto para que el botón funcione.
 - **Páginas institucionales:** `page.php` presenta el contenido escrito en WordPress. El enlace de la sección editorial a `nosotros` aparece solo cuando existe una página publicada con ese slug. En el entorno local se creó esa página y se asignaron los menús desde el administrador; estos datos no forman parte de Git.
 - **Assets:** Vite compila Tailwind, JavaScript y Lato local. `inc/enqueue.php` lee la entrada `assets/src/js/app.js` del manifest. Los hashes no se escriben manualmente.
 - **Seguridad y SEO:** se usan las funciones públicas de WordPress para escapar salida y generar URLs, y el tema declara soporte de `title-tag`. La configuración SEO detallada corresponderá al sitio o a un plugin SEO elegido después.
@@ -94,6 +98,7 @@ La hoja `assets/src/css/app.css` concentra hoy todo el sistema visual y los esti
 | 2026-09-23 | Módulos editoriales fijos con campos de ACF gratuito. | Permitir edición controlada sin un constructor visual ni duplicar datos comerciales. |
 | 2026-09-23 | `server.origin` de Vite apunta al servidor de desarrollo. | Resolver las fuentes importadas desde CSS cuando WordPress sirve el HTML en otro puerto. |
 | 2026-09-28 | Requisitos comerciales de Perú (comprobante, DNI/RUC) en el plugin `frave-peru`, fuera del tema. | Son lógica comercial y datos de pedidos: deben conservarse si cambia el tema. El tema solo aporta estilos. Ver `D:/Frave-web/frave-peru/README.md`. |
+| 2026-10-11 | Portada nueva con campos ACF renombrados (`frave_home_*`) en lugar de reutilizar los antiguos. | Los textos guardados del diseño anterior no se mezclan con los nuevos; los campos antiguos quedan sin uso en la base de datos. |
 | 2026-10-11 | Sistema de diseño en `assets/src/css/system/` importado por `app.css`, con el orden de capas fijado al principio. Cabecera que superpone la página (`--header-height` como relleno del contenido) para que las bandas oscuras corran por detrás. | Separar el sistema de los estilos de cada página y permitir la cabecera flotante sin desplazar contenido. |
 | 2026-10-10 | Web corporativa con catálogo: modo catálogo en `frave-peru` (activado por defecto) y la tienda en pausa sin borrar su código. | Frave pospone la venta en línea; un interruptor permite volver a vender sin rehacer el carrito, el checkout ni la boleta/factura. Ver [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md). |
 

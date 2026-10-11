@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fases 1 y 2 en `main`; pendientes de publicar en frave.pe (con los datos de producción de la fase 1) y de que Frave apruebe el sistema visual en `/?sistema-visual`.
+- **Estado:** fases 1, 2 y 3 en `main`; pendientes de publicar en frave.pe (con los datos de producción de la fase 1), de que Frave apruebe el sistema visual en `/?sistema-visual` y del vídeo del hero en 1080p.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
@@ -114,15 +114,17 @@ Sitio (base de datos, local y producción):
 
 ### Fase 3 — Portada nueva
 
-- [ ] Hero fijo a pantalla completa con píldoras y dos acciones («Solicitar asesoría», «Ver catálogo»).
-- [ ] Nuestras soluciones: Sabores, Fragancias, Envases.
-- [ ] Nuestra fórmula: tres pasos con bloque fijo.
-- [ ] Productos destacados sin precio.
-- [ ] Razones para elegirnos.
-- [ ] Franja de contacto.
-- [ ] Tendencias (solo con artículos publicados).
-- [ ] Dónde estamos con mapa bajo demanda.
-- [ ] Campos ACF de la portada reorganizados.
+- [x] Hero a pantalla completa con vídeo (una reproducción, último fotograma como imagen fija, botón de pausa, sin vídeo con movimiento reducido o ahorro de datos), título con píldora y dos acciones; fijo en escritorio mientras sube la sección siguiente.
+- [x] Nuestras soluciones: Sabores, Fragancias y Envases en tarjetas con forma de frasco (imagen y descripción de cada categoría); carrusel en móvil.
+- [x] Cómo trabajamos: introducción fija y tres pasos apilados.
+- [x] Productos destacados sin precio.
+- [x] Razones para elegirnos: cuatro tarjetas con icono.
+- [x] Panel del catálogo con buscador y accesos a las líneas (la invitación a contactar ya está en el pie).
+- [x] Tendencias: solo con entradas fuera de la categoría por defecto.
+- [x] Dónde estamos: canales y mapa de Google bajo demanda; solo con dirección configurada.
+- [x] Campos ACF de la portada reorganizados por pestañas (`frave_home_*`), con los textos por defecto en `inc/home.php` y resaltado con `*asteriscos*`.
+- [ ] Vídeo del hero en 1080p (y versión vertical opcional) que está preparando el equipo.
+- [ ] Validar con Frave los textos por defecto de la portada y subir imágenes de las categorías.
 
 ### Fase 4 — Páginas de línea
 
@@ -156,6 +158,8 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 - [ ] Fotos de productos, equipo y local.
 - [ ] Sedes, horarios, WhatsApp, correo y redes sociales.
 - [ ] Primeros productos del catálogo (nombre, descripción, fotos, presentaciones).
+- [ ] Imagen de cada línea (categorías Sabores, Fragancias y Envases) y validación de los textos de la portada.
+- [ ] Vídeo del hero en 1080p (y vertical opcional), con licencia de uso comercial.
 - [ ] Certificaciones, solo si existen.
 - [ ] Texto revisado de la política de privacidad y los términos de uso.
 
@@ -167,3 +171,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-10 | Fase 1 implementada. Evidencia: `php -l`, PHPCS del tema y del plugin, ESLint y build; Playwright en local con el modo catálogo (19 pruebas correctas, 7 de compra omitidas a propósito) y con la tienda activa (12 correctas); revisión en el navegador a 1366px y 375px (cabecera, submenús, catálogo, ficha, cotización con el formulario rellenado, menú móvil) sin desbordamiento horizontal ni errores PHP; tienda intacta al desactivar el modo. Se reforzó la prueba del producto variable, que podía enviar el formulario antes de que WooCommerce eligiera la variación. Pendiente: publicación y datos de producción. |
 | 2026-10-11 | Pull requests de la fase 1 fusionados (tema #3, plugin #2). A partir de ahora se trabaja directamente sobre `main`. |
 | 2026-10-11 | Fase 2 implementada (tema 1.3.0, plugin 1.1.1: sin valoraciones en modo catálogo). Evidencia: PHPCS, ESLint y build; Playwright en local con el modo catálogo (24 correctas, 7 de compra omitidas a propósito) y con la tienda activa (16 correctas); capturas a 1440px y 390px de la guía, catálogo, ficha, contacto, portada, 404, submenú y menú móvil, sin desbordamiento horizontal; cabecera fija medida a 10–12 px del borde al hacer scroll. Se corrigió el orden de capas CSS, que hacía ganar a los estilos base sobre los componentes. |
+| 2026-10-11 | Fase 3 implementada (tema 1.4.0) con el vídeo de frutas provisional (720p, optimizado de 2,4 MB a 0,84 MB en MP4 y 0,72 MB en WebM, sin sonido). Evidencia: PHPCS, ESLint y build; Playwright en local con el modo catálogo (29 correctas, 7 de compra omitidas a propósito) y con la tienda activa (21 correctas), incluidas las nuevas pruebas del hero (pausa y movimiento reducido), líneas, pasos y mapa; capturas a 1440px y 390px sin desbordamiento, con el hero fijo y la sección de soluciones subiendo por encima. La prueba de la pausa detectó que la capa de texto tapaba el botón en escritorio; corregido. |

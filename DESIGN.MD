@@ -114,6 +114,21 @@ El énfasis dentro de un título se hace con `<strong>` (700), con `.pill` (pala
 
 Duraciones y curvas en `--duration-fast` (160 ms), `--duration` (320 ms), `--duration-slow` (750 ms) y `--ease-out`.
 
+## Portada
+
+| Sección | Superficie | Detalles |
+| --- | --- | --- |
+| Hero | Beige del vídeo `#eedcc8` | Vídeo en el 60 % derecho (en móvil, marco 4:3 bajo el texto) con degradado hacia el texto; título display con píldora; rótulo `#a83200` y entrada `#4a4642` por contraste sobre beige; fijo en escritorio. |
+| Nuestras soluciones | Blanco, sube sobre el hero con esquinas redondeadas | Tarjetas con marco de frasco; sin imagen, degradado de la línea con su icono. Carrusel en móvil, tres columnas en escritorio. |
+| Cómo trabajamos | Noche con órbita | Introducción fija a la izquierda y pasos apilados a la derecha con números grandes en naranja. |
+| Destacados | Blanco | Cuatro tarjetas de producto. |
+| Razones | Superficie | Cuatro tarjetas con icono grande. |
+| Catálogo | Panel noche redondeado | Buscador y accesos a las líneas en píldoras. |
+| Tendencias | Blanco | Tarjetas de entrada; sin imagen, el isotipo. |
+| Dónde estamos | Blanco | Canales con iconos y mapa bajo demanda. |
+
+El vídeo se reproduce una vez y descansa en su último fotograma, que también es la imagen fija. Recomendado: MP4 H.264 sin sonido, 1920×1080, unos 8 segundos, con el sujeto a la derecha y el tercio izquierdo despejado para el texto.
+
 ## Accesibilidad
 
 HTML semántico, enlace para saltar al contenido, foco visible en todos los controles (también en la búsqueda, que muestra un anillo en toda la píldora), menús con `aria-expanded`, Escape y retención del foco, carrusel navegable con teclado y movimiento reducido. Pendiente: auditoría con lector de pantalla y contenido definitivo (fase 6).
