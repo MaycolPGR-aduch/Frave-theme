@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fase 1 implementada y probada en local; pendiente de revisión, fusión y publicación.
+- **Estado:** fase 1 fusionada en `main` (tema y plugin); pendiente de publicar en frave.pe y de los datos de producción.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
@@ -51,7 +51,7 @@ Las páginas de envíos y de cambios y devoluciones quedan en borrador hasta que
 
 ## Fases
 
-Cada fase se cierra con sus pruebas, se fusiona en `main` y se publica por SSH (ver [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD)). Cuando una fase toca el tema y el plugin, **el plugin se publica primero**: el CI del tema instala `frave-peru` desde su rama `main`.
+**Flujo de trabajo:** mientras la web esté en construcción se trabaja directamente sobre `main` en los dos repositorios, sin ramas ni pull requests. Cada bloque de trabajo se cierra con sus pruebas, se sube a `main` con el CI en verde y se publica por SSH (ver [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD)). Cuando un cambio toca el tema y el plugin, **el plugin se sube y se publica primero**: el CI del tema instala `frave-peru` desde su rama `main`.
 
 ### Fase 1 — Modo catálogo y navegación corporativa
 
@@ -85,8 +85,8 @@ Sitio (base de datos, local y producción):
 
 #### Publicar la fase 1
 
-1. Fusionar y publicar **primero el plugin** (`feature/modo-catalogo` de `frave-peru`): con el plugin nuevo y el tema anterior, la web ya oculta precios y compras.
-2. Fusionar y publicar el tema (`feature/modo-catalogo` de `frave`); su CI instala el plugin desde `main`.
+1. Publicar **primero el plugin** (`main` de `frave-peru`): con el plugin nuevo y el tema anterior, la web ya oculta precios y compras.
+2. Publicar el tema (`main` de `frave`).
 3. En el servidor, desde la carpeta del sitio (`~/domains/frave.pe/public_html`):
 
    ```bash
@@ -163,3 +163,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | --- | --- |
 | 2026-10-10 | Cambio de rumbo acordado y plan creado. Comienza la fase 1 en las ramas `feature/modo-catalogo` del tema y del plugin. |
 | 2026-10-10 | Fase 1 implementada. Evidencia: `php -l`, PHPCS del tema y del plugin, ESLint y build; Playwright en local con el modo catálogo (19 pruebas correctas, 7 de compra omitidas a propósito) y con la tienda activa (12 correctas); revisión en el navegador a 1366px y 375px (cabecera, submenús, catálogo, ficha, cotización con el formulario rellenado, menú móvil) sin desbordamiento horizontal ni errores PHP; tienda intacta al desactivar el modo. Se reforzó la prueba del producto variable, que podía enviar el formulario antes de que WooCommerce eligiera la variación. Pendiente: publicación y datos de producción. |
+| 2026-10-11 | Pull requests de la fase 1 fusionados (tema #3, plugin #2). A partir de ahora se trabaja directamente sobre `main`. |
