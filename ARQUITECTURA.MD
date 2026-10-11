@@ -1,7 +1,7 @@
 # Arquitectura del tema Frave
 
 - **Estado:** implementación inicial funcional.
-- **Última revisión:** 10 de octubre de 2026.
+- **Última revisión:** 11 de octubre de 2026.
 - **Seguimiento:** [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md) (plan vigente) y [ROADMAP.md](ROADMAP.md).
 
 ## Límites del sistema
@@ -16,9 +16,11 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | --- | --- |
 | `functions.php` | Define constantes y carga los módulos de `inc/`. |
 | `inc/setup.php` | Soporte del tema, menús, tamaños de imagen y ancho de contenido. |
-| `inc/helpers.php` | Lectura opcional de ACF, URL de assets y botón reutilizable. |
+| `inc/helpers.php` | Lectura opcional de ACF, URL de assets y botón del sistema (`frave_button()`, `.btn` con icono). |
+| `inc/icons.php` | Iconos de línea (`frave_icon()`), icono de cada línea de producto y el isotipo en SVG (`frave_isotype()`). |
+| `inc/style-guide.php`, `template-parts/style-guide.php` | Guía interna del sistema visual en `/?sistema-visual`, solo para quien puede editar el tema y sin indexar. |
 | `inc/enqueue.php` | Carga Vite en desarrollo o CSS y JS desde el manifest compilado. |
-| `inc/woocommerce.php` | Wrappers del contenido, columnas de catálogo, fragmento del contador del carrito, `frave_catalog_mode()` / `frave_shop_enabled()` y botón «Ver detalles» de las tarjetas en modo catálogo. |
+| `inc/woocommerce.php` | Wrappers del contenido, banda de cabecera del catálogo (título, descripción, migas y buscador), columnas, marco e imagen y categoría de las tarjetas, fragmento del contador del carrito, `frave_catalog_mode()` / `frave_shop_enabled()` y botón «Ver detalles» en modo catálogo. |
 | `inc/navigation.php` | Menús de respaldo con la estructura corporativa (solo enlaces que existen), botones de submenú y descripciones para los menús de WordPress, y llamada a la acción de la cabecera. |
 | `inc/acf.php` | Registra `acf-json/` como ruta de carga de grupos ACF. |
 | `inc/catalog-filters.php` | Filtros del catálogo: consultas de disponibilidad y oferta, recuentos, URL, chips de filtros activos, maquetación a dos columnas y `noindex` de vistas filtradas. |
@@ -30,9 +32,10 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `front-page.php`, `page.php`, `single.php`, `archive.php`, `search.php`, `index.php`, `404.php` | Jerarquía de templates clásicos. |
 | `header.php`, `footer.php` | Estructura global, navegación, búsqueda, carrito y pie. |
 | `template-parts/sections/` | Hero, categorías, destacados, presentación editorial, guía y cierre de la portada. |
-| `template-parts/cards/` y `template-parts/components/` | Tarjeta de categoría, enlace de carrito y estado vacío. |
-| `assets/src/css/app.css` | Tailwind, tokens, estilos de componentes y estilos WooCommerce. |
-| `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú móvil con submenús (desplegable en escritorio, acordeón en móvil) y revelado progresivo de módulos editoriales. |
+| `template-parts/cards/` y `template-parts/components/` | Tarjeta de categoría, banda de cabecera de páginas interiores (`page-hero.php`), formulario de búsqueda, enlace de carrito y estado vacío. |
+| `assets/src/css/app.css` | Orden de capas, tokens, cabecera, menús, pie, secciones de la portada, WooCommerce y páginas institucionales. |
+| `assets/src/css/system/` | Sistema de diseño: tipografía, botones, superficies, formas, movimiento y carrusel (ver [DESIGN.MD](DESIGN.MD)). |
+| `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú con submenús, estado de la cabecera al hacer scroll, aparición progresiva, carrusel, apilado y contadores. |
 | `assets/dist/` | CSS, JavaScript, fuentes y manifest listos para servir; se versiona en Git. |
 | `acf-json/` | Configuración versionada de los campos editoriales de la portada. |
 | `theme.json`, `style.css` | Ajustes del editor y metadatos necesarios para activar el tema. |
@@ -91,6 +94,7 @@ La hoja `assets/src/css/app.css` concentra hoy todo el sistema visual y los esti
 | 2026-09-23 | Módulos editoriales fijos con campos de ACF gratuito. | Permitir edición controlada sin un constructor visual ni duplicar datos comerciales. |
 | 2026-09-23 | `server.origin` de Vite apunta al servidor de desarrollo. | Resolver las fuentes importadas desde CSS cuando WordPress sirve el HTML en otro puerto. |
 | 2026-09-28 | Requisitos comerciales de Perú (comprobante, DNI/RUC) en el plugin `frave-peru`, fuera del tema. | Son lógica comercial y datos de pedidos: deben conservarse si cambia el tema. El tema solo aporta estilos. Ver `D:/Frave-web/frave-peru/README.md`. |
+| 2026-10-11 | Sistema de diseño en `assets/src/css/system/` importado por `app.css`, con el orden de capas fijado al principio. Cabecera que superpone la página (`--header-height` como relleno del contenido) para que las bandas oscuras corran por detrás. | Separar el sistema de los estilos de cada página y permitir la cabecera flotante sin desplazar contenido. |
 | 2026-10-10 | Web corporativa con catálogo: modo catálogo en `frave-peru` (activado por defecto) y la tienda en pausa sin borrar su código. | Frave pospone la venta en línea; un interruptor permite volver a vender sin rehacer el carrito, el checkout ni la boleta/factura. Ver [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md). |
 
 Anota aquí las decisiones que cambien los límites del sistema o las dependencias; las tareas concretas se siguen en [ROADMAP.md](ROADMAP.md).

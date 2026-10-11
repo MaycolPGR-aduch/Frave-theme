@@ -1,100 +1,133 @@
-# Diseño de Frave
+# Sistema visual de Frave
 
-- **Estado:** sistema visual inicial, pendiente de aprobación final de marca.
-- **Última revisión:** 10 de octubre de 2026.
-- **Seguimiento:** [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md). La fase 2 del plan redefine el sistema visual con aire corporativo, tomando como referencia la estructura y el movimiento de disaromas.com.
+- **Estado:** sistema corporativo implementado (fase 2 del plan); pendiente de aprobación de Frave.
+- **Última revisión:** 11 de octubre de 2026.
+- **Seguimiento:** [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md).
+- **Ver en vivo:** con sesión de administrador, abre `/?sistema-visual` (local o frave.pe). Muestra colores, tipografía, botones, iconos, formas, tarjetas, cifras y movimiento con contenido de ejemplo.
 
-## Dirección visual
+## Dirección
 
-Frave busca una experiencia elegante, limpia y editorial para fragancias, esencias e insumos de perfumería. La identidad inicial usa el logotipo horizontal naranja disponible en los recursos de marca, fondos claros, amplio espacio en blanco y fotografía de producto administrada desde WordPress y WooCommerce. Las referencias externas sirven para estudiar calidad de composición y experiencia; el diseño de Frave debe mantener una identidad propia.
+Una web corporativa de captación que tiene que enganchar: titulares grandes y ligeros, superficies oscuras con profundidad, un único acento naranja y movimiento al hacer scroll. La referencia de estructura y ritmo es [disaromas.com](https://disaromas.com/); la identidad es de Frave:
 
-La portada de [Eurofragance](https://www.eurofragance.com/) sirve como referencia de ritmo editorial: hero amplio, módulos visuales diferenciados, cambios claros de superficie y espacios generosos entre bloques. Frave traslada esa intención a una composición propia, con acentos naranja, formas circulares y contenido centrado en creación de fragancias.
+- **Base corporativa:** blanco, tinta y noche. El naranja de marca guía la mirada y no se usa como fondo de grandes superficies.
+- **Motivo gráfico propio:** la gota y el frasco del isotipo recortan fotografías, aparecen como marca de agua y dan forma a los iconos.
+- **Movimiento progresivo:** todo se ve sin JavaScript y se detiene con `prefers-reduced-motion`.
 
-La portada ofrece hero, categorías, productos destacados y tres módulos editoriales: presentación, guía y cierre hacia la tienda. Los textos de los módulos se editan en ACF gratuito. Cuando no se ha cargado una imagen editorial, el hero muestra una composición hecha con CSS y la presentación utiliza un monograma tipográfico. Son respaldos visuales, no fotografías comerciales definitivas.
+Lo que se evita de la referencia: librerías por CDN (jQuery, Swiper, AOS), imágenes sin optimizar, títulos sin `h1`, botones sin destino y metadatos duplicados.
 
 ## Fuentes de verdad
 
-| Elemento | Archivo actual | Regla de cambio |
+| Elemento | Archivo |
+| --- | --- |
+| Tokens (color, radios, sombras, movimiento, escala tipográfica) | `assets/src/css/app.css` (`@theme` y `:root`) |
+| Tipografía: `.display`, `.lead`, `.pill`, `.mark`, `.section-head` | `assets/src/css/system/typography.css` |
+| Botones `.btn` | `assets/src/css/system/buttons.css` y `frave_button()` en `inc/helpers.php` |
+| Superficies, tarjetas, iconos en mosaico, cifras y banda de cabecera | `assets/src/css/system/surfaces.css` y `template-parts/components/page-hero.php` |
+| Formas, isotipo e iconos | `assets/src/css/system/shapes.css` y `inc/icons.php` |
+| Movimiento | `assets/src/css/system/motion.css` y `assets/src/js/modules/` |
+| Carrusel | `assets/src/css/system/carousel.css` y `assets/src/js/modules/carousel.js` |
+| Cabecera, menús, pie, WooCommerce y páginas institucionales | `assets/src/css/app.css` |
+| Paleta del editor | `theme.json` |
+
+El orden de capas CSS se fija al principio de `app.css` (`@layer theme, utilities, base, components;`): los archivos del sistema se importan antes y, sin esa línea, su capa `components` quedaría por debajo de `base`.
+
+## Color
+
+| Token | Valor | Uso | Contraste |
+| --- | --- | --- | --- |
+| `night` | `#121418` | Banda de páginas, pie, secciones de impacto | Blanco 18,4:1 · naranja 5,4:1 |
+| `night-2` | `#1c1f25` | Tarjetas sobre noche | Blanco 16,5:1 |
+| `ink` / `foreground` | `#202329` | Texto principal, botón oscuro | Sobre blanco 15,9:1 |
+| `brand-orange` / `accent` | `#fc4c02` | Líneas, iconos, píldoras, títulos grandes; texto solo sobre oscuro | Sobre blanco 3,4:1 (solo texto grande) |
+| `primary` | `#c43b00` | Botones con texto blanco, enlaces y acentos sobre claro | Blanco 5,3:1 |
+| `primary-hover` | `#a83200` | Hover de botones primarios | Blanco 6,7:1 |
+| `orange-soft` | `#fff1ea` | Fondo de iconos y píldoras suaves | Primario encima 4,8:1 |
+| `orange-tint` | `#ffe1d1` | Matices de ilustración | — |
+| `surface` / `surface-2` | `#f6f4f1` / `#efebe6` | Secciones alternas, fondos de imagen | Texto secundario 4,9:1 |
+| `line` / `border` | `#e5e1dc` | Bordes y divisores | — |
+| `muted` | `#6b6b68` | Descripciones | Sobre blanco 5,4:1 |
+| `on-dark` / `on-dark-muted` | `#f4f2ef` / `#a9a7a3` | Texto sobre noche | 17:1 / 7,7:1 |
+| `success`, `warning`, `error` | `#276749`, `#9c6b1b`, `#b42318` | Estados | — |
+| `whatsapp` / `whatsapp-dark` | `#0f7d6f` / `#075e54` | Botones de WhatsApp (el verde de marca da 1,98:1) | Blanco 5,0:1 |
+
+Regla práctica: sobre blanco, el naranja de marca solo en títulos de 24 px o más y en elementos sin texto; para texto y botones, `primary`. Sobre `night`, el naranja vale también para texto.
+
+## Tipografía
+
+Lato local (`@fontsource/lato`) en 300, 400 y 700, con precarga de los tres WOFF2.
+
+| Rol | Tamaño | Peso |
 | --- | --- | --- |
-| Tokens y estilos del frontend | `assets/src/css/app.css` | Cambiar aquí los valores y componentes visibles. |
-| Paleta y opciones del editor | `theme.json` | Mantener los valores compartidos alineados con el CSS. |
-| Logotipos de respaldo | `assets/images/frave-logo.png` (encabezado) y `assets/images/frave-logo-footer.png` (pie oscuro, fondo transparente) | Conservar los originales de marca fuera del tema. |
-| Contenido editorial de portada | `acf-json/group_frave_home.json` y `template-parts/sections/` | Editar contenido desde la portada; versionar cambios de estructura de campos. |
-| Imágenes, precios, stock y atributos de producto | WooCommerce y la biblioteca de medios | No duplicar estos datos en ACF. |
+| Display (hero) `.display` | `clamp(3rem, 7vw, 6.25rem)` | 300, interlineado 1 |
+| `h1` | `clamp(2.6rem, 5.4vw, 4.6rem)` | 300 |
+| `h2` | `clamp(2.1rem, 4vw, 3.4rem)` | 300; 700 en paneles, formularios, WooCommerce y pie |
+| `h3` | `clamp(1.3rem, 2vw, 1.6rem)` | 700 |
+| Entrada `.lead` | `clamp(1.1rem, 1.6vw, 1.3rem)` | 400, color `muted` |
+| Texto | 1rem, interlineado 1,6 | 400 |
+| Rótulo `.eyebrow` | 0,75rem, mayúsculas, espaciado 0,2em, línea naranja delante | 700, color `primary` (naranja sobre oscuro) |
 
-## Color inicial
+El énfasis dentro de un título se hace con `<strong>` (700), con `.pill` (palabra sobre naranja; `--soft`, `--ink`, `--outline`) o con `.mark` (subrayado de rotulador). `.section-head` agrupa rótulo, título y entrada; `--center` los centra y `--split` pone una acción a la derecha.
 
-| Token | Valor | Uso actual |
+## Espacio, radios y sombras
+
+- Contenedor de 80rem con márgenes fluidos (`--site-gutter`). Las páginas interiores alinean su contenido con el logo y limitan la lectura a 58rem.
+- Secciones con `--section-space` = `clamp(4.5rem, 9vw, 8rem)`.
+- Radios: `--radius-sm` 0,75rem, `--radius-md` 1,25rem (tarjetas), `--radius-lg` 2rem (marcos), `--radius-xl` hasta 3,25rem (bandas y secciones superpuestas).
+- Sombras: `--shadow-soft` (reposo), `--shadow-lift` (tarjeta al pasar el puntero, cabecera al hacer scroll), `--shadow-header`.
+
+## Componentes
+
+| Componente | Clases | Notas |
 | --- | --- | --- |
-| `brand-orange` / `accent` | `#fc4c02` | Logotipo y acentos no textuales. |
-| `brand-orange-dark` / `primary` | `#c43b00` | Botones con texto blanco, texto de acento y estados hover. |
-| `background` | `#ffffff` | Fondo principal. |
-| `foreground` | `#202329` | Texto principal. |
-| `border` | `#e5e1dc` | Bordes y divisores. |
-| `ink` | `#202329` | Texto principal y botones oscuros. |
-| `muted` | `#6b6b68` | Texto secundario. |
-| `surface` | `#f6f4f1` | Secciones y superficies suaves. |
-| `line` | `#e5e1dc` | Bordes y divisores. |
-| `success` | `#276749` | Estados positivos y disponibilidad. |
-| `warning` | `#9c6b1b` | Avisos. |
-| `error` | `#b42318` | Errores y agotados. |
-| `white` | `#ffffff` | Fondo y texto sobre superficies oscuras. |
-| `whatsapp` / `whatsapp-dark` | `#0f7d6f` / `#075e54` | Botones de WhatsApp. El verde claro de la marca (`#25d366`) da 1,98:1 con blanco; `#0f7d6f` da 5,02:1. |
+| Botón | `.btn` + `--primary`, `--dark`, `--light`, `--outline`, `--sm`; `.btn__icon`; `.btn-row` | Píldora con icono circular que avanza en hover. No se llama `.button` porque WooCommerce restyliza `.button` en sus páginas. `frave_button( $label, $url, $classes, $icon )` lo genera. |
+| Enlace con flecha | `.link-arrow` | Acción secundaria. |
+| Cabecera | `.site-header`, `.site-header__inner` | Cápsula blanca flotante, fija arriba; se eleva al hacer scroll (`.is-scrolled`). Superpone la página (`--header-height`), así las bandas oscuras corren por detrás. |
+| Submenú | `.sub-menu`, `.menu-item__icon`, `.menu-item__description` | Panel con iconos en escritorio, acordeón en móvil. Las líneas toman su icono de la categoría; otros elementos con la clase `frave-icon-NOMBRE`. |
+| Menú móvil | `.primary-navigation.is-open` | Tarjeta bajo la cápsula con «Solicitar asesoría» al final. |
+| Banda de cabecera | `template-parts/components/page-hero.php` | Fondo noche con resplandor naranja, órbitas e isotipo de marca de agua, esquinas inferiores redondeadas. Rótulo, título, entrada, línea de datos, migas y buscador opcionales. La usan las páginas, entradas, archivo, búsqueda y el catálogo. |
+| Superficies | `.section--dark` / `.on-dark`, `.section--surface`, `.section--overlap` | Lo oscuro ajusta títulos, rótulos, píldoras, iconos y botones de contorno. |
+| Tarjeta | `.card` + `--surface`, `--dark`, `--interactive`; `.card__link` | La interactiva sube y gana sombra; `.card__link` hace clicable toda la tarjeta con foco visible. |
+| Icono en mosaico | `.icon-tile`, `--lg` | Naranja suave sobre claro, naranja translúcido sobre oscuro. |
+| Cifra | `.stat`, `.stat__value`, `.stat__label` | Con `data-count-to` cuenta al aparecer. |
+| Tarjeta de producto | `.product-card__media`, `.product-card__category` | Marco con zoom de imagen y categoría sobre el título. |
+| Pie | `.site-footer` | Noche con isotipo, franja «¿Tienes un proyecto en mente?» y botones, columnas con iconos de contacto y Libro de Reclamaciones. |
 
-La paleta se apoya en la guía de marca naranja disponible en `D:/Frave-web/IDENTIDAD DE MARCA FRAVE/`, pero la aplicación final sigue pendiente de aprobación. El naranja de marca `#fc4c02` con blanco da aproximadamente **3,40:1**; por eso los botones, badges y paginación con texto pequeño usan `primary` (`#c43b00`), que da aproximadamente **5,29:1** con blanco. WooCommerce incluye reglas CSS sin capas que sobrescriben colores de enlaces; el botón primario y los enlaces del pie tienen una regla explícita para conservar el contraste.
+## Formas e iconos
 
-## Tipografía y composición
+- **Marcos** `.media-frame` + `.shape-drop` (gota), `.shape-bottle` (frasco con cuello) o `.shape-arch` (arco). Proporción 4:5; la máscara recorta la imagen.
+- **Isotipo** `frave_isotype()`: frasco con gota a línea, para marcas de agua y sellos (`.brand-seal`).
+- **Órbitas** `.orbit` (naranja) y `.orbit--soft` (blanca) para profundidad.
+- **Separador** `.divider-drop`: línea, gota, línea.
+- **Iconos** `frave_icon( $nombre )`: trazo 1,6 con remates redondeados sobre 24 px, color del texto. Lista completa en `frave_icon_paths()` y en `/?sistema-visual`. Sabores, Fragancias y Envases tienen icono propio (`frave_product_line_icon()`).
 
-- **Familia:** Lato 400 y 700 alojada localmente mediante `@fontsource/lato`, con Arial y `sans-serif` como respaldo.
-- **Texto base:** `1rem`, interlineado `1.6`.
-- **Títulos generales:** negrita, interlineado `1.12` y espaciado de letras `-0.035em`; `h1` y `h2` usan tamaños fluidos con `clamp()`.
-- **Roles presentes:** display/hero `clamp(2.5rem, 8vw, 4.5rem)` según viewport; títulos de sección `clamp(2rem, 4vw, 3.25rem)`; cuerpo `1rem`; texto auxiliar `0.875rem`; eyebrow `0.75rem` en mayúsculas; botones `0.875rem` en negrita.
-- **Contenedor:** ancho máximo de `80rem` con gutters fluidos; las secciones usan espaciado vertical adaptable.
-- **Tarjetas:** radio aproximado de `1.15rem`; botones y controles principales usan contorno redondeado.
+## Movimiento
 
-## Responsive y movimiento
-
-La interfaz cubre móvil, tablet y escritorio. El catálogo pasa de dos columnas en móvil a tres en escritorio; las categorías pasan de dos a cuatro. El menú usa una presentación móvil hasta `63.99rem` y el layout estrecho se ajusta por debajo de `47.99rem`. El ancho mínimo de diseño actual es `320px`.
-
-El CSS actual contiene estilos generales y ajustes con `max-width`; todavía no está reorganizado como hoja móvil primero. En esta iteración se verificaron las secciones nuevas a 408px y 1440px: guía en una columna y CTA apilado en móvil, sin desbordamiento horizontal; en escritorio la guía usa tres columnas. Una conversión completa del CSS requiere una ronda de regresión del flujo de compra.
-
-La portada usa una entrada progresiva de sus módulos cuando llegan al viewport: textos y bloques aparecen con un desplazamiento corto, las imágenes editoriales usan escala sutil y las tarjetas entran escalonadas. Cambios de fondo, curvas y anillos gráficos marcan el paso entre secciones sin reproducir la composición de una web de referencia. El efecto se inicializa con `IntersectionObserver` en `assets/src/js/modules/section-transitions.js`; si JavaScript o esa API no están disponibles, el contenido sigue visible. `prefers-reduced-motion` desactiva los desplazamientos y deja todos los bloques visibles. El hero mantiene un pulso decorativo lento, también reducido por esa preferencia.
-
-## Componentes y estados actuales
-
-| Componente | Estado | Ubicación |
+| Efecto | Uso | Implementación |
 | --- | --- | --- |
-| Header, menú móvil, búsqueda y footer | Inicial | `header.php`, `footer.php`, `template-parts/components-search.php` |
-| Submenús (panel de 15–21rem con sombra en escritorio, acordeón en móvil) y botón «Solicitar asesoría» | Inicial | `inc/navigation.php`, `assets/src/js/modules/navigation.js` |
-| Bloque «¿Te interesa este producto?» (superficie suave, cotización naranja y WhatsApp) y «Ver detalles» con contorno en las tarjetas | Inicial | `inc/contact.php`, `inc/woocommerce.php` |
-| Botón y enlace textual | Inicial | `inc/helpers.php`, `assets/src/css/app.css` |
-| Hero, categorías, destacados, presentación, guía y cierre | Inicial | `template-parts/sections/` |
-| Tarjeta de categoría y estado vacío | Inicial | `template-parts/cards/`, `template-parts/components/` |
-| Enlace y contador del carrito | Inicial | `template-parts/components/cart-link.php` |
-| Formularios, mensajes y páginas WooCommerce | Estilos base | `assets/src/css/app.css` |
-| Botón flotante, botón de ficha y enlace de pie de WhatsApp | Inicial | `inc/contact.php`, `template-parts/components/whatsapp-button.php` |
-| Enlace del pie y formulario del Libro de Reclamaciones | Inicial | `footer.php`, `assets/src/css/app.css`; el formulario lo genera el plugin `frave-peru` |
-| Mini-carrito lateral (cajón de 26rem, pantalla completa en móvil) | Inicial | `template-parts/components/mini-cart.php`, `assets/src/js/modules/mini-cart.js` |
-| Filtros del catálogo: barra lateral fija desde 64rem, cajón izquierdo en móvil, secciones plegables, casillas, chips | Inicial | `template-parts/catalog/`, `assets/src/js/modules/catalog-filters.js` |
-| Páginas institucionales: canales de contacto, índice «En esta página», acordeones de FAQ, texto legal de lectura cómoda (46rem), enlaces legales del pie | Inicial | `page-templates/`, `template-parts/components/contact-channels.php`, `assets/src/css/app.css` |
-| Modal genérico | Pendiente | Fases posteriores, según necesidad real |
+| Aparición | `data-reveal="up|left|right|scale|fade|clip"`, `data-reveal-group` (escalonado hasta 7) | `section-transitions.js` con `IntersectionObserver`. |
+| Hero fijo y telón | `.pin` seguido de `.curtain` | CSS: el hero queda fijo y la sección siguiente sube con esquinas redondeadas y sombra. |
+| Apilado | `.stack[data-stack] > .stack__item` | Las tarjetas se fijan bajo la cabecera y se encogen al cubrirlas la siguiente (`stack.js`). |
+| Carrusel | `.carousel[data-carousel]` | Scroll nativo con *scroll snap* (táctil, trackpad, flechas con foco); `carousel.js` gestiona anterior y siguiente y los oculta si todo cabe. |
+| Pie que se descubre | automático | En pantallas desde 64rem de ancho y 46rem de alto, el contenido se despega del pie al final. |
+| Cabecera | automático | Sombra mayor al hacer scroll (`header-scroll.js`). |
+| Contadores | `data-count-to` | `counter.js`; el valor final está en el HTML. |
 
-## Imágenes y accesibilidad
+Duraciones y curvas en `--duration-fast` (160 ms), `--duration` (320 ms), `--duration-slow` (750 ms) y `--ease-out`.
 
-Las imágenes subidas a WordPress deben tener dimensiones apropiadas, texto alternativo útil cuando comuniquen contenido y versiones responsive generadas por la biblioteca de medios. El tema registra tamaños `frave-card` y `frave-editorial`; las imágenes de categoría usan carga diferida y el hero prioriza la imagen principal cuando existe. La calidad final depende de las fotografías y de la configuración del servidor.
+## Accesibilidad
 
-La base incluye HTML semántico, enlace para saltar al contenido, estados `:focus-visible` y navegación móvil con atributos ARIA, cierre por Escape y ciclo de foco dentro del menú abierto. Los focos en la CTA y el footer usan un contorno claro que contrasta sobre su fondo oscuro. `prefers-reduced-motion` elimina también el retraso de transición al cerrar el menú. Queda pendiente la auditoría manual completa con lector de pantalla, estados y contenido definitivos.
+HTML semántico, enlace para saltar al contenido, foco visible en todos los controles (también en la búsqueda, que muestra un anillo en toda la píldora), menús con `aria-expanded`, Escape y retención del foco, carrusel navegable con teclado y movimiento reducido. Pendiente: auditoría con lector de pantalla y contenido definitivo (fase 6).
 
 ## Registro de cambios y decisiones
 
 | Fecha | Cambio | Estado |
 | --- | --- | --- |
 | 2026-09-23 | Se documenta el sistema visual inicial observado en el tema. | Base provisional |
-| 2026-09-23 | Se usa `primary` oscuro para texto blanco y se añaden secciones editoriales controladas. | Implementado; revisión de marca pendiente |
-| 2026-09-28 | Botones de WhatsApp en verde oscuro accesible; el flotante queda bajo el menú móvil (z-index 60) y en móvil muestra solo el icono. | Implementado |
-| 2026-09-28 | Mini-carrito lateral sobre el header (z-index 95, fondo 90) con «Finalizar compra» como acción principal y «Explorar productos» cuando está vacío. | Implementado |
-| 2026-10-05 | El tema añade la clase `woocommerce-block-theme-has-button-styles` al body para desactivar el estilo gris de botones de WooCommerce; todos los botones usan el estilo oscuro del tema con estados de carga y deshabilitado. Etiqueta «¡Oferta!» en `primary`. | Implementado |
-| 2026-10-10 | Modo catálogo: cabecera con logo, menú centrado con submenús y botón naranja «Solicitar asesoría» (en móvil, al final del menú); sin cuenta ni carrito. Ficha con bloque de cotización; tarjetas con «Ver detalles» con contorno. El botón de la cabecera no usa `.button`, porque en las páginas de tienda el `body` lleva `.woocommerce` y sus reglas de botón lo cambiarían. | Implementado |
-| 2026-10-05 | Páginas WooCommerce alineadas con el sistema: pestañas planas con subrayado `primary`, stock y descuentos con colores de estado, iconos de aviso por estado (info `primary`, éxito `success`, error `error`), títulos internos a 1,3–1,6rem y etiqueta superior según la página. | Implementado |
+| 2026-09-23 | Se usa `primary` oscuro para texto blanco y se añaden secciones editoriales controladas. | Implementado |
+| 2026-09-28 | Botones de WhatsApp en verde oscuro accesible; el flotante queda bajo el menú móvil y en móvil muestra solo el icono. | Implementado |
+| 2026-09-28 | Mini-carrito lateral con «Finalizar compra» como acción principal. | Implementado (en pausa con el modo catálogo) |
+| 2026-10-05 | Botones de WooCommerce con el estilo del tema (`woocommerce-block-theme-has-button-styles`) y etiqueta «¡Oferta!» en `primary`. Páginas WooCommerce alineadas con el sistema. | Implementado |
+| 2026-10-10 | Modo catálogo: menú con submenús, «Solicitar asesoría», bloque de cotización en la ficha y «Ver detalles» con contorno. | Implementado |
+| 2026-10-11 | Sistema corporativo (fase 2): tokens noche y naranja suave, Lato 300 en títulos, botones `.btn` con icono, píldoras y marcador, cabecera en cápsula flotante, submenús con iconos, banda de cabecera en páginas y catálogo, pie oscuro con llamada a la acción, formas de gota y frasco, isotipo, iconos de línea, tarjetas, cifras, carrusel, apilado, hero fijo con telón y pie que se descubre. Guía en `/?sistema-visual`. | Implementado; pendiente de aprobación de Frave |
 
-Al aprobar una decisión visual, actualiza esta guía y los tokens correspondientes; compila los assets y comprueba portada, catálogo, producto, carrito y checkout en móvil y escritorio. Registra en la tabla qué cambió y por qué.
+Al aprobar o cambiar una decisión visual, actualiza esta guía, los tokens y `theme.json`; compila los assets y revisa `/?sistema-visual`, portada, catálogo, ficha y contacto en móvil y escritorio. Registra qué cambió y por qué.

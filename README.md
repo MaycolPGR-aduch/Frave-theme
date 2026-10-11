@@ -6,7 +6,7 @@ Tema clásico personalizado para Frave (sabores, fragancias y envases). Desde oc
 
 - [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md): **plan vigente**, fases de la web corporativa y registro de avances.
 - [ROADMAP.md](ROADMAP.md): base construida y plan de la futura tienda en línea.
-- [DESIGN.MD](DESIGN.MD): identidad visual, tokens, componentes y decisiones de diseño.
+- [DESIGN.MD](DESIGN.MD): sistema visual (colores, tipografía, componentes, formas y movimiento). Para verlo en vivo, abre `/?sistema-visual` con sesión de administrador.
 - [ARQUITECTURA.MD](ARQUITECTURA.MD): límites del sistema, módulos e integraciones.
 - [GUIA_COMPILACION.MD](GUIA_COMPILACION.MD): desarrollo local, build y validación de assets.
 - [GUIA_DESPLIEGUE_LOCAL.MD](GUIA_DESPLIEGUE_LOCAL.MD): instalación local de WordPress y Frave desde cero en Windows.
@@ -117,8 +117,8 @@ Para probar el build de producción, compila con `npm.cmd run build` y cambia `F
 ## Arquitectura
 
 - `inc/`: configuración inicial, helpers, assets, ACF opcional, integración WooCommerce y modo catálogo, contacto y navegación.
-- `template-parts/`: secciones independientes de portada, cards, búsqueda y estados vacíos reutilizables.
-- `assets/src/`: CSS, JavaScript y sistema de diseño de Tailwind.
+- `template-parts/`: secciones independientes de portada, banda de cabecera, cards, búsqueda, estados vacíos y la guía del sistema visual.
+- `assets/src/`: CSS (con el sistema de diseño en `css/system/`) y JavaScript nativo por módulos.
 - `assets/dist/`: archivos listos para producción generados por Vite y versionados.
 - `acf-json/`: grupo de campos editoriales de portada sincronizable con ACF gratuito.
 - `woocommerce/`: no contiene overrides por ahora; los wrappers se integran con hooks públicos.

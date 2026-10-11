@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fase 1 fusionada en `main` (tema y plugin); pendiente de publicar en frave.pe y de los datos de producción.
+- **Estado:** fases 1 y 2 en `main`; pendientes de publicar en frave.pe (con los datos de producción de la fase 1) y de que Frave apruebe el sistema visual en `/?sistema-visual`.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
@@ -103,12 +103,14 @@ Sitio (base de datos, local y producción):
 
 ### Fase 2 — Sistema visual corporativo
 
-- [ ] Tokens: tinta oscura y blanco como base, naranja como acento, superficies y estados.
-- [ ] Tipografía Lato con títulos grandes y ligeros (añadir peso 300).
-- [ ] Motivos gráficos con la gota y el frasco: recortes de fotos, marcos, separadores.
-- [ ] Componentes: botones, píldoras de título, tarjetas, iconos de línea, header corporativo con desplegable con iconos.
-- [ ] Librería de transiciones: hero fijo, apilado al hacer scroll, aparición, carrusel con scroll-snap, footer revelado.
-- [ ] Actualizar [DESIGN.MD](DESIGN.MD) y `theme.json`.
+- [x] Tokens: noche, tinta y blanco como base, naranja como acento, naranja suave, superficies, radios, sombras y movimiento.
+- [x] Tipografía Lato con títulos grandes y ligeros (peso 300 añadido y precargado) y énfasis con negrita, píldora o marcador.
+- [x] Motivos gráficos con la gota y el frasco: marcos de imagen, isotipo como marca de agua y sello, órbitas y separador.
+- [x] Componentes: botones `.btn` con icono, píldoras, tarjetas, iconos de línea, cifras, cabecera en cápsula flotante con submenú con iconos, banda de cabecera para páginas y catálogo, pie oscuro con llamada a la acción.
+- [x] Librería de transiciones: hero fijo con telón, apilado al hacer scroll, aparición, carrusel con *scroll snap*, pie que se descubre, cabecera al hacer scroll y contadores.
+- [x] [DESIGN.MD](DESIGN.MD) reescrito como guía del sistema y paleta de `theme.json` actualizada.
+- [x] Guía interna en `/?sistema-visual` (solo administradores) para revisar y aprobar el sistema.
+- [ ] Aprobación de Frave: paleta, tipografía, formas y movimiento.
 
 ### Fase 3 — Portada nueva
 
@@ -164,3 +166,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-10 | Cambio de rumbo acordado y plan creado. Comienza la fase 1 en las ramas `feature/modo-catalogo` del tema y del plugin. |
 | 2026-10-10 | Fase 1 implementada. Evidencia: `php -l`, PHPCS del tema y del plugin, ESLint y build; Playwright en local con el modo catálogo (19 pruebas correctas, 7 de compra omitidas a propósito) y con la tienda activa (12 correctas); revisión en el navegador a 1366px y 375px (cabecera, submenús, catálogo, ficha, cotización con el formulario rellenado, menú móvil) sin desbordamiento horizontal ni errores PHP; tienda intacta al desactivar el modo. Se reforzó la prueba del producto variable, que podía enviar el formulario antes de que WooCommerce eligiera la variación. Pendiente: publicación y datos de producción. |
 | 2026-10-11 | Pull requests de la fase 1 fusionados (tema #3, plugin #2). A partir de ahora se trabaja directamente sobre `main`. |
+| 2026-10-11 | Fase 2 implementada (tema 1.3.0, plugin 1.1.1: sin valoraciones en modo catálogo). Evidencia: PHPCS, ESLint y build; Playwright en local con el modo catálogo (24 correctas, 7 de compra omitidas a propósito) y con la tienda activa (16 correctas); capturas a 1440px y 390px de la guía, catálogo, ficha, contacto, portada, 404, submenú y menú móvil, sin desbordamiento horizontal; cabecera fija medida a 10–12 px del borde al hacer scroll. Se corrigió el orden de capas CSS, que hacía ganar a los estilos base sobre los componentes. |
