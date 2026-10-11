@@ -1,27 +1,22 @@
 <?php
-/** Homepage. */
+/**
+ * Home page. The hero stays in place on large screens while "Nuestras soluciones" rises
+ * over it; the following sections scroll normally. Copy: ACF group "Inicio Frave"
+ * (defaults in inc/home.php).
+ */
 get_header();
 ?>
-<main id="primary" class="site-main">
-	<?php get_template_part( 'template-parts/sections/hero' ); ?>
-
-	<?php if ( class_exists( 'WooCommerce' ) ) : ?>
-		<?php get_template_part( 'template-parts/sections/categories' ); ?>
-		<?php get_template_part( 'template-parts/sections/featured-products' ); ?>
-	<?php else : ?>
-		<section class="section setup-note">
-			<div class="container setup-note__inner">
-				<p class="eyebrow"><?php esc_html_e( 'CREA A TU MANERA', 'frave' ); ?></p>
-				<h2><?php esc_html_e( 'Tu idea empieza con buenos ingredientes.', 'frave' ); ?></h2>
-				<p><?php esc_html_e( 'Fragancias, esencias y materias primas para acompañar cada proyecto.', 'frave' ); ?></p>
-			</div>
-		</section>
-	<?php endif; ?>
-	<?php get_template_part( 'template-parts/sections/story' ); ?>
-	<?php get_template_part( 'template-parts/sections/guide' ); ?>
-	<?php if ( class_exists( 'WooCommerce' ) ) : ?>
-		<?php get_template_part( 'template-parts/sections/shop-cta' ); ?>
-	<?php endif; ?>
+<main id="primary" class="site-main home">
+	<div class="home-intro">
+		<?php get_template_part( 'template-parts/home/hero' ); ?>
+		<?php get_template_part( 'template-parts/home/lines' ); ?>
+	</div>
+	<?php get_template_part( 'template-parts/home/steps' ); ?>
+	<?php get_template_part( 'template-parts/home/featured' ); ?>
+	<?php get_template_part( 'template-parts/home/reasons' ); ?>
+	<?php get_template_part( 'template-parts/home/catalog-cta' ); ?>
+	<?php get_template_part( 'template-parts/home/posts' ); ?>
+	<?php get_template_part( 'template-parts/home/location' ); ?>
 </main>
 <?php
 get_footer();

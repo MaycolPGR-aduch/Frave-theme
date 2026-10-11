@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Frave 1.3.0\n"
+"Project-Id-Version: Frave 1.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/frave\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-11T05:43:58+00:00\n"
+"POT-Creation-Date: 2026-10-11T06:11:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: frave\n"
@@ -38,9 +38,8 @@ msgid "Volver al inicio"
 msgstr ""
 
 #: 404.php:13
+#: inc/home.php:21
 #: template-parts/components/empty-state.php:6
-#: template-parts/sections/hero.php:7
-#: template-parts/sections/shop-cta.php:12
 #: template-parts/style-guide.php:119
 #: template-parts/style-guide.php:126
 msgid "Ver el catálogo"
@@ -66,6 +65,8 @@ msgstr ""
 #: inc/navigation.php:332
 #: page-templates/preguntas-frecuentes.php:48
 #: template-parts/components/contact-channels.php:23
+#: template-parts/home/hero.php:38
+#: template-parts/home/location.php:59
 msgid "(se abre en una nueva pestaña)"
 msgstr ""
 
@@ -105,18 +106,6 @@ msgstr ""
 
 #: footer.php:105
 msgid "Todos los derechos reservados."
-msgstr ""
-
-#: front-page.php:14
-msgid "CREA A TU MANERA"
-msgstr ""
-
-#: front-page.php:15
-msgid "Tu idea empieza con buenos ingredientes."
-msgstr ""
-
-#: front-page.php:16
-msgid "Fragancias, esencias y materias primas para acompañar cada proyecto."
 msgstr ""
 
 #: header.php:12
@@ -319,6 +308,223 @@ msgstr ""
 msgid "FRAVE"
 msgstr ""
 
+#: inc/home.php:17
+msgid "Sabores · Fragancias · Envases"
+msgstr ""
+
+#: inc/home.php:18
+msgid "Sabores y fragancias que *conectan* con tu marca"
+msgstr ""
+
+#: inc/home.php:19
+msgid "Acompañamos a marcas y emprendedores con insumos seleccionados y asesoría cercana para que cada producto deje huella."
+msgstr ""
+
+#: inc/home.php:20
+#: inc/navigation.php:305
+#: template-parts/style-guide.php:118
+#: template-parts/style-guide.php:125
+msgid "Solicitar asesoría"
+msgstr ""
+
+#: inc/home.php:23
+msgid "Nuestras soluciones"
+msgstr ""
+
+#: inc/home.php:24
+msgid "Tres líneas para dar vida a *tus productos*"
+msgstr ""
+
+#: inc/home.php:25
+msgid "Elige la línea que necesitas y explora sus productos, o cuéntanos tu proyecto y te orientamos."
+msgstr ""
+
+#: inc/home.php:26
+msgid "Sabores para alimentos, bebidas y repostería que realzan cada receta."
+msgstr ""
+
+#: inc/home.php:27
+msgid "Fragancias para perfumería, cuidado personal y ambientación del hogar."
+msgstr ""
+
+#: inc/home.php:28
+msgid "Frascos, atomizadores y accesorios para presentar tus productos con calidad."
+msgstr ""
+
+#: inc/home.php:30
+msgid "Cómo trabajamos"
+msgstr ""
+
+#: inc/home.php:31
+msgid "Tu proyecto, *paso a paso*"
+msgstr ""
+
+#: inc/home.php:32
+msgid "Te acompañamos desde la primera consulta hasta que los insumos llegan a tu taller o planta."
+msgstr ""
+
+#: inc/home.php:33
+msgid "Conversamos"
+msgstr ""
+
+#: inc/home.php:34
+msgid "Nos cuentas qué estás creando, para quién y en qué cantidades."
+msgstr ""
+
+#: inc/home.php:35
+msgid "Proponemos"
+msgstr ""
+
+#: inc/home.php:36
+msgid "Te recomendamos sabores, fragancias o envases del catálogo y preparamos tu cotización."
+msgstr ""
+
+#: inc/home.php:37
+msgid "Entregamos"
+msgstr ""
+
+#: inc/home.php:38
+msgid "Coordinamos presentaciones, plazos y despacho para que tu producción avance."
+msgstr ""
+
+#: inc/home.php:40
+msgid "Selección Frave"
+msgstr ""
+
+#: inc/home.php:41
+msgid "Productos *destacados*"
+msgstr ""
+
+#: inc/home.php:43
+msgid "Por qué Frave"
+msgstr ""
+
+#: inc/home.php:44
+msgid "Razones para *elegirnos*"
+msgstr ""
+
+#: inc/home.php:45
+msgid "Lo que nos piden las marcas que confían en nosotros."
+msgstr ""
+
+#: inc/home.php:47
+#: template-parts/style-guide.php:182
+msgid "Asesoría cercana"
+msgstr ""
+
+#: inc/home.php:48
+msgid "Te orientamos para elegir lo que mejor funciona en tu producto."
+msgstr ""
+
+#: inc/home.php:50
+msgid "Todo en un lugar"
+msgstr ""
+
+#: inc/home.php:51
+msgid "Sabores, fragancias y envases con un solo proveedor."
+msgstr ""
+
+#: inc/home.php:53
+msgid "Calidad cuidada"
+msgstr ""
+
+#: inc/home.php:54
+msgid "Insumos seleccionados para que tu producto rinda como esperas."
+msgstr ""
+
+#: inc/home.php:56
+msgid "Respuesta ágil"
+msgstr ""
+
+#: inc/home.php:57
+msgid "Atendemos tus consultas y cotizaciones con rapidez."
+msgstr ""
+
+#: inc/home.php:59
+#: inc/navigation.php:79
+msgid "Catálogo"
+msgstr ""
+
+#: inc/home.php:60
+msgid "Encuentra lo que *tu producto* necesita"
+msgstr ""
+
+#: inc/home.php:61
+msgid "Busca por nombre o explora por línea, familia olfativa y presentación."
+msgstr ""
+
+#: inc/home.php:63
+msgid "Tendencias"
+msgstr ""
+
+#: inc/home.php:64
+msgid "Ideas para *tu próxima creación*"
+msgstr ""
+
+#: inc/home.php:66
+msgid "Dónde estamos"
+msgstr ""
+
+#: inc/home.php:67
+msgid "Visítanos o *escríbenos*"
+msgstr ""
+
+#: inc/home.php:68
+msgid "Te atendemos en nuestro local y por todos nuestros canales."
+msgstr ""
+
+#: inc/home.php:186
+msgid "Conversación"
+msgstr ""
+
+#: inc/home.php:187
+msgid "Destello"
+msgstr ""
+
+#: inc/home.php:188
+#: template-parts/style-guide.php:26
+msgid "Calidad"
+msgstr ""
+
+#: inc/home.php:189
+msgid "Reloj"
+msgstr ""
+
+#: inc/home.php:190
+msgid "Laboratorio"
+msgstr ""
+
+#: inc/home.php:191
+#: template-parts/style-guide.php:27
+msgid "Despacho"
+msgstr ""
+
+#: inc/home.php:192
+msgid "Personas"
+msgstr ""
+
+#: inc/home.php:193
+msgid "Natural"
+msgstr ""
+
+#: inc/home.php:194
+#: inc/navigation.php:17
+#: template-parts/style-guide.php:22
+msgid "Sabores"
+msgstr ""
+
+#: inc/home.php:195
+#: inc/navigation.php:18
+#: template-parts/style-guide.php:23
+msgid "Fragancias"
+msgstr ""
+
+#: inc/home.php:196
+#: inc/navigation.php:19
+#: template-parts/style-guide.php:24
+msgid "Envases"
+msgstr ""
+
 #: inc/institutional.php:18
 msgid "Enlaces legales del pie"
 msgstr ""
@@ -336,21 +542,6 @@ msgstr ""
 msgid "Enlaces legales"
 msgstr ""
 
-#: inc/navigation.php:17
-#: template-parts/style-guide.php:22
-msgid "Sabores"
-msgstr ""
-
-#: inc/navigation.php:18
-#: template-parts/style-guide.php:23
-msgid "Fragancias"
-msgstr ""
-
-#: inc/navigation.php:19
-#: template-parts/style-guide.php:24
-msgid "Envases"
-msgstr ""
-
 #: inc/navigation.php:44
 msgid "Inicio"
 msgstr ""
@@ -361,10 +552,6 @@ msgstr ""
 
 #: inc/navigation.php:72
 msgid "Soluciones"
-msgstr ""
-
-#: inc/navigation.php:79
-msgid "Catálogo"
 msgstr ""
 
 #: inc/navigation.php:79
@@ -379,12 +566,6 @@ msgstr ""
 #: inc/navigation.php:223
 #, php-format
 msgid "Mostrar el submenú de %s"
-msgstr ""
-
-#: inc/navigation.php:305
-#: template-parts/style-guide.php:118
-#: template-parts/style-guide.php:125
-msgid "Solicitar asesoría"
 msgstr ""
 
 #: inc/navigation.php:313
@@ -682,105 +863,74 @@ msgstr ""
 msgid "por WhatsApp (se abre en una nueva pestaña)"
 msgstr ""
 
-#: template-parts/sections/categories.php:26
-#: template-parts/sections/shop-cta.php:8
-msgid "EXPLORA FRAVE"
-msgstr ""
-
-#: template-parts/sections/categories.php:27
-msgid "Encuentra lo que imaginas"
-msgstr ""
-
-#: template-parts/sections/categories.php:29
-msgid "Ver todo el catálogo"
-msgstr ""
-
-#: template-parts/sections/featured-products.php:49
-msgid "SELECCIÓN FRAVE"
-msgstr ""
-
-#: template-parts/sections/featured-products.php:50
-msgid "Inspírate para crear"
-msgstr ""
-
-#: template-parts/sections/featured-products.php:52
+#: template-parts/home/featured.php:50
 msgid "Ver todos los productos"
 msgstr ""
 
-#: template-parts/sections/guide.php:5
-msgid "Explora aromas"
+#: template-parts/home/hero.php:22
+msgid "Pausar la animación"
 msgstr ""
 
-#: template-parts/sections/guide.php:6
-msgid "Descubre fragancias y esencias para inspirar tu próxima idea."
+#: template-parts/home/hero.php:22
+msgid "Reproducir la animación"
 msgstr ""
 
-#: template-parts/sections/guide.php:9
-msgid "Elige insumos"
+#: template-parts/home/hero.php:22
+msgid "Ver de nuevo la animación"
 msgstr ""
 
-#: template-parts/sections/guide.php:10
-msgid "Encuentra materias primas y complementos para tu proceso creativo."
+#: template-parts/home/lines.php:20
+msgid "Ver todo el catálogo"
 msgstr ""
 
-#: template-parts/sections/guide.php:13
-msgid "Crea a tu manera"
+#: template-parts/home/lines.php:25
+msgid "Líneas de productos de Frave"
 msgstr ""
 
-#: template-parts/sections/guide.php:14
-msgid "Combina posibilidades y da forma a un proyecto propio."
+#: template-parts/home/lines.php:27
+#: template-parts/style-guide.php:208
+msgid "diapositiva"
 msgstr ""
 
-#: template-parts/sections/guide.php:22
-msgid "TU PROCESO CREATIVO"
+#. translators: 1: slide number, 2: total.
+#: template-parts/home/lines.php:27
+#: template-parts/style-guide.php:208
+#, php-format
+msgid "%1$d de %2$d"
 msgstr ""
 
-#: template-parts/sections/guide.php:23
-msgid "Cada creación empieza con una idea"
+#: template-parts/home/lines.php:50
+msgid "Ver productos"
 msgstr ""
 
-#: template-parts/sections/hero.php:3
-msgid "FRAGANCIAS Y ENVASES"
+#: template-parts/home/lines.php:57
+msgid "Línea anterior"
 msgstr ""
 
-#: template-parts/sections/hero.php:4
-msgid ""
-"El arte de crear\n"
-"tu propia esencia"
+#: template-parts/home/lines.php:58
+msgid "Línea siguiente"
 msgstr ""
 
-#: template-parts/sections/hero.php:5
-msgid "Sabores, fragancias y envases seleccionados para dar vida a tus productos."
+#. translators: %s: address.
+#: template-parts/home/location.php:54
+#, php-format
+msgid "Mapa: %s"
 msgstr ""
 
-#: template-parts/sections/hero.php:49
-msgid "Encuentra tu próxima creación"
+#: template-parts/home/location.php:58
+msgid "Ver el mapa"
 msgstr ""
 
-#: template-parts/sections/shop-cta.php:9
-msgid "Encuentra el comienzo de tu próxima creación"
+#: template-parts/home/location.php:59
+msgid "Abrir en Google Maps"
 msgstr ""
 
-#: template-parts/sections/shop-cta.php:10
-msgid "Recorre el catálogo de sabores, fragancias y envases."
+#: template-parts/home/location.php:60
+msgid "El mapa se carga desde Google al pulsar el botón."
 msgstr ""
 
-#: template-parts/sections/story.php:3
-msgid "ACERCA DE FRAVE"
-msgstr ""
-
-#: template-parts/sections/story.php:4
-msgid "Un espacio para imaginar nuevas esencias"
-msgstr ""
-
-#: template-parts/sections/story.php:5
-msgid "Explora fragancias, esencias e insumos para dar forma a tus ideas. Frave reúne opciones para quienes disfrutan crear y descubrir el mundo de la perfumería."
-msgstr ""
-
-#: template-parts/sections/story.php:41
-#: template-parts/style-guide.php:120
-#: template-parts/style-guide.php:127
-msgid "Conoce Frave"
+#: template-parts/home/posts.php:30
+msgid "Ver todos los artículos"
 msgstr ""
 
 #: template-parts/style-guide.php:12
@@ -864,15 +1014,7 @@ msgid "Fórmulas pensadas para tu producto"
 msgstr ""
 
 #: template-parts/style-guide.php:26
-msgid "Calidad"
-msgstr ""
-
-#: template-parts/style-guide.php:26
 msgid "Insumos seleccionados y controlados"
-msgstr ""
-
-#: template-parts/style-guide.php:27
-msgid "Despacho"
 msgstr ""
 
 #: template-parts/style-guide.php:27
@@ -951,6 +1093,11 @@ msgstr ""
 msgid "Píldora con icono que avanza al pasar el puntero. El primario lleva a contactar; los demás acompañan."
 msgstr ""
 
+#: template-parts/style-guide.php:120
+#: template-parts/style-guide.php:127
+msgid "Conoce Frave"
+msgstr ""
+
 #: template-parts/style-guide.php:121
 msgid "Pequeño"
 msgstr ""
@@ -1012,10 +1159,6 @@ msgstr ""
 msgid "Acción de la sección"
 msgstr ""
 
-#: template-parts/style-guide.php:182
-msgid "Asesoría cercana"
-msgstr ""
-
 #: template-parts/style-guide.php:183
 msgid "Tarjeta oscura para destacar un bloque."
 msgstr ""
@@ -1046,16 +1189,6 @@ msgstr ""
 
 #: template-parts/style-guide.php:206
 msgid "Líneas de Frave (ejemplo)"
-msgstr ""
-
-#: template-parts/style-guide.php:208
-msgid "diapositiva"
-msgstr ""
-
-#. translators: 1: slide number, 2: total.
-#: template-parts/style-guide.php:208
-#, php-format
-msgid "%1$d de %2$d"
 msgstr ""
 
 #: template-parts/style-guide.php:218

@@ -1,0 +1,561 @@
+/*
+ * Home page (front-page.php, template-parts/home/).
+ *
+ * The hero sits on the warm beige of its video (#eedcc8): on that background the eyebrow
+ * uses #a83200 (5:1) and the lead #4a4642 (7:1), as primary and muted fall to 4:1.
+ */
+@layer components {
+  /* ---------- Hero ---------- */
+
+  .home-hero {
+    --hero-bg: #eedcc8;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    margin-top: calc(-1 * var(--header-height));
+    padding-top: var(--header-height);
+    overflow: hidden;
+    background: var(--hero-bg);
+  }
+
+  /* The full-width layer over the video lets clicks through, so its pause button works. */
+  .home-hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(2.5rem, 7vw, 4rem) 2rem;
+    pointer-events: none;
+  }
+
+  .home-hero__copy {
+    max-width: 40rem;
+    pointer-events: auto;
+  }
+
+  .home-hero .eyebrow {
+    color: #a83200;
+  }
+
+  .home-hero__title {
+    margin: 0 0 1.5rem;
+    color: var(--color-ink);
+    font-size: clamp(2.75rem, 5.4vw, 5.25rem);
+  }
+
+  .home-hero__lead {
+    margin: 0 0 2rem;
+    color: #4a4642;
+  }
+
+  .home-hero__media {
+    position: relative;
+    order: 2;
+    margin: 0 var(--site-gutter) calc(var(--radius-xl) + 2rem);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-lg);
+  }
+
+  .home-hero__video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 80% 50%;
+  }
+
+  /* Top right: the floating WhatsApp button holds the bottom right corner. */
+  .home-hero__toggle {
+    position: absolute;
+    z-index: 2;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 88%);
+    color: var(--color-ink);
+    box-shadow: var(--shadow-soft);
+    transition: background-color var(--duration-fast) ease;
+  }
+
+  .home-hero__toggle:hover {
+    background: #fff;
+  }
+
+  .home-hero__toggle .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .home-hero__toggle[hidden] {
+    display: none;
+  }
+
+  @media (min-width: 64rem) {
+    /* Pinned: "Nuestras soluciones" slides over it (both live in .home-intro). */
+    .home-hero {
+      position: sticky;
+      top: 0;
+      z-index: 0;
+      min-height: 100svh;
+      justify-content: center;
+    }
+
+    .home-hero__inner {
+      padding-block: 3rem calc(var(--radius-xl) + 5rem);
+    }
+
+    .home-hero__copy {
+      max-width: min(42vw, 40rem);
+    }
+
+    /* The video fills the right side; its left edge melts into the beige behind the copy. */
+    .home-hero__media {
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 60%;
+      margin: 0;
+      aspect-ratio: auto;
+      border-radius: 0;
+    }
+
+    .home-hero__media::after {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--hero-bg) 0%, rgb(238 220 200 / 0%) 22%);
+      content: "";
+      pointer-events: none;
+    }
+
+    .home-hero__video {
+      object-position: 74% 50%;
+    }
+
+    .home-hero__toggle {
+      top: calc(var(--header-height) + 1rem);
+      right: max(var(--site-gutter), calc(50% - 40rem));
+    }
+  }
+
+  /* ---------- Nuestras soluciones ---------- */
+
+  .home-lines {
+    position: relative;
+    z-index: 1;
+    margin-top: calc(-1 * var(--radius-xl));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background: #fff;
+    box-shadow: 0 -1.5rem 3rem rgb(18 20 24 / 10%);
+  }
+
+  .home-lines__carousel {
+    --carousel-item: min(80%, 22rem);
+  }
+
+  @media (min-width: 64rem) {
+    .home-lines__carousel {
+      --carousel-item: calc((100% - 2 * var(--carousel-gap)) / 3);
+    }
+  }
+
+  .line-card.card {
+    height: 100%;
+    gap: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+  }
+
+  .line-card.card--interactive:hover,
+  .line-card.card--interactive:focus-within {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .line-card__media {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(160deg, #fbe9dc 0%, #f1d3bd 100%);
+    transition: transform var(--duration) var(--ease-out);
+  }
+
+  .line-card--fragancias .line-card__media {
+    background: linear-gradient(160deg, #f8ebe7 0%, #ecd2cc 100%);
+  }
+
+  .line-card--envases .line-card__media {
+    background: linear-gradient(160deg, #f1efec 0%, #ddd8d1 100%);
+  }
+
+  .line-card__media img {
+    transition: transform 800ms var(--ease-out);
+  }
+
+  .line-card:hover .line-card__media {
+    transform: translateY(-6px);
+  }
+
+  .line-card:hover .line-card__media img {
+    transform: scale(1.05);
+  }
+
+  .line-card__art {
+    display: grid;
+    width: 46%;
+    place-items: center;
+    color: var(--color-primary);
+  }
+
+  .line-card__art .icon {
+    width: 100%;
+    height: auto;
+    stroke-width: 0.9;
+  }
+
+  .line-card__body {
+    display: grid;
+    gap: 0.65rem;
+    padding: 1.5rem 0.25rem 0.25rem;
+  }
+
+  .line-card h3 {
+    font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+    font-weight: 300;
+    letter-spacing: -0.035em;
+  }
+
+  .line-card p {
+    color: var(--color-muted);
+  }
+
+  /* ---------- Cómo trabajamos ---------- */
+
+  .home-steps {
+    position: relative;
+    overflow: clip;
+  }
+
+  .home-steps__orbit {
+    top: -22rem;
+    left: -18rem;
+    width: 48rem;
+    height: 48rem;
+  }
+
+  .home-steps__grid {
+    position: relative;
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .home-steps__intro h2 {
+    margin: 0 0 1rem;
+  }
+
+  .home-steps__intro .lead {
+    margin: 0 0 2rem;
+  }
+
+  .home-steps__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .home-step.card {
+    min-height: clamp(14rem, 28vw, 18rem);
+    justify-content: flex-end;
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    background: linear-gradient(160deg, var(--color-night-2), #15171c);
+  }
+
+  .home-step__number {
+    margin-bottom: auto;
+    color: var(--color-brand-orange);
+    font-size: clamp(3.5rem, 7vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+
+  .home-step h3 {
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    font-weight: 300;
+    letter-spacing: -0.035em;
+  }
+
+  @media (min-width: 64rem) {
+    .home-steps__grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: start;
+    }
+
+    .home-steps__intro {
+      position: sticky;
+      top: calc(var(--header-height) + 3rem);
+    }
+  }
+
+  /* ---------- Destacados ---------- */
+
+  @media (min-width: 64rem) {
+    .featured-section .woocommerce ul.products {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  /* ---------- Razones ---------- */
+
+  .home-reasons__grid {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .home-reason h3 {
+    font-size: 1.3rem;
+  }
+
+  /* ---------- Catálogo ---------- */
+
+  .home-catalog__panel {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: 2rem;
+    overflow: hidden;
+    padding: clamp(2rem, 5vw, 4rem);
+    border-radius: var(--radius-xl);
+    background:
+      radial-gradient(40rem 25rem at 100% 0%, rgb(252 76 2 / 22%), transparent 60%),
+      var(--color-night);
+  }
+
+  .home-catalog__orbit {
+    top: -12rem;
+    right: -8rem;
+    width: 30rem;
+    height: 30rem;
+  }
+
+  .home-catalog__decor {
+    position: absolute;
+    z-index: -1;
+    right: 2rem;
+    bottom: -3rem;
+    width: 11rem;
+    color: rgb(255 255 255 / 6%);
+  }
+
+  .home-catalog__decor .isotype {
+    width: 100%;
+    height: auto;
+    stroke-width: 1.4;
+  }
+
+  .home-catalog__copy h2 {
+    margin: 0 0 1rem;
+  }
+
+  .home-catalog__copy .lead {
+    margin: 0;
+  }
+
+  .home-catalog__search .product-search {
+    max-width: none;
+    margin: 0;
+    border-color: transparent;
+  }
+
+  .home-catalog__lines {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .home-catalog__lines a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid rgb(255 255 255 / 18%);
+    border-radius: 999px;
+    color: #fff !important;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition:
+      border-color var(--duration-fast) ease,
+      background-color var(--duration-fast) ease;
+  }
+
+  .home-catalog__lines a:hover {
+    border-color: var(--color-brand-orange);
+    background: rgb(252 76 2 / 12%);
+  }
+
+  .home-catalog__lines .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    color: var(--color-brand-orange);
+  }
+
+  @media (min-width: 64rem) {
+    .home-catalog__panel {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 4rem;
+    }
+  }
+
+  /* ---------- Tendencias ---------- */
+
+  .home-posts__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .post-tile.card {
+    gap: 0.6rem;
+    padding: 0.75rem 0.75rem 1.5rem;
+  }
+
+  .post-tile > :not(.post-tile__media) {
+    margin-inline: 0.75rem;
+  }
+
+  .post-tile__media {
+    display: grid;
+    margin-bottom: 0.75rem;
+    aspect-ratio: 16 / 10;
+    place-items: center;
+    border-radius: calc(var(--radius-md) - 0.25rem);
+  }
+
+  .post-tile__art {
+    width: 18%;
+    color: var(--color-primary);
+  }
+
+  .post-tile__art .isotype {
+    width: 100%;
+    height: auto;
+    stroke-width: 1.8;
+  }
+
+  .post-tile__date {
+    color: var(--color-primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .post-tile h3 {
+    font-size: 1.3rem;
+  }
+
+  /* ---------- Dónde estamos ---------- */
+
+  .home-location__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .home-location__copy h2 {
+    margin: 0 0 1rem;
+  }
+
+  .home-location__copy .lead {
+    margin: 0 0 2rem;
+  }
+
+  .home-location__channels {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .home-location__channels li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .home-location__channels strong {
+    display: block;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .home-location__channels a {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .home-location__channels .whatsapp-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .home-map {
+    position: relative;
+    display: grid;
+    min-height: 24rem;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(circle at 70% 30%, rgb(252 76 2 / 10%), transparent 50%),
+      var(--color-surface);
+  }
+
+  .home-map__placeholder {
+    display: grid;
+    gap: 1rem;
+    place-content: center;
+    justify-items: center;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .home-map__placeholder p {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .home-map__placeholder small {
+    color: var(--color-muted);
+  }
+
+  .home-map__frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  @media (min-width: 64rem) {
+    .home-location__grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      align-items: center;
+    }
+  }
+}
