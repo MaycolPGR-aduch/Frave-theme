@@ -145,6 +145,9 @@ Objetivo: habilitar ventas reales con configuración comercial, calidad técnica
 - [ ] Completar en producción razón social, RUC y domicilio del libro, zona horaria America/Lima y SMTP; validar el texto de la hoja con la asesoría legal de Frave y los feriados del año.
 - [ ] Seleccionar e integrar pasarela real; verificar pagos aprobados, rechazados, reembolsos y notificaciones en un entorno de pruebas.
 - [ ] Revisar correos transaccionales, estados de pedido, inventario, cupones y cuentas con datos representativos.
+- [x] Guía de despliegue en Hostinger ([GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD)): SSH, `bin/deploy.sh` (con reversión y vaciado de la caché de LiteSpeed) o ZIP, flujo local → Hostinger según el tipo de cambio, correo, caché, seguridad, dominio y apertura. Paquetes verificados sin archivos de desarrollo.
+- [x] Contratar el hosting (Hostinger Premium, 8 de octubre de 2026).
+- [ ] Preparar el sitio en Hostinger, hacer el primer despliegue y completar la tabla «Datos de este hosting» de la guía.
 - [ ] Configurar dominio, HTTPS, copias de seguridad, actualizaciones, caché y observabilidad en hosting o staging.
 - [ ] Validar SEO técnico, títulos, indexación, breadcrumbs y compatibilidad con el plugin SEO elegido, sin duplicar metadatos.
 - [ ] Medir LCP, CLS e INP en páginas de portada, catálogo, producto, carrito y checkout; corregir cuellos de botella comprobados.
