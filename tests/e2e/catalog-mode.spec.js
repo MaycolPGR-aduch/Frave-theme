@@ -59,6 +59,7 @@ test.describe('modo catálogo', () => {
     await expect(summary.locator('.price')).toHaveCount(0);
     await expect(summary.locator('form.cart')).toHaveCount(0);
     await expect(page.locator('script[type="application/ld+json"]', { hasText: '"offers"' })).toHaveCount(0);
+    await expect(page.locator('#tab-title-reviews')).toHaveCount(0);
 
     const inquiry = page.locator('.product-inquiry');
     await expect(inquiry.getByRole('heading', { name: '¿Te interesa este producto?' })).toBeVisible();
