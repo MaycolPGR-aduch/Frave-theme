@@ -30,6 +30,8 @@ $settings = array(
 	'woocommerce_enable_ajax_add_to_cart'      => 'yes',
 	'woocommerce_cart_redirect_after_add'      => 'no',
 	'woocommerce_hide_out_of_stock_items'      => 'no',
+	// Catalog mode like production; CI turns it off for a second run of the purchase tests.
+	'frave_peru_catalog_mode'                  => 'yes',
 	'woocommerce_cod_settings'                 => array(
 		'enabled'            => 'yes',
 		'title'              => 'Contra entrega',
@@ -46,24 +48,27 @@ foreach ( $settings as $option => $value ) {
 global $wp_rewrite;
 $wp_rewrite->set_permalink_structure( '/%postname%/' );
 
-/* ---------- WooCommerce pages, classic shortcodes ---------- */
+/* ---------- WooCommerce pages, classic shortcodes, Spanish slugs as in production ---------- */
 
 WC_Install::create_pages();
 $shortcodes = array(
-	'cart'      => '[woocommerce_cart]',
-	'checkout'  => '[woocommerce_checkout]',
-	'myaccount' => '[woocommerce_my_account]',
+	'cart'      => array( '[woocommerce_cart]', 'carrito' ),
+	'checkout'  => array( '[woocommerce_checkout]', 'finalizar-compra' ),
+	'myaccount' => array( '[woocommerce_my_account]', 'mi-cuenta' ),
+	'shop'      => array( null, 'catalogo' ),
 );
-foreach ( $shortcodes as $page => $shortcode ) {
+foreach ( $shortcodes as $page => list( $shortcode, $slug ) ) {
 	$page_id = wc_get_page_id( $page );
 	if ( $page_id > 0 ) {
-		wp_update_post(
-			array(
-				'ID'           => $page_id,
-				'post_content' => $shortcode,
-				'post_status'  => 'publish',
-			)
+		$data = array(
+			'ID'          => $page_id,
+			'post_name'   => $slug,
+			'post_status' => 'publish',
 		);
+		if ( $shortcode ) {
+			$data['post_content'] = $shortcode;
+		}
+		wp_update_post( $data );
 	}
 }
 

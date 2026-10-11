@@ -6,11 +6,11 @@ get_header();
 	<div class="container empty-state empty-state--large">
 		<p class="eyebrow">404</p>
 		<h1><?php esc_html_e( 'Esta esencia aún no existe.', 'frave' ); ?></h1>
-		<p><?php esc_html_e( 'La página que buscas pudo cambiar de lugar. Vuelve al inicio o explora la tienda.', 'frave' ); ?></p>
+		<p><?php esc_html_e( 'La página que buscas pudo cambiar de lugar. Vuelve al inicio o explora el catálogo.', 'frave' ); ?></p>
 		<div class="button-row">
 			<?php frave_button( __( 'Volver al inicio', 'frave' ), home_url( '/' ) ); ?>
 			<?php if ( class_exists( 'WooCommerce' ) ) : ?>
-				<?php frave_button( __( 'Ir a la tienda', 'frave' ), wc_get_page_permalink( 'shop' ), 'button button--secondary' ); ?>
+				<?php frave_button( __( 'Ver el catálogo', 'frave' ), frave_catalog_shop_url(), 'button button--secondary' ); ?>
 			<?php endif; ?>
 		</div>
 	</div>

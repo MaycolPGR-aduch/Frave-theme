@@ -1,3 +1,45 @@
+/**
+ * Submenus as disclosures: the toggle button opens its submenu (a dropdown on desktop, an
+ * accordion in the mobile drawer). On desktop a pointer hover also opens it through CSS;
+ * Escape, a click outside or moving focus elsewhere closes it.
+ */
+function initializeSubmenus(navigation, mobileViewport) {
+  const toggles = Array.from(navigation.querySelectorAll('[data-submenu-toggle]'));
+  if (!toggles.length) return;
+
+  const setOpen = (toggle, open) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.closest('li')?.classList.toggle('is-open', open);
+  };
+  const closeAll = (except = null) => {
+    toggles.filter((toggle) => toggle !== except).forEach((toggle) => setOpen(toggle, false));
+  };
+
+  toggles.forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') !== 'true';
+      closeAll(toggle);
+      setOpen(toggle, open);
+    });
+    toggle.closest('li')?.addEventListener('focusout', (event) => {
+      if (mobileViewport.matches || event.currentTarget.contains(event.relatedTarget)) return;
+      setOpen(toggle, false);
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!mobileViewport.matches && !navigation.contains(event.target)) closeAll();
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape' || mobileViewport.matches) return;
+    const open = toggles.find((toggle) => toggle.getAttribute('aria-expanded') === 'true');
+    if (!open) return;
+    setOpen(open, false);
+    open.focus();
+  });
+  mobileViewport.addEventListener('change', () => closeAll());
+}
+
 /** Accessible mobile navigation drawer. */
 export function initializeNavigation() {
   const toggle = document.querySelector('[data-menu-toggle]');
@@ -8,6 +50,7 @@ export function initializeNavigation() {
   if (!toggle || !navigation || !backdrop) return;
 
   const mobileViewport = window.matchMedia('(max-width: 63.99rem)');
+  initializeSubmenus(navigation, mobileViewport);
 
   const setMenuState = (isOpen, restoreFocus = false) => {
     const open = isOpen && mobileViewport.matches;

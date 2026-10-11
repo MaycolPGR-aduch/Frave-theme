@@ -8,7 +8,7 @@
 				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
 					<img src="<?php echo esc_url( frave_asset_url( 'assets/images/frave-logo-footer.png' ) ); ?>" alt="" width="330" height="198" loading="lazy">
 				</a>
-				<p><?php esc_html_e( 'Fragancias, esencias e insumos para crear con intención.', 'frave' ); ?></p>
+				<p><?php esc_html_e( 'Sabores, fragancias y envases para dar vida a tus productos.', 'frave' ); ?></p>
 			</div>
 			<div class="site-footer__links">
 				<h2><?php esc_html_e( 'Descubre Frave', 'frave' ); ?></h2>
@@ -18,16 +18,35 @@
 						'theme_location' => 'footer',
 						'container'      => false,
 						'menu_class'     => 'footer-menu',
-						'fallback_cb'    => false,
+						'depth'          => 1,
+						'fallback_cb'    => 'frave_footer_menu_fallback',
 					)
 				);
 				?>
 			</div>
 			<div class="site-footer__contact">
-				<h2><?php esc_html_e( 'Tu cuenta', 'frave' ); ?></h2>
-				<p><?php esc_html_e( 'Consulta tu cuenta y el estado de tus pedidos.', 'frave' ); ?></p>
-				<?php if ( class_exists( 'WooCommerce' ) ) : ?>
-					<a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Mi cuenta y pedidos', 'frave' ); ?></a>
+				<h2><?php esc_html_e( 'Contacto', 'frave' ); ?></h2>
+				<?php $frave_channels = array_intersect_key( frave_contact_channels(), array_flip( array( 'email', 'phone', 'address' ) ) ); ?>
+				<?php if ( $frave_channels ) : ?>
+					<ul class="footer-channels">
+						<?php foreach ( $frave_channels as $frave_channel ) : ?>
+							<li>
+								<span class="screen-reader-text"><?php echo esc_html( $frave_channel['label'] ); ?>:</span>
+								<?php if ( $frave_channel['url'] ) : ?>
+									<a href="<?php echo esc_url( $frave_channel['url'] ); ?>"><?php echo esc_html( $frave_channel['value'] ); ?></a>
+								<?php else : ?>
+									<?php echo nl2br( esc_html( $frave_channel['value'] ), false ); ?>
+								<?php endif; ?>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				<?php endif; ?>
+				<?php $frave_contact_url = frave_contact_page_url(); ?>
+				<?php if ( $frave_contact_url ) : ?>
+					<a class="footer-link" href="<?php echo esc_url( $frave_contact_url ); ?>"><?php esc_html_e( 'Escríbenos o solicita una cotización', 'frave' ); ?></a>
+				<?php endif; ?>
+				<?php if ( frave_shop_enabled() ) : ?>
+					<a class="footer-link" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Mi cuenta y pedidos', 'frave' ); ?></a>
 				<?php endif; ?>
 				<?php $frave_whatsapp_url = frave_whatsapp_url( frave_whatsapp_message() ); ?>
 				<?php if ( $frave_whatsapp_url ) : ?>

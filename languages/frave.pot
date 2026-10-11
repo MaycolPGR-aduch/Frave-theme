@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Frave 1.1.0\n"
+"Project-Id-Version: Frave 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/frave\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-05T15:36:24+00:00\n"
+"POT-Creation-Date: 2026-10-11T03:50:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: frave\n"
@@ -30,7 +30,7 @@ msgid "Esta esencia aún no existe."
 msgstr ""
 
 #: 404.php:9
-msgid "La página que buscas pudo cambiar de lugar. Vuelve al inicio o explora la tienda."
+msgid "La página que buscas pudo cambiar de lugar. Vuelve al inicio o explora el catálogo."
 msgstr ""
 
 #: 404.php:11
@@ -38,8 +38,10 @@ msgid "Volver al inicio"
 msgstr ""
 
 #: 404.php:13
+#: template-parts/components/empty-state.php:6
+#: template-parts/sections/hero.php:7
 #: template-parts/sections/shop-cta.php:12
-msgid "Ir a la tienda"
+msgid "Ver el catálogo"
 msgstr ""
 
 #: archive.php:8
@@ -47,46 +49,53 @@ msgid "JOURNAL FRAVE"
 msgstr ""
 
 #: footer.php:11
-msgid "Fragancias, esencias e insumos para crear con intención."
+msgid "Sabores, fragancias y envases para dar vida a tus productos."
 msgstr ""
 
 #: footer.php:14
 msgid "Descubre Frave"
 msgstr ""
 
-#: footer.php:27
-msgid "Tu cuenta"
-msgstr ""
-
+#. Template Name of the theme
 #: footer.php:28
-msgid "Consulta tu cuenta y el estado de tus pedidos."
+#: inc/contact.php:36
+#: inc/navigation.php:111
+msgid "Contacto"
 msgstr ""
 
-#: footer.php:30
+#: footer.php:46
+msgid "Escríbenos o solicita una cotización"
+msgstr ""
+
+#: footer.php:49
 msgid "Mi cuenta y pedidos"
 msgstr ""
 
-#: footer.php:35
+#: footer.php:54
 msgid "Escríbenos por WhatsApp"
 msgstr ""
 
-#: footer.php:36
-#: inc/contact.php:219
+#: footer.php:55
+#: inc/contact.php:220
+#: inc/contact.php:262
+#: inc/navigation.php:167
+#: inc/navigation.php:280
 #: page-templates/preguntas-frecuentes.php:43
 #: template-parts/components/contact-channels.php:23
 msgid "(se abre en una nueva pestaña)"
 msgstr ""
 
-#: footer.php:43
+#: footer.php:62
 #: inc/institutional.php:227
+#: inc/navigation.php:97
 msgid "Libro de Reclamaciones"
 msgstr ""
 
-#: footer.php:49
+#: footer.php:68
 msgid "Todos los derechos reservados."
 msgstr ""
 
-#: footer.php:51
+#: footer.php:70
 msgid "Diseñado para acompañar tu creatividad."
 msgstr ""
 
@@ -120,74 +129,69 @@ msgstr ""
 msgid "Navegación principal"
 msgstr ""
 
-#: header.php:46
+#: header.php:49
 #: template-parts/components-search.php:10
 msgid "Buscar productos"
 msgstr ""
 
-#: header.php:49
-#: inc/setup.php:70
+#: header.php:54
+#: inc/navigation.php:119
 msgid "Mi cuenta"
 msgstr ""
 
 #. translators: 1: minimum price, 2: maximum price.
-#: inc/catalog-filters.php:389
+#: inc/catalog-filters.php:396
 #, php-format
 msgid "Precio: %1$s – %2$s"
 msgstr ""
 
 #. translators: %s: minimum price.
-#: inc/catalog-filters.php:392
+#: inc/catalog-filters.php:399
 #, php-format
 msgid "Precio: desde %s"
 msgstr ""
 
 #. translators: %s: maximum price.
-#: inc/catalog-filters.php:395
+#: inc/catalog-filters.php:402
 #, php-format
 msgid "Precio: hasta %s"
 msgstr ""
 
 #. translators: %d: number of stars.
-#: inc/catalog-filters.php:414
+#: inc/catalog-filters.php:421
 #, php-format
 msgid "Valoración: %d estrella"
 msgid_plural "Valoración: %d estrellas"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/catalog-filters.php:422
-#: template-parts/catalog/filters.php:81
+#: inc/catalog-filters.php:429
+#: template-parts/catalog/filters.php:82
 msgid "Solo disponibles"
 msgstr ""
 
-#: inc/catalog-filters.php:428
-#: template-parts/catalog/filters.php:84
+#: inc/catalog-filters.php:435
+#: template-parts/catalog/filters.php:85
 msgid "En oferta"
 msgstr ""
 
-#: inc/catalog-filters.php:474
-#: inc/catalog-filters.php:507
+#: inc/catalog-filters.php:481
+#: inc/catalog-filters.php:514
 msgid "producto"
 msgid_plural "productos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/catalog-filters.php:478
+#: inc/catalog-filters.php:485
 msgid "(filtro activo, pulsa para quitarlo)"
 msgstr ""
 
-#: inc/catalog-filters.php:562
+#: inc/catalog-filters.php:569
 msgid "Quitar todos los filtros"
 msgstr ""
 
 #: inc/contact.php:27
 msgid "Escribe el número con código de país, por ejemplo 51 999 888 777."
-msgstr ""
-
-#. Template Name of the theme
-#: inc/contact.php:36
-msgid "Contacto"
 msgstr ""
 
 #: inc/contact.php:37
@@ -240,6 +244,7 @@ msgid "Dirección o zona de cobertura"
 msgstr ""
 
 #: inc/contact.php:137
+#: inc/navigation.php:89
 msgid "WhatsApp"
 msgstr ""
 
@@ -265,8 +270,21 @@ msgstr ""
 msgid "Hola, quiero consultar por este producto: %1$s %2$s"
 msgstr ""
 
-#: inc/contact.php:218
+#: inc/contact.php:219
+#: inc/contact.php:261
 msgid "Consultar por WhatsApp"
+msgstr ""
+
+#: inc/contact.php:249
+msgid "¿Te interesa este producto?"
+msgstr ""
+
+#: inc/contact.php:250
+msgid "Cuéntanos qué necesitas y te enviamos precio, presentaciones y disponibilidad."
+msgstr ""
+
+#: inc/contact.php:254
+msgid "Solicitar cotización"
 msgstr ""
 
 #: inc/enqueue.php:108
@@ -310,24 +328,67 @@ msgstr ""
 msgid "Enlaces legales"
 msgstr ""
 
+#: inc/navigation.php:17
+msgid "Sabores"
+msgstr ""
+
+#: inc/navigation.php:18
+msgid "Fragancias"
+msgstr ""
+
+#: inc/navigation.php:19
+msgid "Envases"
+msgstr ""
+
+#: inc/navigation.php:44
+msgid "Inicio"
+msgstr ""
+
+#: inc/navigation.php:52
+msgid "Nosotros"
+msgstr ""
+
+#: inc/navigation.php:71
+msgid "Soluciones"
+msgstr ""
+
+#: inc/navigation.php:78
+msgid "Catálogo"
+msgstr ""
+
+#: inc/navigation.php:78
+msgid "Tienda"
+msgstr ""
+
+#: inc/navigation.php:105
+msgid "Formulario de contacto"
+msgstr ""
+
+#. translators: %s: menu item label.
+#: inc/navigation.php:211
+#, php-format
+msgid "Mostrar el submenú de %s"
+msgstr ""
+
+#: inc/navigation.php:253
+msgid "Solicitar asesoría"
+msgstr ""
+
+#: inc/navigation.php:261
+#: page-templates/contacto.php:32
+msgid "Escríbenos"
+msgstr ""
+
 #: inc/setup.php:47
 msgid "Navegación del pie"
 msgstr ""
 
-#: inc/setup.php:67
-msgid "Inicio"
-msgstr ""
-
-#: inc/setup.php:69
-msgid "Tienda"
+#: inc/woocommerce.php:131
+msgid "Ver detalles"
 msgstr ""
 
 #: page-templates/contacto.php:20
 msgid "CONTACTO"
-msgstr ""
-
-#: page-templates/contacto.php:32
-msgid "Escríbenos"
 msgstr ""
 
 #: page-templates/contacto.php:37
@@ -454,59 +515,63 @@ msgstr ""
 msgid "Quitar todos"
 msgstr ""
 
-#: template-parts/catalog/filters.php:29
+#: template-parts/catalog/filters.php:30
 msgid "Filtrar productos"
 msgstr ""
 
-#: template-parts/catalog/filters.php:32
+#: template-parts/catalog/filters.php:33
 msgid "Cerrar filtros"
 msgstr ""
 
-#: template-parts/catalog/filters.php:39
+#: template-parts/catalog/filters.php:40
 msgid "Categorías"
 msgstr ""
 
-#: template-parts/catalog/filters.php:42
+#: template-parts/catalog/filters.php:43
 msgid "Todos los productos"
 msgstr ""
 
-#: template-parts/catalog/filters.php:51
+#: template-parts/catalog/filters.php:52
 msgid "Precio"
 msgstr ""
 
 #. translators: %s: currency symbol.
-#: template-parts/catalog/filters.php:60
+#: template-parts/catalog/filters.php:61
 #, php-format
 msgid "Desde (%s)"
 msgstr ""
 
 #. translators: %s: currency symbol.
-#: template-parts/catalog/filters.php:65
+#: template-parts/catalog/filters.php:66
 #, php-format
 msgid "Hasta (%s)"
 msgstr ""
 
-#: template-parts/catalog/filters.php:69
+#: template-parts/catalog/filters.php:70
 msgid "Aplicar precio"
 msgstr ""
 
-#: template-parts/catalog/filters.php:77
+#: template-parts/catalog/filters.php:78
 msgid "Disponibilidad y ofertas"
 msgstr ""
 
-#: template-parts/catalog/filters.php:107
+#: template-parts/catalog/filters.php:78
+msgid "Disponibilidad"
+msgstr ""
+
+#: template-parts/catalog/filters.php:108
 msgid "Valoración"
 msgstr ""
 
 #. translators: %s: number of products.
-#: template-parts/catalog/filters.php:115
+#: template-parts/catalog/filters.php:116
 #, php-format
 msgid "Ver %s producto"
 msgid_plural "Ver %s productos"
 msgstr[0] ""
 msgstr[1] ""
 
-#: template-parts/catalog/filters.php:119
+#: template-parts/catalog/filters.php:120
 msgid "Quitar filtros"
 msgstr ""
 
@@ -521,7 +586,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: template-parts/components-search.php:11
-msgid "Busca fragancias, esencias e insumos"
+msgid "Busca sabores, fragancias y envases"
 msgstr ""
 
 #: template-parts/components-search.php:14
@@ -561,13 +626,7 @@ msgid "Todavía no hay contenido aquí."
 msgstr ""
 
 #: template-parts/components/empty-state.php:4
-msgid "Prueba otra búsqueda o vuelve a la tienda para seguir explorando."
-msgstr ""
-
-#: template-parts/components/empty-state.php:6
-#: template-parts/components/mini-cart.php:31
-#: template-parts/sections/hero.php:7
-msgid "Explorar productos"
+msgid "Prueba otra búsqueda o vuelve al catálogo para seguir explorando."
 msgstr ""
 
 #: template-parts/components/mini-cart.php:19
@@ -580,6 +639,10 @@ msgstr ""
 
 #: template-parts/components/mini-cart.php:24
 msgid "Cerrar carrito"
+msgstr ""
+
+#: template-parts/components/mini-cart.php:31
+msgid "Explorar productos"
 msgstr ""
 
 #: template-parts/components/whatsapp-button.php:13
@@ -600,7 +663,7 @@ msgid "Encuentra lo que imaginas"
 msgstr ""
 
 #: template-parts/sections/categories.php:29
-msgid "Ver toda la tienda"
+msgid "Ver todo el catálogo"
 msgstr ""
 
 #: template-parts/sections/featured-products.php:49
@@ -658,7 +721,7 @@ msgid ""
 msgstr ""
 
 #: template-parts/sections/hero.php:5
-msgid "Encuentra fragancias, esencias e insumos seleccionados para crear con intención."
+msgid "Sabores, fragancias y envases seleccionados para dar vida a tus productos."
 msgstr ""
 
 #: template-parts/sections/hero.php:49
@@ -670,7 +733,7 @@ msgid "Encuentra el comienzo de tu próxima creación"
 msgstr ""
 
 #: template-parts/sections/shop-cta.php:10
-msgid "Recorre el catálogo de fragancias, esencias e insumos."
+msgid "Recorre el catálogo de sabores, fragancias y envases."
 msgstr ""
 
 #: template-parts/sections/story.php:3

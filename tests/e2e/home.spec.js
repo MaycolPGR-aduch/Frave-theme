@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { collectPageErrors, expectNoPhpErrors } from './helpers.js';
+import { collectPageErrors, expectNoPhpErrors, isCatalogMode } from './helpers.js';
 
 test('la portada carga sin errores y con los destacados como tarjetas', async ({ page }) => {
   const errors = collectPageErrors(page);
@@ -13,8 +13,15 @@ test('la portada carga sin errores y con los destacados como tarjetas', async ({
     // Unstyled cards fall back to the 2rem+ global heading size.
     const size = await titles.first().evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
     expect(size).toBeLessThan(24);
-    const button = page.locator('.featured-section ul.products .button').first();
-    await expect(button).toHaveCSS('background-color', 'rgb(32, 35, 41)');
+    if (await isCatalogMode(page)) {
+      // Outlined "Ver detalles" instead of the dark add-to-cart button.
+      const details = page.locator('.featured-section ul.products a.product-card__details').first();
+      await expect(details).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
+      await expect(details).toHaveCSS('color', 'rgb(32, 35, 41)');
+    } else {
+      const button = page.locator('.featured-section ul.products .button').first();
+      await expect(button).toHaveCSS('background-color', 'rgb(32, 35, 41)');
+    }
   }
 
   expect(errors).toEqual([]);

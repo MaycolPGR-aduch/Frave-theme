@@ -35,29 +35,36 @@
 						'theme_location' => 'primary',
 						'container'      => false,
 						'menu_class'     => 'menu-list',
+						'depth'          => 2,
 						'fallback_cb'    => 'frave_primary_menu_fallback',
 					)
 				);
+				// In the mobile drawer the call to action follows the menu.
+				frave_render_header_cta( 'menu-cta' );
 				?>
 			</nav>
 
 			<div class="header-actions">
 				<?php if ( class_exists( 'WooCommerce' ) ) : ?>
-					<a class="header-action header-action--search" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>" aria-label="<?php esc_attr_e( 'Buscar productos', 'frave' ); ?>">
+					<a class="header-action header-action--search" href="<?php echo esc_url( frave_catalog_shop_url() ); ?>#frave-product-search" aria-label="<?php esc_attr_e( 'Buscar productos', 'frave' ); ?>">
 						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10.8" cy="10.8" r="6.4"></circle><path d="m16 16 4.2 4.2"></path></svg>
 					</a>
+				<?php endif; ?>
+				<?php if ( frave_shop_enabled() ) : ?>
 					<a class="header-action header-action--account" href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>" aria-label="<?php esc_attr_e( 'Mi cuenta', 'frave' ); ?>">
 						<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3.2"></circle><path d="M5.2 20c.5-3.3 2.8-5.2 6.8-5.2s6.3 1.9 6.8 5.2"></path></svg>
 					</a>
 					<?php get_template_part( 'template-parts/components/cart-link' ); ?>
 				<?php endif; ?>
+				<?php frave_render_header_cta( 'header-cta' ); ?>
 			</div>
 		</div>
 	</header>
 	<div class="mobile-menu-backdrop" data-menu-backdrop hidden></div>
 	<div class="site-content">
 		<?php
-		if ( class_exists( 'WooCommerce' ) ) {
+		// A corporate site keeps the product search to the catalog; a store shows it everywhere.
+		if ( class_exists( 'WooCommerce' ) && ( frave_shop_enabled() || is_woocommerce() || is_search() ) ) {
 			get_template_part( 'template-parts/components', 'search' );
 		}
 		?>

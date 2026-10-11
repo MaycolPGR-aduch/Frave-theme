@@ -1,0 +1,289 @@
+<?php
+/**
+ * Site navigation: fallback menus with the corporate structure, accessible submenus and
+ * the header call to action.
+ *
+ * Menus assigned in Apariencia → Menús take precedence. Until then the fallbacks link
+ * only to pages and categories that exist, so a fresh install never shows dead links.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/** Product lines of Frave, as product category slugs and labels. */
+function frave_product_lines(): array {
+	return array(
+		'sabores'    => __( 'Sabores', 'frave' ),
+		'fragancias' => __( 'Fragancias', 'frave' ),
+		'envases'    => __( 'Envases', 'frave' ),
+	);
+}
+
+/** URL of the published page with this slug, or ''. */
+function frave_published_page_url( string $slug ): string {
+	$page = get_page_by_path( $slug );
+	return $page instanceof WP_Post && 'publish' === $page->post_status ? (string) get_permalink( $page ) : '';
+}
+
+/** Contact page (template Contacto), or '' while it is not published. */
+function frave_contact_page_url(): string {
+	$page = frave_page_with_template( FRAVE_TEMPLATE_CONTACT );
+	return $page ? (string) get_permalink( $page ) : '';
+}
+
+/**
+ * Items of the fallback main menu: Inicio, Nosotros, Soluciones (one entry per product
+ * line whose category has products, so no entry leads to an empty page), Catálogo and Contacto.
+ *
+ * @return array<int, array{label: string, url: string, children?: array}>
+ */
+function frave_primary_menu_fallback_items(): array {
+	$items = array(
+		array(
+			'label' => __( 'Inicio', 'frave' ),
+			'url'   => home_url( '/' ),
+		),
+	);
+
+	$about = frave_published_page_url( 'nosotros' );
+	if ( $about ) {
+		$items[] = array(
+			'label' => __( 'Nosotros', 'frave' ),
+			'url'   => $about,
+		);
+	}
+
+	if ( class_exists( 'WooCommerce' ) ) {
+		$lines = array();
+		foreach ( frave_product_lines() as $slug => $label ) {
+			$term = get_term_by( 'slug', $slug, 'product_cat' );
+			$link = $term && $term->count > 0 ? get_term_link( $term ) : '';
+			if ( $link && ! is_wp_error( $link ) ) {
+				$lines[] = array(
+					'label' => $label,
+					'url'   => $link,
+				);
+			}
+		}
+		if ( $lines ) {
+			$items[] = array(
+				'label'    => __( 'Soluciones', 'frave' ),
+				'url'      => '',
+				'children' => $lines,
+			);
+		}
+
+		$items[] = array(
+			'label' => frave_catalog_mode() ? __( 'Catálogo', 'frave' ) : __( 'Tienda', 'frave' ),
+			'url'   => frave_catalog_shop_url(),
+		);
+	}
+
+	$contact = frave_contact_page_url();
+	if ( $contact ) {
+		$children = array();
+		$whatsapp = frave_whatsapp_url( frave_whatsapp_message() );
+		if ( $whatsapp ) {
+			$children[] = array(
+				'label'    => __( 'WhatsApp', 'frave' ),
+				'url'      => $whatsapp,
+				'external' => true,
+			);
+		}
+		$claims = function_exists( 'frave_peru_claims_page_url' ) ? frave_peru_claims_page_url() : '';
+		if ( $claims ) {
+			$children[] = array(
+				'label' => __( 'Libro de Reclamaciones', 'frave' ),
+				'url'   => $claims,
+			);
+		}
+		if ( $children ) {
+			array_unshift(
+				$children,
+				array(
+					'label' => __( 'Formulario de contacto', 'frave' ),
+					'url'   => $contact,
+				)
+			);
+		}
+		$items[] = array(
+			'label'    => __( 'Contacto', 'frave' ),
+			'url'      => $children ? '' : $contact,
+			'children' => $children,
+			// The footer has its own WhatsApp and Libro de Reclamaciones links.
+			'footer'   => array(
+				'label' => __( 'Contacto', 'frave' ),
+				'url'   => $contact,
+			),
+		);
+	}
+
+	if ( frave_shop_enabled() ) {
+		$items[] = array(
+			'label' => __( 'Mi cuenta', 'frave' ),
+			'url'   => wc_get_page_permalink( 'myaccount' ),
+		);
+	}
+
+	return $items;
+}
+
+/** Whether $url is the requested page: same path and query, in any order, with or without a trailing slash. */
+function frave_is_current_url( string $url ): bool {
+	if ( '' === $url ) {
+		return false;
+	}
+	$normalize = static function ( string $address ): string {
+		$query = array();
+		wp_parse_str( (string) wp_parse_url( $address, PHP_URL_QUERY ), $query );
+		ksort( $query );
+		return trailingslashit( (string) wp_parse_url( $address, PHP_URL_PATH ) ) . '?' . http_build_query( $query );
+	};
+	$request   = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+	return $normalize( $url ) === $normalize( $request );
+}
+
+/** Same markup as wp_nav_menu(), so styles and scripts treat both menus alike. */
+function frave_primary_menu_fallback(): void {
+	echo '<ul class="menu-list">';
+	foreach ( frave_primary_menu_fallback_items() as $item ) {
+		$children = $item['children'] ?? array();
+		$classes  = $children ? 'menu-item menu-item-has-children' : 'menu-item';
+		$current  = frave_is_current_url( $item['url'] );
+		echo '<li class="' . esc_attr( $classes . ( $current ? ' current-menu-item' : '' ) ) . '">';
+		if ( '' === $item['url'] ) {
+			frave_submenu_toggle( $item['label'], true );
+		} else {
+			printf( '<a href="%1$s"%3$s>%2$s</a>', esc_url( $item['url'] ), esc_html( $item['label'] ), $current ? ' aria-current="page"' : '' );
+			if ( $children ) {
+				frave_submenu_toggle( $item['label'], false );
+			}
+		}
+		if ( $children ) {
+			echo '<ul class="sub-menu">';
+			foreach ( $children as $child ) {
+				$external = ! empty( $child['external'] );
+				printf(
+					'<li class="menu-item"><a href="%1$s"%3$s>%2$s%4$s</a></li>',
+					esc_url( $child['url'] ),
+					esc_html( $child['label'] ),
+					$external ? ' target="_blank" rel="noopener"' : '',
+					$external ? '<span class="screen-reader-text"> ' . esc_html__( '(se abre en una nueva pestaña)', 'frave' ) . '</span>' : ''
+				);
+			}
+			echo '</ul>';
+		}
+		echo '</li>';
+	}
+	echo '</ul>';
+}
+
+/** Footer fallback: the main pages in one list; a group without its own page lists its entries. */
+function frave_footer_menu_fallback(): void {
+	$links = array();
+	foreach ( frave_primary_menu_fallback_items() as $item ) {
+		if ( isset( $item['footer'] ) ) {
+			$links[] = $item['footer'];
+		} elseif ( '' === $item['url'] ) {
+			array_push( $links, ...( $item['children'] ?? array() ) );
+		} else {
+			$links[] = $item;
+		}
+	}
+	echo '<ul class="footer-menu">';
+	foreach ( $links as $link ) {
+		printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( $link['url'] ), esc_html( $link['label'] ) );
+	}
+	echo '</ul>';
+}
+
+/**
+ * Disclosure button of a submenu. A parent without its own page (custom link "#") is the
+ * button itself; otherwise the button follows the parent link.
+ */
+function frave_submenu_toggle( string $label, bool $is_label ): void {
+	$chevron = '<svg class="submenu-toggle__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 9 6 6 6-6"></path></svg>';
+	if ( $is_label ) {
+		printf(
+			'<button class="submenu-toggle submenu-toggle--label" type="button" aria-expanded="false" data-submenu-toggle>%1$s%2$s</button>',
+			esc_html( $label ),
+			$chevron // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG.
+		);
+		return;
+	}
+	printf(
+		'<button class="submenu-toggle" type="button" aria-expanded="false" data-submenu-toggle><span class="screen-reader-text">%1$s</span>%2$s</button>',
+		/* translators: %s: menu item label. */
+		esc_html( sprintf( __( 'Mostrar el submenú de %s', 'frave' ), $label ) ),
+		$chevron // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG.
+	);
+}
+
+/** Submenu toggles and descriptions for menus assigned in Apariencia → Menús. */
+function frave_nav_menu_item_output( string $item_output, $item, int $depth, $args ): string {
+	if ( ! isset( $args->theme_location ) || 'primary' !== $args->theme_location ) {
+		return $item_output;
+	}
+	if ( 1 === $depth && '' !== trim( (string) $item->description ) ) {
+		$item_output = str_replace(
+			'</a>',
+			'<span class="menu-item__description">' . esc_html( $item->description ) . '</span></a>',
+			$item_output
+		);
+	}
+	if ( 0 !== $depth || ! in_array( 'menu-item-has-children', (array) $item->classes, true ) ) {
+		return $item_output;
+	}
+
+	ob_start();
+	$url = trim( (string) $item->url );
+	if ( '' === $url || '#' === $url ) {
+		frave_submenu_toggle( wp_strip_all_tags( $item->title ), true );
+		return (string) ob_get_clean();
+	}
+	frave_submenu_toggle( wp_strip_all_tags( $item->title ), false );
+	return $item_output . ob_get_clean();
+}
+add_filter( 'walker_nav_menu_start_el', 'frave_nav_menu_item_output', 10, 4 );
+
+/**
+ * Header call to action: the contact form, or WhatsApp while the contact page is not
+ * published. Nothing when neither exists.
+ *
+ * @return array{label: string, url: string, external: bool}|null
+ */
+function frave_header_cta(): ?array {
+	$contact = frave_contact_page_url();
+	if ( $contact ) {
+		return array(
+			'label'    => __( 'Solicitar asesoría', 'frave' ),
+			'url'      => $contact,
+			'external' => false,
+		);
+	}
+	$whatsapp = frave_whatsapp_url( frave_whatsapp_message() );
+	if ( $whatsapp ) {
+		return array(
+			'label'    => __( 'Escríbenos', 'frave' ),
+			'url'      => $whatsapp,
+			'external' => true,
+		);
+	}
+	return null;
+}
+
+function frave_render_header_cta( string $classes ): void {
+	$cta = frave_header_cta();
+	if ( ! $cta ) {
+		return;
+	}
+	printf(
+		'<a class="%1$s" href="%2$s"%4$s>%3$s%5$s</a>',
+		esc_attr( $classes ),
+		esc_url( $cta['url'] ),
+		esc_html( $cta['label'] ),
+		$cta['external'] ? ' target="_blank" rel="noopener"' : '',
+		$cta['external'] ? '<span class="screen-reader-text"> ' . esc_html__( '(se abre en una nueva pestaña)', 'frave' ) . '</span>' : ''
+	);
+}

@@ -14,6 +14,21 @@ test.describe('móvil', () => {
     await expect(toggle).toBeFocused();
   });
 
+  test('los submenús se despliegan como acordeón dentro del menú', async ({ page }) => {
+    await page.goto('/');
+    const submenuToggle = page.locator('[data-primary-navigation] [data-submenu-toggle]').first();
+    test.skip((await submenuToggle.count()) === 0, 'El menú de este sitio no tiene submenús.');
+
+    await page.locator('[data-menu-toggle]').click();
+    const submenu = submenuToggle.locator('xpath=ancestor::li[1]/ul[contains(@class, "sub-menu")]');
+    await expect(submenu).toBeHidden();
+    await submenuToggle.click();
+    await expect(submenuToggle).toHaveAttribute('aria-expanded', 'true');
+    await expect(submenu).toBeVisible();
+    await submenuToggle.click();
+    await expect(submenu).toBeHidden();
+  });
+
   test('los filtros se abren como panel lateral modal', async ({ page }) => {
     await page.goto(SHOP);
     const button = page.locator('.catalog-toolbar__filters');

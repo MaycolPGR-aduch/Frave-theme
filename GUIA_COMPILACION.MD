@@ -119,7 +119,15 @@ GitHub Actions (`.github/workflows/ci.yml`) ejecuta en cada pull request y en ca
 
 ## Pruebas de principio a fin (Playwright)
 
-`tests/e2e/` recorre la tienda como un cliente: portada, filtros del catálogo, mini-carrito (producto simple y variable), checkout con boleta y factura (validación de DNI y RUC y pedido real), Libro de Reclamaciones, formulario de contacto, 404 y, en un móvil emulado, menú, panel de filtros y ausencia de desbordamiento.
+`tests/e2e/` recorre el sitio como un cliente: portada, menús y submenús, filtros del catálogo, modo catálogo (sin precios ni compra, redirecciones, Store API cerrada, cotización desde la ficha con el formulario rellenado), mini-carrito (producto simple y variable), checkout con boleta y factura (validación de DNI y RUC y pedido real), Libro de Reclamaciones, formulario de contacto, 404 y, en un móvil emulado, menú con acordeón, panel de filtros y ausencia de desbordamiento.
+
+Cada prueba detecta el modo por la clase `frave-catalog-mode` del `body`: con el modo catálogo activo se saltan las de compra (carrito, checkout, filtro de precio), y con la tienda activa se saltan las del modo catálogo. Para probar la tienda en local, desactiva el modo, ejecuta esas pruebas y vuelve a activarlo:
+
+```powershell
+& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' ..\.local-wordpress\wp-cli.phar --path=..\.local-wordpress\wordpress option update frave_peru_catalog_mode no
+npm.cmd run test:e2e -- cart checkout catalog home
+& 'C:\laragon\bin\php\php-8.3.30-Win32-vs16-x64\php.exe' ..\.local-wordpress\wp-cli.phar --path=..\.local-wordpress\wordpress option update frave_peru_catalog_mode yes
+```
 
 **En local**, con MySQL, PHP y Vite en marcha y el WordPress de Laragon:
 
@@ -129,7 +137,7 @@ npm.cmd run test:e2e
 
 Usa el Chrome instalado (no descarga navegadores) y la URL `http://127.0.0.1:8080`; otra URL se indica con `FRAVE_E2E_URL`. Las pruebas encuentran productos y páginas navegando, así que funcionan con los datos de muestra locales. Crean pedidos y hojas de reclamación de prueba en la base local. La prueba de contacto se omite si la página Contacto no está publicada.
 
-**En CI**, el trabajo «E2E» crea con `@wordpress/env` (Docker) un WordPress efímero con la última versión de WooCommerce y el plugin `frave-peru`, carga una tienda mínima con `tests/e2e/fixtures/seed.php` y ejecuta las pruebas en Chromium. Falla también si el tema o el plugin escriben errores o avisos en el registro de PHP. Si falla, descarga el artefacto `playwright-report` del run para ver capturas y trazas. Con Docker instalado se puede reproducir en local: `npm.cmd run env:start`, `npm.cmd run env:seed` y `$env:FRAVE_E2E_URL='http://localhost:8888'; npm.cmd run test:e2e`.
+**En CI**, el trabajo «E2E» crea con `@wordpress/env` (Docker) un WordPress efímero con la última versión de WooCommerce y el plugin `frave-peru`, carga una tienda mínima con `tests/e2e/fixtures/seed.php` (con el modo catálogo activo, como en producción) y ejecuta las pruebas en Chromium; después desactiva el modo y repite las pruebas de compra. El plugin se descarga de su rama `main`: un cambio que necesite una versión nueva del plugin requiere fusionar antes el plugin. Falla también si el tema o el plugin escriben errores o avisos en el registro de PHP. Si falla, descarga el artefacto `playwright-report` del run para ver capturas y trazas. Con Docker instalado se puede reproducir en local: `npm.cmd run env:start`, `npm.cmd run env:seed` y `$env:FRAVE_E2E_URL='http://localhost:8888'; npm.cmd run test:e2e`.
 
 ## Registro de cambios de la guía
 
@@ -138,5 +146,6 @@ Usa el Chrome instalado (no descarga navegadores) y la URL `http://127.0.0.1:808
 | 2026-09-23 | Procedimiento inicial basado en Vite, Tailwind y el entorno local actual. |
 | 2026-09-23 | Se documenta el origen de assets en desarrollo tras corregir las peticiones 404 de Lato. |
 | 2026-09-28 | Se añade la generación de `languages/frave.pot` con WP-CLI. |
+| 2026-10-10 | Pruebas E2E en dos pasadas: modo catálogo y tienda. |
 | 2026-10-05 | Se añaden PHPCS, ESLint y el flujo de GitHub Actions. |
 | 2026-10-05 | Se añaden las pruebas de principio a fin con Playwright y el entorno efímero de CI con wp-env. |

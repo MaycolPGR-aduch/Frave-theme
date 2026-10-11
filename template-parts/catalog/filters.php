@@ -10,10 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $frave_args     = frave_catalog_active_args();
 $frave_tree     = frave_catalog_category_tree();
-$frave_range    = frave_catalog_price_range();
+$frave_prices   = frave_catalog_offers_price_filters();
+$frave_range    = $frave_prices ? frave_catalog_price_range() : null;
 $frave_in_stock = frave_catalog_in_stock_only();
 $frave_on_sale  = frave_catalog_on_sale_only();
-$frave_has_sale = $frave_on_sale || frave_catalog_sale_ids();
+$frave_has_sale = $frave_prices && ( $frave_on_sale || frave_catalog_sale_ids() );
 $frave_total    = (int) $GLOBALS['wp_query']->found_posts;
 $frave_symbol   = html_entity_decode( get_woocommerce_currency_symbol() );
 
@@ -46,7 +47,7 @@ $frave_price_hidden = array_diff_key( array_merge( $frave_base_query, $frave_arg
 			</details>
 		<?php endif; ?>
 
-		<?php if ( ( $frave_range && $frave_range['max'] > $frave_range['min'] ) || isset( $frave_args['min_price'] ) || isset( $frave_args['max_price'] ) ) : ?>
+		<?php if ( $frave_prices && ( ( $frave_range && $frave_range['max'] > $frave_range['min'] ) || isset( $frave_args['min_price'] ) || isset( $frave_args['max_price'] ) ) ) : ?>
 			<details class="catalog-filter catalog-filter--price" open>
 				<summary class="catalog-filter__title"><?php esc_html_e( 'Precio', 'frave' ); ?></summary>
 				<div class="catalog-filter__content">
@@ -74,7 +75,7 @@ $frave_price_hidden = array_diff_key( array_merge( $frave_base_query, $frave_arg
 
 		<?php if ( frave_catalog_offers_stock_filter() || $frave_has_sale ) : ?>
 			<details class="catalog-filter catalog-filter--status" open>
-				<summary class="catalog-filter__title"><?php esc_html_e( 'Disponibilidad y ofertas', 'frave' ); ?></summary>
+				<summary class="catalog-filter__title"><?php $frave_has_sale ? esc_html_e( 'Disponibilidad y ofertas', 'frave' ) : esc_html_e( 'Disponibilidad', 'frave' ); ?></summary>
 				<div class="catalog-filter__content">
 					<ul class="catalog-options">
 						<?php if ( frave_catalog_offers_stock_filter() ) : ?>

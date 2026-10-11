@@ -1,7 +1,24 @@
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 /** Shop archive: works with plain and pretty permalinks. */
 export const SHOP = '/?post_type=product';
+
+/** WooCommerce pages by slug (Spanish slugs locally; the CI seed uses the same). */
+export const STORE_PAGES = ['/?pagename=carrito', '/?pagename=finalizar-compra', '/?pagename=mi-cuenta'];
+
+/**
+ * Catalog mode (frave-peru): products without online sales. The theme marks the body.
+ * Opens the home page when the current page is blank.
+ */
+export async function isCatalogMode(page) {
+  if (page.url() === 'about:blank') await page.goto('/');
+  return page.locator('body.frave-catalog-mode').count().then((count) => count > 0);
+}
+
+/** Skip the purchase journeys while catalog mode is on; CI runs them again with it off. */
+export async function skipInCatalogMode(page) {
+  test.skip(await isCatalogMode(page), 'Modo catálogo activo: la compra en línea está desactivada.');
+}
 
 /** Collect uncaught JavaScript errors of a page. */
 export function collectPageErrors(page) {

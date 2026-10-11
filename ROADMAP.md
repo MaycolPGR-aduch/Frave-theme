@@ -2,6 +2,8 @@
 
 Actualizado: 23 de septiembre de 2026.
 
+> **Desde el 10 de octubre de 2026 el plan vigente es [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md).** Frave pospuso la venta en línea: la web pasa a ser un sitio corporativo con catálogo y la tienda queda en pausa detrás del modo catálogo. Este archivo conserva el registro de la base construida y sirve como plan de la futura tienda (fases 3 y 4).
+
 Este archivo registra el avance del tema y las siguientes fases. El código del tema vive en este repositorio; la configuración de WordPress, WooCommerce, productos y pedidos vive en la instalación correspondiente. Una casilla marcada indica que la función existe en el tema o que la tarea se completó en el entorno local. No implica que la tienda esté lista para vender en producción.
 
 ## Objetivo y decisiones técnicas
