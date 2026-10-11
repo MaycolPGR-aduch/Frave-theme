@@ -8,7 +8,7 @@ if ( ! class_exists( 'WooCommerce' ) ) {
 	<div class="container">
 		<form role="search" method="get" class="product-search" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 			<label class="screen-reader-text" for="frave-product-search"><?php esc_html_e( 'Buscar productos', 'frave' ); ?></label>
-			<input id="frave-product-search" type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php esc_attr_e( 'Busca fragancias, esencias e insumos', 'frave' ); ?>">
+			<input id="frave-product-search" type="search" name="s" value="<?php echo esc_attr( get_search_query() ); ?>" placeholder="<?php esc_attr_e( 'Busca sabores, fragancias y envases', 'frave' ); ?>">
 			<input type="hidden" name="post_type" value="product">
 			<button class="product-search__submit" type="submit">
 				<span><?php esc_html_e( 'Buscar', 'frave' ); ?></span>

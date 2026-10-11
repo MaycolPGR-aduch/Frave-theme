@@ -27,9 +27,15 @@ function frave_catalog_in_stock_only(): bool {
 	return isset( $_GET['filter_stock_status'] ) && 'instock' === sanitize_key( wp_unslash( $_GET['filter_stock_status'] ) );
 }
 
+/** Ignored in catalog mode: which products are on sale says something about their prices. */
 function frave_catalog_on_sale_only(): bool {
 	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only catalog filter.
-	return isset( $_GET['on_sale'] ) && '1' === sanitize_key( wp_unslash( $_GET['on_sale'] ) );
+	return ! frave_catalog_mode() && isset( $_GET['on_sale'] ) && '1' === sanitize_key( wp_unslash( $_GET['on_sale'] ) );
+}
+
+/** Price filter and "en oferta" exist only when prices are shown. */
+function frave_catalog_offers_price_filters(): bool {
+	return ! frave_catalog_mode();
 }
 
 /** The stock filter is pointless when the store already hides out-of-stock products. */
@@ -151,7 +157,8 @@ function frave_catalog_active_args(): array {
 		if ( ! is_string( $key ) || ! is_scalar( $value ) || '' === (string) $value ) {
 			continue;
 		}
-		if ( preg_match( '/^(filter_|query_type_)[a-z0-9_-]+$/', $key ) || in_array( $key, array( 'min_price', 'max_price', 'rating_filter', 'orderby', 'on_sale' ), true ) ) {
+		$known = frave_catalog_offers_price_filters() ? array( 'min_price', 'max_price', 'rating_filter', 'orderby', 'on_sale' ) : array( 'rating_filter', 'orderby' );
+		if ( preg_match( '/^(filter_|query_type_)[a-z0-9_-]+$/', $key ) || in_array( $key, $known, true ) ) {
 			$args[ $key ] = wc_clean( (string) $value );
 		}
 	}
@@ -182,7 +189,7 @@ function frave_catalog_base_url(): string {
 }
 
 /**
- * Canonical shop archive URL: /tienda/ with pretty permalinks, ?post_type=product with plain
+ * Canonical shop archive URL: /catalogo/ (the shop page's slug) with pretty permalinks, ?post_type=product with plain
  * ones (the shop page's ?page_id= URL redirects there and would cost an extra request).
  */
 function frave_catalog_shop_url(): string {

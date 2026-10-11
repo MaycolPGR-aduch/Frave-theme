@@ -5,6 +5,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Catalog mode (plugin frave-peru, WooCommerce → Ajustes → Productos): products are shown
+ * without online sales. The plugin removes prices and purchases; the theme drops the
+ * shopping interface (account, cart, mini-cart) and leads to contact instead.
+ */
+function frave_catalog_mode(): bool {
+	return class_exists( 'WooCommerce' ) && function_exists( 'frave_peru_catalog_mode' ) && frave_peru_catalog_mode();
+}
+
+/** The shopping interface: header account and cart, mini-cart and cart fragments. */
+function frave_shop_enabled(): bool {
+	return class_exists( 'WooCommerce' ) && ! frave_catalog_mode();
+}
+
+function frave_catalog_mode_body_class( array $classes ): array {
+	if ( frave_catalog_mode() ) {
+		$classes[] = 'frave-catalog-mode';
+	}
+	return $classes;
+}
+add_filter( 'body_class', 'frave_catalog_mode_body_class' );
+
 function frave_woocommerce_setup(): void {
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		return;
@@ -58,7 +80,7 @@ add_filter( 'body_class', 'frave_woocommerce_button_styles_class' );
  * (one request per session, then cached in sessionStorage).
  */
 function frave_enqueue_cart_fragments(): void {
-	if ( class_exists( 'WooCommerce' ) ) {
+	if ( frave_shop_enabled() ) {
 		wp_enqueue_script( 'wc-cart-fragments' );
 	}
 }
@@ -66,7 +88,7 @@ add_action( 'wp_enqueue_scripts', 'frave_enqueue_cart_fragments', 20 );
 
 /** The drawer duplicates the cart and checkout pages, so it is left out there. */
 function frave_show_mini_cart(): bool {
-	return class_exists( 'WooCommerce' ) && ! is_cart() && ! is_checkout();
+	return frave_shop_enabled() && ! is_cart() && ! is_checkout();
 }
 
 /** Keep the custom header cart link in sync with WooCommerce AJAX fragments. */
@@ -93,3 +115,20 @@ add_filter( 'woocommerce_add_to_cart_fragments', 'frave_cart_link_fragment' );
  */
 add_filter( 'woocommerce_product_description_heading', '__return_empty_string' );
 add_filter( 'woocommerce_product_additional_information_heading', '__return_empty_string' );
+
+/**
+ * In catalog mode product cards end with "Ver detalles" where WooCommerce printed the
+ * add-to-cart button; the whole card already links to the product, so the button is
+ * hidden from assistive technology to avoid announcing the same link twice.
+ */
+function frave_catalog_mode_loop_button(): void {
+	if ( ! frave_catalog_mode() ) {
+		return;
+	}
+	printf(
+		'<a href="%1$s" class="button product-card__details" tabindex="-1" aria-hidden="true">%2$s<span aria-hidden="true">&rarr;</span></a>',
+		esc_url( get_permalink() ),
+		esc_html__( 'Ver detalles', 'frave' )
+	);
+}
+add_action( 'woocommerce_after_shop_loop_item', 'frave_catalog_mode_loop_button', 10 );

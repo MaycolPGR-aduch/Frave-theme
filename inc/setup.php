@@ -58,17 +58,3 @@ function frave_content_width(): void {
 	$GLOBALS['content_width'] = 760;
 }
 add_action( 'after_setup_theme', 'frave_content_width', 0 );
-
-/** Provide a small, useful menu until the owner assigns a custom menu. */
-function frave_primary_menu_fallback(): void {
-	$shop_url = class_exists( 'WooCommerce' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
-	?>
-	<ul class="menu-list">
-		<li><a href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Inicio', 'frave' ); ?></a></li>
-		<?php if ( class_exists( 'WooCommerce' ) ) : ?>
-			<li><a href="<?php echo esc_url( $shop_url ); ?>"><?php esc_html_e( 'Tienda', 'frave' ); ?></a></li>
-			<li><a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php esc_html_e( 'Mi cuenta', 'frave' ); ?></a></li>
-		<?php endif; ?>
-	</ul>
-	<?php
-}

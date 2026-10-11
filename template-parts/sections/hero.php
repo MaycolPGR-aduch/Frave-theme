@@ -2,10 +2,10 @@
 /** Homepage hero with editable ACF fields and safe defaults. */
 $eyebrow    = frave_field( 'frave_hero_eyebrow', __( 'FRAGANCIAS Y ENVASES', 'frave' ) );
 $heading    = frave_field( 'frave_hero_title', __( "El arte de crear\ntu propia esencia", 'frave' ) );
-$copy       = frave_field( 'frave_hero_text', __( 'Encuentra fragancias, esencias e insumos seleccionados para crear con intención.', 'frave' ) );
+$copy       = frave_field( 'frave_hero_text', __( 'Sabores, fragancias y envases seleccionados para dar vida a tus productos.', 'frave' ) );
 $image      = frave_field( 'frave_hero_image' );
-$button     = frave_field( 'frave_hero_cta_label', __( 'Explorar productos', 'frave' ) );
-$shop_url   = class_exists( 'WooCommerce' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
+$button     = frave_field( 'frave_hero_cta_label', __( 'Ver el catálogo', 'frave' ) );
+$shop_url   = class_exists( 'WooCommerce' ) ? frave_catalog_shop_url() : home_url( '/' );
 $button_url = frave_field( 'frave_hero_cta_url', $shop_url );
 $image_id   = is_array( $image ) ? absint( $image['ID'] ?? 0 ) : ( is_numeric( $image ) ? absint( $image ) : 0 );
 $image_url  = $image_id ? wp_get_attachment_image_url( $image_id, 'frave-editorial' ) : ( is_array( $image ) ? ( $image['url'] ?? '' ) : '' );

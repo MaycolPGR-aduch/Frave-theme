@@ -204,7 +204,8 @@ function frave_whatsapp_icon(): string {
 
 /** "Consultar por WhatsApp" under the add-to-cart form, for advice before buying. */
 function frave_product_whatsapp_button(): void {
-	if ( ! get_theme_mod( 'frave_whatsapp_product', true ) ) {
+	// In catalog mode the inquiry block below includes it.
+	if ( frave_catalog_mode() || ! get_theme_mod( 'frave_whatsapp_product', true ) ) {
 		return;
 	}
 	$url = frave_whatsapp_url( frave_whatsapp_message() );
@@ -222,3 +223,47 @@ function frave_product_whatsapp_button(): void {
 	<?php
 }
 add_action( 'woocommerce_single_product_summary', 'frave_product_whatsapp_button', 35 );
+
+/** Contact form with the quote request for a product filled in (plugin frave-peru), or ''. */
+function frave_quote_url( WC_Product $product ): string {
+	$contact = frave_contact_page_url();
+	return $contact ? add_query_arg( 'producto', $product->get_id(), $contact ) . '#frave-contact' : '';
+}
+
+/**
+ * Catalog mode: where the price and the add-to-cart form were, the product page invites
+ * the visitor to ask for a quote through the contact form or WhatsApp.
+ */
+function frave_product_inquiry(): void {
+	global $product;
+	if ( ! frave_catalog_mode() || ! $product instanceof WC_Product ) {
+		return;
+	}
+	$quote    = frave_quote_url( $product );
+	$whatsapp = get_theme_mod( 'frave_whatsapp_product', true ) ? frave_whatsapp_url( frave_whatsapp_message() ) : '';
+	if ( '' === $quote && '' === $whatsapp ) {
+		return;
+	}
+	?>
+	<section class="product-inquiry" aria-labelledby="product-inquiry-title">
+		<h2 class="product-inquiry__title" id="product-inquiry-title"><?php esc_html_e( '¿Te interesa este producto?', 'frave' ); ?></h2>
+		<p class="product-inquiry__text"><?php esc_html_e( 'Cuéntanos qué necesitas y te enviamos precio, presentaciones y disponibilidad.', 'frave' ); ?></p>
+		<div class="product-inquiry__actions">
+			<?php if ( $quote ) : ?>
+				<a class="button button--primary product-inquiry__quote" href="<?php echo esc_url( $quote ); ?>">
+					<?php esc_html_e( 'Solicitar cotización', 'frave' ); ?>
+					<span aria-hidden="true">&rarr;</span>
+				</a>
+			<?php endif; ?>
+			<?php if ( $whatsapp ) : ?>
+				<a class="whatsapp-button" href="<?php echo esc_url( $whatsapp ); ?>" target="_blank" rel="noopener" data-frave-whatsapp="product">
+					<?php echo frave_whatsapp_icon(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
+					<span><?php esc_html_e( 'Consultar por WhatsApp', 'frave' ); ?></span>
+					<span class="screen-reader-text"><?php esc_html_e( '(se abre en una nueva pestaña)', 'frave' ); ?></span>
+				</a>
+			<?php endif; ?>
+		</div>
+	</section>
+	<?php
+}
+add_action( 'woocommerce_single_product_summary', 'frave_product_inquiry', 30 );

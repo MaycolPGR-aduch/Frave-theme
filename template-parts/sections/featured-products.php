@@ -49,7 +49,7 @@ if ( empty( $products ) ) {
 				<p class="eyebrow"><?php esc_html_e( 'SELECCIÓN FRAVE', 'frave' ); ?></p>
 				<h2 id="featured-heading"><?php esc_html_e( 'Inspírate para crear', 'frave' ); ?></h2>
 			</div>
-			<a class="text-link" href="<?php echo esc_url( wc_get_page_permalink( 'shop' ) ); ?>"><?php esc_html_e( 'Ver todos los productos', 'frave' ); ?><span aria-hidden="true">&rarr;</span></a>
+			<a class="text-link" href="<?php echo esc_url( frave_catalog_shop_url() ); ?>"><?php esc_html_e( 'Ver todos los productos', 'frave' ); ?><span aria-hidden="true">&rarr;</span></a>
 		</div>
 		<?php // Product cards are styled under .woocommerce, as WooCommerce's own [products] shortcode wraps them. ?>
 		<div class="woocommerce">
