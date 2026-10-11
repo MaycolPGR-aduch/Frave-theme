@@ -1,8 +1,8 @@
 # Diseño de Frave
 
 - **Estado:** sistema visual inicial, pendiente de aprobación final de marca.
-- **Última revisión:** 26 de septiembre de 2026.
-- **Seguimiento:** [ROADMAP.md](ROADMAP.md).
+- **Última revisión:** 10 de octubre de 2026.
+- **Seguimiento:** [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md). La fase 2 del plan redefine el sistema visual con aire corporativo, tomando como referencia la estructura y el movimiento de disaromas.com.
 
 ## Dirección visual
 
@@ -65,6 +65,8 @@ La portada usa una entrada progresiva de sus módulos cuando llegan al viewport:
 | Componente | Estado | Ubicación |
 | --- | --- | --- |
 | Header, menú móvil, búsqueda y footer | Inicial | `header.php`, `footer.php`, `template-parts/components-search.php` |
+| Submenús (panel de 15–21rem con sombra en escritorio, acordeón en móvil) y botón «Solicitar asesoría» | Inicial | `inc/navigation.php`, `assets/src/js/modules/navigation.js` |
+| Bloque «¿Te interesa este producto?» (superficie suave, cotización naranja y WhatsApp) y «Ver detalles» con contorno en las tarjetas | Inicial | `inc/contact.php`, `inc/woocommerce.php` |
 | Botón y enlace textual | Inicial | `inc/helpers.php`, `assets/src/css/app.css` |
 | Hero, categorías, destacados, presentación, guía y cierre | Inicial | `template-parts/sections/` |
 | Tarjeta de categoría y estado vacío | Inicial | `template-parts/cards/`, `template-parts/components/` |
@@ -92,6 +94,7 @@ La base incluye HTML semántico, enlace para saltar al contenido, estados `:focu
 | 2026-09-28 | Botones de WhatsApp en verde oscuro accesible; el flotante queda bajo el menú móvil (z-index 60) y en móvil muestra solo el icono. | Implementado |
 | 2026-09-28 | Mini-carrito lateral sobre el header (z-index 95, fondo 90) con «Finalizar compra» como acción principal y «Explorar productos» cuando está vacío. | Implementado |
 | 2026-10-05 | El tema añade la clase `woocommerce-block-theme-has-button-styles` al body para desactivar el estilo gris de botones de WooCommerce; todos los botones usan el estilo oscuro del tema con estados de carga y deshabilitado. Etiqueta «¡Oferta!» en `primary`. | Implementado |
+| 2026-10-10 | Modo catálogo: cabecera con logo, menú centrado con submenús y botón naranja «Solicitar asesoría» (en móvil, al final del menú); sin cuenta ni carrito. Ficha con bloque de cotización; tarjetas con «Ver detalles» con contorno. El botón de la cabecera no usa `.button`, porque en las páginas de tienda el `body` lleva `.woocommerce` y sus reglas de botón lo cambiarían. | Implementado |
 | 2026-10-05 | Páginas WooCommerce alineadas con el sistema: pestañas planas con subrayado `primary`, stock y descuentos con colores de estado, iconos de aviso por estado (info `primary`, éxito `success`, error `error`), títulos internos a 1,3–1,6rem y etiqueta superior según la página. | Implementado |
 
 Al aprobar una decisión visual, actualiza esta guía y los tokens correspondientes; compila los assets y comprueba portada, catálogo, producto, carrito y checkout en móvil y escritorio. Registra en la tabla qué cambió y por qué.

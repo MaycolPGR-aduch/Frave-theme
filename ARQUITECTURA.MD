@@ -1,8 +1,8 @@
 # Arquitectura del tema Frave
 
 - **Estado:** implementación inicial funcional.
-- **Última revisión:** 26 de septiembre de 2026.
-- **Seguimiento:** [ROADMAP.md](ROADMAP.md).
+- **Última revisión:** 10 de octubre de 2026.
+- **Seguimiento:** [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md) (plan vigente) y [ROADMAP.md](ROADMAP.md).
 
 ## Límites del sistema
 
@@ -18,20 +18,21 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `inc/setup.php` | Soporte del tema, menús, tamaños de imagen y ancho de contenido. |
 | `inc/helpers.php` | Lectura opcional de ACF, URL de assets y botón reutilizable. |
 | `inc/enqueue.php` | Carga Vite en desarrollo o CSS y JS desde el manifest compilado. |
-| `inc/woocommerce.php` | Wrappers del contenido, columnas de catálogo y fragmento del contador del carrito. |
+| `inc/woocommerce.php` | Wrappers del contenido, columnas de catálogo, fragmento del contador del carrito, `frave_catalog_mode()` / `frave_shop_enabled()` y botón «Ver detalles» de las tarjetas en modo catálogo. |
+| `inc/navigation.php` | Menús de respaldo con la estructura corporativa (solo enlaces que existen), botones de submenú y descripciones para los menús de WordPress, y llamada a la acción de la cabecera. |
 | `inc/acf.php` | Registra `acf-json/` como ruta de carga de grupos ACF. |
 | `inc/catalog-filters.php` | Filtros del catálogo: consultas de disponibilidad y oferta, recuentos, URL, chips de filtros activos, maquetación a dos columnas y `noindex` de vistas filtradas. |
 | `template-parts/catalog/` | Panel de filtros, barra de herramientas (botón «Filtrar», resultados y orden) y chips de filtros activos. |
 | `assets/src/js/modules/drawer.js` | Cajón lateral modal compartido por el mini-carrito y los filtros: foco, Escape, fondo y un solo cajón abierto. |
 | `inc/institutional.php`, `page-templates/` | Plantillas Contacto, Preguntas frecuentes y Política o texto legal; anclas e índice de secciones, datos `FAQPage`, enlaces legales del pie (menú `legal` o automático). |
 | `patterns/` | Estructuras iniciales de las páginas institucionales (categoría «Frave: páginas institucionales»), con marcadores `[PENDIENTE]`. |
-| `inc/contact.php` | Ajustes de WhatsApp en el Personalizador, enlaces `wa.me` y botón de consulta en la ficha de producto. |
+| `inc/contact.php` | Ajustes de WhatsApp en el Personalizador, enlaces `wa.me`, botón de consulta en la ficha y, en modo catálogo, bloque «¿Te interesa este producto?» con el enlace de cotización (`?producto=ID`). |
 | `front-page.php`, `page.php`, `single.php`, `archive.php`, `search.php`, `index.php`, `404.php` | Jerarquía de templates clásicos. |
 | `header.php`, `footer.php` | Estructura global, navegación, búsqueda, carrito y pie. |
 | `template-parts/sections/` | Hero, categorías, destacados, presentación editorial, guía y cierre de la portada. |
 | `template-parts/cards/` y `template-parts/components/` | Tarjeta de categoría, enlace de carrito y estado vacío. |
 | `assets/src/css/app.css` | Tailwind, tokens, estilos de componentes y estilos WooCommerce. |
-| `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú móvil y revelado progresivo de módulos editoriales. |
+| `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú móvil con submenús (desplegable en escritorio, acordeón en móvil) y revelado progresivo de módulos editoriales. |
 | `assets/dist/` | CSS, JavaScript, fuentes y manifest listos para servir; se versiona en Git. |
 | `acf-json/` | Configuración versionada de los campos editoriales de la portada. |
 | `theme.json`, `style.css` | Ajustes del editor y metadatos necesarios para activar el tema. |
@@ -51,6 +52,8 @@ En la portada, los elementos con `data-reveal` y `data-reveal-group` se observan
 
 ## Integraciones y decisiones vigentes
 
+- **Modo catálogo:** la decisión de no vender en línea es lógica comercial y vive en el plugin `frave-peru` (opción `frave_peru_catalog_mode`, filtro del mismo nombre): productos no comprables, precios fuera de páginas, `wc-ajax=get_variation`, datos estructurados y orden; carrito, checkout y cuenta redirigen al catálogo; la Store API pública queda cerrada. El tema solo lee `frave_catalog_mode()` para quitar la interfaz de compra (cuenta, carrito, mini-carrito, fragmentos, filtros de precio y oferta) y ofrecer cotización y WhatsApp. Sin el plugin, el tema vuelve al modo tienda.
+- **Navegación:** `inc/navigation.php` añade a los elementos con hijos del menú principal un botón (`[data-submenu-toggle]`, `aria-expanded`); un enlace personalizado `#` se convierte en ese botón. En escritorio el submenú se abre al pasar el puntero (CSS, solo con `hover: hover`) o con el botón, y se cierra con Escape, un clic fuera o al salir el foco; en el menú móvil es un acordeón. Sin JavaScript, el panel se abre con el puntero en escritorio y los submenús quedan desplegados en móvil.
 - **WooCommerce:** el soporte se declara en `inc/setup.php`; `inc/woocommerce.php` sustituye sus wrappers de contenido, oculta el sidebar de WooCommerce y define tres columnas de catálogo. El contador del carrito se actualiza mediante el filtro de fragmentos de WooCommerce. La lógica de compra sigue dentro del plugin.
 - **Botones de WooCommerce:** `inc/woocommerce.php` añade al body la clase `woocommerce-block-theme-has-button-styles`, el mecanismo de WooCommerce para que un tema sustituya su estilo de botones; así no hace falta pelear con sus reglas sin capa.
 - **Rendimiento:** `inc/enqueue.php` precarga las fuentes WOFF2 del manifest con `wp_preload_resources` y elimina el script y los estilos de emojis de WordPress.
@@ -88,5 +91,6 @@ La hoja `assets/src/css/app.css` concentra hoy todo el sistema visual y los esti
 | 2026-09-23 | Módulos editoriales fijos con campos de ACF gratuito. | Permitir edición controlada sin un constructor visual ni duplicar datos comerciales. |
 | 2026-09-23 | `server.origin` de Vite apunta al servidor de desarrollo. | Resolver las fuentes importadas desde CSS cuando WordPress sirve el HTML en otro puerto. |
 | 2026-09-28 | Requisitos comerciales de Perú (comprobante, DNI/RUC) en el plugin `frave-peru`, fuera del tema. | Son lógica comercial y datos de pedidos: deben conservarse si cambia el tema. El tema solo aporta estilos. Ver `D:/Frave-web/frave-peru/README.md`. |
+| 2026-10-10 | Web corporativa con catálogo: modo catálogo en `frave-peru` (activado por defecto) y la tienda en pausa sin borrar su código. | Frave pospone la venta en línea; un interruptor permite volver a vender sin rehacer el carrito, el checkout ni la boleta/factura. Ver [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md). |
 
 Anota aquí las decisiones que cambien los límites del sistema o las dependencias; las tareas concretas se siguen en [ROADMAP.md](ROADMAP.md).

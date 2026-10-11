@@ -1,10 +1,11 @@
 # Frave WordPress Theme
 
-Tema clásico personalizado para Frave, una tienda de fragancias, esencias e insumos de perfumería. WordPress administra páginas y medios; WooCommerce conserva el catálogo, inventario, variaciones, precios, carrito, checkout, pagos, pedidos y cuentas. La apariencia se implementa en este tema.
+Tema clásico personalizado para Frave (sabores, fragancias y envases). Desde octubre de 2026 la web es un **sitio corporativo de captación con catálogo**: presenta la empresa, muestra los productos sin precios y lleva al cliente a contactar. La venta en línea queda en pausa detrás del **modo catálogo** del plugin Frave Perú y se reactivará más adelante. WordPress administra páginas y medios; WooCommerce conserva el catálogo y, cuando se active la tienda, inventario, precios, carrito, checkout, pagos, pedidos y cuentas. La apariencia se implementa en este tema.
 
 ## Documentación del proyecto
 
-- [ROADMAP.md](ROADMAP.md): tareas implementadas y siguientes fases.
+- [PLAN_WEB_CORPORATIVA.md](PLAN_WEB_CORPORATIVA.md): **plan vigente**, fases de la web corporativa y registro de avances.
+- [ROADMAP.md](ROADMAP.md): base construida y plan de la futura tienda en línea.
 - [DESIGN.MD](DESIGN.MD): identidad visual, tokens, componentes y decisiones de diseño.
 - [ARQUITECTURA.MD](ARQUITECTURA.MD): límites del sistema, módulos e integraciones.
 - [GUIA_COMPILACION.MD](GUIA_COMPILACION.MD): desarrollo local, build y validación de assets.
@@ -22,7 +23,7 @@ Tema clásico personalizado para Frave, una tienda de fragancias, esencias e ins
 - Node.js 22.12 o superior y npm.
 - MySQL 8.0+ o MariaDB 10.6+.
 - Advanced Custom Fields gratuito es opcional (validado con 6.8.10); sin ACF, la portada utiliza contenido de respaldo.
-- Plugin **Frave Perú** (`D:/Frave-web/frave-peru/`, fuera de este repositorio) para pedir boleta o factura con DNI, CE, pasaporte o RUC en el checkout. Consulta su `README.md`.
+- Plugin **Frave Perú** (`D:/Frave-web/frave-peru/`, fuera de este repositorio): modo catálogo, formulario de contacto, Libro de Reclamaciones y, con la tienda activa, boleta o factura con DNI, CE, pasaporte o RUC en el checkout. Consulta su `README.md`. Sin el plugin activo el tema se comporta como tienda.
 
 La recomendación sigue las versiones actuales de WooCommerce y Vite. Comprueba los requisitos del hosting antes de desplegar.
 
@@ -31,18 +32,36 @@ La recomendación sigue las versiones actuales de WooCommerce y Vite. Comprueba 
 1. Despliega el tema en `wp-content/themes/frave` con Git o con el paquete `frave.zip` (`npm run package`), como explica [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD). No copies la carpeta del repositorio tal cual: incluye herramientas y documentación interna.
 2. En WordPress, activa **Frave** en **Apariencia → Temas**.
 3. Instala y activa WooCommerce. ACF gratuito es opcional.
-4. Asigna una página estática como portada. Si deseas el enlace institucional de la portada, crea una página publicada con slug `nosotros`; su contenido se edita con el editor de WordPress. Asigna menús a **Navegación principal** y **Navegación del pie**.
+4. Asigna una página estática como portada. Si deseas el enlace institucional de la portada, crea una página publicada con slug `nosotros`; su contenido se edita con el editor de WordPress. Los menús se explican en [Navegación](#navegación).
 5. Completa los datos de tienda, moneda, envíos, impuestos y pagos en los ajustes de WooCommerce.
 6. En las páginas de carrito y checkout, selecciona las versiones clásicas de WooCommerce con `[woocommerce_cart]` y `[woocommerce_checkout]` si el asistente creó bloques. La cuenta usa `[woocommerce_my_account]`.
 7. Para las páginas de contacto, preguntas frecuentes y políticas, sigue [PLAN_CONTENIDO_INSTITUCIONAL.md](PLAN_CONTENIDO_INSTITUCIONAL.md): cada una usa una plantilla del tema y parte de un patrón de «Frave: páginas institucionales».
 8. Para los canales de contacto y WhatsApp, abre **Apariencia → Personalizar → Contacto** e introduce el número de WhatsApp Business de Frave (para un celular de Perú bastan los 9 dígitos; se añade el 51). Sin número no se muestra ningún botón.
+
+### Modo catálogo
+
+Con el modo catálogo del plugin Frave Perú activo (*WooCommerce → Ajustes → Productos*, activado por defecto), el plugin quita precios y compras, y el tema:
+
+- quita de la cabecera la cuenta y el carrito, y no carga el mini-carrito ni `wc-cart-fragments`;
+- muestra la barra de búsqueda de productos solo en el catálogo, las fichas y los resultados;
+- cambia «Añadir al carrito» de las tarjetas por **«Ver detalles»** y pone en la ficha el bloque **«¿Te interesa este producto?»** con «Solicitar cotización» (abre el formulario de contacto con el producto ya escrito, `?producto=ID`) y «Consultar por WhatsApp»;
+- oculta en los filtros el precio y «En oferta»;
+- añade al `body` la clase `frave-catalog-mode`.
+
+«Solicitar cotización» y el botón «Solicitar asesoría» de la cabecera aparecen cuando hay una página publicada con la plantilla **Contacto**; sin ella, la cabecera ofrece WhatsApp. Al desactivar el modo vuelve la tienda tal como estaba.
+
+### Navegación
+
+El menú asignado a **Navegación principal** admite un nivel de submenú: en escritorio se abre como panel (al pasar el puntero o con su botón) y en el menú móvil como acordeón. Para un grupo sin página propia, como «Soluciones», usa un enlace personalizado con URL `#`: el tema lo convierte en un botón. La **descripción** de cada elemento del submenú (actívala en *Opciones de pantalla* de Apariencia → Menús) aparece bajo su nombre.
+
+Mientras no haya menús asignados, el tema muestra uno de respaldo con la estructura corporativa y solo enlaces que existen: Inicio, Nosotros (página `nosotros`), Soluciones (categorías de producto `sabores`, `fragancias` y `envases` que ya tengan productos), Catálogo y Contacto (con WhatsApp y Libro de Reclamaciones). El pie usa los mismos enlaces sin submenús.
 
 ### Contacto por WhatsApp
 
 Con un número configurado, el tema muestra:
 
 - un **botón flotante** en todas las páginas excepto el checkout, donde taparía «Realizar pedido» en móvil. En móvil solo muestra el icono;
-- **«Consultar por WhatsApp»** en cada ficha de producto, bajo el botón de compra, con un mensaje que incluye el nombre y el enlace del producto;
+- **«Consultar por WhatsApp»** en cada ficha de producto (en el bloque de cotización del modo catálogo, o bajo el botón de compra con la tienda activa), con un mensaje que incluye el nombre y el enlace del producto;
 - un enlace **«Escríbenos por WhatsApp»** en el pie.
 
 El mensaje inicial general, el botón flotante y el de las fichas se ajustan en la misma sección del Personalizador. Los enlaces llevan `data-frave-whatsapp="floating|product|footer"` para medir clics cuando se configure analítica. El filtro `frave_show_whatsapp_floating` permite ocultar el botón flotante en otras páginas.
@@ -97,7 +116,7 @@ Para probar el build de producción, compila con `npm.cmd run build` y cambia `F
 
 ## Arquitectura
 
-- `inc/`: configuración inicial, helpers, assets, ACF opcional e integración WooCommerce.
+- `inc/`: configuración inicial, helpers, assets, ACF opcional, integración WooCommerce y modo catálogo, contacto y navegación.
 - `template-parts/`: secciones independientes de portada, cards, búsqueda y estados vacíos reutilizables.
 - `assets/src/`: CSS, JavaScript y sistema de diseño de Tailwind.
 - `assets/dist/`: archivos listos para producción generados por Vite y versionados.
