@@ -1,8 +1,9 @@
 import { expect, test } from '@playwright/test';
-import { addFirstSimpleProduct, checkoutUrl, fillBilling, waitForCheckoutIdle } from './helpers.js';
+import { addFirstSimpleProduct, checkoutUrl, fillBilling, skipInCatalogMode, waitForCheckoutIdle } from './helpers.js';
 
 test.describe('checkout con comprobante de Perú', () => {
   test.beforeEach(async ({ page }) => {
+    await skipInCatalogMode(page);
     await addFirstSimpleProduct(page);
     await page.goto(await checkoutUrl(page));
     await waitForCheckoutIdle(page);

@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { SHOP, collectPageErrors, expectNoPhpErrors } from './helpers.js';
+import { SHOP, collectPageErrors, expectNoPhpErrors, isCatalogMode, skipInCatalogMode } from './helpers.js';
 
 test.describe('filtros del catálogo', () => {
   test('el panel muestra las secciones y filtra por atributo', async ({ page }) => {
@@ -9,7 +9,8 @@ test.describe('filtros del catálogo', () => {
 
     const panel = page.locator('#catalog-filters');
     await expect(panel.locator('.catalog-filter__title', { hasText: 'Categorías' })).toBeVisible();
-    await expect(panel.locator('.catalog-filter__title', { hasText: 'Precio' })).toBeVisible();
+    // Catalog mode hides prices, so there is no price filter.
+    await expect(panel.locator('.catalog-filter__title', { hasText: 'Precio' })).toHaveCount((await isCatalogMode(page)) ? 0 : 1);
 
     const total = await page.locator('ul.products li.product').count();
     const option = panel.locator('.catalog-filter--attribute a.catalog-option').first();
@@ -36,6 +37,7 @@ test.describe('filtros del catálogo', () => {
   });
 
   test('un rango de precio invertido se corrige con una redirección', async ({ page }) => {
+    await skipInCatalogMode(page);
     await page.goto(`${SHOP}&min_price=50&max_price=20`);
     await expect(page).toHaveURL(/min_price=20/);
     await expect(page).toHaveURL(/max_price=50/);
@@ -43,6 +45,7 @@ test.describe('filtros del catálogo', () => {
   });
 
   test('una combinación sin resultados ofrece quitar los filtros', async ({ page }) => {
+    await skipInCatalogMode(page);
     await page.goto(`${SHOP}&min_price=999990&max_price=999999`);
     await expect(page.locator('.catalog-no-results a')).toBeVisible();
     await page.locator('.catalog-no-results a').click();

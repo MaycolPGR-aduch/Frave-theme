@@ -1,7 +1,11 @@
 import { expect, test } from '@playwright/test';
-import { SHOP, addFirstSimpleProduct, collectPageErrors } from './helpers.js';
+import { SHOP, addFirstSimpleProduct, collectPageErrors, skipInCatalogMode } from './helpers.js';
 
 test.describe('mini-carrito', () => {
+  test.beforeEach(async ({ page }) => {
+    await skipInCatalogMode(page);
+  });
+
   test('se abre al añadir por AJAX y permite quitar el producto', async ({ page }) => {
     const errors = collectPageErrors(page);
     await addFirstSimpleProduct(page);
@@ -42,6 +46,8 @@ test.describe('mini-carrito', () => {
       const value = await selects.nth(i).locator('option:not([value=""])').first().getAttribute('value');
       await selects.nth(i).selectOption(value);
     }
+    // The button is not disabled either before WooCommerce's script runs: wait for the chosen variation.
+    await expect(page.locator('form.variations_form input.variation_id')).toHaveValue(/^[1-9]\d*$/);
     const add = page.locator('form.variations_form .single_add_to_cart_button');
     await expect(add).not.toHaveClass(/disabled/);
     await add.click();
