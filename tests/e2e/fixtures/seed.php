@@ -259,9 +259,10 @@ update_option(
 	)
 );
 
-/* ---------- Product lines: the agreed tree and the line pages (as in production) ---------- */
+/* ---------- Line pages and company pages (as in production) ---------- */
 
 require dirname( __DIR__, 3 ) . '/bin/crear-lineas.php';
+require dirname( __DIR__, 3 ) . '/bin/crear-paginas-empresa.php';
 
 // One product in a subcategory, so the portfolio links that subcategory to the catalog.
 $arabic = get_term_by( 'slug', 'perfumeria-arabe', 'product_cat' );

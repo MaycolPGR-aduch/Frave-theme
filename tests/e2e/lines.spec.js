@@ -13,7 +13,7 @@ test.describe('páginas de línea', () => {
     await expect(page.locator('.line-hero h1')).toContainText('aromas');
     await expect(page.locator('.line-hero__media img')).toBeVisible();
     // The figure counts up, so its heading carries the full text for screen readers.
-    await expect(page.locator('.line-highlight h3').first()).toHaveText(/\+500\s+referencias/);
+    await expect(page.locator('.highlight h3').first()).toHaveText(/\+500\s+referencias/);
 
     const groups = page.locator('#portafolio .line-group');
     await expect(groups).toHaveCount(4);
@@ -28,7 +28,7 @@ test.describe('páginas de línea', () => {
     await expect(page.locator('.line-applications .ticker')).toHaveAttribute('aria-hidden', 'true');
     await expect(page.locator('.line-applications__list li').first()).toBeVisible();
     // The page closes with its own call to action instead of the footer's.
-    await expect(page.locator('.line-cta')).toBeVisible();
+    await expect(page.locator('.cta-panel')).toBeVisible();
     await expect(page.locator('.site-footer__cta')).toHaveCount(0);
     expect(errors).toEqual([]);
   });

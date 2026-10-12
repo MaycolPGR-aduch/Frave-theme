@@ -45,8 +45,21 @@ test.describe('móvil', () => {
     await expect(button).toBeFocused();
   });
 
+  test('los pasos de «Cómo trabajamos» son un acordeón', async ({ page }) => {
+    await page.goto('/?pagename=experticia');
+    const second = page.getByRole('button', { name: /Proponemos/ });
+    await expect(second).toHaveAttribute('aria-expanded', 'false');
+    await second.click();
+    await expect(second).toHaveAttribute('aria-expanded', 'true');
+    // On phones the panel opens right under its button.
+    const button = await second.boundingBox();
+    const panel = await page.locator('#paso-proponemos').boundingBox();
+    expect(panel.y).toBeGreaterThan(button.y);
+    expect(panel.y - (button.y + button.height)).toBeLessThan(40);
+  });
+
   test('la página no se desborda horizontalmente', async ({ page }) => {
-    for (const path of ['/', SHOP, '/?pagename=contacto', '/?pagename=fragancias']) {
+    for (const path of ['/', SHOP, '/?pagename=contacto', '/?pagename=fragancias', '/?pagename=nosotros', '/?pagename=experticia']) {
       await page.goto(path);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow, path).toBeLessThanOrEqual(0);
