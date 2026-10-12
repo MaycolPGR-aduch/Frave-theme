@@ -16,16 +16,16 @@ function frave_home_defaults(): array {
 	return array(
 		'frave_home_hero_eyebrow'     => __( 'Sabores · Fragancias · Envases', 'frave' ),
 		'frave_home_hero_title'       => __( 'Sabores y fragancias que *conectan* con tu marca', 'frave' ),
-		'frave_home_hero_text'        => __( 'Acompañamos a marcas y emprendedores con insumos seleccionados y asesoría cercana para que cada producto deje huella.', 'frave' ),
+		'frave_home_hero_text'        => __( 'Conectamos a las marcas de perfumería, cosmética, cuidado personal y del hogar con fabricantes internacionales de fragancias y sabores, con asesoría técnica especializada.', 'frave' ),
 		'frave_home_hero_primary'     => __( 'Solicitar asesoría', 'frave' ),
 		'frave_home_hero_secondary'   => __( 'Ver el catálogo', 'frave' ),
 
-		'frave_home_lines_eyebrow'    => __( 'Nuestras soluciones', 'frave' ),
+		'frave_home_lines_eyebrow'    => __( 'Nuestras líneas', 'frave' ),
 		'frave_home_lines_title'      => __( 'Tres líneas para dar vida a *tus productos*', 'frave' ),
-		'frave_home_lines_text'       => __( 'Elige la línea que necesitas y explora sus productos, o cuéntanos tu proyecto y te orientamos.', 'frave' ),
-		'frave_home_line_sabores'     => __( 'Sabores para alimentos, bebidas y repostería que realzan cada receta.', 'frave' ),
-		'frave_home_line_fragancias'  => __( 'Fragancias para perfumería, cuidado personal y ambientación del hogar.', 'frave' ),
-		'frave_home_line_envases'     => __( 'Frascos, atomizadores y accesorios para presentar tus productos con calidad.', 'frave' ),
+		'frave_home_lines_text'       => __( 'Conoce cada línea y su portafolio, o cuéntanos tu proyecto y te orientamos.', 'frave' ),
+		'frave_home_line_sabores'     => __( 'Saborización para bebidas, alimentos, lácteos y salud bucal.', 'frave' ),
+		'frave_home_line_fragancias'  => __( 'Más de 500 referencias para perfumería, cosmética, cuidado del hogar y ambientación.', 'frave' ),
+		'frave_home_line_envases'     => __( 'Frascos, válvulas y accesorios para perfumería, cosmética y cuidado personal.', 'frave' ),
 
 		'frave_home_steps_eyebrow'    => __( 'Cómo trabajamos', 'frave' ),
 		'frave_home_steps_title'      => __( 'Tu proyecto, *paso a paso*', 'frave' ),
@@ -153,27 +153,26 @@ function frave_home_preload_poster( array $resources ): array {
 add_filter( 'wp_preload_resources', 'frave_home_preload_poster' );
 
 /**
- * The three product lines with their category link, image and description. A line without
- * its category links to the catalog, so the home page always presents the business.
+ * The three product lines with their link (line page, else category, else catalog), image
+ * (category image, else the theme's) and description, so the home page always presents
+ * the business.
  *
- * @return array<int, array{slug: string, name: string, text: string, url: string, image_id: int, icon: string}>
+ * @return array<int, array{slug: string, name: string, text: string, url: string, has_page: bool, image_id: int, image: string, icon: string}>
  */
 function frave_home_lines(): array {
 	$lines   = array();
 	$catalog = class_exists( 'WooCommerce' ) ? frave_catalog_shop_url() : home_url( '/' );
 	foreach ( frave_product_lines() as $slug => $name ) {
-		$term = class_exists( 'WooCommerce' ) ? get_term_by( 'slug', $slug, 'product_cat' ) : false;
-		$link = $term ? get_term_link( $term ) : '';
-		$text = frave_home_text( 'frave_home_line_' . $slug );
-		if ( $term && '' !== trim( wp_strip_all_tags( $term->description ) ) && ! frave_field( 'frave_home_line_' . $slug ) ) {
-			$text = wp_strip_all_tags( $term->description );
-		}
+		$term    = frave_line_term( $slug );
+		$link    = frave_line_url( $slug );
 		$lines[] = array(
 			'slug'     => $slug,
 			'name'     => $term ? $term->name : $name,
-			'text'     => $text,
-			'url'      => $link && ! is_wp_error( $link ) ? $link : $catalog,
+			'text'     => frave_home_text( 'frave_home_line_' . $slug ),
+			'url'      => '' !== $link ? $link : $catalog,
+			'has_page' => null !== frave_line_page( $slug ),
 			'image_id' => $term ? (int) get_term_meta( $term->term_id, 'thumbnail_id', true ) : 0,
+			'image'    => frave_line_card_image( $slug ),
 			'icon'     => frave_product_line_icon( $slug ),
 		);
 	}

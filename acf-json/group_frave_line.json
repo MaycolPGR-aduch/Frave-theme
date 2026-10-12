@@ -1,0 +1,434 @@
+{
+    "key": "group_frave_line",
+    "title": "Línea Frave",
+    "fields": [
+        {
+            "key": "field_frave_line_tab_0",
+            "label": "Línea",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_line_category",
+            "label": "Categoría de producto",
+            "name": "frave_line_category",
+            "type": "taxonomy",
+            "instructions": "La línea que presenta esta página: sus subcategorías forman el portafolio y sus productos, la sección de catálogo. Vacío: la categoría con el mismo slug que la página.",
+            "required": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "product_cat",
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "field_type": "select",
+            "allow_null": 1,
+            "multiple": 0,
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_frave_line_image_desktop",
+            "label": "Imagen de escritorio",
+            "name": "frave_line_image_desktop",
+            "type": "image",
+            "instructions": "Horizontal (16:9, unos 1700 × 950 px) con el tercio izquierdo despejado para el texto. Vacío: la imagen del tema.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg,jpeg,webp,png"
+        },
+        {
+            "key": "field_frave_line_image_mobile",
+            "label": "Imagen de móvil",
+            "name": "frave_line_image_mobile",
+            "type": "image",
+            "instructions": "Vertical (4:5, unos 1100 × 1400 px) con la parte superior despejada. Vacío: la imagen del tema.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg,jpeg,webp,png"
+        },
+        {
+            "key": "field_frave_line_eyebrow",
+            "label": "Texto superior",
+            "name": "frave_line_eyebrow",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_line_title",
+            "label": "Título",
+            "name": "frave_line_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: Sabores que *se recuerdan*. Se muestra sobre fondo naranja.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_lead",
+            "label": "Descripción",
+            "name": "frave_line_lead",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_tab_7",
+            "label": "Presentación",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_line_intro_title",
+            "label": "Frase principal",
+            "name": "frave_line_intro_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: Sabores que *se recuerdan*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_intro_text",
+            "label": "Texto",
+            "name": "frave_line_intro_text",
+            "type": "textarea",
+            "instructions": "Separa los párrafos con una línea en blanco.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 6,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_highlight_1_title",
+            "label": "Destacado 1: título",
+            "name": "frave_line_highlight_1_title",
+            "type": "text",
+            "instructions": "Si empieza con una cifra (+500 referencias), la cifra se anima al aparecer.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_line_highlight_1_text",
+            "label": "Destacado 1: texto",
+            "name": "frave_line_highlight_1_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_line_highlight_2_title",
+            "label": "Destacado 2: título",
+            "name": "frave_line_highlight_2_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_line_highlight_2_text",
+            "label": "Destacado 2: texto",
+            "name": "frave_line_highlight_2_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_line_highlight_3_title",
+            "label": "Destacado 3: título",
+            "name": "frave_line_highlight_3_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_line_highlight_3_text",
+            "label": "Destacado 3: texto",
+            "name": "frave_line_highlight_3_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_line_tab_16",
+            "label": "Portafolio y aplicaciones",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_line_portfolio_title",
+            "label": "Título del portafolio",
+            "name": "frave_line_portfolio_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: Sabores que *se recuerdan*. Las tarjetas salen de las subcategorías de WooCommerce (nombre, descripción e imagen).",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_portfolio_text",
+            "label": "Texto del portafolio",
+            "name": "frave_line_portfolio_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_applications_title",
+            "label": "Título de aplicaciones",
+            "name": "frave_line_applications_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: Sabores que *se recuerdan*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_applications_text",
+            "label": "Texto de aplicaciones",
+            "name": "frave_line_applications_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_applications",
+            "label": "Aplicaciones",
+            "name": "frave_line_applications",
+            "type": "textarea",
+            "instructions": "Una por línea. Aparecen en la banda de palabras y en la lista. Vacío: el texto por defecto; para ocultar la sección, deja solo un guion (-).",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 8,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_tab_22",
+            "label": "Cierre",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_line_cta_title",
+            "label": "Título de la llamada a la acción",
+            "name": "frave_line_cta_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: Sabores que *se recuerdan*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_line_cta_text",
+            "label": "Texto de la llamada a la acción",
+            "name": "frave_line_cta_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates/linea.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Textos e imágenes de una página de línea. Los campos vacíos muestran el texto por defecto de la línea, visible en gris dentro de cada campo.",
+    "show_in_rest": 0,
+    "modified": 1791783941
+}

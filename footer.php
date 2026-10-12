@@ -17,7 +17,8 @@ $frave_channel_icon = array(
 	<footer class="site-footer on-dark">
 		<div class="site-footer__decor" aria-hidden="true"><?php echo frave_isotype(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></div>
 		<div class="container">
-			<?php if ( $frave_cta ) : ?>
+			<?php // Pages with their own closing call to action (line pages) turn this one off. ?>
+			<?php if ( $frave_cta && apply_filters( 'frave_show_footer_cta', true ) ) : ?>
 				<div class="site-footer__cta">
 					<div>
 						<p class="eyebrow"><?php esc_html_e( 'Hablemos', 'frave' ); ?></p>

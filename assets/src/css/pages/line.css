@@ -1,0 +1,531 @@
+/*
+ * Line pages (page-templates/linea.php, template-parts/line/).
+ *
+ * The hero sits on the warm ivory of the line image: --line-tone comes from each image
+ * (inc/lines.php). On those tones the eyebrow uses #a83200 (6:1 or more) and the lead
+ * #4a4642, as on the home hero.
+ */
+@layer components {
+  /* ---------- Hero ---------- */
+
+  .line-hero {
+    --line-tone: #e9dccd;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    margin-top: calc(-1 * var(--header-height));
+    padding-top: var(--header-height);
+    overflow: hidden;
+    background: var(--line-tone);
+  }
+
+  .line-hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(2.5rem, 7vw, 4rem) 0;
+  }
+
+  .line-hero__copy {
+    max-width: 40rem;
+  }
+
+  .line-hero .eyebrow {
+    color: #a83200;
+  }
+
+  .line-hero__title {
+    margin: 0 0 1.5rem;
+    color: var(--color-ink);
+    font-size: clamp(2.75rem, 5.4vw, 5.25rem);
+  }
+
+  .line-hero__lead {
+    margin: 0 0 2rem;
+    color: #4a4642;
+  }
+
+  /* Phones: the portrait image follows the copy; its empty top melts into the tone. */
+  .line-hero__media {
+    order: 2;
+    display: block;
+    margin-top: -12vw;
+  }
+
+  .line-hero__media img {
+    width: 100%;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 30%);
+  }
+
+  @media (min-width: 64rem) {
+    /* Pinned: the introduction slides over it (both live in .line-intro-wrap). */
+    .line-hero {
+      position: sticky;
+      top: 0;
+      z-index: 0;
+      min-height: 100svh;
+      justify-content: center;
+    }
+
+    .line-hero__inner {
+      padding-block: 3rem calc(var(--radius-xl) + 5rem);
+    }
+
+    .line-hero__copy {
+      max-width: min(42vw, 37rem);
+    }
+
+    .line-hero__lead {
+      max-width: 30rem;
+    }
+
+    /* The landscape image fills the hero; its left side is the clean ivory behind the copy. */
+    /* On wide screens it starts near the centered copy, so the subject stays beside the text. */
+    .line-hero__media {
+      position: absolute;
+      z-index: -1;
+      inset: 0 0 0 max(0px, calc((100% - 90rem) / 2));
+      margin: 0;
+    }
+
+    .line-hero__media img {
+      height: 100%;
+      object-fit: cover;
+      object-position: 35% 50%;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    /* Its arrangement starts further left: crop the right edge instead of the left. */
+    .line-hero--sabores .line-hero__media img {
+      object-position: 0% 50%;
+    }
+
+    .line-hero__media::after {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, var(--line-tone) 0%, color-mix(in srgb, var(--line-tone) 70%, transparent) 30%, transparent 50%);
+      content: "";
+      pointer-events: none;
+    }
+  }
+
+  /* ---------- Introduction ---------- */
+
+  .line-intro {
+    position: relative;
+    z-index: 1;
+    margin-top: calc(-1 * var(--radius-xl));
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background: #fff;
+    box-shadow: 0 -1.5rem 3rem rgb(18 20 24 / 10%);
+  }
+
+  .line-intro--empty {
+    height: var(--radius-xl);
+  }
+
+  .line-intro__grid {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .line-intro__title {
+    margin: 0;
+    font-size: clamp(1.9rem, 3.6vw, 3.1rem);
+    font-weight: 300;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+
+  .line-intro__title strong {
+    color: var(--color-primary);
+    font-weight: 400;
+  }
+
+  .line-intro__text {
+    color: var(--color-muted);
+    font-size: var(--text-lead);
+    line-height: 1.6;
+  }
+
+  .line-intro__text p {
+    margin: 0 0 1em;
+  }
+
+  .line-intro__text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .line-highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
+    margin: clamp(3rem, 6vw, 5rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .line-highlight {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .line-highlight h3 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  .line-highlight p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .line-highlight__figure {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 64rem) {
+    .line-intro__grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      align-items: end;
+    }
+  }
+
+  /* ---------- Portfolio ---------- */
+
+  .line-portfolio {
+    background: var(--color-surface);
+  }
+
+  .line-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Lines with subcategories inside subcategories (Fragancias): two wide columns. */
+  @media (min-width: 56rem) {
+    .line-portfolio--groups .line-groups {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .line-group.card {
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    background: #fff;
+  }
+
+  .line-group__media {
+    aspect-ratio: 16 / 9;
+    border-radius: 0;
+  }
+
+  .line-group__body {
+    display: grid;
+    flex: 1;
+    grid-template-rows: auto auto 1fr;
+    align-content: start;
+    gap: 0.85rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .line-group__number {
+    color: var(--color-brand-orange);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+
+  .line-group__title {
+    margin: 0;
+    font-size: clamp(1.45rem, 2.2vw, 1.9rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+
+  .line-group__text {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .line-group__types {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 0.5rem;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .line-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    color: var(--color-ink);
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .line-chip .icon {
+    width: 0.95rem;
+    height: 0.95rem;
+    color: var(--color-primary);
+  }
+
+  .line-chip--link {
+    transition:
+      border-color var(--duration-fast) ease,
+      background-color var(--duration-fast) ease;
+  }
+
+  .line-chip--link:hover {
+    border-color: var(--color-brand-orange);
+    background: var(--color-orange-soft);
+  }
+
+  .line-group__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin-top: 0.5rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .link-arrow--muted {
+    color: var(--color-ink) !important;
+  }
+
+  /* ---------- Applications ---------- */
+
+  .line-applications {
+    position: relative;
+    overflow: clip;
+    padding-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .line-applications__grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .line-applications__head h2 {
+    margin: 0 0 1rem;
+  }
+
+  .line-applications__head .lead {
+    margin: 0;
+  }
+
+  .line-applications__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .line-applications__list li {
+    padding: 0.6rem 1.1rem;
+    border: 1px solid rgb(255 255 255 / 16%);
+    border-radius: 999px;
+    color: var(--color-on-dark);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  @media (min-width: 64rem) {
+    .line-applications__grid {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+      align-items: start;
+    }
+  }
+
+  /* Word band: two rows that travel in opposite directions with the scroll (ticker.js). */
+  .ticker {
+    --ticker-progress: 0.5;
+    display: grid;
+    gap: 0.25rem;
+    user-select: none;
+  }
+
+  .ticker__row {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    width: max-content;
+    font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    transform: translateX(calc(var(--ticker-progress) * -25%));
+    will-change: transform;
+  }
+
+  .ticker__row--reverse {
+    transform: translateX(calc((var(--ticker-progress) - 1) * 25%));
+  }
+
+  .ticker__row:first-child .ticker__word {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(255 255 255 / 45%);
+  }
+
+  .ticker__row--reverse .ticker__word {
+    color: var(--color-on-dark);
+  }
+
+  /* The brand drop between words. */
+  .ticker__sep {
+    flex: none;
+    width: 0.32em;
+    height: 0.32em;
+    border-radius: 50% 0 50% 50%;
+    background: var(--color-brand-orange);
+    transform: rotate(-45deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker__row,
+    .ticker__row--reverse {
+      transform: none;
+    }
+  }
+
+  /* ---------- Closing call to action ---------- */
+
+  .line-cta__panel {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    min-height: clamp(30rem, 70vw, 34rem);
+    place-items: center;
+    overflow: hidden;
+    padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+    border-radius: var(--radius-xl);
+    background: #f3ece2;
+    text-align: center;
+  }
+
+  .line-cta__media {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+  }
+
+  .line-cta__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .line-cta__copy {
+    display: grid;
+    justify-items: center;
+    max-width: 36rem;
+  }
+
+  .line-cta__copy .eyebrow {
+    color: #a83200;
+  }
+
+  .line-cta__copy h2 {
+    margin: 0 0 1rem;
+  }
+
+  .line-cta__copy .lead {
+    margin: 0 0 2rem;
+    color: #4a4642;
+  }
+
+  .line-cta__copy .btn-row {
+    justify-content: center;
+  }
+
+  @media (min-width: 48rem) {
+    .line-cta__panel {
+      min-height: clamp(26rem, 34vw, 32rem);
+    }
+  }
+
+  /* ---------- Other lines ---------- */
+
+  .line-others {
+    padding-top: 0;
+  }
+
+  .line-others__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: clamp(1rem, 3vw, 2rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .line-other.card {
+    flex-direction: row;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+    padding: 1rem;
+  }
+
+  .line-other__media {
+    display: grid;
+    flex: none;
+    width: clamp(6.5rem, 18vw, 9.5rem);
+    aspect-ratio: 4 / 5;
+    place-items: center;
+    background: linear-gradient(160deg, #fbe9dc 0%, #f1d3bd 100%);
+  }
+
+  .line-other__body {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .line-other h3 {
+    margin: 0;
+    font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+
+  .line-other p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------- Catalog link to the line (catalog hero) ---------- */
+
+  .page-hero__line-link {
+    color: var(--color-brand-orange) !important;
+    font-weight: 700;
+  }
+
+  .page-hero__line-link:hover {
+    text-decoration: underline;
+  }
+}

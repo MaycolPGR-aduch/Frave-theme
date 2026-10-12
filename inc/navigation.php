@@ -33,8 +33,9 @@ function frave_contact_page_url(): string {
 }
 
 /**
- * Items of the fallback main menu: Inicio, Nosotros, Soluciones (one entry per product
- * line whose category has products, so no entry leads to an empty page), Catálogo and Contacto.
+ * Items of the fallback main menu: Inicio, Nosotros, Líneas (one entry per product line
+ * with a line page or a category with products, so no entry leads to an empty page),
+ * Catálogo and Contacto.
  *
  * @return array<int, array{label: string, url: string, children?: array}>
  */
@@ -57,9 +58,8 @@ function frave_primary_menu_fallback_items(): array {
 	if ( class_exists( 'WooCommerce' ) ) {
 		$lines = array();
 		foreach ( frave_product_lines() as $slug => $label ) {
-			$term = get_term_by( 'slug', $slug, 'product_cat' );
-			$link = $term && $term->count > 0 ? get_term_link( $term ) : '';
-			if ( $link && ! is_wp_error( $link ) ) {
+			$link = frave_line_url( $slug );
+			if ( '' !== $link ) {
 				$lines[] = array(
 					'label' => $label,
 					'url'   => $link,
@@ -69,7 +69,7 @@ function frave_primary_menu_fallback_items(): array {
 		}
 		if ( $lines ) {
 			$items[] = array(
-				'label'    => __( 'Soluciones', 'frave' ),
+				'label'    => __( 'Líneas', 'frave' ),
 				'url'      => '',
 				'children' => $lines,
 			);

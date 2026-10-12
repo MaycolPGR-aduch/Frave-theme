@@ -1,9 +1,25 @@
 <?php
-/** Featured products, managed in WooCommerce (the star in the product list). */
+/**
+ * Featured products, managed in WooCommerce (the star in the product list); the latest
+ * products when none is featured. Line pages pass a category and their own heading.
+ *
+ * Arguments: category (slug), eyebrow, title, link, link_label.
+ */
 
 if ( ! defined( 'ABSPATH' ) || ! class_exists( 'WooCommerce' ) ) {
 	return;
 }
+
+$frave_featured_args = wp_parse_args(
+	$args ?? array(),
+	array(
+		'category'   => '',
+		'eyebrow'    => frave_home_text( 'frave_home_featured_eyebrow' ),
+		'title'      => frave_home_text( 'frave_home_featured_title' ),
+		'link'       => frave_catalog_shop_url(),
+		'link_label' => __( 'Ver todos los productos', 'frave' ),
+	)
+);
 
 // Respect catalog visibility and the "hide out of stock items" setting, as the shop does.
 $frave_query_args = array(
@@ -11,6 +27,9 @@ $frave_query_args = array(
 	'limit'      => 4,
 	'visibility' => 'catalog',
 );
+if ( '' !== $frave_featured_args['category'] ) {
+	$frave_query_args['category'] = array( $frave_featured_args['category'] );
+}
 if ( 'yes' === get_option( 'woocommerce_hide_out_of_stock_items' ) ) {
 	$frave_query_args['stock_status'] = 'instock';
 }
@@ -45,9 +64,9 @@ if ( empty( $frave_products ) ) {
 <section class="section featured-section" aria-labelledby="featured-heading">
 	<div class="container">
 		<div class="section-head section-head--split" data-reveal="up">
-			<p class="eyebrow"><?php echo esc_html( frave_home_text( 'frave_home_featured_eyebrow' ) ); ?></p>
-			<h2 id="featured-heading"><?php echo frave_emphasis( frave_home_text( 'frave_home_featured_title' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h2>
-			<a class="link-arrow section-head__action" href="<?php echo esc_url( frave_catalog_shop_url() ); ?>"><?php esc_html_e( 'Ver todos los productos', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
+			<p class="eyebrow"><?php echo esc_html( $frave_featured_args['eyebrow'] ); ?></p>
+			<h2 id="featured-heading"><?php echo frave_emphasis( $frave_featured_args['title'] ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h2>
+			<a class="link-arrow section-head__action" href="<?php echo esc_url( $frave_featured_args['link'] ); ?>"><?php echo esc_html( $frave_featured_args['link_label'] ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
 		</div>
 		<?php // Product cards are styled under .woocommerce, as WooCommerce's own [products] shortcode wraps them. ?>
 		<div class="woocommerce">

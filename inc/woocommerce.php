@@ -58,12 +58,15 @@ function frave_catalog_hero(): void {
 	if ( is_search() ) {
 		$eyebrow = __( 'BÚSQUEDA', 'frave' );
 		$lead    = '';
+		$meta    = '';
 	} elseif ( is_product_taxonomy() ) {
 		$term    = get_queried_object();
 		$parent  = $term instanceof WP_Term && $term->parent ? get_term( $term->parent, $term->taxonomy ) : null;
 		$eyebrow = $parent instanceof WP_Term ? $parent->name : __( 'CATÁLOGO', 'frave' );
 		$lead    = $term instanceof WP_Term ? term_description( $term ) : '';
+		$meta    = $term instanceof WP_Term ? frave_catalog_line_link( $term ) : '';
 	} else {
+		$meta    = '';
 		$shop    = get_post( wc_get_page_id( 'shop' ) );
 		$eyebrow = __( 'NUESTROS PRODUCTOS', 'frave' );
 		$lead    = $shop instanceof WP_Post && '' !== trim( $shop->post_content ) ? $shop->post_content : __( 'Explora nuestras líneas de sabores, fragancias y envases, y solicita una cotización de lo que necesites.', 'frave' );
@@ -75,9 +78,29 @@ function frave_catalog_hero(): void {
 			'eyebrow'    => $eyebrow,
 			'title'      => woocommerce_page_title( false ),
 			'lead'       => $lead,
+			'meta'       => $meta,
 			'breadcrumb' => true,
 			'search'     => true,
 		)
+	);
+}
+
+/** On a product line's category or subcategory, a link to the line page; '' otherwise. */
+function frave_catalog_line_link( WP_Term $term ): string {
+	if ( 'product_cat' !== $term->taxonomy ) {
+		return '';
+	}
+	$ancestors = get_ancestors( $term->term_id, 'product_cat', 'taxonomy' );
+	$top       = $ancestors ? get_term( (int) end( $ancestors ), 'product_cat' ) : $term;
+	$page      = $top instanceof WP_Term ? frave_line_page( $top->slug ) : null;
+	if ( ! $page ) {
+		return '';
+	}
+	return sprintf(
+		'<a class="page-hero__line-link" href="%1$s">%2$s <span aria-hidden="true">→</span></a>',
+		esc_url( get_permalink( $page ) ),
+		/* translators: %s: product line name. */
+		esc_html( sprintf( __( 'Conoce la línea %s', 'frave' ), $top->name ) )
 	);
 }
 

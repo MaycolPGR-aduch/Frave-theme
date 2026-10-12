@@ -1,7 +1,8 @@
 <?php
 /**
- * "Nuestras soluciones": the three product lines as bottle-shaped cards. On phones they
- * become a swipeable carousel; the line image is the product category's image.
+ * "Nuestras líneas": the three product lines as bottle-shaped cards leading to their line
+ * pages. On phones they become a swipeable carousel. The image is the product category's
+ * image, or the theme's line image.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -40,6 +41,8 @@ $frave_lines = frave_home_lines();
 										)
 									);
 									?>
+								<?php elseif ( '' !== $frave_line['image'] ) : ?>
+									<img src="<?php echo esc_url( $frave_line['image'] ); ?>" width="600" height="750" alt="" loading="lazy" decoding="async">
 								<?php else : ?>
 									<span class="line-card__art" aria-hidden="true"><?php echo frave_icon( $frave_line['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></span>
 								<?php endif; ?>
@@ -47,7 +50,7 @@ $frave_lines = frave_home_lines();
 							<div class="line-card__body">
 								<h3><a class="card__link" href="<?php echo esc_url( $frave_line['url'] ); ?>"><?php echo esc_html( $frave_line['name'] ); ?></a></h3>
 								<p><?php echo esc_html( $frave_line['text'] ); ?></p>
-								<span class="link-arrow" aria-hidden="true"><?php esc_html_e( 'Ver productos', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></span>
+								<span class="link-arrow" aria-hidden="true"><?php echo esc_html( $frave_line['has_page'] ? __( 'Conocer la línea', 'frave' ) : __( 'Ver productos', 'frave' ) ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></span>
 							</div>
 						</article>
 					</li>

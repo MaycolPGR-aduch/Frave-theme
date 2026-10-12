@@ -12,6 +12,7 @@ import { initializeMiniCart } from './modules/mini-cart.js';
 import { initializeNavigation } from './modules/navigation.js';
 import { initializeSectionTransitions } from './modules/section-transitions.js';
 import { initializeStacks } from './modules/stack.js';
+import { initializeTickers } from './modules/ticker.js';
 
 document.documentElement.classList.add('js');
 initializeNavigation();
@@ -21,6 +22,7 @@ initializeCatalogFilters();
 initializeSectionTransitions();
 initializeCarousels();
 initializeStacks();
+initializeTickers();
 initializeCounters();
 initializeHeroVideo();
 initializeMaps();
