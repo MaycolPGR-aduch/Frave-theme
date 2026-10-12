@@ -58,8 +58,22 @@ test.describe('móvil', () => {
     expect(panel.y - (button.y + button.height)).toBeLessThan(40);
   });
 
+  test('el chat de WhatsApp cabe en la pantalla', async ({ page }) => {
+    await page.goto('/');
+    const opener = page.locator('[data-wa-chat-open]');
+    test.skip((await opener.count()) === 0, 'Sin número de WhatsApp configurado.');
+    await opener.click();
+    const chat = page.locator('[data-wa-chat]');
+    await expect(chat).toBeVisible();
+    const box = await chat.boundingBox();
+    const viewport = page.viewportSize();
+    expect(box.x).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width).toBeLessThanOrEqual(viewport.width);
+    expect(box.y).toBeGreaterThanOrEqual(0);
+  });
+
   test('la página no se desborda horizontalmente', async ({ page }) => {
-    for (const path of ['/', SHOP, '/?pagename=contacto', '/?pagename=fragancias', '/?pagename=nosotros', '/?pagename=experticia']) {
+    for (const path of ['/', SHOP, '/?pagename=contacto', '/?pagename=fragancias', '/?pagename=nosotros', '/?pagename=experticia', '/?pagename=soluciones', '/?pagename=soluciones/perfumeria']) {
       await page.goto(path);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow, path).toBeLessThanOrEqual(0);

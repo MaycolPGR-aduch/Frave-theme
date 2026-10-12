@@ -263,6 +263,10 @@ update_option(
 
 require dirname( __DIR__, 3 ) . '/bin/crear-lineas.php';
 require dirname( __DIR__, 3 ) . '/bin/crear-paginas-empresa.php';
+require dirname( __DIR__, 3 ) . '/bin/crear-soluciones.php';
+
+// A test number, so the floating button and the guided WhatsApp chat are on.
+set_theme_mod( 'frave_whatsapp_number', '51900000000' );
 
 // One product in a subcategory, so the portfolio links that subcategory to the catalog.
 $arabic = get_term_by( 'slug', 'perfumeria-arabe', 'product_cat' );
