@@ -381,14 +381,16 @@ add_filter( 'wp_preload_resources', 'frave_line_preload_image' );
  * when a field is empty.
  */
 function frave_line_acf_placeholder( array $field ): array {
-	if ( ! is_admin() || ! str_starts_with( (string) $field['name'], 'frave_line_' ) ) {
+	// By now ACF has turned 'name' into the input name (acf[field_…]); '_name' keeps the field name.
+	$name = (string) ( $field['_name'] ?? $field['name'] );
+	if ( ! is_admin() || ! str_starts_with( $name, 'frave_line_' ) ) {
 		return $field;
 	}
 	$page = get_post();
 	if ( ! $page instanceof WP_Post || 'page' !== $page->post_type ) {
 		return $field;
 	}
-	$key  = substr( $field['name'], strlen( 'frave_line_' ) );
+	$key  = substr( $name, strlen( 'frave_line_' ) );
 	$copy = frave_line_copy( frave_line_slug( $page ) );
 	if ( is_string( $copy[ $key ] ?? null ) && '' !== $copy[ $key ] ) {
 		$field['placeholder'] = $copy[ $key ];

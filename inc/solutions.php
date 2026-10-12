@@ -196,12 +196,14 @@ add_filter( 'frave_show_footer_cta', 'frave_solutions_hide_footer_cta' );
 
 /** The defaults as placeholders in the page's ACF fields. */
 function frave_solution_acf_placeholder( array $field ): array {
-	if ( ! is_admin() || ! str_starts_with( (string) $field['name'], 'frave_solution_' ) ) {
+	// By now ACF has turned 'name' into the input name (acf[field_…]); '_name' keeps the field name.
+	$name = (string) ( $field['_name'] ?? $field['name'] );
+	if ( ! is_admin() || ! str_starts_with( $name, 'frave_solution_' ) ) {
 		return $field;
 	}
 	$page = get_post();
 	$slug = $page instanceof WP_Post ? frave_solution_slug( $page ) : '';
-	$key  = substr( $field['name'], strlen( 'frave_solution_' ) );
+	$key  = substr( $name, strlen( 'frave_solution_' ) );
 	$copy = frave_solutions()[ $slug ][ $key ] ?? '';
 	if ( is_string( $copy ) && '' !== $copy ) {
 		$field['placeholder'] = $copy;

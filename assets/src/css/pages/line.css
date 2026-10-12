@@ -2,7 +2,7 @@
  * Line pages (page-templates/linea.php, template-parts/line/).
  *
  * The hero sits on the warm ivory of the line image: --line-tone comes from each image
- * (inc/lines.php). On those tones the eyebrow uses #a83200 (6:1 or more) and the lead
+ * (inc/lines.php). On those tones the eyebrow uses #8f2a00 (5.2:1 or more) and the lead
  * #4a4642, as on the home hero.
  */
 @layer components {
@@ -30,8 +30,9 @@
     max-width: 40rem;
   }
 
+  /* 5.2:1 even on the darkest tone (Envases, #ddc9b6). */
   .line-hero .eyebrow {
-    color: #a83200;
+    color: #8f2a00;
   }
 
   .line-hero__title {
@@ -170,8 +171,9 @@
     padding: clamp(1.5rem, 3vw, 2.25rem);
   }
 
+  /* Primary, not the brand orange: small text needs 4.5:1 on white. */
   .line-group__number {
-    color: var(--color-brand-orange);
+    color: var(--color-primary);
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.14em;
