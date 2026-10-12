@@ -31,16 +31,18 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `inc/contact.php` | Ajustes de WhatsApp en el Personalizador, enlaces `wa.me`, botón de consulta en la ficha y, en modo catálogo, bloque «¿Te interesa este producto?» con el enlace de cotización (`?producto=ID`). |
 | `front-page.php`, `page.php`, `single.php`, `archive.php`, `search.php`, `index.php`, `404.php` | Jerarquía de templates clásicos. |
 | `header.php`, `footer.php` | Estructura global, navegación, búsqueda, carrito y pie. |
-| `front-page.php`, `template-parts/home/` | Portada: hero con vídeo, soluciones, cómo trabajamos, destacados, razones, catálogo, tendencias y ubicación. |
+| `front-page.php`, `template-parts/home/` | Portada: hero con vídeo, líneas, cómo trabajamos, destacados, razones, catálogo, tendencias y ubicación. |
 | `inc/home.php` | Textos por defecto de la portada (única fuente, también para los valores por defecto de ACF), resaltado con `*asteriscos*`, vídeo del hero y precarga de su imagen fija, datos de las tres líneas e iconos de las razones. |
-| `assets/media/` | Vídeo por defecto del hero (MP4 y WebM sin sonido) y su último fotograma. |
+| `inc/lines.php`, `page-templates/linea.php`, `template-parts/line/` | Páginas de línea (plantilla «Línea»): textos por defecto acordados con la gerencia, categoría de la página, portafolio desde las subcategorías, enlaces de cotización `?linea=`, imágenes y enlaces a la línea desde la portada, el menú y el catálogo. |
+| `bin/crear-lineas.php` | Crea con WP-CLI el árbol de subcategorías acordado y las páginas /sabores/, /fragancias/ y /envases/ (no se despliega con el tema). |
+| `assets/media/` | Vídeo por defecto del hero (MP4 y WebM sin sonido) y su último fotograma; imágenes de las líneas (`lineas/`) y de la llamada a la acción (`contacto/`); `.htaccess` con los tipos de vídeo. |
 | `template-parts/cards/` y `template-parts/components/` | Tarjeta de categoría, banda de cabecera de páginas interiores (`page-hero.php`), formulario de búsqueda, enlace de carrito y estado vacío. |
 | `assets/src/css/app.css` | Orden de capas, tokens, cabecera, menús, pie, WooCommerce y páginas institucionales. |
-| `assets/src/css/pages/home.css` | Estilos de la portada. |
+| `assets/src/css/pages/home.css`, `assets/src/css/pages/line.css` | Estilos de la portada y de las páginas de línea. |
 | `assets/src/css/system/` | Sistema de diseño: tipografía, botones, superficies, formas, movimiento y carrusel (ver [DESIGN.MD](DESIGN.MD)). |
-| `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú con submenús, estado de la cabecera al hacer scroll, aparición progresiva, carrusel, apilado y contadores. |
+| `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú con submenús, estado de la cabecera al hacer scroll, aparición progresiva, carrusel, apilado, contadores y bandas de palabras ligadas al scroll. |
 | `assets/dist/` | CSS, JavaScript, fuentes y manifest listos para servir; se versiona en Git. |
-| `acf-json/` | Configuración versionada de los campos editoriales de la portada. |
+| `acf-json/` | Configuración versionada de los campos editoriales de la portada y de las páginas de línea. |
 | `theme.json`, `style.css` | Ajustes del editor y metadatos necesarios para activar el tema. |
 | `bin/deploy.sh`, `.gitattributes` | Despliegue en Hostinger por SSH, con reversión y vaciado de caché, y lista de archivos que no se publican (`export-ignore`). |
 
@@ -51,8 +53,9 @@ Actualmente no existe un directorio `woocommerce/` de overrides. Tampoco existen
 1. WordPress resuelve la URL y selecciona un template del tema o de WooCommerce.
 2. El tema imprime header, contenido y footer; las secciones reutilizables se cargan con `get_template_part()`.
 3. Para el catálogo y la compra, WooCommerce produce datos y formularios. El tema aporta wrappers y estilos mediante sus hooks públicos.
-4. En la portada, cada sección lee sus campos ACF con `frave_home_text()`, que usa los textos por defecto de `inc/home.php` cuando faltan. Las líneas toman imagen y descripción de sus categorías de producto y los destacados proceden de WooCommerce.
-5. WordPress encola `assets/src/js/app.js` desde Vite en desarrollo o los archivos con hash indicados por `assets/dist/manifest.json` en producción.
+4. En la portada, cada sección lee sus campos ACF con `frave_home_text()`, que usa los textos por defecto de `inc/home.php` cuando faltan. Las líneas enlazan con su página de línea y toman la imagen de su categoría o la del tema; los destacados proceden de WooCommerce.
+5. En una página de línea, `frave_line_text()` lee el campo ACF de la página o el texto por defecto de `inc/lines.php`; el portafolio sale de las subcategorías de WooCommerce.
+6. WordPress encola `assets/src/js/app.js` desde Vite en desarrollo o los archivos con hash indicados por `assets/dist/manifest.json` en producción.
 
 En la portada, los elementos con `data-reveal` y `data-reveal-group` se observan con `IntersectionObserver`. Las clases de preparación se añaden solo desde JavaScript; así el contenido no queda oculto cuando JS no carga. El módulo `assets/src/js/modules/section-transitions.js` omite el efecto cuando el visitante ha solicitado movimiento reducido.
 

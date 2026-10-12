@@ -71,7 +71,7 @@ El mensaje inicial general, el botón flotante y el de las fichas se ajustan en 
 La portada (`front-page.php`, `template-parts/home/`) tiene estas secciones:
 
 1. **Hero** con vídeo a pantalla completa. Se reproduce una vez y se queda en el último fotograma; tiene botón de pausa. Con movimiento reducido o ahorro de datos se muestra la imagen fija. En escritorio queda fijo mientras sube la sección siguiente.
-2. **Nuestras soluciones:** Sabores, Fragancias y Envases en tarjetas con forma de frasco. Usa la imagen y la descripción de cada categoría de producto.
+2. **Nuestras líneas:** Sabores, Fragancias y Envases en tarjetas con forma de frasco que llevan a su página de línea. Usa la imagen de cada categoría de producto o, sin ella, la del tema.
 3. **Cómo trabajamos:** tres pasos que se apilan al hacer scroll.
 4. **Productos destacados:** la estrella de WooCommerce.
 5. **Razones para elegirnos:** cuatro tarjetas con icono.
@@ -80,6 +80,16 @@ La portada (`front-page.php`, `template-parts/home/`) tiene estas secciones:
 8. **Dónde estamos:** solo con dirección en el Personalizador; el mapa de Google se carga al pedirlo.
 
 Todos los textos, el vídeo y su imagen fija se editan en el grupo ACF **Inicio Frave** de la página de portada. Una palabra entre `*asteriscos*` se resalta: en el hero sobre fondo naranja, en las demás secciones en negrita. Los campos vacíos muestran los textos por defecto de `inc/home.php`; sin ACF, también. El vídeo por defecto está en `assets/media/` (MP4 y WebM sin sonido, más el último fotograma en JPG). Si el administrador de ACF ofrece **Sincronización disponible** para «Inicio Frave», sincronízalo para editar los campos nuevos.
+
+### Páginas de línea
+
+Sabores, Fragancias y Envases tienen su página con la plantilla **Línea** (`page-templates/linea.php`): hero con la imagen de la línea, presentación con tres destacados, portafolio, aplicaciones en una banda de palabras, productos de la línea, llamada a la acción y las otras líneas.
+
+- **Categoría:** la elegida en el grupo ACF **Línea Frave** o, si no, la categoría con el mismo slug que la página.
+- **Portafolio:** una tarjeta por subcategoría de WooCommerce, con su nombre, descripción e imagen; sus propias subcategorías aparecen como etiquetas. Cada tarjeta ofrece «Cotizar» (`?linea=slug` en la página de contacto, que el plugin convierte en el mensaje) y «Ver productos» cuando los hay.
+- **Textos:** los acordados con la gerencia están en `inc/lines.php`; cada uno se reemplaza en ACF y el texto por defecto se ve en gris dentro del campo. Las imágenes por defecto están en `assets/media/lineas/`.
+- **Crear el árbol y las páginas:** `wp eval-file RUTA/bin/crear-lineas.php` crea las subcategorías acordadas con sus descripciones y las páginas /sabores/, /fragancias/ y /envases/. Se puede repetir: no cambia lo que ya existe.
+- El pie no muestra su invitación a contactar en estas páginas, que cierran con la suya (filtro `frave_show_footer_cta`).
 
 ## Desarrollo de assets
 

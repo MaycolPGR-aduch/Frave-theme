@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fases 1, 2 y 3 publicadas en frave.pe. Pendientes: la página de Contacto y el WhatsApp en producción (paso 4 de «Publicar la fase 1»), los productos del catálogo y la aprobación del sistema visual en `/?sistema-visual`.
+- **Estado:** fases 1 a 3 publicadas en frave.pe; fase 4 (páginas de línea) en `main`, pendiente de publicar. Pendientes en producción: WhatsApp, productos del catálogo y aprobación del sistema visual en `/?sistema-visual`.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
@@ -36,14 +36,17 @@ Errores de la referencia que se evitan desde el principio:
 
 ## Mapa del sitio objetivo
 
+Según los acuerdos de gerencia (12-10-2026): **Líneas** son Sabores, Fragancias y Envases; **Soluciones**, las industrias que se atienden; **Experticia**, la asesoría técnica, cómo trabajamos y la nube de palabras del Perú. La línea de sabores se sigue llamando «Sabores».
+
 ```
 Inicio
 ├── Nosotros
-├── Soluciones ▾  Sabores · Fragancias · Envases
-├── Catálogo      (sin precios, con filtros)
-├── Cómo trabajamos
-├── Blog          (solo cuando haya artículos)
-└── Contacto ▾    Formulario · WhatsApp · Libro de Reclamaciones
+├── Líneas ▾       Sabores · Fragancias · Envases
+├── Soluciones ▾   por industria (perfumería, cosmética, hogar, ambientación, alimentos y bebidas…)
+├── Experticia     asesoría técnica, cómo trabajamos, nube de palabras del Perú
+├── Catálogo       (sin precios, con filtros)
+├── Blog           (solo cuando haya artículos)
+└── Contacto ▾     Formulario · WhatsApp · Libro de Reclamaciones
 Pie: Preguntas frecuentes · Política de privacidad · Términos de uso
 ```
 
@@ -65,7 +68,8 @@ Documento «ACUERDOS FRAVE - PROYECTO PAG WEB» (fuera del repositorio). Resumen
 - **Referencia visual adicional:** milagrosbeauty.com (cabecera en cápsula, botones píldora con flecha, tarjetas redondeadas con etiqueta, fondos teñidos del color de marca, banda de mensajes en movimiento).
 - **Identidad:** la lámina de creencias usa un logotipo FRAVE azul marino con «INSUMOS AROMÁTICOS» y una onda naranja, distinto del logotipo naranja actual («FRAGANCIAS Y ENVASES»). Por confirmar.
 
-Recursos gráficos en `D:\Frave-webecursos-graficosrave-v1` (generados con IA, WebP ya optimizados, 40–200 KiB): portadas de Sabores, Fragancias y Envases en escritorio (16:9, espacio a la izquierda) y móvil (4:5, espacio arriba), franja de contacto, imagen base del hero y dos *storyboards* de referencia. Son conceptuales: los envases no son modelos confirmados del catálogo.
+Recursos gráficos en `D:\Frave-web
+ecursos-graficosrave-v1` (generados con IA, WebP ya optimizados, 40–200 KiB): portadas de Sabores, Fragancias y Envases en escritorio (16:9, espacio a la izquierda) y móvil (4:5, espacio arriba), franja de contacto, imagen base del hero y dos *storyboards* de referencia. Son conceptuales: los envases no son modelos confirmados del catálogo.
 
 ## Fases
 
@@ -146,15 +150,32 @@ Sitio (base de datos, local y producción):
 
 ### Fase 4 — Páginas de línea
 
-- [ ] Plantilla «Línea» conectada a una categoría de producto.
-- [ ] Tarjetas a partir de las subcategorías de WooCommerce, con enlace al catálogo filtrado.
-- [ ] Bloque de presentaciones y aplicaciones, destacados de la línea y llamada a la acción.
-- [ ] Páginas Sabores, Fragancias y Envases; menú apuntando a ellas.
+- [x] Plantilla «Línea» conectada a una categoría de producto (ACF «Línea Frave» o el slug de la página), con los textos acordados con la gerencia como valores por defecto.
+- [x] Árbol de subcategorías acordado y páginas /sabores/, /fragancias/ y /envases/ creados por `bin/crear-lineas.php`.
+- [x] Portafolio a partir de las subcategorías de WooCommerce: descripción, tipos como etiquetas, «Cotizar» con la subcategoría escrita en el formulario (`?linea=`, plugin 1.2.0) y «Ver productos» solo cuando los hay.
+- [x] Presentación con destacados (cifra animada), aplicaciones en una banda de palabras ligada al scroll, productos de la línea, cierre con la imagen de contacto y las otras líneas.
+- [x] Imágenes de los recursos gráficos v1 en el hero de cada línea y en las tarjetas de la portada; menú «Líneas», portada y categorías del catálogo enlazan con las páginas.
+- [ ] Validar con Frave los textos y las imágenes (generadas con IA; los envases no son modelos del catálogo).
 
-### Fase 5 — Empresa y contacto
+#### Publicar la fase 4
 
-- [ ] Nosotros: historia, objetivo, valores y equipo.
-- [ ] Cómo trabajamos: pestañas en escritorio, acordeón en móvil, con enlaces directos.
+1. Publicar primero el plugin (1.2.0) y después el tema (1.5.0), como siempre.
+2. Desde la carpeta del sitio, crear el árbol de subcategorías y las páginas de línea:
+
+   ```bash
+   wp eval-file ~/repos/frave-theme/bin/crear-lineas.php
+   wp litespeed-purge all
+   ```
+
+3. Si el administrador de ACF ofrece «Sincronización disponible» para «Línea Frave», sincronizarlo.
+4. Comprobar /sabores/, /fragancias/ y /envases/, el menú «Líneas» y que «Cotizar» abre el formulario con la línea escrita.
+
+### Fase 5 — Empresa, experticia, soluciones y contacto
+
+- [ ] Nosotros: el texto de la gerencia, las cuatro creencias y comportamientos y la esencia; equipo cuando haya fotos.
+- [ ] Experticia: asesoría técnica, cómo trabajamos (pestañas en escritorio, acordeón en móvil) y la nube de palabras con la silueta del Perú.
+- [ ] Soluciones: páginas por industria que cruzan las líneas (perfumería, cosmética y cuidado personal, hogar, ambientación y marketing olfativo, alimentos y bebidas).
+- [ ] Razones para elegirnos de la portada con los atributos de la gerencia.
 - [ ] Contacto ampliado: empresa, ciudad, línea de interés, producto y consentimiento según la Ley 29733.
 - [ ] Chat de WhatsApp guiado (cotización, consulta de producto, reclamo), sin guardar datos en la web.
 
@@ -191,3 +212,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-11 | Fase 3 implementada (tema 1.4.0) con el vídeo de frutas provisional (720p, optimizado de 2,4 MB a 0,84 MB en MP4 y 0,72 MB en WebM, sin sonido). Evidencia: PHPCS, ESLint y build; Playwright en local con el modo catálogo (29 correctas, 7 de compra omitidas a propósito) y con la tienda activa (21 correctas), incluidas las nuevas pruebas del hero (pausa y movimiento reducido), líneas, pasos y mapa; capturas a 1440px y 390px sin desbordamiento, con el hero fijo y la sección de soluciones subiendo por encima. La prueba de la pausa detectó que la capa de texto tapaba el botón en escritorio; corregido. |
 | 2026-10-12 | Fases 1 a 3 publicadas en frave.pe (revisión `0f26947`). Comprobado en Chrome a 1440px y 390px: portada sin desbordamiento, vídeo reproduciéndose, modo catálogo activo (`/carrito/` lleva al catálogo) y las tres líneas enlazadas. El vídeo de frutas queda como definitivo; se probó recodificar el WebM con más calidad y la mejora no compensaba el peso. LiteSpeed servía el `.webm` como `text/plain`: se añade `assets/media/.htaccess` con su tipo y una caché de 7 días. Falta en producción: página de Contacto (sin ella no aparece «Solicitar asesoría») y WhatsApp. |
 | 2026-10-12 | Revisados los acuerdos de gerencia (secciones, Nosotros, creencias, árbol de categorías, textos por concepto, referencia milagrosbeauty.com) y los recursos gráficos v1. Pendiente de confirmar: logotipo azul «Insumos aromáticos», diferencia entre Líneas, Soluciones y Experticia, y nombre «Sabores» o «Aromas». |
+| 2026-10-12 | Fase 4 implementada (tema 1.5.0, plugin 1.2.0): páginas de Sabores, Fragancias y Envases con los textos de la gerencia, árbol de subcategorías acordado (`bin/crear-lineas.php`), portafolio, banda de aplicaciones, cotización con la línea escrita e imágenes v1; la portada pasa a «Nuestras líneas» con imágenes y el texto de posicionamiento. Evidencia: PHPCS del tema y del plugin, ESLint y build; Playwright en local con el modo catálogo, incluidas las 7 pruebas nuevas de líneas (la del menú, con el menú automático como en producción); capturas a 1280, 1440 y 1920px y a 390px sin desbordamiento. Se corrigieron la legibilidad del hero sobre la imagen de Sabores y la posición de la imagen en pantallas anchas. |

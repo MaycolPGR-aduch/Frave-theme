@@ -129,6 +129,18 @@ Duraciones y curvas en `--duration-fast` (160 ms), `--duration` (320 ms), `--dur
 
 El vídeo se reproduce una vez y descansa en su último fotograma, que también es la imagen fija. Recomendado: MP4 H.264 sin sonido, 1920×1080, unos 8 segundos, con el sujeto a la derecha y el tercio izquierdo despejado para el texto.
 
+## Páginas de línea
+
+Misma estructura para Sabores, Fragancias y Envases, con el tono de cada imagen (`--line-tone`):
+
+- **Hero:** la imagen horizontal llena la pantalla en escritorio y se funde a la izquierda con el tono de la línea, donde va el texto; en pantallas anchas empieza junto al texto centrado. En móvil, la imagen vertical va debajo del texto y su parte superior se desvanece en el tono. Queda fija mientras sube la presentación.
+- **Presentación:** frase grande con énfasis en naranja oscuro y tres destacados en superficie cálida; un título que empieza con cifra («+500 referencias») se anima al aparecer.
+- **Portafolio:** tarjetas blancas numeradas sobre superficie; en Fragancias van a dos columnas porque sus subcategorías tienen tipos (etiquetas). Las etiquetas solo enlazan cuando hay productos.
+- **Aplicaciones:** sección oscura con dos filas de palabras grandes (una con contorno, otra sólida) separadas por la gota de marca, que se desplazan en sentidos opuestos según el scroll. No se mueven solas, así que no necesitan botón de pausa; con movimiento reducido quedan quietas. La lista legible está debajo.
+- **Cierre:** panel con la imagen de contacto (ingredientes en los bordes y el texto en el centro) y las otras líneas con imagen en arco.
+
+Imágenes de línea: horizontal 16:9 con el tercio izquierdo despejado y vertical 4:5 con la parte superior despejada, fondo marfil y luz suave desde arriba a la izquierda.
+
 ## Accesibilidad
 
 HTML semántico, enlace para saltar al contenido, foco visible en todos los controles (también en la búsqueda, que muestra un anillo en toda la píldora), menús con `aria-expanded`, Escape y retención del foco, carrusel navegable con teclado y movimiento reducido. Pendiente: auditoría con lector de pantalla y contenido definitivo (fase 6).
