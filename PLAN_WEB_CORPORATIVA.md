@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fases 1, 2 y 3 en `main`; pendientes de publicar en frave.pe (con los datos de producción de la fase 1), de que Frave apruebe el sistema visual en `/?sistema-visual` y del vídeo del hero en 1080p.
+- **Estado:** fases 1, 2 y 3 publicadas en frave.pe. Pendientes: la página de Contacto y el WhatsApp en producción (paso 4 de «Publicar la fase 1»), los productos del catálogo y la aprobación del sistema visual en `/?sistema-visual`.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
@@ -123,7 +123,7 @@ Sitio (base de datos, local y producción):
 - [x] Tendencias: solo con entradas fuera de la categoría por defecto.
 - [x] Dónde estamos: canales y mapa de Google bajo demanda; solo con dirección configurada.
 - [x] Campos ACF de la portada reorganizados por pestañas (`frave_home_*`), con los textos por defecto en `inc/home.php` y resaltado con `*asteriscos*`.
-- [ ] Vídeo del hero en 1080p (y versión vertical opcional) que está preparando el equipo.
+- [x] Vídeo del hero: queda como definitivo el de frutas creado por el equipo (720p, 8 s).
 - [ ] Validar con Frave los textos por defecto de la portada y subir imágenes de las categorías.
 
 ### Fase 4 — Páginas de línea
@@ -159,7 +159,6 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 - [ ] Sedes, horarios, WhatsApp, correo y redes sociales.
 - [ ] Primeros productos del catálogo (nombre, descripción, fotos, presentaciones).
 - [ ] Imagen de cada línea (categorías Sabores, Fragancias y Envases) y validación de los textos de la portada.
-- [ ] Vídeo del hero en 1080p (y vertical opcional), con licencia de uso comercial.
 - [ ] Certificaciones, solo si existen.
 - [ ] Texto revisado de la política de privacidad y los términos de uso.
 
@@ -172,3 +171,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-11 | Pull requests de la fase 1 fusionados (tema #3, plugin #2). A partir de ahora se trabaja directamente sobre `main`. |
 | 2026-10-11 | Fase 2 implementada (tema 1.3.0, plugin 1.1.1: sin valoraciones en modo catálogo). Evidencia: PHPCS, ESLint y build; Playwright en local con el modo catálogo (24 correctas, 7 de compra omitidas a propósito) y con la tienda activa (16 correctas); capturas a 1440px y 390px de la guía, catálogo, ficha, contacto, portada, 404, submenú y menú móvil, sin desbordamiento horizontal; cabecera fija medida a 10–12 px del borde al hacer scroll. Se corrigió el orden de capas CSS, que hacía ganar a los estilos base sobre los componentes. |
 | 2026-10-11 | Fase 3 implementada (tema 1.4.0) con el vídeo de frutas provisional (720p, optimizado de 2,4 MB a 0,84 MB en MP4 y 0,72 MB en WebM, sin sonido). Evidencia: PHPCS, ESLint y build; Playwright en local con el modo catálogo (29 correctas, 7 de compra omitidas a propósito) y con la tienda activa (21 correctas), incluidas las nuevas pruebas del hero (pausa y movimiento reducido), líneas, pasos y mapa; capturas a 1440px y 390px sin desbordamiento, con el hero fijo y la sección de soluciones subiendo por encima. La prueba de la pausa detectó que la capa de texto tapaba el botón en escritorio; corregido. |
+| 2026-10-12 | Fases 1 a 3 publicadas en frave.pe (revisión `0f26947`). Comprobado en Chrome a 1440px y 390px: portada sin desbordamiento, vídeo reproduciéndose, modo catálogo activo (`/carrito/` lleva al catálogo) y las tres líneas enlazadas. El vídeo de frutas queda como definitivo; se probó recodificar el WebM con más calidad y la mejora no compensaba el peso. LiteSpeed servía el `.webm` como `text/plain`: se añade `assets/media/.htaccess` con su tipo y una caché de 7 días. Falta en producción: página de Contacto (sin ella no aparece «Solicitar asesoría») y WhatsApp. |
