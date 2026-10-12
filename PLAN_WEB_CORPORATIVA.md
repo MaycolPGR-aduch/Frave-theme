@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fases 1 a 4 publicadas en frave.pe; fase 5a (Nosotros, Experticia y razones de la portada) en `main`, pendiente de publicar. Pendientes en producción: WhatsApp, productos del catálogo y aprobación del sistema visual en `/?sistema-visual`.
+- **Estado:** fases 1 a 4 publicadas en frave.pe; fase 5 completa en `main` (5a: Nosotros y Experticia; 5b: Soluciones, contacto ampliado y chat de WhatsApp), pendiente de publicar. Pendientes en producción: WhatsApp, productos del catálogo y aprobación del sistema visual en `/?sistema-visual`.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
@@ -175,7 +175,7 @@ Sitio (base de datos, local y producción):
 - [x] Nosotros: el texto de la gerencia, la esencia y las cuatro creencias y comportamientos (5a).
 - [ ] Equipo y años de experiencia en Nosotros, cuando Frave los entregue (se pueden escribir en el editor de la página).
 - [x] Experticia: nube de palabras con la silueta del Perú, asesoría técnica con destacados, cómo trabajamos (pestañas en escritorio, acordeón en móvil, con enlaces directos) e industrias por línea (5a).
-- [ ] Soluciones: páginas por industria que cruzan las líneas (perfumería, cosmética y cuidado personal, hogar, ambientación y marketing olfativo, alimentos y bebidas).
+- [x] Soluciones: página central y cinco páginas por industria que cruzan las líneas (perfumería, cosmética y cuidado personal, hogar, ambientación y marketing olfativo, alimentos y bebidas) (5b).
 - [x] Razones para elegirnos de la portada con los atributos de la gerencia y enlaces a Experticia (5a).
 
 #### Publicar la fase 5a
@@ -189,8 +189,22 @@ Sitio (base de datos, local y producción):
    ```
 
 3. En ACF, sincronizar «Nosotros Frave» y «Experticia Frave» si aparece «Sincronización disponible».
-- [ ] Contacto ampliado: empresa, ciudad, línea de interés, producto y consentimiento según la Ley 29733.
-- [ ] Chat de WhatsApp guiado (cotización, consulta de producto, reclamo), sin guardar datos en la web.
+
+#### Publicar la fase 5b
+
+1. Publicar el plugin (1.3.0) y después el tema (1.7.0).
+2. Desde la carpeta del sitio:
+
+   ```bash
+   wp eval-file ~/repos/frave-theme/bin/crear-soluciones.php
+   wp litespeed-purge all
+   ```
+
+3. En ACF, sincronizar «Solución Frave» si aparece «Sincronización disponible».
+4. Configurar el número de WhatsApp (Apariencia → Personalizar → Contacto) para activar el chat guiado.
+5. Revisar la política de privacidad, que el consentimiento del formulario enlaza (Ley 29733).
+- [x] Contacto ampliado: empresa, ciudad y línea de interés (completada desde `?linea=` o `?producto=`), consentimiento según la Ley 29733 con aviso de derechos y fecha guardada (plugin 1.3.0) (5b).
+- [x] Chat de WhatsApp guiado (cotización, consulta de producto, otra consulta; reclamos al Libro de Reclamaciones), sin guardar datos en la web (5b). Necesita el número de WhatsApp en producción.
 
 ### Fase 6 — Blog, SEO, rendimiento y salida
 
@@ -227,3 +241,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-12 | Revisados los acuerdos de gerencia (secciones, Nosotros, creencias, árbol de categorías, textos por concepto, referencia milagrosbeauty.com) y los recursos gráficos v1. Pendiente de confirmar: logotipo azul «Insumos aromáticos», diferencia entre Líneas, Soluciones y Experticia, y nombre «Sabores» o «Aromas». |
 | 2026-10-12 | Fase 4 implementada (tema 1.5.0, plugin 1.2.0): páginas de Sabores, Fragancias y Envases con los textos de la gerencia, árbol de subcategorías acordado (`bin/crear-lineas.php`), portafolio, banda de aplicaciones, cotización con la línea escrita e imágenes v1; la portada pasa a «Nuestras líneas» con imágenes y el texto de posicionamiento. Evidencia: PHPCS del tema y del plugin, ESLint y build; Playwright en local con el modo catálogo, incluidas las 7 pruebas nuevas de líneas (la del menú, con el menú automático como en producción); capturas a 1280, 1440 y 1920px y a 390px sin desbordamiento. Se corrigieron la legibilidad del hero sobre la imagen de Sabores y la posición de la imagen en pantallas anchas. |
 | 2026-10-12 | Fase 5a implementada (tema 1.6.0): Nosotros (hero con la gota, quiénes somos, esencia y cuatro creencias) y Experticia (nube de palabras del Perú generada como texto real por `bin/nube-peru.py`, asesoría con destacados, cómo trabajamos en pestañas o acordeón con direcciones `#paso-…` e industrias por línea), páginas creadas por `bin/crear-paginas-empresa.php`, razones de la portada con los atributos de la gerencia y bloques compartidos en `system/blocks.css`. Evidencia: PHPCS, ESLint y build; Playwright en local con el menú automático (40 correctas, 8 omitidas: las de compra y una de tienda), incluidas 5 pruebas nuevas de empresa y el acordeón en móvil; capturas a 1440px y 390px sin desbordamiento y menú completo a 1024px. |
+| 2026-10-12 | Fase 5b implementada (tema 1.7.0, plugin 1.3.0): Soluciones con página central y cinco industrias (`bin/crear-soluciones.php`) que reúnen las categorías de cada línea; formulario con empresa, ciudad, línea de interés y consentimiento de la Ley 29733 (columnas Empresa y Línea en Mensajes); chat de WhatsApp guiado sin guardar datos; menú automático con Soluciones (Inicio cede su lugar con siete entradas). Tarjeta de subcategoría y banda de aplicaciones pasan a componentes. Evidencia: PHPCS del tema y del plugin, ESLint y build; Playwright en local con el menú automático (45 correctas, 8 omitidas), incluidas las pruebas nuevas de soluciones, formulario, chat y chat en móvil; capturas a 1440px y 390px y menú a 1024px. Se corrigió que las páginas hijas (industrias) no aparecían en la consulta por plantilla. |

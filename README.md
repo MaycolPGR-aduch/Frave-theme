@@ -91,6 +91,19 @@ Sabores, Fragancias y Envases tienen su página con la plantilla **Línea** (`pa
 - **Crear el árbol y las páginas:** `wp eval-file RUTA/bin/crear-lineas.php` crea las subcategorías acordadas con sus descripciones y las páginas /sabores/, /fragancias/ y /envases/. Se puede repetir: no cambia lo que ya existe.
 - El pie no muestra su invitación a contactar en estas páginas, que cierran con la suya (filtro `frave_show_footer_cta`).
 
+### Soluciones por industria
+
+La página **Soluciones** (`page-templates/soluciones.php`, /soluciones/) presenta las industrias, y cada industria tiene su página con la plantilla **Solución** (`page-templates/solucion.php`, /soluciones/perfumeria/…): hero, presentación, **lo que le ofrece cada línea** (tarjetas de las categorías de producto, con la línea a la que pertenecen, «Cotizar» y «Ver productos»), aplicaciones, cierre y las otras industrias.
+
+- **Industrias y categorías:** `inc/solutions.php` (`frave_solutions()`): Perfumería, Cosmética y cuidado personal, Cuidado del hogar, Ambientación y marketing olfativo, Alimentos y bebidas. La industria es el slug de la página.
+- **Textos:** editables en el grupo ACF **Solución Frave**, con el texto por defecto en gris dentro de cada campo.
+- **Crear las páginas:** `wp eval-file RUTA/bin/crear-soluciones.php`.
+- **Menú automático:** «Soluciones» con la página central y un acceso por industria. Con siete entradas, «Inicio» deja su lugar (el logotipo ya lleva a la portada).
+
+### Chat de WhatsApp guiado
+
+Con un número configurado, el botón flotante abre un chat: el visitante elige el motivo (cotización, producto u otra consulta), completa unos datos opcionales y continúa en WhatsApp con el mensaje ya armado. Los reclamos llevan al Libro de Reclamaciones. La web no guarda nada; sin JavaScript, el botón es un enlace directo a WhatsApp.
+
 ### Nosotros y Experticia
 
 Dos plantillas con los textos de la gerencia (`inc/company.php`), editables en los grupos ACF **Nosotros Frave** y **Experticia Frave**:
