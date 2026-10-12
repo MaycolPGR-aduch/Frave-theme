@@ -259,6 +259,19 @@ update_option(
 	)
 );
 
+/* ---------- Product lines: the agreed tree and the line pages (as in production) ---------- */
+
+require dirname( __DIR__, 3 ) . '/bin/crear-lineas.php';
+
+// One product in a subcategory, so the portfolio links that subcategory to the catalog.
+$arabic = get_term_by( 'slug', 'perfumeria-arabe', 'product_cat' );
+$floral = wc_get_product( wc_get_product_id_by_sku( 'E2E-FLO' ) );
+if ( $arabic && $floral ) {
+	$floral->set_category_ids( array( $fragrance, (int) $arabic->term_id ) );
+	$floral->save();
+}
+wc_recount_all_terms();
+
 flush_rewrite_rules();
 wc_delete_product_transients();
 WP_CLI::success( 'Tienda E2E lista.' );

@@ -46,7 +46,7 @@ test.describe('móvil', () => {
   });
 
   test('la página no se desborda horizontalmente', async ({ page }) => {
-    for (const path of ['/', SHOP, '/?pagename=contacto']) {
+    for (const path of ['/', SHOP, '/?pagename=contacto', '/?pagename=fragancias']) {
       await page.goto(path);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow, path).toBeLessThanOrEqual(0);
