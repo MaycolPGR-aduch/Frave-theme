@@ -1,0 +1,190 @@
+/*
+ * Reusable page blocks (line, company and expertise pages):
+ * - .statement: a large sentence beside its explanation (two columns from 64rem).
+ * - .highlights / .highlight: three facts on warm surfaces; .highlight__figure counts up.
+ * - .ticker: rows of large words that slide with the scroll (ticker.js), decorative.
+ * - .cta-panel: closing call to action over the contact image (template-parts/components/cta-panel.php).
+ */
+@layer components {
+  /* ---------- Statement and highlights ---------- */
+
+  .statement {
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 4rem);
+  }
+
+  .statement__title {
+    margin: 0;
+    font-size: clamp(1.9rem, 3.6vw, 3.1rem);
+    font-weight: 300;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+
+  .statement__title strong {
+    color: var(--color-primary);
+    font-weight: 400;
+  }
+
+  .statement__text {
+    color: var(--color-muted);
+    font-size: var(--text-lead);
+    line-height: 1.6;
+  }
+
+  .statement__text p {
+    margin: 0 0 1em;
+  }
+
+  .statement__text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .highlights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
+    margin: clamp(3rem, 6vw, 5rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .highlight {
+    display: grid;
+    align-content: start;
+    gap: 0.75rem;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+  }
+
+  .highlight h3 {
+    margin: 0;
+    font-size: 1.3rem;
+  }
+
+  .highlight p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .highlight__figure {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  @media (min-width: 64rem) {
+    .statement {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      align-items: end;
+    }
+  }
+
+  /* Word band: two rows that travel in opposite directions with the scroll (ticker.js). */
+  .ticker {
+    --ticker-progress: 0.5;
+    display: grid;
+    gap: 0.25rem;
+    user-select: none;
+  }
+
+  .ticker__row {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.5vw, 2rem);
+    width: max-content;
+    font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+    transform: translateX(calc(var(--ticker-progress) * -25%));
+    will-change: transform;
+  }
+
+  .ticker__row--reverse {
+    transform: translateX(calc((var(--ticker-progress) - 1) * 25%));
+  }
+
+  .ticker__row:first-child .ticker__word {
+    color: transparent;
+    -webkit-text-stroke: 1px rgb(255 255 255 / 45%);
+  }
+
+  .ticker__row--reverse .ticker__word {
+    color: var(--color-on-dark);
+  }
+
+  /* The brand drop between words. */
+  .ticker__sep {
+    flex: none;
+    width: 0.32em;
+    height: 0.32em;
+    border-radius: 50% 0 50% 50%;
+    background: var(--color-brand-orange);
+    transform: rotate(-45deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker__row,
+    .ticker__row--reverse {
+      transform: none;
+    }
+  }
+
+  /* ---------- Closing call to action ---------- */
+
+  .cta-panel {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    min-height: clamp(30rem, 70vw, 34rem);
+    place-items: center;
+    overflow: hidden;
+    padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 5vw, 4rem);
+    border-radius: var(--radius-xl);
+    background: #f3ece2;
+    text-align: center;
+  }
+
+  .cta-panel__media {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+  }
+
+  .cta-panel__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cta-panel__copy {
+    display: grid;
+    justify-items: center;
+    max-width: 36rem;
+  }
+
+  .cta-panel__copy .eyebrow {
+    color: #a83200;
+  }
+
+  .cta-panel__copy h2 {
+    margin: 0 0 1rem;
+  }
+
+  .cta-panel__copy .lead {
+    margin: 0 0 2rem;
+    color: #4a4642;
+  }
+
+  .cta-panel__copy .btn-row {
+    justify-content: center;
+  }
+
+  @media (min-width: 48rem) {
+    .cta-panel {
+      min-height: clamp(26rem, 34vw, 32rem);
+    }
+  }
+}

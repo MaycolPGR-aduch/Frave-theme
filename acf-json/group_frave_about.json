@@ -1,0 +1,471 @@
+{
+    "key": "group_frave_about",
+    "title": "Nosotros Frave",
+    "fields": [
+        {
+            "key": "field_group_frave_about_tab_0",
+            "label": "Portada",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_about_hero_eyebrow",
+            "label": "Texto superior",
+            "name": "frave_about_hero_eyebrow",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_about_hero_title",
+            "label": "Título",
+            "name": "frave_about_hero_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*. Se muestra sobre fondo naranja.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_hero_text",
+            "label": "Descripción",
+            "name": "frave_about_hero_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_group_frave_about_tab_4",
+            "label": "Quiénes somos",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_about_intro_title",
+            "label": "Frase principal",
+            "name": "frave_about_intro_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_intro_text",
+            "label": "Texto",
+            "name": "frave_about_intro_text",
+            "type": "textarea",
+            "instructions": "Separa los párrafos con una línea en blanco.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 8,
+            "new_lines": ""
+        },
+        {
+            "key": "field_group_frave_about_tab_7",
+            "label": "Esencia",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_about_essence_title",
+            "label": "Esencia",
+            "name": "frave_about_essence_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_essence_text",
+            "label": "Texto",
+            "name": "frave_about_essence_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_group_frave_about_tab_10",
+            "label": "Creencias",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_about_beliefs_title",
+            "label": "Título",
+            "name": "frave_about_beliefs_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_beliefs_text",
+            "label": "Introducción",
+            "name": "frave_about_beliefs_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_belief_1_title",
+            "label": "Creencia 1: título",
+            "name": "frave_about_belief_1_title",
+            "type": "text",
+            "instructions": "Vacío: la tarjeta no se muestra.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_about_belief_1_text",
+            "label": "Creencia 1: texto",
+            "name": "frave_about_belief_1_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_belief_1_behavior",
+            "label": "Creencia 1: comportamiento",
+            "name": "frave_about_belief_1_behavior",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_about_belief_2_title",
+            "label": "Creencia 2: título",
+            "name": "frave_about_belief_2_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_about_belief_2_text",
+            "label": "Creencia 2: texto",
+            "name": "frave_about_belief_2_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_belief_2_behavior",
+            "label": "Creencia 2: comportamiento",
+            "name": "frave_about_belief_2_behavior",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_about_belief_3_title",
+            "label": "Creencia 3: título",
+            "name": "frave_about_belief_3_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_about_belief_3_text",
+            "label": "Creencia 3: texto",
+            "name": "frave_about_belief_3_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_belief_3_behavior",
+            "label": "Creencia 3: comportamiento",
+            "name": "frave_about_belief_3_behavior",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_about_belief_4_title",
+            "label": "Creencia 4: título",
+            "name": "frave_about_belief_4_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_about_belief_4_text",
+            "label": "Creencia 4: texto",
+            "name": "frave_about_belief_4_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_belief_4_behavior",
+            "label": "Creencia 4: comportamiento",
+            "name": "frave_about_belief_4_behavior",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_group_frave_about_tab_25",
+            "label": "Cierre",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_about_cta_title",
+            "label": "Título de la llamada a la acción",
+            "name": "frave_about_cta_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_about_cta_text",
+            "label": "Texto de la llamada a la acción",
+            "name": "frave_about_cta_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates/nosotros.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Textos de la página Nosotros. Los campos vacíos muestran el texto por defecto del tema.",
+    "show_in_rest": 0,
+    "modified": 1791844984
+}

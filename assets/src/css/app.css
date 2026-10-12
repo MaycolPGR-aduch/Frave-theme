@@ -12,9 +12,11 @@
 @import "./system/shapes.css";
 @import "./system/motion.css";
 @import "./system/carousel.css";
+@import "./system/blocks.css";
 /* Pages. */
 @import "./pages/home.css";
 @import "./pages/line.css";
+@import "./pages/company.css";
 @source "../../../**/*.php";
 @source "../js/**/*.js";
 @source not "../../../tests";

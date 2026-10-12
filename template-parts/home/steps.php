@@ -13,9 +13,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<h2 id="home-steps-title"><?php echo frave_emphasis( frave_home_text( 'frave_home_steps_title' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h2>
 			<p class="lead"><?php echo esc_html( frave_home_text( 'frave_home_steps_text' ) ); ?></p>
 			<?php $frave_cta = frave_header_cta(); ?>
-			<?php if ( $frave_cta && ! $frave_cta['external'] ) : ?>
-				<?php frave_button( frave_home_text( 'frave_home_hero_primary' ), $frave_cta['url'] ); ?>
-			<?php endif; ?>
+			<div class="btn-row">
+				<?php if ( $frave_cta && ! $frave_cta['external'] ) : ?>
+					<?php frave_button( frave_home_text( 'frave_home_hero_primary' ), $frave_cta['url'] ); ?>
+				<?php endif; ?>
+				<?php $frave_expertise = frave_company_page_url( FRAVE_TEMPLATE_EXPERTISE ); ?>
+				<?php if ( $frave_expertise ) : ?>
+					<?php frave_button( __( 'Ver nuestro método', 'frave' ), $frave_expertise . '#como-trabajamos', 'btn btn--outline' ); ?>
+				<?php endif; ?>
+			</div>
 		</div>
 		<ol class="stack home-steps__list" data-stack>
 			<?php foreach ( array( 1, 2, 3 ) as $frave_step ) : ?>

@@ -35,7 +35,7 @@ function frave_contact_page_url(): string {
 /**
  * Items of the fallback main menu: Inicio, Nosotros, Líneas (one entry per product line
  * with a line page or a category with products, so no entry leads to an empty page),
- * Catálogo and Contacto.
+ * Experticia, Catálogo and Contacto. Pages appear once they are published.
  *
  * @return array<int, array{label: string, url: string, children?: array}>
  */
@@ -47,7 +47,8 @@ function frave_primary_menu_fallback_items(): array {
 		),
 	);
 
-	$about = frave_published_page_url( 'nosotros' );
+	$about = frave_company_page_url( FRAVE_TEMPLATE_ABOUT );
+	$about = '' !== $about ? $about : frave_published_page_url( 'nosotros' );
 	if ( $about ) {
 		$items[] = array(
 			'label' => __( 'Nosotros', 'frave' ),
@@ -72,6 +73,14 @@ function frave_primary_menu_fallback_items(): array {
 				'label'    => __( 'Líneas', 'frave' ),
 				'url'      => '',
 				'children' => $lines,
+			);
+		}
+
+		$expertise = frave_company_page_url( FRAVE_TEMPLATE_EXPERTISE );
+		if ( $expertise ) {
+			$items[] = array(
+				'label' => __( 'Experticia', 'frave' ),
+				'url'   => $expertise,
 			);
 		}
 

@@ -1,0 +1,509 @@
+{
+    "key": "group_frave_expertise",
+    "title": "Experticia Frave",
+    "fields": [
+        {
+            "key": "field_group_frave_expertise_tab_0",
+            "label": "Portada",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_expertise_hero_eyebrow",
+            "label": "Texto superior",
+            "name": "frave_expertise_hero_eyebrow",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_hero_title",
+            "label": "Título",
+            "name": "frave_expertise_hero_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*. Se muestra sobre fondo naranja.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_hero_text",
+            "label": "Descripción",
+            "name": "frave_expertise_hero_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_cloud_caption",
+            "label": "Pie de la nube de palabras",
+            "name": "frave_expertise_cloud_caption",
+            "type": "text",
+            "instructions": "Las palabras de la nube se cambian con bin/nube-peru.py.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_group_frave_expertise_tab_5",
+            "label": "Asesoría",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_expertise_intro_title",
+            "label": "Frase principal",
+            "name": "frave_expertise_intro_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_intro_text",
+            "label": "Texto",
+            "name": "frave_expertise_intro_text",
+            "type": "textarea",
+            "instructions": "Separa los párrafos con una línea en blanco.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 6,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_highlight_1_title",
+            "label": "Destacado 1: título",
+            "name": "frave_expertise_highlight_1_title",
+            "type": "text",
+            "instructions": "Si empieza con una cifra (+500 referencias), la cifra se anima al aparecer.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_highlight_1_text",
+            "label": "Destacado 1: texto",
+            "name": "frave_expertise_highlight_1_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_highlight_2_title",
+            "label": "Destacado 2: título",
+            "name": "frave_expertise_highlight_2_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_highlight_2_text",
+            "label": "Destacado 2: texto",
+            "name": "frave_expertise_highlight_2_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_highlight_3_title",
+            "label": "Destacado 3: título",
+            "name": "frave_expertise_highlight_3_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_highlight_3_text",
+            "label": "Destacado 3: texto",
+            "name": "frave_expertise_highlight_3_text",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_group_frave_expertise_tab_14",
+            "label": "Cómo trabajamos",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_expertise_method_title",
+            "label": "Título",
+            "name": "frave_expertise_method_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_method_text",
+            "label": "Introducción",
+            "name": "frave_expertise_method_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_step_1_title",
+            "label": "Paso 1: título",
+            "name": "frave_expertise_step_1_title",
+            "type": "text",
+            "instructions": "También forma la dirección del paso (#paso-escuchamos). Vacío: el paso no se muestra.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_step_1_text",
+            "label": "Paso 1: texto",
+            "name": "frave_expertise_step_1_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_step_2_title",
+            "label": "Paso 2: título",
+            "name": "frave_expertise_step_2_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_step_2_text",
+            "label": "Paso 2: texto",
+            "name": "frave_expertise_step_2_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_step_3_title",
+            "label": "Paso 3: título",
+            "name": "frave_expertise_step_3_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_step_3_text",
+            "label": "Paso 3: texto",
+            "name": "frave_expertise_step_3_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_step_4_title",
+            "label": "Paso 4: título",
+            "name": "frave_expertise_step_4_title",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "40",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_expertise_step_4_text",
+            "label": "Paso 4: texto",
+            "name": "frave_expertise_step_4_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "60",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_group_frave_expertise_tab_25",
+            "label": "Industrias y cierre",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_expertise_industries_title",
+            "label": "Título de industrias",
+            "name": "frave_expertise_industries_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_industries_text",
+            "label": "Texto de industrias",
+            "name": "frave_expertise_industries_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_cta_title",
+            "label": "Título de la llamada a la acción",
+            "name": "frave_expertise_cta_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: crear *valor*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_expertise_cta_text",
+            "label": "Texto de la llamada a la acción",
+            "name": "frave_expertise_cta_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates/experticia.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Textos de la página Experticia. Los campos vacíos muestran el texto por defecto del tema.",
+    "show_in_rest": 0,
+    "modified": 1791844984
+}

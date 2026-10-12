@@ -13,6 +13,10 @@ $frave_icons = frave_home_reason_icons();
 			<p class="eyebrow"><?php echo esc_html( frave_home_text( 'frave_home_reasons_eyebrow' ) ); ?></p>
 			<h2 id="home-reasons-title"><?php echo frave_emphasis( frave_home_text( 'frave_home_reasons_title' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h2>
 			<p class="lead"><?php echo esc_html( frave_home_text( 'frave_home_reasons_text' ) ); ?></p>
+			<?php $frave_expertise = frave_company_page_url( FRAVE_TEMPLATE_EXPERTISE ); ?>
+			<?php if ( $frave_expertise ) : ?>
+				<a class="link-arrow" href="<?php echo esc_url( $frave_expertise ); ?>"><?php esc_html_e( 'Conoce nuestra experticia', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
+			<?php endif; ?>
 		</div>
 		<ul class="feature-grid home-reasons__grid" data-reveal-group>
 			<?php foreach ( array( 1, 2, 3, 4 ) as $frave_reason ) : ?>
