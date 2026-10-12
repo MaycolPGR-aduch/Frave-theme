@@ -39,6 +39,7 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `template-parts/components/term-card.php`, `template-parts/components/applications.php` | Tarjeta de subcategoría (portafolio y soluciones) y banda de aplicaciones. |
 | `template-parts/components/whatsapp-button.php`, `assets/src/js/modules/whatsapp-chat.js` | Botón flotante y chat de WhatsApp guiado (motivo, detalles y mensaje armado; no guarda datos). |
 | `template-parts/components/highlights.php`, `template-parts/components/cta-panel.php` | Destacados con cifra animada y cierre con la imagen de contacto, compartidos por las páginas de línea y de empresa. |
+| `inc/seo.php`, `assets/media/og/`, `assets/images/favicon*` | Descripción y etiquetas Open Graph de cada página mientras no haya un plugin SEO (imágenes JPG de 1200 × 630 para compartir) y favicon con el isotipo mientras no haya icono del sitio. |
 | `bin/crear-soluciones.php` | Crea /soluciones/ y una página por industria (no se despliega). |
 | `bin/crear-paginas-empresa.php`, `bin/nube-peru.py` | Crean las páginas /nosotros/ y /experticia/, y generan la nube de palabras (`assets/media/experticia/`). No se despliegan. |
 | `bin/crear-lineas.php` | Crea con WP-CLI el árbol de subcategorías acordado y las páginas /sabores/, /fragancias/ y /envases/ (no se despliega con el tema). |

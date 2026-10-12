@@ -100,6 +100,10 @@ La página **Soluciones** (`page-templates/soluciones.php`, /soluciones/) presen
 - **Crear las páginas:** `wp eval-file RUTA/bin/crear-soluciones.php`.
 - **Menú automático:** «Soluciones» con la página central y un acceso por industria. Con siete entradas, «Inicio» deja su lugar (el logotipo ya lleva a la portada).
 
+### Metadatos para buscadores y redes
+
+Mientras no haya un plugin SEO activo, `inc/seo.php` imprime la descripción de cada página (el texto de su hero) y las etiquetas Open Graph que usan WhatsApp, Facebook o LinkedIn para la vista previa, con imágenes JPG de `assets/media/og/`. Si no hay icono del sitio en el Personalizador, el favicon es el isotipo. Con Yoast, Rank Math, AIOSEO, SEOPress o The SEO Framework activos, el tema no imprime estas etiquetas.
+
 ### Chat de WhatsApp guiado
 
 Con un número configurado, el botón flotante abre un chat: el visitante elige el motivo (cotización, producto u otra consulta), completa unos datos opcionales y continúa en WhatsApp con el mensaje ya armado. Los reclamos llevan al Libro de Reclamaciones. La web no guarda nada; sin JavaScript, el botón es un enlace directo a WhatsApp.
