@@ -120,6 +120,14 @@ function frave_primary_menu_fallback_items(): array {
 				'icon'     => 'whatsapp',
 			);
 		}
+		$faq = frave_page_with_template( FRAVE_TEMPLATE_FAQ );
+		if ( $faq ) {
+			$children[] = array(
+				'label' => get_the_title( $faq ),
+				'url'   => (string) get_permalink( $faq ),
+				'icon'  => 'chat',
+			);
+		}
 		$claims = function_exists( 'frave_peru_claims_page_url' ) ? frave_peru_claims_page_url() : '';
 		if ( $claims ) {
 			$children[] = array(
@@ -147,6 +155,10 @@ function frave_primary_menu_fallback_items(): array {
 				'label' => __( 'Contacto', 'frave' ),
 				'url'   => $contact,
 			),
+			'extra'    => $faq ? array(
+				'label' => get_the_title( $faq ),
+				'url'   => (string) get_permalink( $faq ),
+			) : null,
 		);
 	}
 
@@ -217,6 +229,9 @@ function frave_footer_menu_fallback(): void {
 	foreach ( frave_primary_menu_fallback_items() as $item ) {
 		if ( isset( $item['footer'] ) ) {
 			$links[] = $item['footer'];
+			if ( ! empty( $item['extra'] ) ) {
+				$links[] = $item['extra'];
+			}
 		} elseif ( '' === $item['url'] ) {
 			array_push( $links, ...( $item['children'] ?? array() ) );
 		} else {
