@@ -91,6 +91,16 @@ Sabores, Fragancias y Envases tienen su página con la plantilla **Línea** (`pa
 - **Crear el árbol y las páginas:** `wp eval-file RUTA/bin/crear-lineas.php` crea las subcategorías acordadas con sus descripciones y las páginas /sabores/, /fragancias/ y /envases/. Se puede repetir: no cambia lo que ya existe.
 - El pie no muestra su invitación a contactar en estas páginas, que cierran con la suya (filtro `frave_show_footer_cta`).
 
+### Nosotros y Experticia
+
+Dos plantillas con los textos de la gerencia (`inc/company.php`), editables en los grupos ACF **Nosotros Frave** y **Experticia Frave**:
+
+- **Nosotros** (`page-templates/nosotros.php`): hero con los ingredientes en forma de gota, quiénes somos, la esencia en una banda oscura y las cuatro creencias con su comportamiento.
+- **Experticia** (`page-templates/experticia.php`): hero con la **nube de palabras con la silueta del Perú**, asesoría técnica con destacados, «Cómo trabajamos» (pestañas en escritorio, acordeón en móvil; cada paso tiene su dirección, como `#paso-escuchamos`) y las industrias que atiende cada línea.
+- **La nube** es texto real generado por `python bin/nube-peru.py` en `assets/media/experticia/` (SVG y la lista para lectores de pantalla); para cambiar sus palabras, edita la lista del script y vuelve a ejecutarlo.
+- **Crear las páginas:** `wp eval-file RUTA/bin/crear-paginas-empresa.php`. Si ya existe una página Nosotros con la plantilla por defecto, le asigna la nueva; lo escrito en el editor se muestra antes del cierre.
+- El menú automático añade Nosotros y Experticia cuando están publicadas; la portada enlaza Experticia desde «Razones para elegirnos» y «Cómo trabajamos».
+
 ## Desarrollo de assets
 
 Desde la carpeta del tema:

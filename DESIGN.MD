@@ -141,6 +141,15 @@ Misma estructura para Sabores, Fragancias y Envases, con el tono de cada imagen 
 
 Imágenes de línea: horizontal 16:9 con el tercio izquierdo despejado y vertical 4:5 con la parte superior despejada, fondo marfil y luz suave desde arriba a la izquierda.
 
+## Nosotros y Experticia
+
+- **Hero cálido** (#f2e2cc) a dos columnas: texto a la izquierda; a la derecha, los ingredientes en la gota de marca (Nosotros) o la nube de palabras del Perú (Experticia). La sección siguiente sube con las esquinas redondeadas.
+- **Nube del Perú:** silueta en marfil con borde naranja, el isotipo en el centro y los 56 términos en mayúsculas de Lato: los principales en naranja oscuro, los secundarios en tinta y el resto en gris. Aparecen uno tras otro desde el centro; con movimiento reducido se ven de inmediato.
+- **Esencia:** frase grande y ligera sobre noche, con el énfasis en naranja y el isotipo como sello de fondo.
+- **Creencias:** tarjetas blancas sobre superficie con icono, número grande en naranja claro y el comportamiento separado por una línea, en naranja oscuro.
+- **Cómo trabajamos:** sobre noche, pestañas verticales con una barra naranja en la activa y un panel con el número en contorno; en móvil, acordeón con chevron.
+- **Bloques compartidos** (`system/blocks.css`): frase con explicación (`.statement`), destacados (`.highlights`), banda de palabras (`.ticker`) y cierre con la imagen de contacto (`.cta-panel`).
+
 ## Accesibilidad
 
 HTML semántico, enlace para saltar al contenido, foco visible en todos los controles (también en la búsqueda, que muestra un anillo en toda la píldora), menús con `aria-expanded`, Escape y retención del foco, carrusel navegable con teclado y movimiento reducido. Pendiente: auditoría con lector de pantalla y contenido definitivo (fase 6).

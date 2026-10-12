@@ -34,15 +34,18 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `front-page.php`, `template-parts/home/` | Portada: hero con vídeo, líneas, cómo trabajamos, destacados, razones, catálogo, tendencias y ubicación. |
 | `inc/home.php` | Textos por defecto de la portada (única fuente, también para los valores por defecto de ACF), resaltado con `*asteriscos*`, vídeo del hero y precarga de su imagen fija, datos de las tres líneas e iconos de las razones. |
 | `inc/lines.php`, `page-templates/linea.php`, `template-parts/line/` | Páginas de línea (plantilla «Línea»): textos por defecto acordados con la gerencia, categoría de la página, portafolio desde las subcategorías, enlaces de cotización `?linea=`, imágenes y enlaces a la línea desde la portada, el menú y el catálogo. |
+| `inc/company.php`, `page-templates/nosotros.php`, `page-templates/experticia.php`, `template-parts/company/` | Páginas Nosotros y Experticia: textos por defecto de la gerencia (única fuente, también para ACF), creencias, nube de palabras del Perú, «Cómo trabajamos» y las industrias de cada línea. |
+| `template-parts/components/highlights.php`, `template-parts/components/cta-panel.php` | Destacados con cifra animada y cierre con la imagen de contacto, compartidos por las páginas de línea y de empresa. |
+| `bin/crear-paginas-empresa.php`, `bin/nube-peru.py` | Crean las páginas /nosotros/ y /experticia/, y generan la nube de palabras (`assets/media/experticia/`). No se despliegan. |
 | `bin/crear-lineas.php` | Crea con WP-CLI el árbol de subcategorías acordado y las páginas /sabores/, /fragancias/ y /envases/ (no se despliega con el tema). |
 | `assets/media/` | Vídeo por defecto del hero (MP4 y WebM sin sonido) y su último fotograma; imágenes de las líneas (`lineas/`) y de la llamada a la acción (`contacto/`); `.htaccess` con los tipos de vídeo. |
 | `template-parts/cards/` y `template-parts/components/` | Tarjeta de categoría, banda de cabecera de páginas interiores (`page-hero.php`), formulario de búsqueda, enlace de carrito y estado vacío. |
 | `assets/src/css/app.css` | Orden de capas, tokens, cabecera, menús, pie, WooCommerce y páginas institucionales. |
-| `assets/src/css/pages/home.css`, `assets/src/css/pages/line.css` | Estilos de la portada y de las páginas de línea. |
-| `assets/src/css/system/` | Sistema de diseño: tipografía, botones, superficies, formas, movimiento y carrusel (ver [DESIGN.MD](DESIGN.MD)). |
-| `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú con submenús, estado de la cabecera al hacer scroll, aparición progresiva, carrusel, apilado, contadores y bandas de palabras ligadas al scroll. |
+| `assets/src/css/pages/home.css`, `line.css`, `company.css` | Estilos de la portada, las páginas de línea y las de empresa. |
+| `assets/src/css/system/` | Sistema de diseño: tipografía, botones, superficies, formas, movimiento, carrusel y bloques de página (ver [DESIGN.MD](DESIGN.MD)). |
+| `assets/src/js/app.js`, `assets/src/js/modules/` | Entrada de assets, menú con submenús, estado de la cabecera al hacer scroll, aparición progresiva, carrusel, apilado, contadores, bandas de palabras ligadas al scroll y pasos en pestañas o acordeón. |
 | `assets/dist/` | CSS, JavaScript, fuentes y manifest listos para servir; se versiona en Git. |
-| `acf-json/` | Configuración versionada de los campos editoriales de la portada y de las páginas de línea. |
+| `acf-json/` | Configuración versionada de los campos editoriales de la portada, las páginas de línea y las de empresa. |
 | `theme.json`, `style.css` | Ajustes del editor y metadatos necesarios para activar el tema. |
 | `bin/deploy.sh`, `.gitattributes` | Despliegue en Hostinger por SSH, con reversión y vaciado de caché, y lista de archivos que no se publican (`export-ignore`). |
 
