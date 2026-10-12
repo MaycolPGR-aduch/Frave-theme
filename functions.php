@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FRAVE_VERSION', '1.6.0' );
+define( 'FRAVE_VERSION', '1.7.0' );
 define( 'FRAVE_THEME_DIR', get_template_directory() );
 define( 'FRAVE_THEME_URI', get_template_directory_uri() );
 
@@ -27,3 +27,4 @@ require_once FRAVE_THEME_DIR . '/inc/style-guide.php';
 require_once FRAVE_THEME_DIR . '/inc/home.php';
 require_once FRAVE_THEME_DIR . '/inc/lines.php';
 require_once FRAVE_THEME_DIR . '/inc/company.php';
+require_once FRAVE_THEME_DIR . '/inc/solutions.php';

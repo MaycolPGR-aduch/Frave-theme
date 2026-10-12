@@ -14,6 +14,7 @@ import { initializeNavigation } from './modules/navigation.js';
 import { initializeSectionTransitions } from './modules/section-transitions.js';
 import { initializeStacks } from './modules/stack.js';
 import { initializeTickers } from './modules/ticker.js';
+import { initializeWhatsAppChat } from './modules/whatsapp-chat.js';
 
 document.documentElement.classList.add('js');
 initializeNavigation();
@@ -28,3 +29,4 @@ initializeCounters();
 initializeHeroVideo();
 initializeMaps();
 initializeMethods();
+initializeWhatsAppChat();

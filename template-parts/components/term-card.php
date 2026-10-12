@@ -1,0 +1,89 @@
+<?php
+/**
+ * Card of a product subcategory (.line-group): number, name, description, its own
+ * subcategories as chips (links only where there are products), "Cotizar" and, when there
+ * are products, "Ver productos". Used by line pages and solution pages.
+ *
+ * Arguments:
+ * - term:      the product category.
+ * - number:    position shown above the name.
+ * - show_line: show the line it belongs to (solution pages mix lines).
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+$frave_term     = $args['term'];
+$frave_children = get_terms(
+	array(
+		'taxonomy'   => 'product_cat',
+		'parent'     => $frave_term->term_id,
+		'hide_empty' => false,
+	)
+);
+$frave_children = is_wp_error( $frave_children ) ? array() : $frave_children;
+$frave_products = frave_term_products_url( $frave_term );
+$frave_quote    = frave_line_quote_link( $frave_term );
+$frave_text     = wp_strip_all_tags( $frave_term->description );
+$frave_image_id = (int) get_term_meta( $frave_term->term_id, 'thumbnail_id', true );
+$frave_line     = ! empty( $args['show_line'] ) && $frave_term->parent ? frave_term_line_name( $frave_term ) : '';
+?>
+<li class="card line-group<?php echo $frave_image_id ? ' line-group--image' : ''; ?>">
+	<?php if ( $frave_image_id ) : ?>
+		<div class="line-group__media media-frame">
+			<?php
+			echo wp_get_attachment_image(
+				$frave_image_id,
+				'frave-card',
+				false,
+				array(
+					'alt'     => '',
+					'sizes'   => '(max-width: 48rem) 90vw, 40vw',
+					'loading' => 'lazy',
+				)
+			);
+			?>
+		</div>
+	<?php endif; ?>
+	<div class="line-group__body">
+		<span class="line-group__number" aria-hidden="true"><?php echo esc_html( sprintf( '%02d', (int) ( $args['number'] ?? 1 ) ) ); ?><?php echo '' !== $frave_line ? ' · ' . esc_html( mb_strtoupper( $frave_line ) ) : ''; ?></span>
+		<h3 class="line-group__title"><?php echo esc_html( $frave_term->name ); ?><?php echo '' !== $frave_line ? '<span class="screen-reader-text"> (' . esc_html( $frave_line ) . ')</span>' : ''; ?></h3>
+		<?php if ( '' !== $frave_text ) : ?>
+			<p class="line-group__text"><?php echo esc_html( $frave_text ); ?></p>
+		<?php endif; ?>
+		<?php if ( $frave_children ) : ?>
+			<ul class="line-group__types" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: subcategory name. */ __( 'Tipos de %s', 'frave' ), $frave_term->name ) ); ?>">
+				<?php foreach ( $frave_children as $frave_child ) : ?>
+					<?php $frave_child_url = frave_term_products_url( $frave_child ); ?>
+					<li>
+						<?php if ( '' !== $frave_child_url ) : ?>
+							<a class="line-chip line-chip--link" href="<?php echo esc_url( $frave_child_url ); ?>"><?php echo esc_html( $frave_child->name ); ?><?php echo frave_icon( 'arrow-up-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
+						<?php else : ?>
+							<span class="line-chip"><?php echo esc_html( $frave_child->name ); ?></span>
+						<?php endif; ?>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		<?php endif; ?>
+		<div class="line-group__actions">
+			<?php if ( $frave_quote ) : ?>
+				<a class="link-arrow" href="<?php echo esc_url( $frave_quote['url'] ); ?>"<?php echo $frave_quote['external'] ? ' target="_blank" rel="noopener"' : ''; ?>>
+					<?php esc_html_e( 'Cotizar', 'frave' ); ?>
+					<span class="screen-reader-text"><?php echo esc_html( $frave_term->name ); ?></span>
+					<?php if ( $frave_quote['external'] ) : ?>
+						<span class="screen-reader-text"><?php esc_html_e( '(se abre en una nueva pestaña)', 'frave' ); ?></span>
+					<?php endif; ?>
+					<?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
+				</a>
+			<?php endif; ?>
+			<?php if ( '' !== $frave_products ) : ?>
+				<a class="link-arrow link-arrow--muted" href="<?php echo esc_url( $frave_products ); ?>">
+					<?php esc_html_e( 'Ver productos', 'frave' ); ?>
+					<span class="screen-reader-text"><?php echo esc_html( $frave_term->name ); ?></span>
+					<?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
+				</a>
+			<?php endif; ?>
+		</div>
+	</div>
+</li>

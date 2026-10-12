@@ -494,3 +494,49 @@
     margin-top: auto;
   }
 }
+
+/*
+ * Solutions by industry (page-templates/soluciones.php, solucion.php): the company hero
+ * with an image in an arch, and the grid of industries.
+ */
+@layer components {
+  .solution-hero__media {
+    justify-self: center;
+    width: min(100%, 26rem);
+    aspect-ratio: 4 / 5;
+    background: transparent;
+  }
+
+  .solution-hero__media img {
+    object-position: 75% 50%;
+  }
+
+  .solution-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .solution-card.card {
+    gap: 0.9rem;
+  }
+
+  .solution-card h3 {
+    margin: 0.5rem 0 0;
+    font-size: clamp(1.35rem, 2vw, 1.6rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+
+  .solution-card p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .solution-card .link-arrow {
+    margin-top: auto;
+  }
+}

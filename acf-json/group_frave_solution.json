@@ -1,0 +1,181 @@
+{
+    "key": "group_frave_solution",
+    "title": "Solución Frave",
+    "fields": [
+        {
+            "key": "field_frave_solution_tab_0",
+            "label": "Portada",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_solution_hero_title",
+            "label": "Título",
+            "name": "frave_solution_hero_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: Espacios con *personalidad*. Se muestra sobre fondo naranja.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_solution_lead",
+            "label": "Descripción",
+            "name": "frave_solution_lead",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_solution_tab_3",
+            "label": "Presentación",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_solution_intro_title",
+            "label": "Frase principal",
+            "name": "frave_solution_intro_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: Espacios con *personalidad*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_solution_intro_text",
+            "label": "Texto",
+            "name": "frave_solution_intro_text",
+            "type": "textarea",
+            "instructions": "Separa los párrafos con una línea en blanco.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 6,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_solution_applications",
+            "label": "Aplicaciones",
+            "name": "frave_solution_applications",
+            "type": "textarea",
+            "instructions": "Una por línea; aparecen en la banda de palabras y en la lista. Para ocultar la sección, deja solo un guion (-).",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 6,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_solution_tab_7",
+            "label": "Cierre",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_frave_solution_cta_title",
+            "label": "Título de la llamada a la acción",
+            "name": "frave_solution_cta_title",
+            "type": "textarea",
+            "instructions": "Rodea con asteriscos las palabras que quieras resaltar, por ejemplo: Espacios con *personalidad*.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_frave_solution_cta_text",
+            "label": "Texto de la llamada a la acción",
+            "name": "frave_solution_cta_text",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates/solucion.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Textos de una página de solución por industria. Los campos vacíos muestran el texto por defecto, visible en gris dentro de cada campo. Lo que se ofrece sale de las categorías de producto.",
+    "show_in_rest": 0,
+    "modified": 1791846457
+}
