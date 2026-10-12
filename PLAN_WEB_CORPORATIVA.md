@@ -49,6 +49,24 @@ Pie: Preguntas frecuentes · Política de privacidad · Términos de uso
 
 Las páginas de envíos y de cambios y devoluciones quedan en borrador hasta que haya venta en línea.
 
+## Acuerdos de gerencia (12-10-2026)
+
+Documento «ACUERDOS FRAVE - PROYECTO PAG WEB» (fuera del repositorio). Resumen:
+
+- **Secciones pedidas:** Home, Nosotros, Experticia, Catálogo, Líneas, Soluciones y Blog; venta en línea «próximamente».
+- **Posicionamiento:** empresa peruana B2B de provisión integral de fragancias e insumos para perfumería, cosmética, cuidado personal y del hogar; conecta a sus clientes con fabricantes internacionales de fragancias y sabores; asesoría técnica; más de 500 referencias de fragancias y esencias hidrosolubles.
+- **Creencias y comportamientos:** 01 Orientamos nuestro trabajo a generar valor · 02 Construimos relaciones que perduran · 03 Evolucionamos con el mercado · 04 Crecemos a través del conocimiento compartido. Esencia: «Conectamos conocimiento, confianza e innovación para crear valor».
+- **Razones / experticia:** nube de palabras (56 términos de aplicaciones y atributos) con la silueta del mapa del Perú.
+- **Árbol de categorías:**
+  - Fragancias → Perfumería (diseñador, árabe, exclusiva o nicho) · Fragancias de consumo: cosméticas (cabello, piel, mascotas) y cuidado del hogar (textil, superficies, cocina y lavavajillas) · Ambientación (difusores de varitas, vehículos, aerosoles y sprays, marketing olfativo).
+  - Sabores («Aromas») → bebidas y lácteos, confitería y panadería, salados, cuidado bucal. Imágenes sugeridas: manzana, maracuyá, fresa, vainilla, panetón, café y té.
+  - Envases («Insumos de envases») → frascos de vidrio para perfumería, frascos para difusores, válvulas.
+- **Textos de cada concepto:** perfumería, nicho, diseñador, árabe, cosméticas, hogar, ambientación, envases y aromas (para las páginas de línea).
+- **Referencia visual adicional:** milagrosbeauty.com (cabecera en cápsula, botones píldora con flecha, tarjetas redondeadas con etiqueta, fondos teñidos del color de marca, banda de mensajes en movimiento).
+- **Identidad:** la lámina de creencias usa un logotipo FRAVE azul marino con «INSUMOS AROMÁTICOS» y una onda naranja, distinto del logotipo naranja actual («FRAGANCIAS Y ENVASES»). Por confirmar.
+
+Recursos gráficos en `D:\Frave-webecursos-graficosrave-v1` (generados con IA, WebP ya optimizados, 40–200 KiB): portadas de Sabores, Fragancias y Envases en escritorio (16:9, espacio a la izquierda) y móvil (4:5, espacio arriba), franja de contacto, imagen base del hero y dos *storyboards* de referencia. Son conceptuales: los envases no son modelos confirmados del catálogo.
+
 ## Fases
 
 **Flujo de trabajo:** mientras la web esté en construcción se trabaja directamente sobre `main` en los dos repositorios, sin ramas ni pull requests. Cada bloque de trabajo se cierra con sus pruebas, se sube a `main` con el CI en verde y se publica por SSH (ver [GUIA_DESPLIEGUE.MD](GUIA_DESPLIEGUE.MD)). Cuando un cambio toca el tema y el plugin, **el plugin se sube y se publica primero**: el CI del tema instala `frave-peru` desde su rama `main`.
@@ -152,13 +170,13 @@ Sitio (base de datos, local y producción):
 
 Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 
-- [ ] Historia, años de experiencia, objetivo y valores.
+- [ ] Historia, años de experiencia, objetivo y valores. *Recibidos: texto de Nosotros y creencias (12-10); faltan años y equipo.*
 - [ ] Ventajas reales para «Razones para elegirnos».
-- [ ] Subcategorías de Sabores, Fragancias y Envases.
+- [x] Subcategorías de Sabores, Fragancias y Envases (acuerdos de gerencia).
 - [ ] Fotos de productos, equipo y local.
 - [ ] Sedes, horarios, WhatsApp, correo y redes sociales.
 - [ ] Primeros productos del catálogo (nombre, descripción, fotos, presentaciones).
-- [ ] Imagen de cada línea (categorías Sabores, Fragancias y Envases) y validación de los textos de la portada.
+- [ ] Imagen de cada línea y validación de los textos de la portada. *Imágenes recibidas (IA, conceptuales); falta validar textos.*
 - [ ] Certificaciones, solo si existen.
 - [ ] Texto revisado de la política de privacidad y los términos de uso.
 
@@ -172,3 +190,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-11 | Fase 2 implementada (tema 1.3.0, plugin 1.1.1: sin valoraciones en modo catálogo). Evidencia: PHPCS, ESLint y build; Playwright en local con el modo catálogo (24 correctas, 7 de compra omitidas a propósito) y con la tienda activa (16 correctas); capturas a 1440px y 390px de la guía, catálogo, ficha, contacto, portada, 404, submenú y menú móvil, sin desbordamiento horizontal; cabecera fija medida a 10–12 px del borde al hacer scroll. Se corrigió el orden de capas CSS, que hacía ganar a los estilos base sobre los componentes. |
 | 2026-10-11 | Fase 3 implementada (tema 1.4.0) con el vídeo de frutas provisional (720p, optimizado de 2,4 MB a 0,84 MB en MP4 y 0,72 MB en WebM, sin sonido). Evidencia: PHPCS, ESLint y build; Playwright en local con el modo catálogo (29 correctas, 7 de compra omitidas a propósito) y con la tienda activa (21 correctas), incluidas las nuevas pruebas del hero (pausa y movimiento reducido), líneas, pasos y mapa; capturas a 1440px y 390px sin desbordamiento, con el hero fijo y la sección de soluciones subiendo por encima. La prueba de la pausa detectó que la capa de texto tapaba el botón en escritorio; corregido. |
 | 2026-10-12 | Fases 1 a 3 publicadas en frave.pe (revisión `0f26947`). Comprobado en Chrome a 1440px y 390px: portada sin desbordamiento, vídeo reproduciéndose, modo catálogo activo (`/carrito/` lleva al catálogo) y las tres líneas enlazadas. El vídeo de frutas queda como definitivo; se probó recodificar el WebM con más calidad y la mejora no compensaba el peso. LiteSpeed servía el `.webm` como `text/plain`: se añade `assets/media/.htaccess` con su tipo y una caché de 7 días. Falta en producción: página de Contacto (sin ella no aparece «Solicitar asesoría») y WhatsApp. |
+| 2026-10-12 | Revisados los acuerdos de gerencia (secciones, Nosotros, creencias, árbol de categorías, textos por concepto, referencia milagrosbeauty.com) y los recursos gráficos v1. Pendiente de confirmar: logotipo azul «Insumos aromáticos», diferencia entre Líneas, Soluciones y Experticia, y nombre «Sabores» o «Aromas». |
