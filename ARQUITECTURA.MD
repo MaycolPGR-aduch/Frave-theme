@@ -17,6 +17,7 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `functions.php` | Define constantes y carga los módulos de `inc/`. |
 | `inc/setup.php` | Soporte del tema, menús, tamaños de imagen y ancho de contenido. |
 | `inc/helpers.php` | Lectura opcional de ACF, URL de assets y botón del sistema (`frave_button()`, `.btn` con icono). |
+| `template-parts/components/social-links.php`, `assets/src/css/system/social.css` | Logos de las redes sociales en la cabecera, el menú móvil y el pie. |
 | `inc/icons.php` | Iconos de línea (`frave_icon()`), logos de redes sociales (`frave_brand_icon()`), icono de cada línea de producto y el isotipo en SVG (`frave_isotype()`). |
 | `inc/style-guide.php`, `template-parts/style-guide.php` | Guía interna del sistema visual en `/?sistema-visual`, solo para quien puede editar el tema y sin indexar. |
 | `inc/enqueue.php` | Carga Vite en desarrollo o CSS y JS desde el manifest compilado. |

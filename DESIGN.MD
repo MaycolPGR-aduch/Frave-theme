@@ -166,7 +166,7 @@ Imágenes de línea: horizontal 16:9 con el tercio izquierdo despejado y vertica
 - **Página de entradas:** banda de cabecera con migas de pan; temas como píldoras (el activo en tinta); el último artículo como tarjeta ancha con imagen a la izquierda, título ligero grande y «Leer artículo»; el resto en una rejilla de tres columnas en escritorio.
 - **Tarjeta de artículo:** imagen 16:10 sobre la superficie marfil (o el isotipo si no hay imagen), tema en naranja oscuro y fecha en mayúsculas espaciadas, título en negrita y extracto en gris. Toda la tarjeta es el enlace.
 - **Artículo:** título ligero de hasta 3,6 rem en la banda oscura, fecha y tiempo de lectura; imagen de portada redondeada; texto de 44 rem como máximo a 1,1 rem con interlineado 1,75, viñetas naranjas y citas con borde naranja; en escritorio, «Compartir» en una columna estrecha que acompaña la lectura. Botones de compartir como píldoras con el logo de cada red en su color.
-- **Pie:** redes sociales como círculos con borde claro que se rellenan de naranja al pasar el cursor.
+- **Redes sociales:** logos en círculos que, al pasar el cursor o con el foco, se rellenan desde el centro con el color de cada red (degradado de Instagram; negro con el eco cian y rojo de TikTok; azules de Facebook y LinkedIn; rojo de YouTube). En la cabecera van en tinta junto a la búsqueda, separados por una línea; en el menú móvil, con borde bajo «Síguenos»; en el pie, con borde claro sobre la noche.
 
 ## Accesibilidad
 
@@ -188,6 +188,7 @@ Regla aprendida: el color de enlace global de `theme.json` no tiene capa y gana 
 | 2026-10-10 | Modo catálogo: menú con submenús, «Solicitar asesoría», bloque de cotización en la ficha y «Ver detalles» con contorno. | Implementado |
 | 2026-10-11 | Sistema corporativo (fase 2): tokens noche y naranja suave, Lato 300 en títulos, botones `.btn` con icono, píldoras y marcador, cabecera en cápsula flotante, submenús con iconos, banda de cabecera en páginas y catálogo, pie oscuro con llamada a la acción, formas de gota y frasco, isotipo, iconos de línea, tarjetas, cifras, carrusel, apilado, hero fijo con telón y pie que se descubre. Guía en `/?sistema-visual`. | Implementado; pendiente de aprobación de Frave |
 
+| 2026-10-13 | Redes sociales en cabecera, menú móvil y pie; entre 1024 y 1280 px la cabecera compacta logo, letra y espacios para que el menú quepa con sus flechas. | Implementado |
 | 2026-10-13 | Blog (tarjetas, artículo, compartir), redes sociales en el pie, menú de siete entradas que cabe desde 1024 px, enlace de salto legible y migas de la ficha subrayadas. | Implementado |
 
 Al aprobar o cambiar una decisión visual, actualiza esta guía, los tokens y `theme.json`; compila los assets y revisa `/?sistema-visual`, portada, catálogo, ficha y contacto en móvil y escritorio. Registra qué cambió y por qué.
