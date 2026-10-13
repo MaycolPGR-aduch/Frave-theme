@@ -227,6 +227,15 @@ function frave_contact_hide_footer_cta( bool $show ): bool {
 }
 add_filter( 'frave_show_footer_cta', 'frave_contact_hide_footer_cta' );
 
+/** The lines of the contact form in the site's order (Sabores, Fragancias, Envases), not alphabetically. */
+function frave_contact_line_order( array $lines ): array {
+	$order = array_flip( array_keys( frave_product_lines() ) );
+	$rank  = static fn( $slug ): int => '' === (string) $slug ? -1 : ( 'varias' === $slug ? 1000 : ( $order[ $slug ] ?? 500 ) );
+	uksort( $lines, static fn( $a, $b ): int => $rank( $a ) <=> $rank( $b ) );
+	return $lines;
+}
+add_filter( 'frave_peru_contact_lines', 'frave_contact_line_order' );
+
 /** Next steps under the plugin's «Mensaje enviado»: WhatsApp for anything urgent, and the catalog. */
 function frave_contact_success_actions(): void {
 	$whatsapp = frave_whatsapp_url( frave_whatsapp_message() );
