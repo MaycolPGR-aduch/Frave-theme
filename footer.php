@@ -48,7 +48,7 @@ $frave_channel_icon = array(
 			<div class="site-footer__main">
 				<div class="site-footer__brand">
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
-						<img src="<?php echo esc_url( frave_asset_url( 'assets/images/frave-logo-footer.png' ) ); ?>" alt="" width="330" height="198" loading="lazy">
+						<img src="<?php echo esc_url( frave_asset_url( 'assets/images/frave-logo-footer.webp' ) ); ?>" alt="" width="840" height="504" loading="lazy">
 					</a>
 					<p><?php esc_html_e( 'Sabores, fragancias y envases para dar vida a tus productos.', 'frave' ); ?></p>
 					<?php $frave_social = frave_social_links(); ?>

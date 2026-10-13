@@ -188,9 +188,9 @@ function frave_schema_organization(): array {
 		'url'         => home_url( '/' ),
 		'logo'        => array(
 			'@type'  => 'ImageObject',
-			'url'    => frave_asset_url( 'assets/images/frave-logo.png' ),
-			'width'  => 440,
-			'height' => 264,
+			'url'    => frave_asset_url( 'assets/images/frave-logo.webp' ),
+			'width'  => 720,
+			'height' => 432,
 		),
 		'description' => get_bloginfo( 'description' ),
 	);
