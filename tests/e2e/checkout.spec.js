@@ -38,6 +38,9 @@ test.describe('checkout con comprobante de Perú', () => {
     await page.fill('#billing_id_number', '12345678');
     await waitForCheckoutIdle(page);
     await page.locator('#payment_method_cod').check();
+    // With a terms page published, WooCommerce asks to accept it before ordering.
+    const terms = page.locator('#terms');
+    if (await terms.count()) await terms.check();
     await page.locator('#place_order').click();
 
     await expect(page).toHaveURL(/order-received/, { timeout: 30_000 });
