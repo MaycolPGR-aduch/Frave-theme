@@ -265,6 +265,10 @@ require dirname( __DIR__, 3 ) . '/bin/crear-lineas.php';
 require dirname( __DIR__, 3 ) . '/bin/crear-paginas-empresa.php';
 require dirname( __DIR__, 3 ) . '/bin/crear-soluciones.php';
 
+// The blog with its starter articles published, as the menus link to it only with posts.
+$args = array( 'publicar' );
+require dirname( __DIR__, 3 ) . '/bin/crear-blog.php';
+
 // A test number, so the floating button and the guided WhatsApp chat are on.
 set_theme_mod( 'frave_whatsapp_number', '51900000000' );
 

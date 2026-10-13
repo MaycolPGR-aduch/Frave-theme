@@ -1,9 +1,11 @@
 <?php
 /**
- * Basic search and sharing metadata while no SEO plugin is active: a meta description and
- * Open Graph tags (the preview WhatsApp, Facebook or LinkedIn show for a shared link),
- * built from each page's own copy. An SEO plugin (phase 6) takes over as soon as it is
- * active. Also a default favicon (the isotype) until a site icon is set in the Customizer.
+ * Search and sharing metadata while no SEO plugin is active: a meta description and Open
+ * Graph tags (the preview WhatsApp, Facebook or LinkedIn show for a shared link), built from
+ * each page's own copy or its excerpt; canonical addresses for listings; and structured
+ * data (Organization, WebSite, BlogPosting, BreadcrumbList) for search engines. A known SEO
+ * plugin takes over all of it as soon as it is active. Also a default favicon (the isotype)
+ * until a site icon is set in the Customizer.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -67,6 +69,8 @@ function frave_seo_data(): array {
 		$product     = wc_get_product( get_queried_object_id() );
 		$description = $product ? $product->get_short_description() : '';
 		$image       = $product && $product->get_image_id() ? (string) wp_get_attachment_image_url( $product->get_image_id(), 'large' ) : '';
+	} elseif ( is_home() ) {
+		$description = frave_blog_lead();
 	} elseif ( is_category() || is_tag() || is_tax() ) {
 		$term        = get_queried_object();
 		$description = $term instanceof WP_Term ? $term->description : '';
@@ -76,6 +80,12 @@ function frave_seo_data(): array {
 		$post        = get_queried_object();
 		$description = $post instanceof WP_Post ? ( has_excerpt( $post ) ? $post->post_excerpt : $post->post_content ) : '';
 		$image       = has_post_thumbnail() ? (string) get_the_post_thumbnail_url( null, 'large' ) : '';
+	}
+
+	// The excerpt of a page («Extracto» in the editor) replaces its description for search engines.
+	$queried = get_queried_object();
+	if ( is_page() && $queried instanceof WP_Post && has_excerpt( $queried ) ) {
+		$description = $queried->post_excerpt;
 	}
 
 	if ( '' === trim( wp_strip_all_tags( $description ) ) ) {
@@ -96,6 +106,9 @@ function frave_seo_url(): string {
 	if ( is_singular() ) {
 		return (string) get_permalink();
 	}
+	if ( is_home() && '' !== frave_blog_url() ) {
+		return frave_blog_url();
+	}
 	if ( is_category() || is_tag() || is_tax() ) {
 		$link = get_term_link( get_queried_object() );
 		return is_wp_error( $link ) ? home_url( '/' ) : $link;
@@ -113,7 +126,7 @@ function frave_seo_head(): void {
 	$data = frave_seo_data();
 	$tags = array(
 		array( 'name', 'description', $data['description'] ),
-		array( 'property', 'og:type', is_front_page() ? 'website' : 'article' ),
+		array( 'property', 'og:type', is_singular( 'post' ) ? 'article' : 'website' ),
 		array( 'property', 'og:locale', 'es_PE' ),
 		array( 'property', 'og:site_name', get_bloginfo( 'name' ) ),
 		array( 'property', 'og:title', wp_get_document_title() ),
@@ -122,6 +135,10 @@ function frave_seo_head(): void {
 		array( 'property', 'og:image', $data['image'] ),
 		array( 'name', 'twitter:card', 'summary_large_image' ),
 	);
+	if ( is_singular( 'post' ) ) {
+		$tags[] = array( 'property', 'article:published_time', (string) get_the_date( 'c' ) );
+		$tags[] = array( 'property', 'article:modified_time', (string) get_the_modified_date( 'c' ) );
+	}
 	foreach ( $tags as list( $attribute, $key, $value ) ) {
 		if ( '' === $value ) {
 			continue;
@@ -130,6 +147,144 @@ function frave_seo_head(): void {
 	}
 }
 add_action( 'wp_head', 'frave_seo_head', 2 );
+
+/**
+ * Canonical address of listings (blog, categories, the catalog), which WordPress only prints
+ * for single pages. Only on their first page and without filters: filtered views are
+ * noindex (frave_catalog_robots) and later pages are their own address.
+ */
+function frave_seo_canonical(): void {
+	if ( frave_seo_plugin_active() || is_singular() || is_paged() || is_search() || is_404() ) {
+		return;
+	}
+	$is_shop = function_exists( 'is_shop' ) && is_shop();
+	if ( ! ( is_home() || is_category() || is_tag() || is_tax() || $is_shop ) ) {
+		return;
+	}
+	if ( frave_catalog_active_filter_count() > 0 ) {
+		return;
+	}
+	printf( '<link rel="canonical" href="%s">' . "\n", esc_url( frave_seo_url() ) );
+}
+add_action( 'wp_head', 'frave_seo_canonical', 2 );
+
+/** Search results are not pages to rank: crawlers may follow their links, not index them. */
+function frave_seo_search_robots( array $robots ): array {
+	if ( is_search() ) {
+		$robots['noindex'] = true;
+		$robots['follow']  = true;
+	}
+	return $robots;
+}
+add_filter( 'wp_robots', 'frave_seo_search_robots' );
+
+/** The company, for the structured data: name, logo, contact details and social profiles. */
+function frave_schema_organization(): array {
+	$channels     = frave_contact_channels();
+	$organization = array(
+		'@type'       => 'Organization',
+		'@id'         => home_url( '/#organization' ),
+		'name'        => get_bloginfo( 'name' ),
+		'url'         => home_url( '/' ),
+		'logo'        => array(
+			'@type'  => 'ImageObject',
+			'url'    => frave_asset_url( 'assets/images/frave-logo.png' ),
+			'width'  => 440,
+			'height' => 264,
+		),
+		'description' => get_bloginfo( 'description' ),
+	);
+	if ( isset( $channels['email'] ) ) {
+		$organization['email'] = $channels['email']['value'];
+	}
+	$phone = $channels['phone']['value'] ?? ( $channels['whatsapp']['value'] ?? '' );
+	if ( '' !== $phone ) {
+		$organization['telephone'] = $phone;
+	}
+	if ( isset( $channels['address'] ) ) {
+		$organization['address'] = array(
+			'@type'          => 'PostalAddress',
+			'streetAddress'  => preg_replace( '/\s+/', ' ', $channels['address']['value'] ),
+			'addressCountry' => 'PE',
+		);
+	}
+	$profiles = array_values( wp_list_pluck( frave_social_links(), 'url' ) );
+	if ( $profiles ) {
+		$organization['sameAs'] = $profiles;
+	}
+	return array_filter( $organization );
+}
+
+/** Structured data of the current page, as the items of a JSON-LD graph. */
+function frave_schema_graph(): array {
+	$graph = array(
+		frave_schema_organization(),
+		array(
+			'@type'      => 'WebSite',
+			'@id'        => home_url( '/#website' ),
+			'url'        => home_url( '/' ),
+			'name'       => get_bloginfo( 'name' ),
+			'inLanguage' => 'es-PE',
+			'publisher'  => array( '@id' => home_url( '/#organization' ) ),
+		),
+	);
+
+	if ( is_singular( 'post' ) ) {
+		$post    = get_queried_object();
+		$article = array(
+			'@type'            => 'BlogPosting',
+			'@id'              => get_permalink( $post ) . '#article',
+			'headline'         => wp_strip_all_tags( get_the_title( $post ) ),
+			'description'      => frave_seo_data()['description'],
+			'datePublished'    => get_the_date( 'c', $post ),
+			'dateModified'     => get_the_modified_date( 'c', $post ),
+			'mainEntityOfPage' => get_permalink( $post ),
+			'inLanguage'       => 'es-PE',
+			// Author archives are off (frave-peru): articles are signed by the company.
+			'author'           => array( '@id' => home_url( '/#organization' ) ),
+			'publisher'        => array( '@id' => home_url( '/#organization' ) ),
+		);
+		if ( has_post_thumbnail( $post ) ) {
+			$article['image'] = get_the_post_thumbnail_url( $post, 'full' );
+		}
+		$category = frave_post_category( $post );
+		if ( $category ) {
+			$article['articleSection'] = $category->name;
+		}
+		$graph[] = $article;
+	}
+
+	// The same trail as the visible breadcrumb of the blog pages.
+	if ( is_home() || is_category() || is_singular( 'post' ) ) {
+		$elements = array();
+		foreach ( frave_breadcrumb_items() as $position => $item ) {
+			$elements[] = array(
+				'@type'    => 'ListItem',
+				'position' => $position + 1,
+				'name'     => $item['label'],
+				'item'     => '' !== $item['url'] ? $item['url'] : frave_seo_url(),
+			);
+		}
+		$graph[] = array(
+			'@type'           => 'BreadcrumbList',
+			'itemListElement' => $elements,
+		);
+	}
+
+	return $graph;
+}
+
+function frave_schema_head(): void {
+	if ( frave_seo_plugin_active() || is_404() ) {
+		return;
+	}
+	$data = array(
+		'@context' => 'https://schema.org',
+		'@graph'   => frave_schema_graph(),
+	);
+	echo '<script type="application/ld+json">' . wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+}
+add_action( 'wp_head', 'frave_schema_head', 4 );
 
 /** The isotype as favicon until a site icon is chosen in Apariencia → Personalizar. */
 function frave_default_favicon(): void {

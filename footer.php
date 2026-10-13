@@ -51,6 +51,19 @@ $frave_channel_icon = array(
 						<img src="<?php echo esc_url( frave_asset_url( 'assets/images/frave-logo-footer.png' ) ); ?>" alt="" width="330" height="198" loading="lazy">
 					</a>
 					<p><?php esc_html_e( 'Sabores, fragancias y envases para dar vida a tus productos.', 'frave' ); ?></p>
+					<?php $frave_social = frave_social_links(); ?>
+					<?php if ( $frave_social ) : ?>
+						<ul class="footer-social" aria-label="<?php esc_attr_e( 'Redes sociales', 'frave' ); ?>">
+							<?php foreach ( $frave_social as $frave_network => $frave_profile ) : ?>
+								<li>
+									<a href="<?php echo esc_url( $frave_profile['url'] ); ?>" target="_blank" rel="noopener me">
+										<?php echo frave_brand_icon( $frave_network ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
+										<span class="screen-reader-text"><?php echo esc_html( $frave_profile['label'] ); ?> <?php esc_html_e( '(se abre en una nueva pestaña)', 'frave' ); ?></span>
+									</a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					<?php endif; ?>
 				</div>
 				<nav class="site-footer__links" aria-labelledby="footer-links-title">
 					<h2 id="footer-links-title"><?php esc_html_e( 'Explora', 'frave' ); ?></h2>

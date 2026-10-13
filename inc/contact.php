@@ -119,6 +119,26 @@ function frave_customize_contact( WP_Customize_Manager $wp_customize ): void {
 			)
 		);
 	}
+
+	foreach ( frave_social_networks() as $network => $label ) {
+		$wp_customize->add_setting(
+			'frave_social_' . $network,
+			array(
+				'default'           => '',
+				'sanitize_callback' => 'esc_url_raw',
+			)
+		);
+		$wp_customize->add_control(
+			'frave_social_' . $network,
+			array(
+				/* translators: %s: social network. */
+				'label'       => sprintf( __( 'Perfil de %s', 'frave' ), $label ),
+				'description' => 'facebook' === $network ? __( 'Dirección completa del perfil (https://…). Las redes con dirección aparecen en el pie de página.', 'frave' ) : '',
+				'section'     => 'frave_contact',
+				'type'        => 'url',
+			)
+		);
+	}
 }
 add_action( 'customize_register', 'frave_customize_contact' );
 
@@ -160,6 +180,36 @@ function frave_contact_channels(): array {
 		),
 	);
 	return array_filter( $channels, static fn( $channel ) => '' !== $channel['value'] );
+}
+
+/** Social networks that can be linked from the footer, by setting key. */
+function frave_social_networks(): array {
+	return array(
+		'facebook'  => 'Facebook',
+		'instagram' => 'Instagram',
+		'linkedin'  => 'LinkedIn',
+		'tiktok'    => 'TikTok',
+		'youtube'   => 'YouTube',
+	);
+}
+
+/**
+ * Social profiles configured in Apariencia → Personalizar → Contacto.
+ *
+ * @return array<string, array{label: string, url: string}>
+ */
+function frave_social_links(): array {
+	$links = array();
+	foreach ( frave_social_networks() as $network => $label ) {
+		$url = esc_url_raw( (string) get_theme_mod( 'frave_social_' . $network, '' ) );
+		if ( '' !== $url ) {
+			$links[ $network ] = array(
+				'label' => $label,
+				'url'   => $url,
+			);
+		}
+	}
+	return $links;
 }
 
 function frave_whatsapp_number(): string {
