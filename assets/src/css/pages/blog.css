@@ -1,0 +1,448 @@
+/*
+ * Blog (inc/blog.php): article cards, the posts page with its topics and pagination, the
+ * breadcrumb in the hero, and the article with its share links and reading typography.
+ */
+@layer components {
+  /* ---------- Article cards ---------- */
+
+  .post-tile.card {
+    height: 100%;
+    gap: 0;
+    padding: 0.75rem;
+  }
+
+  .post-tile__media {
+    display: grid;
+    aspect-ratio: 16 / 10;
+    place-items: center;
+    border-radius: calc(var(--radius-md) - 0.25rem);
+    background: #f3ece2;
+  }
+
+  .post-tile__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .post-tile__art {
+    width: 18%;
+    color: var(--color-primary);
+  }
+
+  .post-tile__art .isotype {
+    width: 100%;
+    height: auto;
+    stroke-width: 1.8;
+  }
+
+  .post-tile__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.25rem 0.75rem 0.75rem;
+  }
+
+  .post-tile__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .post-tile__category {
+    color: var(--color-primary);
+  }
+
+  .post-tile__title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .post-tile__excerpt {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .post-tile__more {
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+
+  @media (min-width: 48rem) {
+    .post-tile--featured.card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+    }
+
+    .post-tile--featured .post-tile__media {
+      aspect-ratio: 4 / 3;
+    }
+
+    .post-tile--featured .post-tile__body {
+      gap: 1rem;
+      padding: 1.5rem clamp(0.5rem, 2vw, 2rem) 1.5rem 0;
+    }
+
+    .post-tile--featured .post-tile__title {
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      font-weight: 300;
+      letter-spacing: -0.03em;
+    }
+
+    .post-tile--featured .post-tile__excerpt {
+      font-size: var(--text-lead);
+    }
+  }
+
+  /* ---------- Posts page ---------- */
+
+  .blog-topics__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .blog-topics {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  /* !important: the unlayered link colour of theme.json would win. */
+  .blog-topics [aria-current="page"] {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #fff !important;
+  }
+
+  .blog-featured {
+    margin-bottom: 1.25rem;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pagination {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .pagination .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+
+  .pagination .page-numbers {
+    display: grid;
+    min-width: 2.75rem;
+    height: 2.75rem;
+    padding-inline: 0.5rem;
+    place-items: center;
+    border-radius: 999px;
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .pagination a.page-numbers:hover {
+    background: var(--color-surface);
+  }
+
+  .pagination .page-numbers.current {
+    background: var(--color-ink);
+    color: #fff !important;
+  }
+
+  .pagination .page-numbers .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .icon--flip {
+    transform: scaleX(-1);
+  }
+
+  /* ---------- Breadcrumb in the hero ---------- */
+
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    margin: 0;
+    padding: 0;
+    color: var(--color-on-dark-muted);
+    font-size: 0.85rem;
+    list-style: none;
+  }
+
+  .breadcrumb li:not(:last-child)::after {
+    margin-left: 0.5rem;
+    content: "/";
+    opacity: 0.6;
+  }
+
+  .breadcrumb a {
+    color: #fff !important;
+  }
+
+  .breadcrumb a:hover {
+    text-decoration: underline;
+  }
+
+  /* The article title can be long: it stays within a readable size. */
+  .article-page .page-hero h1 {
+    max-width: 50rem;
+    font-size: clamp(2rem, 4.6vw, 3.6rem);
+  }
+
+  /* ---------- Article ---------- */
+
+  /* !important: WordPress's unlayered figure margin would win. */
+  .article__cover {
+    max-width: 68rem;
+    margin: 0 auto clamp(2.5rem, 5vw, 4rem) !important;
+  }
+
+  .article__cover img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 850;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+  }
+
+  .article__cover figcaption {
+    margin-top: 0.75rem;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .article__layout {
+    display: grid;
+    gap: 2.5rem;
+    max-width: 68rem;
+    margin-inline: auto;
+  }
+
+  .article__body {
+    max-width: 44rem;
+    font-size: 1.1rem;
+    line-height: 1.75;
+  }
+
+  .article__body > * {
+    margin-block: 0 1.25em;
+  }
+
+  .article__lead {
+    color: var(--color-ink);
+    font-size: var(--text-lead);
+    line-height: 1.6;
+  }
+
+  .article__body h2 {
+    margin: 2.25em 0 0.75em;
+    font-size: clamp(1.5rem, 2.6vw, 1.9rem);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+  }
+
+  .article__body h3 {
+    margin: 1.75em 0 0.6em;
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .article__body ul,
+  .article__body ol {
+    padding-left: 1.4em;
+  }
+
+  .article__body li + li {
+    margin-top: 0.4em;
+  }
+
+  .article__body li::marker {
+    color: var(--color-primary);
+  }
+
+  .article__body blockquote {
+    margin-inline: 0;
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    border-left: 3px solid var(--color-brand-orange);
+    color: var(--color-ink);
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  .article__body blockquote cite {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    font-style: normal;
+  }
+
+  .article__body figure {
+    margin-inline: 0;
+  }
+
+  .article__body figcaption {
+    margin-top: 0.6rem;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+
+  .article__body table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .article__body th,
+  .article__body td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--color-line);
+    text-align: left;
+  }
+
+  .article__body th {
+    color: var(--color-ink);
+  }
+
+  .article__body .wp-block-table {
+    overflow-x: auto;
+  }
+
+  .article__tags {
+    max-width: 68rem;
+    margin: 2.5rem auto 0;
+  }
+
+  /* ---------- Share ---------- */
+
+  .share {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .share__title {
+    margin: 0 0 0.85rem;
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .share__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .share__button {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      border-color var(--duration-fast) ease,
+      background-color var(--duration-fast) ease;
+  }
+
+  .share__button:hover {
+    border-color: var(--color-brand-orange);
+    background: var(--color-orange-soft);
+  }
+
+  .share__button svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    flex: none;
+  }
+
+  .share__button .icon {
+    fill: none;
+    stroke: currentColor;
+  }
+
+  .share__button .brand-icon,
+  .share__button .whatsapp-icon {
+    fill: currentColor;
+  }
+
+  .share__button--whatsapp svg {
+    color: var(--color-whatsapp);
+  }
+
+  .share__button--linkedin svg {
+    color: #0a66c2;
+  }
+
+  .share__button--facebook svg {
+    color: #1877f2;
+  }
+
+  @media (min-width: 64rem) {
+    /* Share links in a narrow column beside the text, in view while reading. */
+    .article__layout {
+      grid-template-columns: minmax(0, 44rem) 11rem;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+
+    .article__aside {
+      align-self: start;
+      position: sticky;
+      top: calc(var(--header-height) + 2rem);
+    }
+
+    .share {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .share__list {
+      flex-direction: column;
+    }
+
+    .share__button {
+      width: 100%;
+    }
+  }
+}

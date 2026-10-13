@@ -108,6 +108,13 @@ function frave_primary_menu_fallback_items(): array {
 		);
 	}
 
+	if ( frave_blog_has_posts() ) {
+		$items[] = array(
+			'label' => frave_blog_title(),
+			'url'   => frave_blog_url(),
+		);
+	}
+
 	$contact = frave_contact_page_url();
 	if ( $contact ) {
 		$children = array();

@@ -1,43 +1,5 @@
 <?php
-/** Generic archive. */
+/** Other post archives (tags, dates). Product archives use WooCommerce's templates. */
 get_header();
-?>
-<main id="primary" class="site-main">
-	<?php
-	get_template_part(
-		'template-parts/components/page-hero',
-		null,
-		array(
-			'eyebrow' => __( 'BLOG', 'frave' ),
-			'title'   => get_the_archive_title(),
-			'lead'    => get_the_archive_description(),
-		)
-	);
-	?>
-	<div class="section">
-		<div class="container content-container">
-			<?php if ( have_posts() ) : ?>
-				<div class="post-list">
-					<?php
-					while ( have_posts() ) :
-						the_post();
-						?>
-						<article <?php post_class( 'post-card' ); ?> id="post-<?php the_ID(); ?>">
-							<?php
-							if ( has_post_thumbnail() ) :
-								?>
-								<a class="post-card__image" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true"><?php the_post_thumbnail( 'frave-card', array( 'loading' => 'lazy' ) ); ?></a><?php endif; ?>
-							<p class="eyebrow"><?php echo esc_html( get_the_date() ); ?></p>
-							<h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-							<div class="post-card__excerpt"><?php the_excerpt(); ?></div>
-						</article>
-					<?php endwhile; ?>
-				</div>
-				<?php the_posts_pagination(); ?>
-			<?php else : ?>
-				<?php get_template_part( 'template-parts/components/empty-state' ); ?>
-			<?php endif; ?>
-		</div>
-	</div>
-</main>
-<?php get_footer(); ?>
+get_template_part( 'template-parts/blog/listing' );
+get_footer();

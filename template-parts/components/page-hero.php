@@ -8,6 +8,7 @@
  * - lead:       optional introduction (HTML allowed).
  * - meta:       optional line under the title, already escaped HTML (e.g. a <time>).
  * - breadcrumb: print WooCommerce's breadcrumb above the eyebrow.
+ * - trail:      print the blog breadcrumb (frave_breadcrumb) above the eyebrow.
  * - search:     add the product search form.
  */
 
@@ -23,6 +24,7 @@ $frave_hero = wp_parse_args(
 		'lead'       => '',
 		'meta'       => '',
 		'breadcrumb' => false,
+		'trail'      => false,
 		'search'     => false,
 	)
 );
@@ -35,6 +37,8 @@ $frave_hero = wp_parse_args(
 		<?php
 		if ( $frave_hero['breadcrumb'] && function_exists( 'woocommerce_breadcrumb' ) ) {
 			woocommerce_breadcrumb();
+		} elseif ( $frave_hero['trail'] ) {
+			frave_breadcrumb();
 		}
 		?>
 		<?php if ( '' !== $frave_hero['eyebrow'] ) : ?>

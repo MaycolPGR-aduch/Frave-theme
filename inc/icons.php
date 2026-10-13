@@ -57,6 +57,24 @@ function frave_icon( string $name, string $class_name = '' ): string {
 	);
 }
 
+/**
+ * Logo of a social network or messaging service (filled, unlike the line icons), or ''.
+ * Decorative: the link around it names the network.
+ */
+function frave_brand_icon( string $network ): string {
+	$paths = array(
+		'facebook'  => '<path d="M13.5 21v-7.75h2.6l.4-3h-3v-1.9c0-.87.25-1.47 1.5-1.47h1.6V4.2a21 21 0 0 0-2.33-.12c-2.3 0-3.87 1.4-3.87 3.98v2.19H7.8v3h2.6V21h3.1Z"/>',
+		'instagram' => '<rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1"/>',
+		'linkedin'  => '<path d="M6.5 8.75h-3v11.5h3V8.75ZM5 3.75a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5Zm4.25 5v11.5h3v-6c0-1.6.6-2.85 2.3-2.85 1.6 0 1.95 1.25 1.95 2.85v6h3v-6.6c0-3.15-1.3-5.15-4.3-5.15-1.6 0-2.55.8-3 1.55V8.75H9.25Z"/>',
+		'tiktok'    => '<path d="M16.6 3c.3 2.3 1.6 3.8 3.9 4v2.8a7 7 0 0 1-3.9-1.1v5.6c0 6.3-6.9 8.3-9.6 3.8-1.8-2.9-.7-8 5-8.2v3c-.4.1-.9.2-1.3.3-1.3.4-2 1.3-1.8 2.8.4 2.7 5.3 3.5 4.9-1.8V3h2.8Z"/>',
+		'youtube'   => '<path fill-rule="evenodd" d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8A26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8c1.6.4 7.8.4 7.8.4s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8ZM10 15V9l5.2 3L10 15Z"/>',
+	);
+	if ( ! isset( $paths[ $network ] ) ) {
+		return '';
+	}
+	return '<svg class="brand-icon brand-icon--' . esc_attr( $network ) . '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' . $paths[ $network ] . '</svg>';
+}
+
 /** Icon of each product line, by product category slug. */
 function frave_product_line_icon( string $slug ): string {
 	$icons = array(

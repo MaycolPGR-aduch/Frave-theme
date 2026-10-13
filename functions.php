@@ -28,5 +28,6 @@ require_once FRAVE_THEME_DIR . '/inc/home.php';
 require_once FRAVE_THEME_DIR . '/inc/lines.php';
 require_once FRAVE_THEME_DIR . '/inc/company.php';
 require_once FRAVE_THEME_DIR . '/inc/solutions.php';
+require_once FRAVE_THEME_DIR . '/inc/blog.php';
 require_once FRAVE_THEME_DIR . '/inc/seo.php';
 require_once FRAVE_THEME_DIR . '/inc/product-page.php';

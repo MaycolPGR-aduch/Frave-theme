@@ -421,51 +421,11 @@
 
   .home-posts__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
     gap: 1.25rem;
     margin: 0;
     padding: 0;
     list-style: none;
-  }
-
-  .post-tile.card {
-    gap: 0.6rem;
-    padding: 0.75rem 0.75rem 1.5rem;
-  }
-
-  .post-tile > :not(.post-tile__media) {
-    margin-inline: 0.75rem;
-  }
-
-  .post-tile__media {
-    display: grid;
-    margin-bottom: 0.75rem;
-    aspect-ratio: 16 / 10;
-    place-items: center;
-    border-radius: calc(var(--radius-md) - 0.25rem);
-  }
-
-  .post-tile__art {
-    width: 18%;
-    color: var(--color-primary);
-  }
-
-  .post-tile__art .isotype {
-    width: 100%;
-    height: auto;
-    stroke-width: 1.8;
-  }
-
-  .post-tile__date {
-    color: var(--color-primary);
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .post-tile h3 {
-    font-size: 1.3rem;
   }
 
   /* ---------- Dónde estamos ---------- */
