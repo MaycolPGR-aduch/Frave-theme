@@ -1,6 +1,19 @@
 import { expect, test } from '@playwright/test';
 
 test.describe('navegación de escritorio', () => {
+  test('el primer Tab muestra «Saltar al contenido» legible y lleva al contenido', async ({ page }) => {
+    await page.goto('/');
+    await page.keyboard.press('Tab');
+    const skip = page.locator('.skip-link');
+    await expect(skip).toBeFocused();
+    await expect(skip).toBeInViewport();
+    const [color, background] = await skip.evaluate((el) => [getComputedStyle(el).color, getComputedStyle(el).backgroundColor]);
+    expect(color).not.toBe(background);
+    expect(color).toBe('rgb(255, 255, 255)');
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/#primary$/);
+  });
+
   test('un submenú se abre con su botón, se cierra con Escape y devuelve el foco', async ({ page }) => {
     await page.goto('/');
     const toggle = page.locator('[data-primary-navigation] [data-submenu-toggle]').first();

@@ -233,3 +233,10 @@ function frave_product_card_category(): void {
 	}
 }
 add_action( 'woocommerce_shop_loop_item_title', 'frave_product_card_category', 5 );
+
+/** The breadcrumb landmark is announced in Spanish, like the blog's («Migas de pan»). */
+function frave_woocommerce_breadcrumb_label( array $defaults ): array {
+	$defaults['wrap_before'] = str_replace( 'aria-label="Breadcrumb"', 'aria-label="' . esc_attr__( 'Migas de pan', 'frave' ) . '"', $defaults['wrap_before'] );
+	return $defaults;
+}
+add_filter( 'woocommerce_breadcrumb_defaults', 'frave_woocommerce_breadcrumb_label' );

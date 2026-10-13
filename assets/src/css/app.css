@@ -207,7 +207,8 @@
   }
 
   .skip-link {
-    @apply absolute left-4 top-4 z-100 rounded-full bg-ink px-5 py-3 font-bold text-white;
+    @apply absolute left-4 top-4 z-100 rounded-full bg-ink px-5 py-3 font-bold;
+    color: #fff !important; /* The unlayered link colour of theme.json would make it dark on dark. */
     transform: translateY(-160%);
   }
 
@@ -986,8 +987,16 @@
     font-size: 0.82rem !important;
   }
 
+  /* Underlined: the darker colour alone does not set the links apart from the text (WCAG 1.4.1). */
   .woocommerce-breadcrumb a {
     color: var(--color-ink) !important;
+    text-decoration: underline;
+    text-decoration-color: var(--color-line);
+    text-underline-offset: 0.2em;
+  }
+
+  .woocommerce-breadcrumb a:hover {
+    text-decoration-color: currentColor;
   }
 
   .frave-woocommerce {

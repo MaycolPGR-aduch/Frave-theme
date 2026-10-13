@@ -49,9 +49,9 @@ get_header();
 						<?php endif; ?>
 						<?php the_content(); ?>
 					</div>
-					<aside class="article__aside">
+					<div class="article__aside">
 						<?php get_template_part( 'template-parts/blog/share' ); ?>
-					</aside>
+					</div>
 				</div>
 				<?php $frave_tags = get_the_tags(); ?>
 				<?php if ( $frave_tags ) : ?>
