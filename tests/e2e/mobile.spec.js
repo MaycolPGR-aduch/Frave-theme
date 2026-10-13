@@ -80,3 +80,15 @@ test.describe('móvil', () => {
     }
   });
 });
+
+test.describe('móvil: redes sociales', () => {
+  test('el menú termina con los logos de las redes', async ({ page }) => {
+    await page.goto('/');
+    test.skip((await page.locator('.social-links--footer .social-link').count()) === 0, 'Este sitio no tiene redes configuradas.');
+    await expect(page.locator('.social-links--header')).toBeHidden();
+    await page.locator('[data-menu-toggle]').click();
+    const links = page.locator('.social-links--menu .social-link');
+    await expect(links.first()).toBeVisible();
+    await expect(page.locator('.social-links--menu .social-links__list')).toHaveAccessibleName('Síguenos');
+  });
+});

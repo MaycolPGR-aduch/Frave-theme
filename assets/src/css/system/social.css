@@ -1,0 +1,212 @@
+/*
+ * Social profiles (template-parts/components/social-links.php): round logo buttons that
+ * fill with the colours of each network on hover or focus. In the header from 80rem (next
+ * to the search, with a divider), in the mobile drawer under the call to action, and on
+ * the dark footer.
+ */
+@layer components {
+  .social-links__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .social-link {
+    --social-bg: var(--color-ink);
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 999px;
+    color: var(--color-ink) !important; /* The unlayered link colour of theme.json would win. */
+    transition: color var(--duration-fast) ease;
+  }
+
+  /* The brand colour grows from the centre. */
+  .social-link::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--social-bg);
+    content: "";
+    opacity: 0;
+    transform: scale(0.4);
+    transition:
+      opacity var(--duration-fast) ease,
+      transform var(--duration) var(--ease-out);
+  }
+
+  .social-link:hover,
+  .social-link:focus-visible {
+    color: #fff !important;
+  }
+
+  .social-link:hover::before,
+  .social-link:focus-visible::before {
+    opacity: 1;
+    transform: none;
+  }
+
+  .social-link:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .social-link .brand-icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    fill: currentColor;
+    transition: transform var(--duration) var(--ease-out);
+  }
+
+  .social-link:hover .brand-icon {
+    transform: scale(1.08);
+  }
+
+  .social-link--instagram {
+    --social-bg: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  }
+
+  .social-link--tiktok {
+    --social-bg: #000;
+  }
+
+  /* TikTok's cyan and red echo around the note. */
+  .social-link--tiktok:hover .brand-icon,
+  .social-link--tiktok:focus-visible .brand-icon {
+    filter: drop-shadow(-1.5px -1px 0 #25f4ee) drop-shadow(1.5px 1px 0 #fe2c55);
+  }
+
+  .social-link--facebook {
+    --social-bg: #1877f2;
+  }
+
+  .social-link--linkedin {
+    --social-bg: #0a66c2;
+  }
+
+  .social-link--youtube {
+    --social-bg: #ff0000;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .social-link::before,
+    .social-link .brand-icon {
+      transition: none;
+    }
+
+    .social-link:hover .brand-icon {
+      transform: none;
+    }
+  }
+
+  /* ---------- Header ---------- */
+
+  .social-links--header {
+    display: none;
+  }
+
+  @media (min-width: 80rem) {
+    .social-links--header {
+      display: block;
+      margin-right: 0.35rem;
+      padding-right: 0.6rem;
+      border-right: 1px solid var(--color-line);
+    }
+
+    .social-links--header .social-links__list {
+      flex-wrap: nowrap;
+      gap: 0.15rem;
+    }
+  }
+
+  /* Small laptops: the menu gives up a little space so the logos fit beside it. */
+  @media (min-width: 80rem) and (max-width: 87.49rem) {
+    .menu-list {
+      gap: 0.95rem;
+    }
+
+    .social-links--header {
+      margin-right: 0.15rem;
+      padding-right: 0.35rem;
+    }
+
+    .social-links--header .social-link {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+  }
+
+  /* ---------- Mobile drawer ---------- */
+
+  .social-links--menu {
+    display: none;
+  }
+
+  @media (max-width: 63.99rem) {
+    .social-links--menu {
+      display: block;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--color-line);
+    }
+  }
+
+  .social-links__title {
+    margin: 0 0 0.75rem;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .social-links--menu .social-links__list {
+    gap: 0.6rem;
+  }
+
+  .social-links--menu .social-link {
+    width: 2.9rem;
+    height: 2.9rem;
+    border: 1px solid var(--color-line);
+  }
+
+  .social-links--menu .social-link .brand-icon {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  /* ---------- Footer ---------- */
+
+  .social-links--footer {
+    margin-top: 1.5rem;
+  }
+
+  .social-links--footer .social-links__list {
+    gap: 0.5rem;
+  }
+
+  .social-links--footer .social-link {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgb(255 255 255 / 18%);
+    color: #fff !important;
+  }
+
+  .social-links--footer .social-link:hover,
+  .social-links--footer .social-link:focus-visible {
+    border-color: transparent;
+  }
+
+  .social-links--footer .social-link:focus-visible {
+    outline-color: #fff;
+  }
+}

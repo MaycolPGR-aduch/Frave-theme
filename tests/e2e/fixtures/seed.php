@@ -271,6 +271,9 @@ require dirname( __DIR__, 3 ) . '/bin/crear-blog.php';
 
 // A test number, so the floating button and the guided WhatsApp chat are on.
 set_theme_mod( 'frave_whatsapp_number', '51900000000' );
+// Social profiles, so the header, the mobile drawer and the footer show their logos.
+set_theme_mod( 'frave_social_instagram', 'https://www.instagram.com/fragancias_frave/' );
+set_theme_mod( 'frave_social_tiktok', 'https://www.tiktok.com/@fragancias_frave' );
 
 // One product in a subcategory, so the portfolio links that subcategory to the catalog.
 $arabic = get_term_by( 'slug', 'perfumeria-arabe', 'product_cat' );

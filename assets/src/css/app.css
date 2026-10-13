@@ -14,6 +14,7 @@
 @import "./system/carousel.css";
 @import "./system/blocks.css";
 @import "./system/chat.css";
+@import "./system/social.css";
 /* Pages. */
 @import "./pages/home.css";
 @import "./pages/line.css";
@@ -315,8 +316,8 @@
     gap: clamp(1.25rem, 2.4vw, 2.25rem);
   }
 
-  /* Seven entries (with the blog) fit next to the logo and the button on small laptops. */
-  @media (min-width: 64rem) and (max-width: 79.99rem) {
+  /* Seven entries (with the blog), and from 80rem the social logos, fit next to the logo and the button on laptops. */
+  @media (min-width: 64rem) and (max-width: 89.99rem) {
     .menu-list {
       gap: clamp(0.85rem, 1.6vw, 1.25rem);
     }
@@ -324,6 +325,31 @@
     .header-cta {
       margin-left: 0.25rem;
       padding-inline: 1rem;
+    }
+  }
+
+  /* Up to 80rem a slightly smaller logo, menu text and spacing keep the seven entries on one line. */
+  @media (min-width: 64rem) and (max-width: 79.99rem) {
+    .site-branding {
+      width: clamp(8.5rem, 13.5vw, 14rem);
+    }
+
+    .menu-list {
+      gap: clamp(0.6rem, 1vw, 1.1rem);
+    }
+
+    .menu-list > li > a,
+    .submenu-toggle--label {
+      font-size: 0.8125rem;
+    }
+
+    .submenu-toggle--label {
+      gap: 0.25rem;
+    }
+
+    .header-cta {
+      padding-inline: 0.9rem;
+      font-size: 0.8rem;
     }
   }
 
@@ -376,6 +402,7 @@
   }
 
   .submenu-toggle__icon {
+    flex: none; /* A tight menu would otherwise squeeze the chevron away. */
     width: 1rem;
     height: 1rem;
     fill: none;
@@ -1314,39 +1341,6 @@
     max-width: none;
     height: auto;
     transform: translateY(-50%);
-  }
-
-  .footer-social {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin: 1.5rem 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .footer-social a {
-    display: grid;
-    width: 2.75rem;
-    height: 2.75rem;
-    place-items: center;
-    border: 1px solid rgb(255 255 255 / 18%);
-    border-radius: 999px;
-    color: #fff !important;
-    transition:
-      border-color var(--duration-fast) ease,
-      background-color var(--duration-fast) ease;
-  }
-
-  .footer-social a:hover {
-    border-color: var(--color-brand-orange);
-    background: var(--color-brand-orange);
-  }
-
-  .footer-social .brand-icon {
-    width: 1.15rem;
-    height: 1.15rem;
-    fill: currentColor;
   }
 
   .site-footer__brand p,

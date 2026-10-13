@@ -32,6 +32,29 @@ test.describe('navegación de escritorio', () => {
     await expect(submenu).toBeHidden();
   });
 
+  test('los submenús conservan su flecha en cualquier ancho de escritorio', async ({ page }) => {
+    for (const width of [1024, 1280, 1440]) {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto('/');
+      const widths = await page.locator('[data-primary-navigation] .submenu-toggle svg').evaluateAll((icons) => icons.map((icon) => icon.getBoundingClientRect().width));
+      expect(Math.min(...widths), `${width}px`).toBeGreaterThanOrEqual(15);
+      const fits = await page.locator('.site-header__inner').evaluate((inner) => inner.scrollWidth <= inner.clientWidth);
+      expect(fits, `${width}px`).toBe(true);
+    }
+  });
+
+  test('las redes sociales aparecen en la cabecera y en el pie, y abren en otra pestaña', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/');
+    const footer = page.locator('.social-links--footer .social-link');
+    test.skip((await footer.count()) === 0, 'Este sitio no tiene redes configuradas.');
+    const header = page.locator('.social-links--header .social-link');
+    await expect(header.first()).toBeVisible();
+    expect(await header.count()).toBe(await footer.count());
+    await expect(header.first()).toHaveAttribute('target', '_blank');
+    await expect(header.first().locator('.screen-reader-text')).toContainText(/Instagram|TikTok|Facebook|LinkedIn|YouTube/);
+  });
+
   test('un clic fuera del menú cierra el submenú', async ({ page }) => {
     await page.goto('/');
     const toggle = page.locator('[data-primary-navigation] [data-submenu-toggle]').first();

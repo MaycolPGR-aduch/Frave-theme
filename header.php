@@ -39,12 +39,14 @@
 						'fallback_cb'    => 'frave_primary_menu_fallback',
 					)
 				);
-				// In the mobile drawer the call to action follows the menu.
+				// In the mobile drawer the call to action and the social profiles follow the menu.
 				frave_render_header_cta( 'menu-cta' );
+				get_template_part( 'template-parts/components/social-links', null, array( 'context' => 'menu' ) );
 				?>
 			</nav>
 
 			<div class="header-actions">
+				<?php get_template_part( 'template-parts/components/social-links', null, array( 'context' => 'header' ) ); ?>
 				<?php if ( class_exists( 'WooCommerce' ) ) : ?>
 					<a class="header-action header-action--search" href="<?php echo esc_url( frave_catalog_shop_url() ); ?>#frave-product-search" aria-label="<?php esc_attr_e( 'Buscar productos', 'frave' ); ?>">
 						<?php echo frave_icon( 'search' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>

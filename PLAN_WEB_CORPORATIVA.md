@@ -242,6 +242,19 @@ Sitio (base de datos, local y producción):
 3. Revisar los borradores en **Entradas**, cambiar lo que haga falta (textos e imágenes) y publicarlos: el blog aparece en el menú con el primer artículo publicado.
 4. Redes sociales en **Apariencia → Personalizar → Contacto** (Facebook, Instagram, LinkedIn, TikTok, YouTube).
 
+### Fase 8 — Puesta en marcha y entrega
+
+Antes de anunciar la web: que los mensajes lleguen, que el sitio esté protegido, que se pueda medir si capta clientes y que Frave sepa manejarlo.
+
+- [ ] **Correo confiable:** prueba real del formulario de contacto y del Libro de Reclamaciones hasta la bandeja de entrada; envío por SMTP (correo de Hostinger) en lugar de PHP `mail()`; registros SPF, DKIM y DMARC de frave.pe. Frave usa hoy frave.cp@gmail.com: recomendar un correo del dominio (por ejemplo contacto@frave.pe) para los avisos y la imagen corporativa.
+- [ ] **Seguridad:** reemplazar el usuario «admin», borrar los temas inactivos, cabeceras de seguridad (HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`), XML-RPC cerrado, límite de intentos de acceso y copias de seguridad automáticas comprobadas en Hostinger.
+- [ ] **Medición de contactos:** formularios enviados, clics en WhatsApp y cotizaciones por página. Propuesta: contador propio en el administrador, sin cookies ni aviso; alternativa GA4 con aviso de cookies y cambio en la política de privacidad. *Decisión pendiente de Frave.*
+- [ ] **Manual para Frave:** editar textos (ACF), publicar artículos, responder mensajes y reclamos, cargar productos con la plantilla y qué no tocar; publicado como página para compartir.
+- [ ] Search Console (y Bing Webmaster Tools): verificar el dominio y enviar `/wp-sitemap.xml`.
+- [ ] Revisión final en producción y aviso de salida a Frave.
+
+Después: **carga del catálogo** (con el listado y las fotos de Frave: importación, tienda en «Visible», medición de ficha y catálogo) y, cuando Frave decida vender, **tienda en línea** sobre la base ya construida ([ROADMAP.md](ROADMAP.md)).
+
 ## Lo que debe aportar Frave
 
 Se puede construir con textos de ejemplo marcados; para publicar hace falta:
