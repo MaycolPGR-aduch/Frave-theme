@@ -1,80 +1,122 @@
-# Propuesta de catálogo de Frave
+# Guía del catálogo de Frave
 
-Estado: borrador para validar con el inventario real. La base local usa cuatro categorías y cinco productos de demostración; no representan el catálogo final. Solo en local existen los atributos globales de prueba «Familia olfativa» y «Presentación», creados por `seed-catalog-filters.php` para revisar los filtros; en producción no se han creado atributos ni aplicado una taxonomía.
+Cómo preparar y cargar los productos de frave.pe. El catálogo funciona en **modo catálogo**: sin precios ni compra en línea, con «Solicitar cotización» en cada ficha. Todo lo que se carga sirve también para la futura tienda.
 
-## Categorías candidatas
+## Resumen del proceso
 
-La navegación debe seguir la forma en que los clientes buscan y compran. Conviene mantener pocas categorías de primer nivel y usar subcategorías solo cuando exista suficiente variedad.
+1. **Una vez por sitio:** crear las categorías y los atributos (comandos más abajo).
+2. **Fotos:** prepararlas con la especificación de esta guía y subirlas a **Medios**.
+3. **Plantilla:** completar la hoja «Importar a Woo» de `PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx` y guardarla como **CSV UTF-8**.
+4. **Prueba:** importar dos o tres productos en borrador (`Published = -1`) y revisarlos.
+5. **Importación:** importar el resto en **Productos → Importar**. Las columnas se asignan solas.
+6. **Publicación:** cuando el catálogo esté listo, poner la tienda en **Visible** (WooCommerce → Ajustes → Visibilidad del sitio) y vaciar la caché.
 
-| Categoría candidata | Estado | Nota |
+## Categorías
+
+Las categorías siguen el árbol acordado con la gerencia (octubre de 2026). `bin/crear-lineas.php` las crea con sus descripciones; en la plantilla, la hoja **Categorías** tiene la ruta exacta de cada una.
+
+| Línea | Subcategorías (y tipos) |
+| --- | --- |
+| Sabores | Bebidas y productos lácteos · Confitería y panadería · Salados · Cuidado bucal |
+| Fragancias | Perfumería (de diseñador, árabe, exclusiva o nicho) · Fragancias cosméticas (cuidado del cabello, de la piel, de mascotas) · Fragancias para el cuidado del hogar (cuidado textil, de superficies, cocina y lavavajillas) · Ambientación (difusores de varitas, vehículos, aerosoles y sprays, marketing olfativo) |
+| Envases | Frascos de vidrio para perfumería · Frascos para difusores · Válvulas |
+
+Asigna cada producto a la categoría **más específica** que le corresponda (por ejemplo, `Fragancias > Perfumería > Perfumería árabe`): las páginas de línea, las soluciones por industria y los filtros suben solos por el árbol. Las etiquetas y los «Ver productos» de las páginas de línea solo enlazan cuando su categoría tiene productos, así que el sitio nunca lleva a una categoría vacía.
+
+## Atributos
+
+Los atributos **globales** son los que aparecen en los filtros del catálogo y como datos en la ficha («Familia olfativa: Oriental · Amaderada»). `bin/crear-atributos.php` los crea con valores sugeridos; la importación añade cualquier otro valor que encuentre.
+
+| Atributo | Línea | Valores sugeridos |
 | --- | --- | --- |
-| Fragancias terminadas | Por validar | Confirmar qué productos terminados vende Frave y cómo los clasifica. |
-| Esencias | Por validar | Confirmar si el catálogo distingue esencias de fragancias terminadas y cómo las nombra comercialmente. |
-| Insumos para perfumería | Por validar | Posibles subcategorías: bases, fijadores y materias primas aromáticas, solo si el inventario lo justifica. |
-| Envases y accesorios | Por validar | El material de marca menciona envases; confirmar disponibilidad y tipos antes de crear la categoría. |
-| Kits y herramientas | Condicional | Crear únicamente si Frave comercializa estos productos. |
+| Presentación | Todas | Formatos de venta: 250 g, 500 g, 1 kg, 5 kg… |
+| Familia olfativa | Fragancias | Cítrica, Floral, Frutal, Amaderada, Oriental, Aromática, Gourmand, Fresca, Especiada |
+| Perfil de sabor | Sabores | Frutal, Cítrico, Lácteo, Dulce, Tostado, Especiado, Salado, Mentolado |
+| Aplicación | Fragancias y sabores | Perfumería fina, Body splash, Cremas y lociones, Jabones, Shampoo y acondicionador, Detergentes y suavizantes, Limpiadores, Velas, Difusores, Ambientadores, Bebidas, Lácteos, Confitería, Panadería, Snacks, Cuidado bucal |
+| Solubilidad | Fragancias y sabores | Hidrosoluble, Liposoluble |
+| Capacidad | Envases | 30 ml, 50 ml, 100 ml, 120 ml… |
+| Material | Envases | Vidrio, PET, Polipropileno, Aluminio |
+| Cierre | Envases | Válvula atomizadora, Bomba dosificadora, Tapa rosca, Tapa a presión, Gotero |
 
-No crear categorías por género, familia olfativa o presentación si funcionan mejor como filtros o atributos. Evitar categorías vacías, nombres duplicados y jerarquías profundas. Confirmar el vocabulario con el equipo comercial antes de cargar productos.
+Reglas:
 
-## Atributos candidatos
+- Escribe los valores **siempre igual** (mismas mayúsculas y unidades): `250 g`, no `250g` ni `250 G`. Cada variante distinta sería otro valor en los filtros.
+- **Presentación** y **Capacidad** se ordenan solas de menor a mayor (250 g, 500 g, 1 kg) si el valor empieza con la cantidad y una unidad conocida (mg, g, kg, ml, cc, l, oz).
+- Los filtros siguen este orden: familia olfativa o perfil de sabor, aplicación, presentación, solubilidad, capacidad, material y cierre. Cada sección aparece solo si algún producto de la vista usa ese atributo.
+- Para añadir un atributo nuevo, créalo en **Productos → Atributos** antes de importar. Un atributo solo informativo puede ocultarse de los filtros con el filtro de PHP `frave_catalog_filter_attributes`.
 
-Los atributos globales de WooCommerce deben ser reutilizables y consistentes en todo el catálogo. Se crearán solo después de revisar productos y valores reales.
+## Fotos de producto
 
-| Atributo candidato | Uso posible | Consideración |
-| --- | --- | --- |
-| Presentación | Variaciones por volumen, peso o unidad | Acordar unidades y formatos de escritura; por ejemplo, no mezclar `30 ml`, `30ML` y `0.03 L`. |
-| Familia olfativa | Información o filtro de esencias y fragancias | Usar los valores confirmados por proveedores o por Frave. |
-| Concentración | Información de fragancias terminadas | Aplicar solo cuando el dato exista y tenga un significado comercial confirmado. |
-| Uso o aplicación | Segmentar insumos | Incorporarlo solo si ayuda a encontrar productos y sus valores están definidos. |
+Para que el catálogo se vea uniforme con el resto del sitio:
 
-Para variaciones, cada producto padre debe declarar todos los valores disponibles. Cada fila de variación usa un único valor y referencia el SKU del padre. El nombre y valor del atributo deben coincidir exactamente. Un atributo global usa `Attribute N global = 1` cuando ya existe en WooCommerce; uno local usa `0`.
+| | Especificación |
+| --- | --- |
+| Formato | Cuadrado (1:1), mínimo **1200 × 1200 px**. |
+| Fondo | Marfil liso y cálido (similar a `#F3ECE2`), como las portadas de las líneas, o blanco roto. Sin texturas fuertes ni degradados oscuros. |
+| Encuadre | Producto centrado, ocupando cerca del **70 %** del alto, con aire alrededor: las tarjetas recortan un poco los bordes. |
+| Luz | Suave, desde arriba a la izquierda, con sombra natural. |
+| Contenido | Sin texto, precios, logotipos ni marcas de agua encima. Para sabores y fragancias, el envase real del producto o un elemento sensorial coherente (fruta, flor) si aún no hay envase. |
+| Archivo | JPG o WebP, calidad 80, **menos de 300 KB**. Nombre = SKU (`FRA-ARA-001.jpg`). |
+| Texto alternativo | El nombre del producto (se completa en Medios). |
 
-## Filtros del catálogo
+Sube las fotos a **Medios → Añadir nuevo**, copia la URL de cada una (botón «Copiar URL al portapapeles») y pégala en la columna `Images`. Varias fotos se separan con comas; la primera es la principal.
 
-La tienda, las categorías y la búsqueda de productos muestran un panel de filtros (barra lateral en escritorio y botón «Filtrar» con panel lateral en móvil y tablet). Casi todo aparece solo a partir de los datos de WooCommerce:
+## Plantilla de importación
 
-| Filtro | De dónde sale | Qué hace falta |
-| --- | --- | --- |
-| Categorías | Categorías de producto | Nada: muestra las de primer nivel y despliega las subcategorías de la categoría abierta. Se ordenan como en **Productos → Categorías** (arrastrando). |
-| Precio | Precios de los productos | Nada: el rango sugerido se calcula con los productos de la vista actual. |
-| Solo disponibles | Estado de inventario | Se oculta si WooCommerce ya esconde los agotados (**Ajustes → Productos → Inventario**). |
-| En oferta | Precio rebajado | Aparece cuando algún producto tiene precio rebajado vigente. |
-| Un filtro por atributo | **Atributos globales** (**Productos → Atributos**) | Crear el atributo global, sus valores y asignarlos a los productos. Cada atributo aparece como una sección con casillas y recuentos cuando algún producto de la vista lo usa. |
-| Valoración | Reseñas aprobadas | Aparece cuando hay productos valorados. |
+`PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx` tiene cinco hojas:
 
-Reglas para que los atributos funcionen como filtro:
+- **Importar a Woo:** la única que se completa. La primera fila tiene los encabezados del importador nativo de WooCommerce; no los cambies ni agregues filas encima. Tiene listas desplegables para tipo, publicado, categorías y atributos.
+- **Ejemplos:** diez productos de muestra de las tres líneas, incluido un producto variable con sus variaciones, como referencia.
+- **Categorías:** las rutas válidas para la columna `Categories`.
+- **Atributos:** los nombres exactos y los valores sugeridos.
+- **Instrucciones:** qué escribir en cada columna, con ejemplos.
 
-- Solo los **atributos globales** se pueden filtrar. Los atributos «personalizados» creados dentro de un producto (como el `Volumen` del producto variable de muestra) no aparecen en los filtros.
-- El orden de los valores se define en el atributo (orden personalizado arrastrando los términos). El orden de las secciones sigue el de **Productos → Atributos**.
-- Dentro de un mismo atributo, marcar varios valores muestra productos con **cualquiera** de ellos (p. ej., Cítrica o Floral). Entre atributos distintos se combinan (Cítrica **y** 50 ml).
-- Un atributo que solo sea informativo puede ocultarse de los filtros con el filtro de PHP `frave_catalog_filter_attributes`.
+Columnas principales:
 
-Las URL usan los parámetros propios de WooCommerce (`filter_{atributo}`, `min_price`, `max_price`, `rating_filter`, `orderby`), más `filter_stock_status=instock` y `on_sale=1`. Las páginas filtradas se marcan `noindex, follow` para que los buscadores no indexen cada combinación.
+| Columna | Qué escribir |
+| --- | --- |
+| `Type` | `simple`; o `variable` para un producto con opciones (p. ej. capacidades) y `variation` para cada opción, en filas debajo de su padre. |
+| `SKU` | Código único y estable; las variaciones, el del padre con un sufijo (`ENV-VID-001-30`). |
+| `Name` | Nombre comercial (vacío en las variaciones). |
+| `Published` | `1` publicado, `0` privado, `-1` borrador. |
+| `Is featured?` | `1` para mostrarlo en «Productos destacados» de la portada y de su línea. |
+| `Short description` | Dos o tres líneas: se ven junto al título, en la vista previa al compartir y como descripción para buscadores. |
+| `Description` | Detalle: notas, uso recomendado, dosis sugerida. Se muestra en «Detalles del producto». |
+| `Regular price` | Opcional, en soles sin símbolo. En modo catálogo no se muestra. |
+| `Categories` | Ruta de la hoja Categorías. |
+| `Images` | URL de las fotos subidas a Medios. |
+| `Attribute N name / value(s) / visible / global` | Hasta cuatro atributos: nombre exacto, valores separados por comas, `1`, `1`. En productos variables, `Attribute N default` indica la opción inicial. |
 
-Para probar los filtros en local, `D:/Frave-web/.local-wordpress/seed-catalog-filters.php` crea los atributos candidatos «Familia olfativa» y «Presentación», una subcategoría «Esencias cítricas», una oferta y una reseña, todo sobre los productos `[MUESTRA]`. No lo ejecutes en producción.
+Guarda la hoja como **CSV UTF-8** (Archivo → Guardar como → CSV UTF-8). Los archivos de Excel no se importan directamente.
 
-## Datos que pertenecen a WooCommerce
+## Importar en WooCommerce
 
-Precio, precio promocional, SKU, inventario, dimensiones, imágenes, atributos y variaciones se administran en WooCommerce. No duplicarlos en ACF. Mantener SKU únicos y estables, incluso entre variaciones.
+1. **Productos → Importar → Elegir archivo** con el CSV y **Continuar**.
+2. La pantalla de asignación reconoce todas las columnas (Tipo, SKU, Nombre, Categorías, Imágenes, atributos…). Revisa que ninguna quede en «No importar» y pulsa **Ejecutar el importador**.
+3. Para corregir datos, vuelve a importar el CSV marcando **Actualizar productos existentes**: los productos se identifican por SKU.
 
-La importación nativa espera `Type` como `simple`, `variable` o `variation` según la fila. Las filas del padre deben preceder a sus variaciones. Usa `Parent` con el SKU del producto padre. Para stock, una cantidad numérica activa su gestión; dejarla vacía desactiva la gestión de inventario para esa fila.
+Las fotos se descargan desde sus URL durante la importación; con muchas fotos, importa por tandas de unas 50 filas.
 
-## Uso de la plantilla
+## Comandos (una vez por sitio)
 
-Abre `PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx` y completa la hoja **Importar a Woo**. La primera fila conserva los encabezados del importador nativo; no agregues títulos ni notas encima. Exporta solo esa hoja como CSV UTF-8. Los archivos de Excel no se importan directamente con el importador nativo de WooCommerce.
+Desde la carpeta del sitio, con el clon del tema en `~/repos/frave-theme`:
 
-Las columnas de dimensiones se prepararon como kg y cm. Si la tienda de destino usa otras unidades, ajusta el texto del encabezado entre paréntesis para que coincida con sus unidades de WooCommerce. Escribe precios como números sin símbolo de moneda, usando la moneda configurada en la tienda. Las imágenes deben estar previamente cargadas o tener URLs directamente accesibles. Usa `1` y `0` para valores booleanos. Separa varios valores con comas, excepto cuando una coma forme parte de un nombre; revisa el escapado antes de importar.
+```bash
+wp eval-file ~/repos/frave-theme/bin/crear-lineas.php
+wp eval-file ~/repos/frave-theme/bin/crear-atributos.php
+```
 
-Primero prueba un producto en borrador (`Published = -1`) y, si hay variaciones, importa un producto padre con una o dos variaciones en la instalación local. Revisa el mapeo, la ficha, las imágenes, los precios y el inventario antes de procesar el resto del catálogo.
+Ambos se pueden repetir sin cambiar lo que ya existe. Después de una importación grande, vuelve a ejecutar `crear-atributos.php` para ordenar las presentaciones y capacidades que se hayan creado.
 
-Consulta el [esquema oficial del importador CSV de WooCommerce](https://woocommerce.com/document/product-csv-importer-exporter/) antes de futuras importaciones; el mapeo puede variar con las versiones y extensiones activas.
+## Prueba local
+
+`bin/muestra-catalogo.csv` tiene diez productos `[MUESTRA]` (con imágenes de las líneas) para probar la importación y el catálogo en local. **No lo importes en producción.** `python bin/plantilla-catalogo.py` (con `openpyxl`) regenera la plantilla y la muestra si cambian las categorías o los atributos.
 
 ## Datos pendientes de Frave
 
-- Inventario aprobado con nombres comerciales y SKU.
-- Clasificación de productos terminados, esencias, insumos y envases.
-- Unidades y presentaciones que se venderán.
-- Familias olfativas, concentraciones y otros atributos que realmente se informarán.
-- Precios, promociones, stock y política para productos agotados.
-- Fotografías propias y texto alternativo de cada producto.
-- Categorías que deben aparecer en la navegación principal.
+- Listado de productos: nombre comercial, SKU, línea y subcategoría.
+- Presentaciones o capacidades de cada producto.
+- Atributos que se informarán (familia olfativa o perfil, aplicación, solubilidad…) y validación de los valores sugeridos.
+- Descripción corta y detalle de cada producto.
+- Fotos con la especificación de esta guía.
+- Productos destacados para la portada y cada línea.

@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fases 1 a 4 publicadas en frave.pe; fase 5 completa en `main` (5a: Nosotros y Experticia; 5b: Soluciones, contacto ampliado y chat de WhatsApp), pendiente de publicar. Pendientes en producción: WhatsApp, productos del catálogo y aprobación del sistema visual en `/?sistema-visual`.
+- **Estado:** fases 1 a 5 publicadas en frave.pe; fase 6 (catálogo listo para cargar) en `main`, pendiente de publicar y de los productos de Frave. Pendientes en producción: WhatsApp y datos de contacto, Libro de Reclamaciones y aprobación del sistema visual.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
@@ -206,7 +206,24 @@ Sitio (base de datos, local y producción):
 - [x] Contacto ampliado: empresa, ciudad y línea de interés (completada desde `?linea=` o `?producto=`), consentimiento según la Ley 29733 con aviso de derechos y fecha guardada (plugin 1.3.0) (5b).
 - [x] Chat de WhatsApp guiado (cotización, consulta de producto, otra consulta; reclamos al Libro de Reclamaciones), sin guardar datos en la web (5b). Necesita el número de WhatsApp en producción.
 
-### Fase 6 — Blog, SEO, rendimiento y salida
+### Fase 6 — Catálogo listo para cargar
+
+- [x] Guía del catálogo y plantilla de importación al día con el árbol acordado: hoja para completar con listas desplegables, ejemplos de las tres líneas (incluido un producto variable), rutas de categoría, atributos e instrucciones ([GUIA_CATALOGO.md](GUIA_CATALOGO.md)).
+- [x] Atributos globales por línea (`bin/crear-atributos.php`): presentación, familia olfativa, perfil de sabor, aplicación, solubilidad, capacidad, material y cierre; los filtros siguen ese orden y las medidas se ordenan de menor a mayor.
+- [x] Ficha de producto rediseñada: línea y subcategoría sobre el título, datos a la vista, cotización, código y descripción como sección; sin la barra de búsqueda bajo la cabecera.
+- [x] Categorías con sus subcategorías como accesos rápidos sobre los productos.
+- [x] Especificación de las fotos de producto.
+- [x] Importación de prueba en local con el importador de WooCommerce (10 productos y 3 variaciones, todas las columnas asignadas solas).
+- [ ] Listado de productos y fotos de Frave; importación en frave.pe.
+- [ ] Tienda en «Visible» y revisión de enlaces de líneas, soluciones y destacados con los productos reales.
+
+#### Publicar la fase 6
+
+1. Publicar el tema (1.9.0).
+2. Desde la carpeta del sitio: `wp eval-file ~/repos/frave-theme/bin/crear-atributos.php`.
+3. Cuando estén los productos: importarlos (ver la guía), volver a ejecutar `crear-atributos.php`, poner la tienda en «Visible» y vaciar la caché.
+
+### Fase 7 — Blog, SEO, rendimiento y salida
 
 - [ ] Blog y artículo con migas de pan y compartir funcional.
 - [x] Descripción y Open Graph por página desde el tema mientras no haya plugin SEO; favicon con el isotipo (revisión general, 12-10).
@@ -246,3 +263,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-12 | Revisión general de frave.pe (público y administrador). Corregido en código (tema 1.8.0, plugin 1.4.0): textos por defecto visibles en gris en los campos ACF de línea y solución, contraste de los números de las tarjetas y del texto superior del hero de Envases, descripción y Open Graph por página con imágenes JPG para compartir, favicon por defecto, usuarios ocultos en la API, archivos de autor redirigidos, mapa del sitio sin usuarios ni páginas de tienda en modo catálogo. Pendiente en el administrador: ver la lista de acciones de la revisión (visibilidad «Próximamente» de WooCommerce, portada estática, nombre del sitio, zona horaria, país y moneda, datos de contacto, páginas legales, entrada de ejemplo, temas inactivos, usuario «admin», correo SMTP). |
 | 2026-10-12 | Páginas legales publicadas en frave.pe: Política de privacidad (Ley 29733, asignada como página de privacidad del sitio y enlazada desde el formulario), Términos y condiciones y Preguntas frecuentes (con datos estructurados FAQPage); Libro de Reclamaciones creado en borrador hasta tener razón social, RUC y domicilio. Los textos describen el sitio real (formulario, chat de WhatsApp sin almacenamiento, solo cookies técnicas y de seguridad); para que eso sea cierto, el plugin 1.4.1 apaga la atribución de pedidos (cookies sbjs_*) en modo catálogo. Las preguntas frecuentes se enlazan desde Contacto y el pie (tema 1.8.1). |
 | 2026-10-12 | Ajustes del administrador aplicados en frave.pe: nombre «Frave» y eslogan, zona horaria America/Lima, Perú (Lima) y soles en WooCommerce, página «Inicio» como portada estática (el grupo ACF «Inicio Frave» ya se edita ahí), «Hello world!» en la papelera, Hostinger Reach desactivado y caché vaciada. Comprobado en línea: títulos «… – Frave», mapa del sitio solo con páginas, sin cookies ni servicios de terceros. Siguen pendientes: datos de contacto, catálogo en «Próximamente» hasta cargar productos, Libro de Reclamaciones, temas inactivos, usuario «admin» y correo SMTP. |
+| 2026-10-12 | Fase 6 implementada (tema 1.9.0): plantilla de importación y muestra generadas por `bin/plantilla-catalogo.py`, atributos globales (`bin/crear-atributos.php`) con orden de filtros y de medidas, ficha de producto rediseñada, subcategorías como accesos rápidos y guía del catálogo reescrita. Evidencia: importación real con el importador de WooCommerce en local (todas las columnas asignadas solas; 10 productos y 3 variaciones con categorías, atributos e imágenes); PHPCS, ESLint y build; Playwright con el modo catálogo y con la tienda activa, incluidas 4 pruebas nuevas de ficha y categorías. Se corrigieron dos estilos de WooCommerce sin capa que anulaban la rejilla y la foto fija de la ficha. |

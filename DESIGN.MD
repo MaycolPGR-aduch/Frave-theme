@@ -155,6 +155,12 @@ Imágenes de línea: horizontal 16:9 con el tercio izquierdo despejado y vertica
 - **Soluciones:** el hero cálido de las páginas de empresa con una imagen en arco; las tarjetas de lo que se ofrece son las del portafolio de línea, con la línea de origen junto al número («01 · FRAGANCIAS»). La página central usa tarjetas con icono.
 - **Chat de WhatsApp:** panel sobre el botón flotante con la cabecera en el verde oscuro de WhatsApp (5:1 con blanco), la pregunta como un mensaje recibido y las opciones como botones con borde verde. En móvil ocupa el ancho de la pantalla menos los márgenes.
 
+## Ficha de producto y catálogo
+
+- **Ficha:** a la izquierda, la foto sobre la superficie marfil (queda fija al bajar en escritorio); a la derecha, la línea y la subcategoría como texto superior enlazado, el título ligero, la descripción corta, los datos del producto como etiqueta en mayúsculas y valores en píldoras, la cotización sobre naranja suave y el código. Debajo, «Detalles del producto» y «También te puede interesar».
+- **Catálogo:** en una categoría con subcategorías, estas aparecen como píldoras sobre los productos, con su número de productos.
+- **Fotos:** cuadradas, fondo marfil liso, producto centrado con aire (ver [GUIA_CATALOGO.md](GUIA_CATALOGO.md)).
+
 ## Accesibilidad
 
 HTML semántico, enlace para saltar al contenido, foco visible en todos los controles (también en la búsqueda, que muestra un anillo en toda la píldora), menús con `aria-expanded`, Escape y retención del foco, carrusel navegable con teclado y movimiento reducido. Pendiente: auditoría con lector de pantalla y contenido definitivo (fase 6).
