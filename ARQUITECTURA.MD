@@ -17,7 +17,7 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `functions.php` | Define constantes y carga los módulos de `inc/`. |
 | `inc/setup.php` | Soporte del tema, menús, tamaños de imagen y ancho de contenido. |
 | `inc/helpers.php` | Lectura opcional de ACF, URL de assets y botón del sistema (`frave_button()`, `.btn` con icono). |
-| `inc/icons.php` | Iconos de línea (`frave_icon()`), icono de cada línea de producto y el isotipo en SVG (`frave_isotype()`). |
+| `inc/icons.php` | Iconos de línea (`frave_icon()`), logos de redes sociales (`frave_brand_icon()`), icono de cada línea de producto y el isotipo en SVG (`frave_isotype()`). |
 | `inc/style-guide.php`, `template-parts/style-guide.php` | Guía interna del sistema visual en `/?sistema-visual`, solo para quien puede editar el tema y sin indexar. |
 | `inc/enqueue.php` | Carga Vite en desarrollo o CSS y JS desde el manifest compilado. |
 | `inc/woocommerce.php` | Wrappers del contenido, banda de cabecera del catálogo (título, descripción, migas y buscador), columnas, marco e imagen y categoría de las tarjetas, fragmento del contador del carrito, `frave_catalog_mode()` / `frave_shop_enabled()` y botón «Ver detalles» en modo catálogo. |
@@ -28,8 +28,8 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `assets/src/js/modules/drawer.js` | Cajón lateral modal compartido por el mini-carrito y los filtros: foco, Escape, fondo y un solo cajón abierto. |
 | `inc/institutional.php`, `page-templates/` | Plantillas Contacto, Preguntas frecuentes y Política o texto legal; anclas e índice de secciones, datos `FAQPage`, enlaces legales del pie (menú `legal` o automático). |
 | `patterns/` | Estructuras iniciales de las páginas institucionales (categoría «Frave: páginas institucionales»), con marcadores `[PENDIENTE]`. |
-| `inc/contact.php` | Ajustes de WhatsApp en el Personalizador, enlaces `wa.me`, botón de consulta en la ficha y, en modo catálogo, bloque «¿Te interesa este producto?» con el enlace de cotización (`?producto=ID`). |
-| `front-page.php`, `page.php`, `single.php`, `archive.php`, `search.php`, `index.php`, `404.php` | Jerarquía de templates clásicos. |
+| `inc/contact.php` | Ajustes de WhatsApp, canales de contacto y redes sociales en el Personalizador, enlaces `wa.me`, botón de consulta en la ficha y, en modo catálogo, bloque «¿Te interesa este producto?» con el enlace de cotización (`?producto=ID`). |
+| `front-page.php`, `page.php`, `search.php`, `index.php`, `404.php` | Jerarquía de templates clásicos (los del blog, en su propia fila). |
 | `header.php`, `footer.php` | Estructura global, navegación, búsqueda, carrito y pie. |
 | `front-page.php`, `template-parts/home/` | Portada: hero con vídeo, líneas, cómo trabajamos, destacados, razones, catálogo, tendencias y ubicación. |
 | `inc/home.php` | Textos por defecto de la portada (única fuente, también para los valores por defecto de ACF), resaltado con `*asteriscos*`, vídeo del hero y precarga de su imagen fija, datos de las tres líneas e iconos de las razones. |
@@ -39,7 +39,9 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `template-parts/components/term-card.php`, `template-parts/components/applications.php` | Tarjeta de subcategoría (portafolio y soluciones) y banda de aplicaciones. |
 | `template-parts/components/whatsapp-button.php`, `assets/src/js/modules/whatsapp-chat.js` | Botón flotante y chat de WhatsApp guiado (motivo, detalles y mensaje armado; no guarda datos). |
 | `template-parts/components/highlights.php`, `template-parts/components/cta-panel.php` | Destacados con cifra animada y cierre con la imagen de contacto, compartidos por las páginas de línea y de empresa. |
-| `inc/seo.php`, `assets/media/og/`, `assets/images/favicon*` | Descripción y etiquetas Open Graph de cada página mientras no haya un plugin SEO (imágenes JPG de 1200 × 630 para compartir) y favicon con el isotipo mientras no haya icono del sitio. |
+| `inc/seo.php`, `assets/media/og/`, `assets/images/favicon*` | Mientras no haya un plugin SEO: descripción (o el extracto de la página) y etiquetas Open Graph de cada página (imágenes JPG de 1200 × 630 para compartir), datos estructurados JSON-LD (Organization, WebSite, BlogPosting, BreadcrumbList), canonical de listados y `noindex` de la búsqueda; favicon con el isotipo mientras no haya icono del sitio. |
+| `inc/blog.php`, `home.php`, `category.php`, `archive.php`, `single.php`, `template-parts/blog/`, `template-parts/components/post-tile.php`, `assets/src/css/pages/blog.css`, `assets/src/js/modules/share.js` | Blog: página de entradas, temas, tarjeta de artículo, migas de pan, tiempo de lectura, enlaces para compartir (copiar enlace y menú del sistema con JavaScript), artículos relacionados; el blog entra en los menús cuando tiene artículos y la entrada de ejemplo de WordPress queda fuera. |
+| `bin/crear-blog.php` | Crea la página /blog/, sus categorías y cuatro artículos de inicio en borrador (no se despliega). |
 | `inc/product-page.php`, `assets/src/css/pages/product.css` | Ficha de producto: línea y subcategoría sobre el título, datos (atributos) a la vista con las medidas de menor a mayor, cotización, código y descripción como sección; orden de tamaño de los términos de presentación y capacidad. |
 | `bin/crear-atributos.php`, `bin/plantilla-catalogo.py`, `bin/muestra-catalogo.csv`, `PLANTILLA_IMPORTACION_WOOCOMMERCE.xlsx` | Atributos globales de las líneas, plantilla de importación con ejemplos, categorías y atributos, y catálogo de muestra para pruebas locales (ver [GUIA_CATALOGO.md](GUIA_CATALOGO.md)). |
 | `bin/crear-soluciones.php` | Crea /soluciones/ y una página por industria (no se despliega). |

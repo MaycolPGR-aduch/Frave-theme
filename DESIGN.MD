@@ -161,9 +161,20 @@ Imágenes de línea: horizontal 16:9 con el tercio izquierdo despejado y vertica
 - **Catálogo:** en una categoría con subcategorías, estas aparecen como píldoras sobre los productos, con su número de productos.
 - **Fotos:** cuadradas, fondo marfil liso, producto centrado con aire (ver [GUIA_CATALOGO.md](GUIA_CATALOGO.md)).
 
+## Blog
+
+- **Página de entradas:** banda de cabecera con migas de pan; temas como píldoras (el activo en tinta); el último artículo como tarjeta ancha con imagen a la izquierda, título ligero grande y «Leer artículo»; el resto en una rejilla de tres columnas en escritorio.
+- **Tarjeta de artículo:** imagen 16:10 sobre la superficie marfil (o el isotipo si no hay imagen), tema en naranja oscuro y fecha en mayúsculas espaciadas, título en negrita y extracto en gris. Toda la tarjeta es el enlace.
+- **Artículo:** título ligero de hasta 3,6 rem en la banda oscura, fecha y tiempo de lectura; imagen de portada redondeada; texto de 44 rem como máximo a 1,1 rem con interlineado 1,75, viñetas naranjas y citas con borde naranja; en escritorio, «Compartir» en una columna estrecha que acompaña la lectura. Botones de compartir como píldoras con el logo de cada red en su color.
+- **Pie:** redes sociales como círculos con borde claro que se rellenan de naranja al pasar el cursor.
+
 ## Accesibilidad
 
-HTML semántico, enlace para saltar al contenido, foco visible en todos los controles (también en la búsqueda, que muestra un anillo en toda la píldora), menús con `aria-expanded`, Escape y retención del foco, carrusel navegable con teclado y movimiento reducido. Pendiente: auditoría con lector de pantalla y contenido definitivo (fase 6).
+HTML semántico, enlace para saltar al contenido, foco visible en todos los controles (también en la búsqueda, que muestra un anillo en toda la píldora), menús con `aria-expanded`, Escape y retención del foco, carrusel navegable con teclado y movimiento reducido.
+
+Auditoría de la fase 7 (13-10-2026): axe con WCAG 2.2 AA en todas las plantillas (escritorio y móvil, con menú y chat abiertos), recorrido con teclado, esquema de encabezados y regiones, y reajuste a 320 px. Quedan como avisos aceptados las palabras del ticker y los números de las creencias: son decorativos y están ocultos a los lectores de pantalla. Pendiente: una pasada con lector de pantalla con el contenido definitivo.
+
+Regla aprendida: el color de enlace global de `theme.json` no tiene capa y gana a cualquier color del tema en un enlace; los enlaces con fondo propio (botones, píldoras activas, enlace de salto, paginación) declaran su color con `!important`.
 
 ## Registro de cambios y decisiones
 
@@ -176,5 +187,7 @@ HTML semántico, enlace para saltar al contenido, foco visible en todos los cont
 | 2026-10-05 | Botones de WooCommerce con el estilo del tema (`woocommerce-block-theme-has-button-styles`) y etiqueta «¡Oferta!» en `primary`. Páginas WooCommerce alineadas con el sistema. | Implementado |
 | 2026-10-10 | Modo catálogo: menú con submenús, «Solicitar asesoría», bloque de cotización en la ficha y «Ver detalles» con contorno. | Implementado |
 | 2026-10-11 | Sistema corporativo (fase 2): tokens noche y naranja suave, Lato 300 en títulos, botones `.btn` con icono, píldoras y marcador, cabecera en cápsula flotante, submenús con iconos, banda de cabecera en páginas y catálogo, pie oscuro con llamada a la acción, formas de gota y frasco, isotipo, iconos de línea, tarjetas, cifras, carrusel, apilado, hero fijo con telón y pie que se descubre. Guía en `/?sistema-visual`. | Implementado; pendiente de aprobación de Frave |
+
+| 2026-10-13 | Blog (tarjetas, artículo, compartir), redes sociales en el pie, menú de siete entradas que cabe desde 1024 px, enlace de salto legible y migas de la ficha subrayadas. | Implementado |
 
 Al aprobar o cambiar una decisión visual, actualiza esta guía, los tokens y `theme.json`; compila los assets y revisa `/?sistema-visual`, portada, catálogo, ficha y contacto en móvil y escritorio. Registra qué cambió y por qué.

@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fases 1 a 5 publicadas en frave.pe; fase 6 (catálogo listo para cargar) en `main`, pendiente de publicar y de los productos de Frave. Pendientes en producción: WhatsApp y datos de contacto, Libro de Reclamaciones y aprobación del sistema visual.
+- **Estado:** fases 1 a 5 publicadas en frave.pe; fase 6 (catálogo listo para cargar) y fase 7 (blog, SEO, rendimiento y accesibilidad; tema 1.10.0 y plugin 1.5.0) en `main`, pendientes de publicar. Faltan los productos de Frave, la revisión en producción y, en el administrador, WhatsApp y datos de contacto, redes sociales, Libro de Reclamaciones y aprobación del sistema visual.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
@@ -25,14 +25,16 @@ Con identidad Frave: naranja `#fc4c02` como acento, tinta oscura y blanco como b
 
 Errores de la referencia que se evitan desde el principio:
 
-- [ ] Imágenes en WebP/AVIF con `srcset` y carga diferida (la portada de la referencia pesa 4,2 MB en 80 peticiones).
-- [ ] Sin jQuery, Swiper, AOS ni librerías por CDN: CSS nativo (`position: sticky`, scroll-snap) y el JavaScript propio del tema.
-- [ ] Un único responsable de las metaetiquetas SEO (el tema no duplica canonical ni Open Graph).
-- [ ] Un `h1` por página y texto alternativo útil en las imágenes que comunican.
-- [ ] Mapa que se carga solo al pedirlo, sin Google Maps en cada visita.
-- [ ] Antispam sin reCAPTCHA (campo trampa y tiempo mínimo, ya implementados).
-- [ ] Sin enlaces a anclas inexistentes, botones vacíos ni restos de pruebas en el HTML.
-- [ ] Movimiento reducido respetado en todas las transiciones.
+Comprobado en la auditoría de la fase 7 (13-10-2026):
+
+- [x] Imágenes en WebP/AVIF con `srcset` y carga diferida (la portada de la referencia pesa 4,2 MB en 80 peticiones).
+- [x] Sin jQuery, Swiper, AOS ni librerías por CDN: CSS nativo (`position: sticky`, scroll-snap) y el JavaScript propio del tema. En modo catálogo, jQuery solo se carga en la ficha, para la galería de WooCommerce.
+- [x] Un único responsable de las metaetiquetas SEO (el tema no duplica canonical ni Open Graph, y se aparta si se activa un plugin SEO).
+- [x] Un `h1` por página y texto alternativo útil en las imágenes que comunican.
+- [x] Mapa que se carga solo al pedirlo, sin Google Maps en cada visita.
+- [x] Antispam sin reCAPTCHA (campo trampa y tiempo mínimo).
+- [x] Sin enlaces a anclas inexistentes, botones vacíos ni restos de pruebas en el HTML.
+- [x] Movimiento reducido respetado en todas las transiciones.
 
 ## Mapa del sitio objetivo
 
@@ -225,12 +227,20 @@ Sitio (base de datos, local y producción):
 
 ### Fase 7 — Blog, SEO, rendimiento y salida
 
-- [ ] Blog y artículo con migas de pan y compartir funcional.
+- [x] Blog: página de entradas con temas y el último artículo destacado, artículo con migas de pan, tiempo de lectura, compartir (WhatsApp, LinkedIn, Facebook, correo, copiar enlace y menú de compartir del teléfono) y «Sigue leyendo». Aparece en el menú cuando hay artículos publicados. `bin/crear-blog.php` crea la página, las categorías y cuatro artículos de inicio en borrador (13-10).
 - [x] Descripción y Open Graph por página desde el tema mientras no haya plugin SEO; favicon con el isotipo (revisión general, 12-10).
-- [ ] Plugin SEO elegido, sin metadatos duplicados; títulos y descripciones.
-- [ ] Imágenes optimizadas y medición de LCP, CLS e INP en portada, línea, catálogo, ficha y contacto.
-- [ ] Auditoría de accesibilidad con teclado y lector de pantalla.
+- [x] SEO técnico desde el tema, sin metadatos duplicados: datos estructurados (Organization con contacto y redes, WebSite, BlogPosting y BreadcrumbList), canonical en listados, `noindex` en la búsqueda y en vistas filtradas, el extracto de una página como su descripción y redes sociales en el Personalizador y en el pie (13-10). **Plugin SEO:** no hace falta para salir; si Frave quiere análisis por página, Yoast o Rank Math funcionan y el tema deja de imprimir sus etiquetas solo.
+- [x] Rendimiento: medición en frave.pe con móvil simulado (CPU 4× más lenta, 4G lenta): LCP de 1,8 a 2,7 s, CLS 0, bloqueo del hilo principal casi nulo y respuesta a la interacción por debajo de 70 ms. Mejoras: logos WebP (de 231 a 46 KB), portadas de línea un 25 % más livianas, vídeo del hero después de la carga (y nunca con conexión lenta o ahorro de datos), página de contacto en caché y sin scripts de compra ni jQuery en modo catálogo (13-10). La ficha y el catálogo se miden cuando estén los productos.
+- [x] Accesibilidad: axe (WCAG 2.2 AA) en las 18 plantillas en escritorio y móvil, con el menú y el chat abiertos; recorrido completo con teclado; esquema de encabezados y regiones; reajuste a 320 px. Corregido: enlace «Saltar al contenido» sin texto visible, migas de la ficha distinguibles solo por color, región de migas en inglés (13-10). Pendiente: una pasada con NVDA o VoiceOver con el contenido definitivo.
+- [ ] Search Console: verificar el dominio y enviar el mapa del sitio (`/wp-sitemap.xml`). Necesita la cuenta de Google de Frave.
 - [ ] Revisión completa en producción y aviso a Frave.
+
+#### Publicar la fase 7
+
+1. Publicar primero el plugin (1.5.0) y después el tema (1.10.0).
+2. Desde la carpeta del sitio: `wp eval-file ~/repos/frave-theme/bin/crear-blog.php` (página /blog/, categorías y cuatro artículos en borrador) y `wp litespeed-purge all`.
+3. Revisar los borradores en **Entradas**, cambiar lo que haga falta (textos e imágenes) y publicarlos: el blog aparece en el menú con el primer artículo publicado.
+4. Redes sociales en **Apariencia → Personalizar → Contacto** (Facebook, Instagram, LinkedIn, TikTok, YouTube).
 
 ## Lo que debe aportar Frave
 
@@ -245,6 +255,9 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 - [ ] Imagen de cada línea y validación de los textos de la portada. *Imágenes recibidas (IA, conceptuales); falta validar textos.*
 - [ ] Certificaciones, solo si existen.
 - [ ] Revisión legal de la política de privacidad, los términos y las preguntas frecuentes (publicadas el 12-10 con textos base); razón social, RUC y domicilio para la política y el Libro de Reclamaciones.
+- [ ] Revisión de los cuatro artículos de inicio del blog (temas técnicos generales, sin datos de la empresa) y temas para los siguientes.
+- [ ] Direcciones de las redes sociales.
+- [ ] Acceso a Google Search Console (o a la cuenta de Google con la que se verificará el dominio).
 
 ## Registro de avances
 
@@ -264,3 +277,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-12 | Páginas legales publicadas en frave.pe: Política de privacidad (Ley 29733, asignada como página de privacidad del sitio y enlazada desde el formulario), Términos y condiciones y Preguntas frecuentes (con datos estructurados FAQPage); Libro de Reclamaciones creado en borrador hasta tener razón social, RUC y domicilio. Los textos describen el sitio real (formulario, chat de WhatsApp sin almacenamiento, solo cookies técnicas y de seguridad); para que eso sea cierto, el plugin 1.4.1 apaga la atribución de pedidos (cookies sbjs_*) en modo catálogo. Las preguntas frecuentes se enlazan desde Contacto y el pie (tema 1.8.1). |
 | 2026-10-12 | Ajustes del administrador aplicados en frave.pe: nombre «Frave» y eslogan, zona horaria America/Lima, Perú (Lima) y soles en WooCommerce, página «Inicio» como portada estática (el grupo ACF «Inicio Frave» ya se edita ahí), «Hello world!» en la papelera, Hostinger Reach desactivado y caché vaciada. Comprobado en línea: títulos «… – Frave», mapa del sitio solo con páginas, sin cookies ni servicios de terceros. Siguen pendientes: datos de contacto, catálogo en «Próximamente» hasta cargar productos, Libro de Reclamaciones, temas inactivos, usuario «admin» y correo SMTP. |
 | 2026-10-12 | Fase 6 implementada (tema 1.9.0): plantilla de importación y muestra generadas por `bin/plantilla-catalogo.py`, atributos globales (`bin/crear-atributos.php`) con orden de filtros y de medidas, ficha de producto rediseñada, subcategorías como accesos rápidos y guía del catálogo reescrita. Evidencia: importación real con el importador de WooCommerce en local (todas las columnas asignadas solas; 10 productos y 3 variaciones con categorías, atributos e imágenes); PHPCS, ESLint y build; Playwright con el modo catálogo y con la tienda activa, incluidas 4 pruebas nuevas de ficha y categorías. Se corrigieron dos estilos de WooCommerce sin capa que anulaban la rejilla y la foto fija de la ficha. |
+| 2026-10-13 | Fase 7 implementada en `main` (tema 1.10.0, plugin 1.5.0): blog con migas de pan, compartir, temas y relacionados (`bin/crear-blog.php` con cuatro artículos de inicio en borrador); datos estructurados, canonical de listados, `noindex` de búsqueda y redes sociales en el Personalizador; logos WebP, portadas más livianas, vídeo del hero diferido, contacto en caché y sin scripts de compra en modo catálogo; correcciones de accesibilidad. Evidencia: medición de Core Web Vitals en frave.pe con móvil simulado (LCP 1,8–2,7 s, CLS 0); axe WCAG 2.2 AA en 18 plantillas, teclado, encabezados y reajuste a 320 px; PHPCS, ESLint; Playwright 56 pruebas con el modo catálogo y 26 con la tienda activa, incluidas 5 nuevas (blog y enlace de salto). La API de PageSpeed no tiene cuota sin clave: la medición se hizo con Chrome y limitación de CPU y red. |

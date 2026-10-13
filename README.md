@@ -100,9 +100,28 @@ La página **Soluciones** (`page-templates/soluciones.php`, /soluciones/) presen
 - **Crear las páginas:** `wp eval-file RUTA/bin/crear-soluciones.php`.
 - **Menú automático:** «Soluciones» con la página central y un acceso por industria. Con siete entradas, «Inicio» deja su lugar (el logotipo ya lleva a la portada).
 
+### Blog
+
+La página de entradas (Ajustes → Lectura) muestra los temas (categorías con artículos), el último artículo destacado y los demás en tarjetas. Cada artículo tiene migas de pan, categoría, fecha y tiempo de lectura, la imagen destacada, el texto con los enlaces para compartir al lado (debajo en móvil) y «Sigue leyendo» con artículos del mismo tema.
+
+- **Crear el blog:** `wp eval-file RUTA/bin/crear-blog.php` crea la página /blog/, la asigna como página de entradas, renombra «Sin categoría» como «Novedades», crea «Guías técnicas» y «Tendencias», y cuatro artículos de inicio **en borrador** con imágenes de las líneas. Con `publicar` al final los publica (sitios de prueba).
+- **Menú:** «Blog» aparece en el menú y en el pie cuando hay al menos un artículo publicado. La entrada de ejemplo de WordPress («Hello world!») no cuenta y no se muestra en ningún listado.
+- **Texto de la cabecera:** el extracto de la página Blog (o un texto por defecto).
+- **Compartir:** WhatsApp, LinkedIn, Facebook y correo; con JavaScript, también «Copiar enlace» y, en teléfonos, el menú de compartir del sistema.
+- Las fechas se muestran como «13 de octubre de 2026», sea cual sea el formato de Ajustes → Generales.
+
 ### Metadatos para buscadores y redes
 
-Mientras no haya un plugin SEO activo, `inc/seo.php` imprime la descripción de cada página (el texto de su hero) y las etiquetas Open Graph que usan WhatsApp, Facebook o LinkedIn para la vista previa, con imágenes JPG de `assets/media/og/`. Si no hay icono del sitio en el Personalizador, el favicon es el isotipo. Con Yoast, Rank Math, AIOSEO, SEOPress o The SEO Framework activos, el tema no imprime estas etiquetas.
+Mientras no haya un plugin SEO activo, `inc/seo.php` se encarga de:
+
+- la descripción de cada página (el texto de su hero, o el **extracto** de la página si se completa en el editor) y las etiquetas Open Graph que usan WhatsApp, Facebook o LinkedIn para la vista previa, con imágenes JPG de `assets/media/og/`;
+- los datos estructurados (JSON-LD): la organización con su logotipo, contacto y redes, el sitio, cada artículo del blog y sus migas de pan;
+- la dirección canónica de los listados (blog, categorías y catálogo sin filtros) y `noindex` en los resultados de búsqueda (las vistas filtradas del catálogo ya lo tenían);
+- el favicon con el isotipo, si no hay icono del sitio en el Personalizador.
+
+Con Yoast, Rank Math, AIOSEO, SEOPress o The SEO Framework activos, el tema no imprime nada de esto.
+
+**Redes sociales:** las direcciones de Facebook, Instagram, LinkedIn, TikTok y YouTube se completan en **Apariencia → Personalizar → Contacto**; las que tienen dirección aparecen en el pie y en los datos de la organización.
 
 ### Chat de WhatsApp guiado
 
