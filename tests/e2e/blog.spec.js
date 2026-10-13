@@ -1,10 +1,13 @@
 import { expect, test } from '@playwright/test';
 import { collectPageErrors, expectNoPhpErrors } from './helpers.js';
 
-/** Address of the blog, from the main menu (it appears once there are published posts). */
+/**
+ * Address of the blog, from the home page: «Ver todos los artículos» of the latest posts,
+ * which does not depend on the menu (a menu set in Apariencia → Menús may leave it out).
+ */
 async function blogUrl(page) {
   await page.goto('/');
-  const link = page.locator('#primary-navigation .menu-list > li > a', { hasText: 'Blog' });
+  const link = page.locator('.home-posts .section-head__action');
   await expect(link).toHaveCount(1);
   return link.getAttribute('href');
 }
@@ -76,6 +79,13 @@ test.describe('blog', () => {
     await copy.click();
     await expect(page.locator('[data-share-status]')).toHaveText('Enlace copiado');
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(page.url());
+  });
+
+  test('con el menú automático, «Blog» aparece cuando hay artículos', async ({ page }) => {
+    const url = await blogUrl(page);
+    const fallback = await page.locator('#primary-navigation .menu-list > li > a[href]').evaluateAll((links) => links.some((a) => a.textContent.trim() === 'Experticia'));
+    test.skip(!fallback, 'Este sitio usa un menú propio de Apariencia → Menús.');
+    await expect(page.locator(`#primary-navigation .menu-list > li > a[href="${url}"]`)).toHaveText('Blog');
   });
 
   test('la búsqueda no se indexa y los listados tienen dirección canónica', async ({ page }) => {

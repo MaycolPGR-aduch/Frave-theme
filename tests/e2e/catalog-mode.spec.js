@@ -68,7 +68,7 @@ test.describe('modo catálogo', () => {
 
     await quote.click();
     await expect(page).toHaveURL(/producto=\d+/);
-    await expect(page.locator('#frave-contact-subject')).toHaveValue('cotizacion');
+    await expect(page.locator('#frave-contact-subject-cotizacion')).toBeChecked();
     await expect(page.locator('#frave-contact-message')).toHaveValue(new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     await expect(page.locator('#frave-contact-order-number')).toHaveCount(0);
   });

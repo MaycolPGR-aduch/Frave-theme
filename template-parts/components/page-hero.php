@@ -10,6 +10,7 @@
  * - breadcrumb: print WooCommerce's breadcrumb above the eyebrow.
  * - trail:      print the blog breadcrumb (frave_breadcrumb) above the eyebrow.
  * - search:     add the product search form.
+ * - facts:      optional list of [ icon, text ] shown as small highlights under the lead.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -26,6 +27,7 @@ $frave_hero = wp_parse_args(
 		'breadcrumb' => false,
 		'trail'      => false,
 		'search'     => false,
+		'facts'      => array(),
 	)
 );
 ?>
@@ -50,6 +52,13 @@ $frave_hero = wp_parse_args(
 		<?php endif; ?>
 		<?php if ( '' !== $frave_hero['meta'] ) : ?>
 			<p class="page-hero__meta"><?php echo wp_kses_post( $frave_hero['meta'] ); ?></p>
+		<?php endif; ?>
+		<?php if ( $frave_hero['facts'] ) : ?>
+			<ul class="page-hero__facts">
+				<?php foreach ( $frave_hero['facts'] as list( $frave_fact_icon, $frave_fact_text ) ) : ?>
+					<li><?php echo frave_icon( $frave_fact_icon ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?><span><?php echo esc_html( $frave_fact_text ); ?></span></li>
+				<?php endforeach; ?>
+			</ul>
 		<?php endif; ?>
 		<?php if ( $frave_hero['search'] ) : ?>
 			<div class="page-hero__search">

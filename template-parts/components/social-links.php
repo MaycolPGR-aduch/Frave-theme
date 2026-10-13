@@ -5,7 +5,7 @@
  *
  * Arguments:
  * - context: 'header' (large screens, next to the search), 'menu' (mobile drawer, with a
- *            label) or 'footer' (on the dark footer).
+ *            label), 'contact' (the contact page's channels) or 'footer' (on the dark footer).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -16,7 +16,7 @@ $frave_profiles = frave_social_links();
 if ( ! $frave_profiles ) {
 	return;
 }
-$frave_context = in_array( $args['context'] ?? '', array( 'header', 'menu', 'footer' ), true ) ? $args['context'] : 'footer';
+$frave_context = in_array( $args['context'] ?? '', array( 'header', 'menu', 'contact', 'footer' ), true ) ? $args['context'] : 'footer';
 $frave_new_tab = __( '(se abre en una nueva pestaña)', 'frave' );
 ?>
 <div class="social-links social-links--<?php echo esc_attr( $frave_context ); ?>">

@@ -212,6 +212,41 @@ function frave_social_links(): array {
 	return $links;
 }
 
+/** «+51914591932» as «+51 914 591 932» (Peruvian mobiles); other numbers as they are. */
+function frave_format_whatsapp_number( string $number ): string {
+	$digits = preg_replace( '/\D/', '', $number );
+	if ( 11 === strlen( $digits ) && str_starts_with( $digits, '519' ) ) {
+		return '+51 ' . substr( $digits, 2, 3 ) . ' ' . substr( $digits, 5, 3 ) . ' ' . substr( $digits, 8 );
+	}
+	return $number;
+}
+
+/** The contact page ends with its own form: the footer's invitation to get in touch would point back to it. */
+function frave_contact_hide_footer_cta( bool $show ): bool {
+	return is_page_template( FRAVE_TEMPLATE_CONTACT ) ? false : $show;
+}
+add_filter( 'frave_show_footer_cta', 'frave_contact_hide_footer_cta' );
+
+/** Next steps under the plugin's «Mensaje enviado»: WhatsApp for anything urgent, and the catalog. */
+function frave_contact_success_actions(): void {
+	$whatsapp = frave_whatsapp_url( frave_whatsapp_message() );
+	echo '<div class="frave-contact__success-actions">';
+	if ( $whatsapp ) {
+		printf(
+			'<a class="btn btn--whatsapp" href="%1$s" target="_blank" rel="noopener" data-frave-whatsapp="contact-success"><span>%2$s</span><span class="screen-reader-text"> %3$s</span><span class="btn__icon">%4$s</span></a>',
+			esc_url( $whatsapp ),
+			esc_html__( '¿Es urgente? Escríbenos por WhatsApp', 'frave' ),
+			esc_html__( '(se abre en una nueva pestaña)', 'frave' ),
+			frave_whatsapp_icon() // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG.
+		);
+	}
+	if ( class_exists( 'WooCommerce' ) ) {
+		frave_button( __( 'Mientras tanto, mira el catálogo', 'frave' ), frave_catalog_shop_url(), 'btn btn--outline' );
+	}
+	echo '</div>';
+}
+add_action( 'frave_peru_contact_success', 'frave_contact_success_actions' );
+
 function frave_whatsapp_number(): string {
 	return frave_normalize_whatsapp_number( (string) get_theme_mod( 'frave_whatsapp_number', '' ) );
 }

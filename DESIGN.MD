@@ -150,6 +150,13 @@ Imágenes de línea: horizontal 16:9 con el tercio izquierdo despejado y vertica
 - **Cómo trabajamos:** sobre noche, pestañas verticales con una barra naranja en la activa y un panel con el número en contorno; en móvil, acordeón con chevron.
 - **Bloques compartidos** (`system/blocks.css`): frase con explicación (`.statement`), destacados (`.highlights`), banda de palabras (`.ticker`) y cierre con la imagen de contacto (`.cta-panel`).
 
+## Contacto
+
+- **Cabecera** oscura con espacio extra abajo: las dos tarjetas suben sobre ella. Bajo la introducción, tres ventajas con icono naranja en un círculo translúcido.
+- **Formulario:** tarjeta blanca con sombra de elevación; título ligero con la parte importante en negrita; bloques con su número en un círculo naranja suave. Campos sobre la superficie clara, sin borde, que al enfocarse pasan a blanco con borde `primary` y un anillo naranja translúcido. Tema y línea como píldoras: la elegida en tinta con una marca que aparece delante; «Aún no lo sé» con borde punteado. Consentimiento en un bloque claro y botón naranja con la flecha en un círculo, que gira mientras envía.
+- **Canales:** tarjeta marfil con WhatsApp en una tarjeta blanca (icono verde y botón verde a todo el ancho), canales con icono en círculo naranja suave, redes con borde, pasos numerados con círculo de borde naranja y enlaces con flecha.
+- **Enviado:** bloque verde muy claro con el visto en un círculo verde, título ligero y acciones (WhatsApp y catálogo).
+
 ## Soluciones y chat de WhatsApp
 
 - **Soluciones:** el hero cálido de las páginas de empresa con una imagen en arco; las tarjetas de lo que se ofrece son las del portafolio de línea, con la línea de origen junto al número («01 · FRAGANCIAS»). La página central usa tarjetas con icono.
@@ -188,6 +195,7 @@ Regla aprendida: el color de enlace global de `theme.json` no tiene capa y gana 
 | 2026-10-10 | Modo catálogo: menú con submenús, «Solicitar asesoría», bloque de cotización en la ficha y «Ver detalles» con contorno. | Implementado |
 | 2026-10-11 | Sistema corporativo (fase 2): tokens noche y naranja suave, Lato 300 en títulos, botones `.btn` con icono, píldoras y marcador, cabecera en cápsula flotante, submenús con iconos, banda de cabecera en páginas y catálogo, pie oscuro con llamada a la acción, formas de gota y frasco, isotipo, iconos de línea, tarjetas, cifras, carrusel, apilado, hero fijo con telón y pie que se descubre. Guía en `/?sistema-visual`. | Implementado; pendiente de aprobación de Frave |
 
+| 2026-10-13 | Página de contacto rediseñada (cabecera con ventajas, formulario en bloques con opciones como píldoras, canales con WhatsApp destacado y confirmación con siguientes pasos); widget de WhatsApp como región propia. | Implementado |
 | 2026-10-13 | Redes sociales en cabecera, menú móvil y pie; entre 1024 y 1280 px la cabecera compacta logo, letra y espacios para que el menú quepa con sus flechas. | Implementado |
 | 2026-10-13 | Blog (tarjetas, artículo, compartir), redes sociales en el pie, menú de siete entradas que cabe desde 1024 px, enlace de salto legible y migas de la ficha subrayadas. | Implementado |
 

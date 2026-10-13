@@ -121,6 +121,15 @@ Mientras no haya un plugin SEO activo, `inc/seo.php` se encarga de:
 
 Con Yoast, Rank Math, AIOSEO, SEOPress o The SEO Framework activos, el tema no imprime nada de esto.
 
+### Página de contacto
+
+La plantilla **Contacto** es la entrada principal de clientes:
+
+- **Cabecera:** el nombre de la página como texto superior, «Hablemos de tu próximo producto», la introducción (el contenido de la página en el editor, o un texto por defecto) y tres ventajas con iconos.
+- **Formulario** (plugin Frave Perú) en una tarjeta que sube sobre la cabecera: dos bloques numerados, «Tus datos» y «Tu consulta»; el tema y la línea de interés se eligen con botones (botones de opción reales, accesibles con teclado); contador de caracteres del mensaje; botón con estado «Enviando…»; tras el envío, una confirmación con WhatsApp para lo urgente y el catálogo.
+- **Canales** a la derecha (debajo en móvil), fijos al bajar: WhatsApp destacado con el número, correo, teléfono, horario y dirección del Personalizador, redes sociales, «Cómo atendemos tu solicitud» y enlaces a Preguntas frecuentes y al Libro de Reclamaciones.
+- El pie no repite su invitación a contactar en esta página.
+
 **Redes sociales:** las direcciones de Facebook, Instagram, LinkedIn, TikTok y YouTube se completan en **Apariencia → Personalizar → Contacto**. Las que tienen dirección aparecen como logos redondos en la cabecera (desde 1280 px, junto a la búsqueda), al final del menú móvil («Síguenos») y en el pie, y en los datos de la organización para buscadores. Al pasar el cursor se rellenan con los colores de cada red (`template-parts/components/social-links.php`, `assets/src/css/system/social.css`).
 
 ### Chat de WhatsApp guiado

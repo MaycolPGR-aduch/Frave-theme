@@ -1,0 +1,635 @@
+/*
+ * Contact page (page-templates/contacto.php): the hero with highlights, the form card and
+ * the channels lifted over it, and the frave-peru contact form in the Frave style (groups
+ * with numbered titles, soft fields with an orange focus ring, options as pills).
+ * Scoped to .frave-contact: the Libro de Reclamaciones keeps the shared .frave-claims form.
+ */
+@layer components {
+  /* ---------- Hero ---------- */
+
+  .page-hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .page-hero__facts li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 700;
+  }
+
+  .page-hero__facts .icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: none;
+    padding: 0.5rem;
+    border-radius: 999px;
+    background: rgb(252 76 2 / 16%);
+    color: var(--color-brand-orange);
+  }
+
+  /* The hero leaves room for the cards that rise over it. */
+  .contact-page-main .page-hero {
+    padding-bottom: clamp(7rem, 11vw, 9.5rem);
+  }
+
+  .contact-page-main .page-hero h1 {
+    max-width: 44rem;
+  }
+
+  /* ---------- Layout ---------- */
+
+  .contact-layout {
+    position: relative;
+    z-index: 2;
+    margin-top: calc(-1 * clamp(4.5rem, 8vw, 6.5rem));
+    padding-bottom: clamp(4rem, 8vw, 6.5rem);
+  }
+
+  .contact-page {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 64rem) {
+    .contact-page {
+      grid-template-columns: minmax(0, 1.55fr) minmax(19rem, 0.85fr);
+      align-items: start;
+      gap: clamp(1.5rem, 2.5vw, 2.25rem);
+    }
+
+    .contact-channels {
+      position: sticky;
+      top: calc(var(--header-height) + 1.5rem);
+    }
+  }
+
+  /* ---------- Form card ---------- */
+
+  .contact-form-card {
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-radius: var(--radius-lg);
+    background: #fff;
+    box-shadow: var(--shadow-lift);
+  }
+
+  .contact-form-card__head {
+    margin-bottom: clamp(1.75rem, 3vw, 2.25rem);
+  }
+
+  .contact-form-card__head h2 {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.85rem, 3.2vw, 2.6rem);
+    font-weight: 300;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+  }
+
+  .contact-form-card__head p:not(.eyebrow) {
+    max-width: 36rem;
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  /* ---------- Form ---------- */
+
+  .frave-contact .frave-claims__form {
+    gap: 2rem;
+  }
+
+  .frave-contact__required-note {
+    margin: 0 0 -0.75rem;
+    color: var(--color-muted);
+    font-size: 0.82rem;
+  }
+
+  .frave-contact__group {
+    display: grid;
+    gap: 1.25rem;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .frave-contact__group + .frave-contact__group {
+    padding-top: 0.5rem;
+  }
+
+  .frave-contact__group > legend {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.4rem;
+    padding: 0;
+    color: var(--color-ink);
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .frave-contact__step {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--color-orange-soft);
+    color: var(--color-primary);
+    font-size: 0.9rem;
+  }
+
+  .frave-contact .frave-claims__grid {
+    gap: 1.15rem 1.25rem;
+  }
+
+  .frave-contact .frave-claims__field label,
+  .frave-contact .frave-contact__choice legend {
+    font-size: 0.86rem;
+  }
+
+  .frave-contact .frave-claims__field input,
+  .frave-contact .frave-claims__field textarea {
+    min-height: 3.25rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.85rem;
+    background: var(--color-surface);
+    transition:
+      border-color var(--duration-fast) ease,
+      background-color var(--duration-fast) ease,
+      box-shadow var(--duration-fast) ease;
+  }
+
+  .frave-contact .frave-claims__field input:hover,
+  .frave-contact .frave-claims__field textarea:hover {
+    border-color: var(--color-line);
+  }
+
+  .frave-contact .frave-claims__field input:focus,
+  .frave-contact .frave-claims__field textarea:focus {
+    border-color: var(--color-primary);
+    outline: 0;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgb(252 76 2 / 14%);
+  }
+
+  .frave-contact .frave-claims__field textarea {
+    min-height: 9.5rem;
+    line-height: 1.6;
+  }
+
+  .frave-contact .has-error input,
+  .frave-contact .has-error textarea {
+    border-color: var(--color-error);
+    background: #fff;
+  }
+
+  /* Character counter added by contact-form.js under the message. */
+  .frave-contact__counter {
+    justify-self: end;
+    margin-top: -0.1rem;
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- Options as pills ---------- */
+
+  .frave-contact__choice {
+    min-width: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .frave-contact__choice legend {
+    margin-bottom: 0.6rem;
+    padding: 0;
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  .frave-contact__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .frave-contact__option {
+    position: relative;
+    cursor: pointer;
+  }
+
+  /* The real radio stays in place for keyboards and screen readers; the pill shows its state. */
+  .frave-contact__option input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .frave-contact__option span {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--color-line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition:
+      border-color var(--duration-fast) ease,
+      background-color var(--duration-fast) ease,
+      color var(--duration-fast) ease;
+  }
+
+  .frave-contact__option:hover span {
+    border-color: var(--color-brand-orange);
+    background: var(--color-orange-soft);
+  }
+
+  .frave-contact__option input:checked + span {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  /* A check mark grows in front of the chosen option. */
+  .frave-contact__option span::before {
+    width: 0;
+    height: 0.55rem;
+    border-bottom: 2px solid currentColor;
+    border-left: 2px solid currentColor;
+    content: "";
+    opacity: 0;
+    transform: translateY(-0.12rem) rotate(-45deg);
+    transition:
+      width var(--duration-fast) ease,
+      opacity var(--duration-fast) ease;
+  }
+
+  .frave-contact__option input:checked + span::before {
+    width: 0.85rem;
+    opacity: 1;
+  }
+
+  .frave-contact__option input:focus-visible + span {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  .frave-contact__choice.has-error .frave-contact__option span {
+    border-color: var(--color-error);
+  }
+
+  .frave-contact__option--ninguna span {
+    border-style: dashed;
+    color: var(--color-muted);
+  }
+
+  /* ---------- Consent and sending ---------- */
+
+  .frave-contact .frave-claims__checkbox {
+    padding: 1rem 1.15rem;
+    border-radius: 0.85rem;
+    background: var(--color-surface);
+    font-size: 0.9rem;
+  }
+
+  .frave-contact .frave-claims__checkbox a {
+    color: var(--color-primary) !important; /* The unlayered link colour of theme.json would win. */
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .frave-contact .frave-claims__checkbox input {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: 0.15rem;
+  }
+
+  .frave-contact__rights {
+    margin: -1.25rem 0 0;
+    font-size: 0.8rem;
+  }
+
+  .frave-contact .frave-claims__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .frave-contact .frave-contact__submit {
+    gap: 0.75rem;
+    min-height: 3.5rem;
+    padding: 0.85rem 1.25rem 0.85rem 1.85rem;
+    border: 0;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .frave-contact .frave-contact__submit-label {
+    font-size: inherit;
+  }
+
+  .frave-contact__submit-icon {
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0.5rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 18%);
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    transition: transform var(--duration) var(--ease-out);
+  }
+
+  .frave-contact__submit:hover .frave-contact__submit-icon {
+    transform: translateX(3px);
+  }
+
+  .frave-contact__submit.is-sending {
+    cursor: progress;
+    opacity: 0.85;
+  }
+
+  .frave-contact__submit.is-sending .frave-contact__submit-icon {
+    border: 2px solid rgb(255 255 255 / 35%);
+    border-top-color: #fff;
+    background: none;
+    stroke: none;
+    animation: frave-spin 0.8s linear infinite;
+  }
+
+  @keyframes frave-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .frave-contact__submit.is-sending .frave-contact__submit-icon {
+      animation: none;
+    }
+  }
+
+  /* ---------- Sent ---------- */
+
+  .frave-contact .frave-contact__success {
+    display: grid;
+    justify-items: start;
+    gap: 0.75rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: #eef6f1;
+  }
+
+  .frave-contact__success-icon {
+    display: grid;
+    width: 3.25rem;
+    height: 3.25rem;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--color-success);
+    color: #fff;
+  }
+
+  .frave-contact__success-icon svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2.4;
+  }
+
+  .frave-contact .frave-contact__success h2 {
+    margin: 0.25rem 0 0;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+
+  .frave-contact .frave-contact__success p {
+    max-width: 34rem;
+    margin: 0;
+    color: #3d4a43;
+  }
+
+  .frave-contact__success-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  /* ---------- Channels ---------- */
+
+  .contact-channels {
+    display: grid;
+    gap: 1.5rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    border: 1px solid #ece4d9;
+    border-radius: var(--radius-lg);
+    background: #fbf8f4;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .contact-channels > .eyebrow {
+    margin: 0 0 -0.75rem;
+  }
+
+  .contact-channels h2 {
+    margin: 0;
+    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+
+  .contact-whatsapp {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.9rem 1rem;
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    background: #fff;
+    box-shadow: 0 0.5rem 1.5rem rgb(15 125 111 / 10%);
+  }
+
+  .contact-whatsapp__icon {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border-radius: 999px;
+    background: #e3f3ef;
+    color: var(--color-whatsapp);
+  }
+
+  .contact-whatsapp__icon .whatsapp-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .contact-whatsapp__title,
+  .contact-channel__label,
+  .contact-channels__subtitle {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .contact-whatsapp__number {
+    margin: 0.15rem 0 0;
+    color: var(--color-ink);
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .contact-whatsapp__button {
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .contact-channels__list {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact-channel {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.65rem 0;
+  }
+
+  .contact-channel + .contact-channel {
+    border-top: 1px solid #ece4d9;
+  }
+
+  .contact-channel__icon {
+    display: grid;
+    width: 2.6rem;
+    height: 2.6rem;
+    flex: none;
+    place-items: center;
+    border-radius: 999px;
+    background: var(--color-orange-soft);
+    color: var(--color-primary);
+  }
+
+  .contact-channel__icon .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .contact-channel__body {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+
+  .contact-channel__value {
+    overflow-wrap: anywhere;
+    color: var(--color-ink) !important;
+    font-weight: 700;
+  }
+
+  a.contact-channel__value:hover {
+    color: var(--color-primary) !important;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .contact-channels__social {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .social-links--contact .social-link {
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid #e3d9cc;
+    background: #fff;
+  }
+
+  .contact-steps {
+    display: grid;
+    gap: 0.85rem;
+    padding-top: 1.35rem;
+    border-top: 1px solid #ece4d9;
+  }
+
+  .contact-steps__list {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: contact-step;
+  }
+
+  .contact-steps__list li {
+    display: grid;
+    grid-template-columns: 1.75rem 1fr;
+    align-items: start;
+    gap: 0.75rem;
+    color: #4a4642;
+    font-size: 0.92rem;
+    counter-increment: contact-step;
+  }
+
+  .contact-steps__list li::before {
+    display: grid;
+    width: 1.75rem;
+    height: 1.75rem;
+    place-items: center;
+    border: 1px solid var(--color-brand-orange);
+    border-radius: 999px;
+    color: var(--color-primary);
+    content: counter(contact-step);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .contact-channels__links {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 1.25rem 0 0;
+    border-top: 1px solid #ece4d9;
+    list-style: none;
+  }
+
+  .contact-channels__empty {
+    margin: 0;
+    color: var(--color-muted);
+  }
+}

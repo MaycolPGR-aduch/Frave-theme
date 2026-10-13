@@ -20,6 +20,7 @@ if ( function_exists( 'is_product' ) && is_product() ) {
 	$frave_product = $frave_current ? $frave_current->get_name() . ' ' . $frave_current->get_permalink() : '';
 }
 ?>
+<aside class="whatsapp-widget" aria-label="<?php esc_attr_e( 'Chat de WhatsApp', 'frave' ); ?>">
 <a class="whatsapp-float" href="<?php echo esc_url( frave_whatsapp_url( frave_whatsapp_message() ) ); ?>" target="_blank" rel="noopener" data-frave-whatsapp="floating" data-wa-chat-open aria-controls="wa-chat">
 	<?php echo frave_whatsapp_icon(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
 	<span class="whatsapp-float__label"><?php esc_html_e( '¿Dudas? Escríbenos', 'frave' ); ?></span>
@@ -83,3 +84,4 @@ if ( function_exists( 'is_product' ) && is_product() ) {
 		</div>
 	</form>
 </div>
+</aside>

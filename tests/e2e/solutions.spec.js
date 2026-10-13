@@ -43,7 +43,7 @@ test.describe('soluciones por industria', () => {
     await expect(page.locator('#frave-contact-company')).toBeVisible();
     await expect(page.locator('#frave-contact-city')).toBeVisible();
     // The line comes from the link: Perfumería árabe belongs to Fragancias.
-    await expect(page.locator('#frave-contact-line')).toHaveValue('fragancias');
+    await expect(page.locator('#frave-contact-line-fragancias')).toBeChecked();
     await expect(page.locator('label[for="frave-contact-privacy"]')).toContainText('Ley N.° 29733');
     await expect(page.locator('.frave-contact__rights')).toContainText('rectificarlos');
   });

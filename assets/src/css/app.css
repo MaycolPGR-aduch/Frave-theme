@@ -21,6 +21,7 @@
 @import "./pages/company.css";
 @import "./pages/product.css";
 @import "./pages/blog.css";
+@import "./pages/contact.css";
 @source "../../../**/*.php";
 @source "../js/**/*.js";
 @source not "../../../tests";
@@ -1941,65 +1942,12 @@
     overflow: hidden;
   }
 
-  /* Institutional pages: contact, FAQ and legal texts. */
-  .contact-grid {
-    display: grid;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .contact-channels,
-  .contact-form-section {
-    padding: 1.5rem;
-    border: 1px solid var(--color-line);
-    border-radius: var(--radius-card);
-  }
-
-  .contact-channels h2,
-  .contact-form-section h2,
+  /* Institutional pages: FAQ and legal texts (the contact page is in pages/contact.css). */
   .faq-help h2,
   .legal-page__others h2 {
     margin-bottom: 1rem;
     font-size: 1.35rem;
     letter-spacing: -0.01em;
-  }
-
-  .contact-channels__list {
-    display: grid;
-    gap: 1rem;
-    margin: 0;
-  }
-
-  .contact-channels__item dt {
-    color: var(--color-muted);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-
-  .contact-channels__item dd {
-    margin: 0.2rem 0 0;
-    color: var(--color-ink);
-  }
-
-  .contact-channels__item dd a:not(.whatsapp-button) {
-    color: var(--color-primary);
-    font-weight: 700;
-  }
-
-  .contact-channels__empty,
-  .contact-channels__claims {
-    margin: 1.25rem 0 0;
-    color: var(--color-muted);
-    font-size: 0.92rem;
-  }
-
-  .contact-channels__claims a {
-    color: var(--color-primary);
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 0.18em;
   }
 
   .page-index {
@@ -2129,12 +2077,6 @@
     list-style: none;
   }
 
-  @media (min-width: 64rem) {
-    .contact-grid {
-      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-      align-items: start;
-    }
-  }
 
   /* WhatsApp: floating button, product page button and footer link. */
   .whatsapp-icon {
@@ -2473,6 +2415,14 @@
   .frave-claims__notice ul {
     margin: 0.5rem 0 0;
     padding-left: 1.1rem;
+  }
+
+  /* Each error links to its field. */
+  .frave-claims__notice--error a {
+    color: var(--color-error) !important;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
   }
 
   .frave-claims__actions {

@@ -58,12 +58,55 @@ test.describe('formulario de contacto', () => {
 
     await page.fill('#frave-contact-name', 'Prueba Automatizada');
     await page.fill('#frave-contact-email', 'e2e@example.com');
-    await page.selectOption('#frave-contact-subject', 'productos');
+    await page.check('#frave-contact-subject-productos');
+    await page.check('#frave-contact-line-fragancias');
     await page.fill('#frave-contact-message', 'Mensaje de prueba automatizada.');
     await page.check('#frave-contact-privacy');
     await page.waitForTimeout(3500);
     await page.locator('[name="frave_contact_submit"]').click();
 
     await expect(page.locator('.frave-contact .frave-claims__notice--success')).toContainText('Mensaje enviado');
+    await expect(page.locator('.frave-contact__success-actions a').first()).toBeVisible();
+  });
+
+  test('el tema y la línea se eligen como opciones, y el mensaje cuenta sus caracteres', async ({ page }) => {
+    const response = await page.goto('/?pagename=contacto&linea=perfumeria');
+    test.skip(!response.ok() || (await page.locator('.frave-contact form').count()) === 0, 'La página de contacto no está publicada en este sitio.');
+
+    // From a line page, the request arrives with the line chosen (and, in catalog mode, «cotización»).
+    await expect(page.locator('#frave-contact-line-fragancias')).toBeChecked();
+    if (await page.locator('#frave-contact-subject-cotizacion').count()) {
+      await expect(page.locator('#frave-contact-subject-cotizacion')).toBeChecked();
+    }
+    const subjects = page.getByRole('group', { name: /¿En qué te podemos ayudar\?/ });
+    await expect(subjects).toBeVisible();
+
+    // The pills are real radio buttons: the keyboard moves the choice.
+    const checked = subjects.locator('input:checked');
+    const before = await checked.getAttribute('id');
+    await checked.focus();
+    await page.keyboard.press('ArrowRight');
+    expect(await subjects.locator('input:checked').getAttribute('id')).not.toBe(before);
+
+    const message = page.locator('#frave-contact-message');
+    const text = await message.inputValue();
+    await message.fill(text + 'abc');
+    await expect(page.locator('.frave-contact__counter')).toContainText(`${text.length + 3} /`);
+  });
+
+  test('un envío incompleto lista los errores y enlaza cada campo', async ({ page }) => {
+    const response = await page.goto('/?pagename=contacto');
+    test.skip(!response.ok() || (await page.locator('.frave-contact form').count()) === 0, 'La página de contacto no está publicada en este sitio.');
+
+    await page.locator('.frave-contact form').evaluate((form) => { form.noValidate = true; });
+    await page.waitForTimeout(3500);
+    await page.locator('[name="frave_contact_submit"]').click();
+    const summary = page.locator('.frave-contact .frave-claims__notice--error');
+    await expect(summary).toBeVisible();
+    for (const link of await summary.locator('a').all()) {
+      const target = (await link.getAttribute('href')).slice(1);
+      await expect(page.locator(`[id="${target}"]`), target).toHaveCount(1);
+    }
+    await expect(page.locator('#frave-contact-name')).toHaveAttribute('aria-invalid', 'true');
   });
 });
