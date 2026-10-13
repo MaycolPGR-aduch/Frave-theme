@@ -447,13 +447,26 @@ function frave_catalog_clear_url(): string {
 }
 
 /**
- * Attributes offered as filters: every global attribute, in WooCommerce's order.
- * Filter to exclude or reorder, e.g. to hide an attribute that is only informative.
+ * Attributes offered as filters: every global attribute, the ones bin/crear-atributos.php
+ * creates first, in the order a buyer narrows down (WooCommerce lists them alphabetically),
+ * then any other. Filter to exclude or reorder, e.g. to hide an informative attribute.
  *
  * @return array<int, object> Attribute taxonomies as returned by wc_get_attribute_taxonomies().
  */
 function frave_catalog_filter_attributes(): array {
-	return (array) apply_filters( 'frave_catalog_filter_attributes', array_values( wc_get_attribute_taxonomies() ) );
+	$order      = array( 'familia-olfativa', 'perfil-de-sabor', 'aplicacion', 'presentacion', 'solubilidad', 'capacidad', 'material', 'cierre' );
+	$attributes = array_values( wc_get_attribute_taxonomies() );
+	usort(
+		$attributes,
+		static function ( $a, $b ) use ( $order ) {
+			$position_a = array_search( $a->attribute_name, $order, true );
+			$position_b = array_search( $b->attribute_name, $order, true );
+			$position_a = false === $position_a ? PHP_INT_MAX : $position_a;
+			$position_b = false === $position_b ? PHP_INT_MAX : $position_b;
+			return array( $position_a, $a->attribute_label ) <=> array( $position_b, $b->attribute_label );
+		}
+	);
+	return (array) apply_filters( 'frave_catalog_filter_attributes', $attributes );
 }
 
 /**
@@ -585,3 +598,41 @@ function frave_catalog_active_filters_bar(): void {
 }
 add_action( 'woocommerce_before_shop_loop', 'frave_catalog_active_filters_bar', 35 );
 add_action( 'woocommerce_no_products_found', 'frave_catalog_active_filters_bar', 5 );
+
+/**
+ * On a category with subcategories, its subcategories as chips above the products: on
+ * phones the filter panel is closed, and this is the quickest way to narrow down a line.
+ * Only subcategories with products appear, so no chip leads to an empty page.
+ */
+function frave_catalog_subcategory_chips(): void {
+	if ( ! is_product_category() ) {
+		return;
+	}
+	$current  = get_queried_object();
+	$children = $current instanceof WP_Term ? get_terms(
+		array(
+			'taxonomy'   => 'product_cat',
+			'parent'     => $current->term_id,
+			'hide_empty' => false,
+		)
+	) : array();
+	$children = is_wp_error( $children ) ? array() : array_filter( $children, static fn( $term ) => frave_term_product_count( $term ) > 0 );
+	if ( ! $children ) {
+		return;
+	}
+	printf( '<nav class="catalog-subcategories" aria-label="%s"><ul>', esc_attr( sprintf( /* translators: %s: category name. */ __( 'Subcategorías de %s', 'frave' ), $current->name ) ) );
+	foreach ( $children as $child ) {
+		$link = get_term_link( $child );
+		if ( is_wp_error( $link ) ) {
+			continue;
+		}
+		printf(
+			'<li><a class="line-chip line-chip--link" href="%1$s">%2$s <span class="catalog-subcategories__count">%3$s</span></a></li>',
+			esc_url( $link ),
+			esc_html( $child->name ),
+			esc_html( number_format_i18n( frave_term_product_count( $child ) ) )
+		);
+	}
+	echo '</ul></nav>';
+}
+add_action( 'woocommerce_before_shop_loop', 'frave_catalog_subcategory_chips', 15 );

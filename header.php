@@ -63,8 +63,9 @@
 	<div class="mobile-menu-backdrop" data-menu-backdrop hidden></div>
 	<div class="site-content">
 		<?php
-		// Catalog pages have the search in their page hero; product pages and a store keep the bar.
-		if ( class_exists( 'WooCommerce' ) && ! frave_is_catalog_archive() && ( frave_shop_enabled() || is_product() ) ) {
+		// Catalog pages have the search in their page hero and product pages the header search;
+		// with the store on, the other pages keep the bar.
+		if ( class_exists( 'WooCommerce' ) && ! frave_is_catalog_archive() && ! is_product() && frave_shop_enabled() ) {
 			get_template_part( 'template-parts/components', 'search' );
 		}
 		?>

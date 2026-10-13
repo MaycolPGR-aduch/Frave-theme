@@ -250,9 +250,9 @@ function frave_product_inquiry(): void {
 		<p class="product-inquiry__text"><?php esc_html_e( 'Cuéntanos qué necesitas y te enviamos precio, presentaciones y disponibilidad.', 'frave' ); ?></p>
 		<div class="product-inquiry__actions">
 			<?php if ( $quote ) : ?>
-				<a class="button button--primary product-inquiry__quote" href="<?php echo esc_url( $quote ); ?>">
-					<?php esc_html_e( 'Solicitar cotización', 'frave' ); ?>
-					<span aria-hidden="true">&rarr;</span>
+				<a class="btn btn--primary product-inquiry__quote" href="<?php echo esc_url( $quote ); ?>">
+					<span><?php esc_html_e( 'Solicitar cotización', 'frave' ); ?></span>
+					<span class="btn__icon"><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></span>
 				</a>
 			<?php endif; ?>
 			<?php if ( $whatsapp ) : ?>

@@ -1,5 +1,5 @@
 <?php
-/** Product search bar under the header (store mode, and product pages in catalog mode). */
+/** Product search bar under the header, on store pages while the store sells online. */
 if ( ! class_exists( 'WooCommerce' ) ) {
 	return;
 }

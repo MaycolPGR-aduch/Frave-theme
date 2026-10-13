@@ -1,0 +1,196 @@
+/*
+ * Product page (inc/product-page.php) and catalog additions: the gallery on a warm surface,
+ * a lighter title under the line it belongs to, the product data as label and chips, the
+ * quote request and the description as its own section.
+ */
+@layer components {
+  .single-product .frave-woocommerce {
+    padding-top: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .woocommerce div.product .product-eyebrow {
+    margin: 0 0 0.75rem;
+  }
+
+  .product-eyebrow a {
+    color: inherit !important;
+  }
+
+  .product-eyebrow a:hover {
+    text-decoration: underline;
+  }
+
+  .woocommerce div.product .product_title {
+    margin: 0 0 1.25rem;
+    color: var(--color-ink);
+    font-size: clamp(2rem, 3.4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
+
+  .woocommerce div.product .woocommerce-product-details__short-description {
+    margin-bottom: 1.5rem;
+    color: #4a4642;
+    font-size: var(--text-lead);
+    line-height: 1.55;
+  }
+
+  .woocommerce div.product .woocommerce-product-details__short-description p {
+    margin: 0;
+  }
+
+  /* The image sits on the warm surface of the line images. */
+  .woocommerce div.product div.images .woocommerce-product-gallery__wrapper {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: #f3ece2;
+  }
+
+  .woocommerce div.product div.images img {
+    border-radius: 0;
+    background: transparent;
+  }
+
+  /* ---------- Product data ---------- */
+
+  .product-specs {
+    display: grid;
+    gap: 0;
+    margin: 0 0 1.75rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .product-specs__row {
+    display: grid;
+    grid-template-columns: minmax(7.5rem, 0.4fr) 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .product-specs dt {
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .product-specs dd {
+    margin: 0;
+  }
+
+  .product-specs__values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .product-specs__values li {
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  .woocommerce div.product .product-inquiry {
+    margin: 0 0 1.25rem;
+    border: 0;
+    background: var(--color-orange-soft);
+  }
+
+  .product-code {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+
+  .product-code span {
+    color: var(--color-ink);
+    font-weight: 700;
+  }
+
+  /* ---------- Description and related products ---------- */
+
+  .product-description {
+    clear: both;
+    max-width: 52rem;
+    padding-top: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  .product-description h2,
+  .woocommerce .related.products > h2 {
+    margin: 0 0 1.25rem;
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+
+  .product-description__content {
+    color: #4a4642;
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
+
+  .woocommerce .related.products {
+    clear: both;
+    padding-top: clamp(3rem, 6vw, 4.5rem);
+  }
+
+  @media (min-width: 64rem) {
+    /* A grid instead of WooCommerce's floats, so the image can stay in view while the summary scrolls. */
+    .woocommerce div.product {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: clamp(2rem, 5vw, 4.5rem);
+      align-items: start;
+    }
+
+    .woocommerce div.product > * {
+      grid-column: 1 / -1;
+    }
+
+    /* WooCommerce's float widths are unlayered, so they would win without !important. */
+    .woocommerce div.product div.images,
+    .woocommerce div.product div.summary {
+      float: none !important;
+      width: auto !important;
+      margin: 0 !important;
+    }
+
+    .woocommerce div.product div.images {
+      position: sticky !important; /* WooCommerce sets relative, which would turn top into an offset. */
+      top: calc(var(--header-height) + 1.5rem);
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .woocommerce div.product div.summary {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  /* ---------- Catalog: subcategories above the products ---------- */
+
+  .catalog-subcategories ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .catalog-subcategories__count {
+    color: var(--color-muted);
+    font-weight: 400;
+  }
+}
