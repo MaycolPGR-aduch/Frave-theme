@@ -147,6 +147,19 @@
     text-align: center;
   }
 
+  /* ---------- Photo (Nosotros) ---------- */
+
+  /* Right after the statement, so it only needs space below. */
+  .company-photo {
+    padding-top: 0;
+  }
+
+  .company-photo__media {
+    aspect-ratio: 16 / 9;
+    margin: 0;
+    border-radius: var(--radius-xl);
+  }
+
   /* ---------- Essence ---------- */
 
   .company-essence {

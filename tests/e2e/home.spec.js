@@ -87,6 +87,13 @@ test.describe('portada', () => {
     await expect(page.locator('.home-steps .home-step')).toHaveCount(3);
   });
 
+  test('las secciones finales comparten el fondo beige', async ({ page }) => {
+    await page.goto('/');
+    const closing = page.locator('.home-closing');
+    test.skip((await closing.count()) === 0, 'Sin artículos ni dirección no hay secciones finales.');
+    await expect(closing).toHaveCSS('background-image', /fondo-beige/);
+  });
+
   test('el mapa solo se carga al pedirlo', async ({ page }) => {
     await page.goto('/');
     const map = page.locator('[data-map]');

@@ -13,6 +13,11 @@ test.describe('páginas de empresa', () => {
 
     await expect(page.locator('.company-hero h1')).toContainText('diferenciarse');
     await expect(page.locator('.company-essence blockquote')).toContainText('Conectamos conocimiento, confianza e innovación');
+    // An illustrative scene: its alt text describes the meeting without naming it Frave's team.
+    const photo = page.locator('.company-photo img');
+    await expect(photo).toHaveAttribute('alt', /Reunión de trabajo/);
+    await photo.scrollIntoViewIfNeeded();
+    await expect.poll(() => photo.evaluate((img) => img.complete && img.naturalWidth > 0)).toBe(true);
     const beliefs = page.locator('.company-belief');
     await expect(beliefs).toHaveCount(4);
     await expect(beliefs.locator('.company-belief__behavior')).toHaveCount(4);

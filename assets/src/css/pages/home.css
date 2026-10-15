@@ -417,6 +417,19 @@
     }
   }
 
+  /* ---------- Closing backdrop (Tendencias and Dónde estamos) ---------- */
+
+  /* Image URLs come from front-page.php as custom properties: the theme serves them as is. */
+  .home-closing {
+    background: var(--closing-image) center / cover no-repeat, var(--color-surface);
+  }
+
+  @media (min-width: 48rem) {
+    .home-closing {
+      background-image: var(--closing-image-wide);
+    }
+  }
+
   /* ---------- Tendencias ---------- */
 
   .home-posts__grid {

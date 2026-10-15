@@ -55,6 +55,7 @@ function frave_is_catalog_archive(): bool {
 
 /** Page hero of catalog pages: breadcrumb, title, description and product search. */
 function frave_catalog_hero(): void {
+	$image = '';
 	if ( is_search() ) {
 		$eyebrow = __( 'BÚSQUEDA', 'frave' );
 		$lead    = '';
@@ -65,6 +66,7 @@ function frave_catalog_hero(): void {
 		$eyebrow = $parent instanceof WP_Term ? $parent->name : __( 'CATÁLOGO', 'frave' );
 		$lead    = $term instanceof WP_Term ? term_description( $term ) : '';
 		$meta    = $term instanceof WP_Term ? frave_catalog_line_link( $term ) : '';
+		$image   = $term instanceof WP_Term && 'product_cat' === $term->taxonomy ? frave_term_image( $term, '(max-width: 60rem) 90vw, 36vw' ) : '';
 	} else {
 		$meta    = '';
 		$shop    = get_post( wc_get_page_id( 'shop' ) );
@@ -81,6 +83,7 @@ function frave_catalog_hero(): void {
 			'meta'       => $meta,
 			'breadcrumb' => true,
 			'search'     => true,
+			'image'      => $image,
 		)
 	);
 }

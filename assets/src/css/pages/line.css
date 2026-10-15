@@ -220,6 +220,27 @@
     color: var(--color-primary);
   }
 
+  /* Chip with the category's round thumbnail at the start. */
+  .line-chip--thumb {
+    padding-left: 0.3rem;
+  }
+
+  .line-chip__thumb {
+    flex: none;
+    width: 1.9rem;
+    height: 1.9rem;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--color-surface);
+  }
+
+  .line-chip__thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .line-chip--link {
     transition:
       border-color var(--duration-fast) ease,
@@ -242,6 +263,50 @@
 
   .link-arrow--muted {
     color: var(--color-ink) !important;
+  }
+
+  /* ---------- Inspiration gallery ---------- */
+
+  .line-gallery__carousel {
+    --carousel-item: min(70%, 17rem);
+    margin-top: clamp(2rem, 4vw, 3rem);
+  }
+
+  .gallery-tile {
+    position: relative;
+    margin: 0;
+  }
+
+  .gallery-tile__media {
+    aspect-ratio: 1;
+    border-radius: var(--radius-lg);
+  }
+
+  .gallery-tile__media img {
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .gallery-tile:hover .gallery-tile__media img {
+    transform: scale(1.04);
+  }
+
+  .gallery-tile__caption {
+    position: absolute;
+    bottom: 0.85rem;
+    left: 0.85rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 92%);
+    color: var(--color-ink);
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 0.35rem 1rem rgb(18 20 24 / 12%);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-tile__media img {
+      transition: none;
+    }
   }
 
   /* ---------- Applications ---------- */

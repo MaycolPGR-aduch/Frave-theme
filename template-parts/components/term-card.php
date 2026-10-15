@@ -26,24 +26,13 @@ $frave_children = is_wp_error( $frave_children ) ? array() : $frave_children;
 $frave_products = frave_term_products_url( $frave_term );
 $frave_quote    = frave_line_quote_link( $frave_term );
 $frave_text     = wp_strip_all_tags( $frave_term->description );
-$frave_image_id = (int) get_term_meta( $frave_term->term_id, 'thumbnail_id', true );
+$frave_image    = frave_term_image( $frave_term, '(max-width: 56rem) 90vw, 45vw' );
 $frave_line     = ! empty( $args['show_line'] ) && $frave_term->parent ? frave_term_line_name( $frave_term ) : '';
 ?>
-<li class="card line-group<?php echo $frave_image_id ? ' line-group--image' : ''; ?>">
-	<?php if ( $frave_image_id ) : ?>
+<li class="card line-group<?php echo '' !== $frave_image ? ' line-group--image' : ''; ?>">
+	<?php if ( '' !== $frave_image ) : ?>
 		<div class="line-group__media media-frame">
-			<?php
-			echo wp_get_attachment_image(
-				$frave_image_id,
-				'frave-card',
-				false,
-				array(
-					'alt'     => '',
-					'sizes'   => '(max-width: 48rem) 90vw, 40vw',
-					'loading' => 'lazy',
-				)
-			);
-			?>
+			<?php echo $frave_image; // phpcs:ignore WordPress.Security.EscapeOutput -- built and escaped by frave_term_image(). ?>
 		</div>
 	<?php endif; ?>
 	<div class="line-group__body">
@@ -55,12 +44,17 @@ $frave_line     = ! empty( $args['show_line'] ) && $frave_term->parent ? frave_t
 		<?php if ( $frave_children ) : ?>
 			<ul class="line-group__types" aria-label="<?php echo esc_attr( sprintf( /* translators: %s: subcategory name. */ __( 'Tipos de %s', 'frave' ), $frave_term->name ) ); ?>">
 				<?php foreach ( $frave_children as $frave_child ) : ?>
-					<?php $frave_child_url = frave_term_products_url( $frave_child ); ?>
+					<?php
+					$frave_child_url   = frave_term_products_url( $frave_child );
+					$frave_child_thumb = frave_term_thumb( $frave_child );
+					$frave_chip_class  = '' !== $frave_child_thumb ? ' line-chip--thumb' : '';
+					$frave_chip_thumb  = '' !== $frave_child_thumb ? '<span class="line-chip__thumb">' . $frave_child_thumb . '</span>' : '';
+					?>
 					<li>
 						<?php if ( '' !== $frave_child_url ) : ?>
-							<a class="line-chip line-chip--link" href="<?php echo esc_url( $frave_child_url ); ?>"><?php echo esc_html( $frave_child->name ); ?><?php echo frave_icon( 'arrow-up-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
+							<a class="line-chip line-chip--link<?php echo esc_attr( $frave_chip_class ); ?>" href="<?php echo esc_url( $frave_child_url ); ?>"><?php echo $frave_chip_thumb; // phpcs:ignore WordPress.Security.EscapeOutput -- built and escaped by frave_term_thumb(). ?><?php echo esc_html( $frave_child->name ); ?><?php echo frave_icon( 'arrow-up-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
 						<?php else : ?>
-							<span class="line-chip"><?php echo esc_html( $frave_child->name ); ?></span>
+							<span class="line-chip<?php echo esc_attr( $frave_chip_class ); ?>"><?php echo $frave_chip_thumb; // phpcs:ignore WordPress.Security.EscapeOutput -- built and escaped by frave_term_thumb(). ?><?php echo esc_html( $frave_child->name ); ?></span>
 						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>

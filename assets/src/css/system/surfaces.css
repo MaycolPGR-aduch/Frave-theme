@@ -302,4 +302,38 @@
     width: min(100%, 38rem);
     margin-top: 0.75rem;
   }
+
+  /*
+   * Hero with an image (catalog categories): text and image side by side on wide screens.
+   * On phones the image is left out so the products stay close to the top.
+   */
+  .page-hero__media {
+    display: none;
+  }
+
+  @media (min-width: 60rem) {
+    .page-hero__layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+      align-items: center;
+      gap: clamp(2rem, 5vw, 4.5rem);
+    }
+
+    .page-hero__media {
+      display: block;
+      position: relative;
+      z-index: 1;
+      aspect-ratio: 3 / 2;
+      border-radius: var(--radius-xl);
+      box-shadow: 0 1.5rem 3.5rem rgb(0 0 0 / 35%);
+    }
+
+    .page-hero__media > img {
+      height: 100% !important; /* WooCommerce's unlayered ".woocommerce img { height: auto }" otherwise wins. */
+    }
+
+    .page-hero--media .page-hero__decor {
+      display: none;
+    }
+  }
 }

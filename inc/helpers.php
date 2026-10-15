@@ -22,6 +22,39 @@ function frave_asset_url( string $path ): string {
 }
 
 /**
+ * <img> of a WebP shipped with the theme. "{$base}.webp" is the full image ($width ×
+ * $height) and "{$base}-{$small}.webp" the same image $small pixels wide, offered in
+ * srcset so phones download the light one. '' when the file is missing.
+ *
+ * @param array<string, string> $attr alt, sizes, loading, class… (alt defaults to '').
+ */
+function frave_theme_image( string $base, int $width, int $height, int $small, array $attr = array() ): string {
+	if ( ! file_exists( FRAVE_THEME_DIR . '/' . $base . '.webp' ) ) {
+		return '';
+	}
+	$attr += array(
+		'alt'      => '',
+		'sizes'    => '100vw',
+		'loading'  => 'lazy',
+		'decoding' => 'async',
+	);
+	$full  = frave_asset_url( $base . '.webp' );
+	$light = frave_asset_url( "{$base}-{$small}.webp" );
+	$html  = sprintf(
+		'<img src="%1$s" srcset="%2$s %3$dw, %1$s %4$dw" width="%4$d" height="%5$d"',
+		esc_url( $full ),
+		esc_url( $light ),
+		$small,
+		$width,
+		$height
+	);
+	foreach ( $attr as $name => $value ) {
+		$html .= sprintf( ' %s="%s"', esc_attr( $name ), esc_attr( $value ) );
+	}
+	return $html . '>';
+}
+
+/**
  * Render a design system button (.btn) with its arrow icon. Variants: btn--primary,
  * btn--dark, btn--light, btn--outline, plus btn--sm.
  */

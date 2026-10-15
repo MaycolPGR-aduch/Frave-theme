@@ -11,13 +11,14 @@
  * - trail:      print the blog breadcrumb (frave_breadcrumb) above the eyebrow.
  * - search:     add the product search form.
  * - facts:      optional list of [ icon, text ] shown as small highlights under the lead.
+ * - image:      optional <img> HTML, already escaped, shown beside the text on wide screens.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$frave_hero = wp_parse_args(
+$frave_hero       = wp_parse_args(
 	$args ?? array(),
 	array(
 		'eyebrow'    => '',
@@ -28,14 +29,19 @@ $frave_hero = wp_parse_args(
 		'trail'      => false,
 		'search'     => false,
 		'facts'      => array(),
+		'image'      => '',
 	)
 );
+$frave_hero_media = '' !== $frave_hero['image'];
 ?>
-<header class="page-hero">
+<header class="page-hero<?php echo $frave_hero_media ? ' page-hero--media' : ''; ?>">
 	<span class="orbit" aria-hidden="true"></span>
 	<span class="orbit orbit--inner orbit--soft" aria-hidden="true"></span>
 	<div class="page-hero__decor"><?php echo frave_isotype(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></div>
-	<div class="container page-hero__inner">
+	<?php if ( $frave_hero_media ) : ?>
+		<div class="container page-hero__layout">
+	<?php endif; ?>
+	<div class="<?php echo $frave_hero_media ? '' : 'container '; ?>page-hero__inner">
 		<?php
 		if ( $frave_hero['breadcrumb'] && function_exists( 'woocommerce_breadcrumb' ) ) {
 			woocommerce_breadcrumb();
@@ -66,4 +72,10 @@ $frave_hero = wp_parse_args(
 			</div>
 		<?php endif; ?>
 	</div>
+	<?php if ( $frave_hero_media ) : ?>
+			<div class="page-hero__media media-frame">
+				<?php echo $frave_hero['image']; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped by the caller. ?>
+			</div>
+		</div>
+	<?php endif; ?>
 </header>

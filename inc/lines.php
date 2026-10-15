@@ -269,6 +269,87 @@ function frave_line_card_image( string $slug ): string {
 }
 
 /**
+ * Image of a product category: the one chosen in Productos → Categorías or, failing that,
+ * the theme's. The theme ships one per category of the agreed tree
+ * (assets/media/categorias/{slug}.webp, 1200 × 800, with a 600 px version) and uses the
+ * line's hero image for the three lines. '' when there is none.
+ *
+ * @param array<string, string> $attr alt, loading, class… (alt defaults to '').
+ */
+function frave_term_image( WP_Term $term, string $sizes, array $attr = array() ): string {
+	$attr += array(
+		'alt'     => '',
+		'loading' => 'lazy',
+		'sizes'   => $sizes,
+	);
+	$id    = (int) get_term_meta( $term->term_id, 'thumbnail_id', true );
+	if ( $id ) {
+		return (string) wp_get_attachment_image( $id, 'frave-editorial', false, $attr );
+	}
+	$html = frave_theme_image( 'assets/media/categorias/' . $term->slug, 1200, 800, 600, $attr );
+	if ( '' === $html && 0 === $term->parent && frave_line_has_theme_image( $term->slug ) ) {
+		$html = sprintf(
+			'<img src="%1$s" width="1672" height="941" alt="%2$s" loading="%3$s" decoding="async">',
+			esc_url( frave_asset_url( "assets/media/lineas/{$term->slug}-escritorio.webp" ) ),
+			esc_attr( $attr['alt'] ),
+			esc_attr( $attr['loading'] )
+		);
+	}
+	return $html;
+}
+
+/**
+ * Small square image of a product category for chips: the thumbnail of the image chosen
+ * in the admin, or the theme's 120 px version. '' when there is none.
+ */
+function frave_term_thumb( WP_Term $term ): string {
+	$id = (int) get_term_meta( $term->term_id, 'thumbnail_id', true );
+	if ( $id ) {
+		return (string) wp_get_attachment_image(
+			$id,
+			'thumbnail',
+			false,
+			array(
+				'alt'     => '',
+				'loading' => 'lazy',
+			)
+		);
+	}
+	$path = 'assets/media/categorias/' . $term->slug . '-mini.webp';
+	if ( ! file_exists( FRAVE_THEME_DIR . '/' . $path ) ) {
+		return '';
+	}
+	return sprintf( '<img src="%s" width="120" height="120" alt="" loading="lazy" decoding="async">', esc_url( frave_asset_url( $path ) ) );
+}
+
+/**
+ * Inspiration gallery of a line: image slug (assets/media/{line}/{slug}.webp, 800 × 800
+ * with a 400 px version) => caption. Only Sabores has one.
+ *
+ * @return array<string, string>
+ */
+function frave_line_gallery( string $slug ): array {
+	if ( 'sabores' !== $slug ) {
+		return array();
+	}
+	return array(
+		'fresa'             => __( 'Fresa', 'frave' ),
+		'maracuya'          => __( 'Maracuyá', 'frave' ),
+		'manzana'           => __( 'Manzana', 'frave' ),
+		'vainilla'          => __( 'Vainilla', 'frave' ),
+		'cafe'              => __( 'Café', 'frave' ),
+		'te'                => __( 'Té', 'frave' ),
+		'paneton'           => __( 'Panetón', 'frave' ),
+		'panaderia'         => __( 'Panadería', 'frave' ),
+		'confiteria'        => __( 'Confitería', 'frave' ),
+		'bebidas'           => __( 'Bebidas', 'frave' ),
+		'productos-lacteos' => __( 'Productos lácteos', 'frave' ),
+		'salados'           => __( 'Salados', 'frave' ),
+		'cuidado-bucal'     => __( 'Cuidado bucal', 'frave' ),
+	);
+}
+
+/**
  * Subcategories of a line in WooCommerce's order, each with its own subcategories.
  *
  * @return array<int, array{term: WP_Term, children: WP_Term[]}>

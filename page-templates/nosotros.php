@@ -3,9 +3,10 @@
  * Template Name: Nosotros
  * Template Post Type: page
  *
- * Who Frave is: hero with the ingredients, the company in management's words, its essence,
- * the four beliefs and behaviors, any content written in the editor (team, history) and a
- * closing call to action. Copy: inc/company.php and the ACF group "Nosotros Frave".
+ * Who Frave is: hero with the ingredients, the company in management's words, a photo of
+ * a working meeting, its essence, the four beliefs and behaviors, any content written in
+ * the editor (team, history) and a closing call to action. Copy: inc/company.php and the
+ * ACF group "Nosotros Frave".
  */
 
 get_header();
@@ -26,6 +27,7 @@ get_header();
 			)
 		);
 		get_template_part( 'template-parts/company/statement', null, array( 'prefix' => 'frave_about' ) );
+		get_template_part( 'template-parts/company/photo' );
 		get_template_part( 'template-parts/company/essence' );
 		get_template_part( 'template-parts/company/beliefs' );
 		if ( '' !== trim( get_the_content() ) ) :
