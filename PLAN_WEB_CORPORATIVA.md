@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fases 1 a 7 publicadas en frave.pe (tema 1.10.0, plugin 1.5.0; blog con sus cuatro artículos de inicio publicado el 13-10). Faltan los productos de Frave y, en el administrador, WhatsApp y datos de contacto, redes sociales, Libro de Reclamaciones, Search Console y aprobación del sistema visual.
+- **Estado:** fases 1 a 7 publicadas en frave.pe (tema 1.14.0, plugin 1.6.0; blog con sus cuatro artículos de inicio publicado el 13-10). Faltan los productos de Frave y, en el administrador, WhatsApp y datos de contacto, redes sociales, Libro de Reclamaciones, Search Console y aprobación del sistema visual.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
@@ -38,14 +38,14 @@ Comprobado en la auditoría de la fase 7 (13-10-2026):
 
 ## Mapa del sitio objetivo
 
-Según los acuerdos de gerencia (12-10-2026): **Líneas** son Sabores, Fragancias y Envases; **Soluciones**, las industrias que se atienden; **Experticia**, la asesoría técnica, cómo trabajamos y la nube de palabras del Perú. La línea de sabores se sigue llamando «Sabores».
+Según los acuerdos de gerencia (12-10-2026): **Líneas** son Sabores, Fragancias y Envases; **Soluciones**, las industrias que se atienden; **Servicios** (llamada «Experticia» hasta el 15-10-2026, renombrada para no parecerse a la referencia), la asesoría técnica, cómo trabajamos y la nube de palabras del Perú. La línea de sabores se sigue llamando «Sabores».
 
 ```
 Inicio
 ├── Nosotros
 ├── Líneas ▾       Sabores · Fragancias · Envases
 ├── Soluciones ▾   por industria (perfumería, cosmética, hogar, ambientación, alimentos y bebidas…)
-├── Experticia     asesoría técnica, cómo trabajamos, nube de palabras del Perú
+├── Servicios      asesoría técnica, cómo trabajamos, nube de palabras del Perú
 ├── Catálogo       (sin precios, con filtros)
 ├── Blog           (solo cuando haya artículos)
 └── Contacto ▾     Formulario · WhatsApp · Libro de Reclamaciones
@@ -209,6 +209,18 @@ Sitio (base de datos, local y producción):
 - [x] Contacto ampliado: empresa, ciudad y línea de interés (completada desde `?linea=` o `?producto=`), consentimiento según la Ley 29733 con aviso de derechos y fecha guardada (plugin 1.3.0) (5b).
 - [x] Chat de WhatsApp guiado (cotización, consulta de producto, otra consulta; reclamos al Libro de Reclamaciones), sin guardar datos en la web (5b). Necesita el número de WhatsApp en producción.
 
+#### Publicar los ajustes del 15-10 (tema 1.14.0)
+
+Solo cambia el tema. Después de desplegarlo, desde la carpeta del sitio (`~/domains/frave.pe/public_html`):
+
+```bash
+wp theme mod set frave_social_linkedin "https://www.linkedin.com/in/frave-fragancias-y-envases-4b8229442"
+wp eval-file ~/repos/frave-theme/bin/crear-paginas-empresa.php
+wp litespeed-purge all
+```
+
+El primero añade LinkedIn a las redes (también se puede hacer en *Apariencia → Personalizar → Contacto*); el segundo renombra la página Experticia a Servicios (`/servicios/`; `/experticia/` redirige). En ACF, sincronizar «Servicios Frave» si aparece «Sincronización disponible».
+
 ### Fase 6 — Catálogo listo para cargar
 
 - [x] Guía del catálogo y plantilla de importación al día con el árbol acordado: hoja para completar con listas desplegables, ejemplos de las tres líneas (incluido un producto variable), rutas de categoría, atributos e instrucciones ([GUIA_CATALOGO.md](GUIA_CATALOGO.md)).
@@ -298,3 +310,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-13 | Contacto publicado y revisado en frave.pe (tema 1.12.0, plugin 1.6.0): axe sin avisos en Contacto y Libro de Reclamaciones, sin desbordes ni errores. Prueba real como visitante: mensaje «PRUEBA TÉCNICA – web Frave» guardado en Mensajes con el aviso por correo «Enviado» (aceptado por el servidor) a gerenciafrave@gmail.com; pendiente confirmar la llegada. Tema 1.12.1: las líneas del formulario siguen el orden del sitio (Sabores, Fragancias, Envases). |
 | 2026-10-15 | Imágenes generadas incorporadas (tema 1.13.0): las 39 imágenes de `imagenes-generadas` revisadas una a una (sin textos, logotipos ni defectos visibles; WebP de 30–113 KB) y copiadas al tema por slug en `assets/media/categorias/` (1200 px, 600 px y miniatura de 120 px), `assets/media/sabores/`, `empresa/reunion` y `fondo-beige`. `frave_term_image()` usa la imagen de la categoría del administrador o, si no hay, la del tema. Evidencia: capturas en escritorio y móvil de Fragancias, Sabores, Envases, categoría del catálogo, portada y Nosotros; PHPCS y ESLint limpios; Playwright 31 pruebas de las páginas afectadas, incluidas 4 nuevas (imágenes del portafolio y miniaturas, galería de Sabores, cabecera de categoría, foto de Nosotros y fondo de la portada). |
 | 2026-10-15 | CI de `main` en rojo desde el 13-10, sin efecto en frave.pe: el paso «Playwright (tienda)» filtraba por `home`, que también coincide con la ruta del servidor (`/home/runner/…`), y ejecutaba todas las pruebas con la tienda activa; ahí la cabecera de 8 entradas más carrito y cuenta desborda a 1024 px. Filtro corregido para que solo corran los 7 archivos previstos; la cabecera del modo catálogo gana margen a 1024 px (de 4 a 20 px: logotipo y separación algo menores entre 1024 y 1280 px) y la prueba informa de sus medidas al fallar. El desborde con la tienda activa queda anotado para su reactivación. |
+| 2026-10-15 | Primera tanda de correcciones de Frave (tema 1.14.0): LinkedIn en las redes de la cabecera, el menú móvil, el pie y contacto (el tema ya lo admitía: falta la dirección en producción); logotipo de la cabecera un 18 % más estrecho (máx. 184 px), que además deja sitio al tercer icono de 1024 a 1600 px; nube del Perú de 56 a 23 términos, más grandes (de 8–16,6 a 10,5–19,8) y separados; «Experticia» pasa a «Servicios» en página, menú, enlaces, plantilla y ACF, con redirección permanente desde `/experticia/`. Evidencia: medición de la cabecera de frave.pe con tres iconos y el logo nuevo (sin desborde a 390, 1024, 1280, 1440 y 1600 px); capturas de la nube en escritorio y móvil; PHPCS, ESLint, build; Playwright 35 pruebas de empresa, navegación, móvil, blog, portada y líneas, incluida una nueva para la redirección. |
