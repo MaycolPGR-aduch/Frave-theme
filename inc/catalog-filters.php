@@ -22,7 +22,10 @@ function frave_is_filterable_catalog(): bool {
 	}
 	// A category without products has nothing to filter: its page invites to request a quote.
 	$term = get_queried_object();
-	return ! ( is_product_category() && $term instanceof WP_Term && frave_term_product_count( $term ) < 1 );
+	if ( is_product_category() && $term instanceof WP_Term && frave_term_product_count( $term ) < 1 ) {
+		return false;
+	}
+	return ! frave_catalog_is_empty_shop();
 }
 
 /* ---------- Custom filters: in stock and on sale ---------- */
