@@ -101,11 +101,12 @@ jobs:
           FRAVE_E2E_URL: http://localhost:8888
 
       # The store stays in the code for later: run the purchase journeys with catalog mode off.
+      # Filters are regular expressions on the full path: a bare "home" also matched /home/runner/.
       - name: Playwright (tienda)
         if: success() || failure()
         run: |
           npx wp-env run cli wp option update frave_peru_catalog_mode no
-          npx playwright test cart checkout catalog home mobile lines
+          npx playwright test 'e2e.(cart|checkout|catalog|home|mobile|lines)'
         env:
           FRAVE_E2E_URL: http://localhost:8888
 
