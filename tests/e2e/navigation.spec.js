@@ -38,8 +38,14 @@ test.describe('navegación de escritorio', () => {
       await page.goto('/');
       const widths = await page.locator('[data-primary-navigation] .submenu-toggle svg').evaluateAll((icons) => icons.map((icon) => icon.getBoundingClientRect().width));
       expect(Math.min(...widths), `${width}px`).toBeGreaterThanOrEqual(15);
-      const fits = await page.locator('.site-header__inner').evaluate((inner) => inner.scrollWidth <= inner.clientWidth);
-      expect(fits, `${width}px`).toBe(true);
+      // On failure the message tells how much the bar overflows and what it holds.
+      const bar = await page.locator('.site-header__inner').evaluate((inner) => ({
+        overflow: inner.scrollWidth - inner.clientWidth,
+        parts: [...inner.children].map((child) => `${child.className.split(' ')[0]} ${Math.round(child.getBoundingClientRect().width)}`).join(', '),
+        items: [...inner.querySelectorAll('.menu-list > li')].map((item) => item.textContent.trim().split('\n')[0]).join(', '),
+        font: document.fonts.check('700 14px Lato'),
+      }));
+      expect(bar.overflow, `${width}px: ${JSON.stringify(bar)}`).toBeLessThanOrEqual(0);
     }
   });
 
