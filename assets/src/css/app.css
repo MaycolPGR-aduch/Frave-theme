@@ -329,14 +329,17 @@
     }
   }
 
-  /* Up to 80rem a slightly smaller logo, menu text and spacing keep the seven entries on one line. */
+  /*
+   * Up to 80rem a slightly smaller logo, menu text and spacing keep the seven entries on one
+   * line, with about 20px to spare at 1024px: text renders a few pixels wider on Linux.
+   */
   @media (min-width: 64rem) and (max-width: 79.99rem) {
     .site-branding {
-      width: clamp(8.5rem, 13.5vw, 14rem);
+      width: clamp(8rem, 12.5vw, 14rem);
     }
 
     .menu-list {
-      gap: clamp(0.6rem, 1vw, 1.1rem);
+      gap: clamp(0.55rem, 0.9vw, 1.1rem);
     }
 
     .menu-list > li > a,
