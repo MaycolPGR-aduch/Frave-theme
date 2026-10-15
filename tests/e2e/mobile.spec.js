@@ -46,7 +46,7 @@ test.describe('móvil', () => {
   });
 
   test('los pasos de «Cómo trabajamos» son un acordeón', async ({ page }) => {
-    await page.goto('/?pagename=experticia');
+    await page.goto('/?pagename=servicios');
     const second = page.getByRole('button', { name: /Proponemos/ });
     await expect(second).toHaveAttribute('aria-expanded', 'false');
     await second.click();
@@ -73,7 +73,7 @@ test.describe('móvil', () => {
   });
 
   test('la página no se desborda horizontalmente', async ({ page }) => {
-    for (const path of ['/', SHOP, '/?pagename=contacto', '/?pagename=fragancias', '/?pagename=nosotros', '/?pagename=experticia', '/?pagename=soluciones', '/?pagename=soluciones/perfumeria']) {
+    for (const path of ['/', SHOP, '/?pagename=contacto', '/?pagename=fragancias', '/?pagename=nosotros', '/?pagename=servicios', '/?pagename=soluciones', '/?pagename=soluciones/perfumeria']) {
       await page.goto(path);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow, path).toBeLessThanOrEqual(0);

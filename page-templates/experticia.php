@@ -1,12 +1,12 @@
 <?php
 /**
- * Template Name: Experticia
+ * Template Name: Servicios
  * Template Post Type: page
  *
  * What Frave knows how to do: hero with the word cloud of Peru, technical advice and
  * highlights, "Cómo trabajamos" (tabs or accordion), the industries served, any content
  * written in the editor and a closing call to action. Copy: inc/company.php and the ACF
- * group "Experticia Frave".
+ * group "Servicios Frave". Called Experticia until October 2026.
  */
 
 get_header();

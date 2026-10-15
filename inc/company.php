@@ -1,10 +1,11 @@
 <?php
 /**
- * Company pages: Nosotros (template "Nosotros") and Experticia (template "Experticia").
+ * Company pages: Nosotros (template "Nosotros") and Servicios (template "Servicios", called
+ * Experticia until October 2026: its code still says "expertise").
  *
  * The defaults below are the copy agreed with Frave's management (October 2026) and the
  * single source of these pages' text: templates fall back to them and ACF shows them as
- * default values ("Nosotros Frave", "Experticia Frave"). Wrap a word in *asterisks* to
+ * default values ("Nosotros Frave", "Servicios Frave"). Wrap a word in *asterisks* to
  * highlight it. bin/crear-paginas-empresa.php creates both pages.
  */
 
@@ -42,7 +43,7 @@ function frave_company_defaults(): array {
 		'frave_about_cta_title'             => __( '¿Construimos juntos tu *próximo producto*?', 'frave' ),
 		'frave_about_cta_text'              => __( 'Cuéntanos sobre tu marca y te acompañamos desde la primera consulta.', 'frave' ),
 
-		'frave_expertise_hero_eyebrow'      => __( 'Experticia', 'frave' ),
+		'frave_expertise_hero_eyebrow'      => __( 'Servicios', 'frave' ),
 		'frave_expertise_hero_title'        => __( 'Conocimiento técnico al servicio de tu *marca*', 'frave' ),
 		'frave_expertise_hero_text'         => __( 'Comprendemos las necesidades de cada negocio para ofrecer soluciones que aportan valor, promueven la innovación y contribuyen al crecimiento sostenible de nuestros clientes.', 'frave' ),
 		'frave_expertise_cloud_caption'     => __( 'Aplicaciones, atributos y servicios que forman parte de nuestro trabajo.', 'frave' ),
@@ -98,7 +99,7 @@ function frave_company_belief_icons(): array {
 }
 
 /**
- * Industries each product line serves (management agreements), for Experticia.
+ * Industries each product line serves (management agreements), for Servicios.
  *
  * @return array<string, string[]>
  */
@@ -149,6 +150,24 @@ function frave_company_hide_footer_cta( bool $show ): bool {
 	return is_page_template( array( FRAVE_TEMPLATE_ABOUT, FRAVE_TEMPLATE_EXPERTISE ) ) ? false : $show;
 }
 add_filter( 'frave_show_footer_cta', 'frave_company_hide_footer_cta' );
+
+/**
+ * /experticia/, the services page's address until October 2026, leads permanently to the
+ * page with the Servicios template (WordPress keeps old addresses only for posts). Before
+ * WordPress's own guess of a similar address.
+ */
+function frave_company_redirect_old_expertise(): void {
+	global $wp;
+	if ( ! is_404() || 'experticia' !== trim( (string) ( get_query_var( 'pagename' ) ? get_query_var( 'pagename' ) : $wp->request ), '/' ) ) {
+		return;
+	}
+	$url = frave_company_page_url( FRAVE_TEMPLATE_EXPERTISE );
+	if ( '' !== $url ) {
+		wp_safe_redirect( $url, 301 );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'frave_company_redirect_old_expertise', 9 );
 
 /** The Nosotros image is the largest element at first paint: fetch it early. */
 function frave_company_preload_image( array $resources ): array {

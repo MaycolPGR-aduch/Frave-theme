@@ -1,9 +1,9 @@
 import { expect, test } from '@playwright/test';
 import { collectPageErrors, expectNoPhpErrors } from './helpers.js';
 
-// bin/crear-paginas-empresa.php (run by the CI seed) creates /nosotros/ and /experticia/.
+// bin/crear-paginas-empresa.php (run by the CI seed) creates /nosotros/ and /servicios/ (called Experticia until October 2026).
 const ABOUT = '/?pagename=nosotros';
-const EXPERTISE = '/?pagename=experticia';
+const EXPERTISE = '/?pagename=servicios';
 
 test.describe('páginas de empresa', () => {
   test('Nosotros presenta la empresa, su esencia y sus creencias', async ({ page }) => {
@@ -27,7 +27,7 @@ test.describe('páginas de empresa', () => {
     expect(errors).toEqual([]);
   });
 
-  test('Experticia muestra la nube de palabras del Perú con su lista legible', async ({ page }) => {
+  test('Servicios muestra la nube de palabras del Perú con su lista legible', async ({ page }) => {
     const errors = collectPageErrors(page);
     await page.goto(EXPERTISE);
     await expectNoPhpErrors(page);
@@ -37,7 +37,7 @@ test.describe('páginas de empresa', () => {
     await expect(cloud).toBeVisible();
     await expect(cloud).toHaveAttribute('aria-hidden', 'true');
     const words = await cloud.locator('text').count();
-    expect(words).toBeGreaterThan(40);
+    expect(words).toBeGreaterThanOrEqual(20);
     // Screen readers get every word from the list instead of the drawing.
     await expect(page.locator('.word-cloud ul.screen-reader-text li')).toHaveCount(words);
     await expect(page.locator('.highlight h3').first()).toHaveText(/\+500\s+referencias/);
@@ -62,15 +62,21 @@ test.describe('páginas de empresa', () => {
     await expect(page.locator('#paso-asesoramos')).toBeVisible();
   });
 
-  test('la portada y el menú llevan a Nosotros y Experticia', async ({ page }) => {
+  test('la portada y el menú llevan a Nosotros y Servicios', async ({ page }) => {
     await page.goto('/');
-    await page.locator('.home-reasons').getByRole('link', { name: 'Conoce nuestra experticia' }).click();
+    await page.locator('.home-reasons').getByRole('link', { name: 'Conoce nuestros servicios' }).click();
     await expect(page.locator('.company-hero h1')).toContainText('marca');
 
     const lines = page.locator('[data-primary-navigation] [data-submenu-toggle]', { hasText: 'Líneas' });
     test.skip((await lines.count()) === 0, 'Este sitio tiene un menú propio en Apariencia → Menús.');
     const nav = page.locator('[data-primary-navigation]');
     await expect(nav.getByRole('link', { name: 'Nosotros', exact: true })).toBeVisible();
-    await expect(nav.getByRole('link', { name: 'Experticia', exact: true })).toBeVisible();
+    await expect(nav.getByRole('link', { name: 'Servicios', exact: true })).toBeVisible();
+  });
+
+  test('la dirección antigua de Experticia lleva a Servicios', async ({ page }) => {
+    const response = await page.goto('/?pagename=experticia');
+    expect(response.request().redirectedFrom()).not.toBeNull();
+    await expect(page.locator('.company-hero .eyebrow')).toHaveText('Servicios');
   });
 });

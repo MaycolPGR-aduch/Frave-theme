@@ -22,7 +22,7 @@ get_header();
 				'prefix'    => 'frave_about',
 				'visual'    => 'image',
 				'secondary' => frave_company_page_url( FRAVE_TEMPLATE_EXPERTISE )
-					? array( __( 'Nuestra experticia', 'frave' ), frave_company_page_url( FRAVE_TEMPLATE_EXPERTISE ) )
+					? array( __( 'Nuestros servicios', 'frave' ), frave_company_page_url( FRAVE_TEMPLATE_EXPERTISE ) )
 					: array( __( 'Ver el catálogo', 'frave' ), frave_catalog_shop_url() ),
 			)
 		);

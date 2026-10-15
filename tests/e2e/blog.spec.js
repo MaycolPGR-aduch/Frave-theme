@@ -83,7 +83,7 @@ test.describe('blog', () => {
 
   test('con el menú automático, «Blog» aparece cuando hay artículos', async ({ page }) => {
     const url = await blogUrl(page);
-    const fallback = await page.locator('#primary-navigation .menu-list > li > a[href]').evaluateAll((links) => links.some((a) => a.textContent.trim() === 'Experticia'));
+    const fallback = await page.locator('#primary-navigation .menu-list > li > a[href]').evaluateAll((links) => links.some((a) => a.textContent.trim() === 'Servicios'));
     test.skip(!fallback, 'Este sitio usa un menú propio de Apariencia → Menús.');
     await expect(page.locator(`#primary-navigation .menu-list > li > a[href="${url}"]`)).toHaveText('Blog');
   });

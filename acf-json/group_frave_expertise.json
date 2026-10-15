@@ -1,6 +1,6 @@
 {
     "key": "group_frave_expertise",
-    "title": "Experticia Frave",
+    "title": "Servicios Frave",
     "fields": [
         {
             "key": "field_group_frave_expertise_tab_0",
@@ -503,7 +503,7 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Textos de la página Experticia. Los campos vacíos muestran el texto por defecto del tema.",
+    "description": "Textos de la página Servicios. Los campos vacíos muestran el texto por defecto del tema.",
     "show_in_rest": 0,
-    "modified": 1791844984
+    "modified": 1792079079
 }

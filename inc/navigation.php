@@ -35,7 +35,7 @@ function frave_contact_page_url(): string {
 /**
  * Items of the fallback main menu: Inicio, Nosotros, Líneas (one entry per product line
  * with a line page or a category with products, so no entry leads to an empty page),
- * Soluciones (the hub and one entry per industry), Experticia, Catálogo and Contacto.
+ * Soluciones (the hub and one entry per industry), Servicios, Catálogo and Contacto.
  * Pages appear once they are published. With seven entries Inicio gives way, as the logo
  * already leads home and the floating header has room for six.
  *
@@ -97,7 +97,7 @@ function frave_primary_menu_fallback_items(): array {
 		$expertise = frave_company_page_url( FRAVE_TEMPLATE_EXPERTISE );
 		if ( $expertise ) {
 			$items[] = array(
-				'label' => __( 'Experticia', 'frave' ),
+				'label' => __( 'Servicios', 'frave' ),
 				'url'   => $expertise,
 			);
 		}

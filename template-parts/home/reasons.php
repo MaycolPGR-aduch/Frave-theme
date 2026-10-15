@@ -15,7 +15,7 @@ $frave_icons = frave_home_reason_icons();
 			<p class="lead"><?php echo esc_html( frave_home_text( 'frave_home_reasons_text' ) ); ?></p>
 			<?php $frave_expertise = frave_company_page_url( FRAVE_TEMPLATE_EXPERTISE ); ?>
 			<?php if ( $frave_expertise ) : ?>
-				<a class="link-arrow" href="<?php echo esc_url( $frave_expertise ); ?>"><?php esc_html_e( 'Conoce nuestra experticia', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
+				<a class="link-arrow" href="<?php echo esc_url( $frave_expertise ); ?>"><?php esc_html_e( 'Conoce nuestros servicios', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
 			<?php endif; ?>
 		</div>
 		<ul class="feature-grid home-reasons__grid" data-reveal-group>

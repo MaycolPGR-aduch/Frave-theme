@@ -1,7 +1,7 @@
 <?php
 /**
  * Hero of the company pages on a warm tone: copy and actions on one side, the visual on
- * the other (the ingredients in a drop in Nosotros, the word cloud of Peru in Experticia).
+ * the other (the ingredients in a drop in Nosotros, the word cloud of Peru in Servicios).
  *
  * Arguments:
  * - prefix:    field prefix, frave_about or frave_expertise.
