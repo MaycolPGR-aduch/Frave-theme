@@ -343,9 +343,10 @@
 
   .line-applications__list li {
     padding: 0.6rem 1.1rem;
-    border: 1px solid rgb(255 255 255 / 16%);
+    border: 1px solid var(--color-sand-line);
     border-radius: 999px;
-    color: var(--color-on-dark);
+    background: rgb(255 255 255 / 55%);
+    color: var(--color-ink);
     font-size: 0.95rem;
     font-weight: 700;
   }
@@ -408,7 +409,7 @@
   /* ---------- Catalog link to the line (catalog hero) ---------- */
 
   .page-hero__line-link {
-    color: var(--color-brand-orange) !important;
+    color: var(--color-sand-accent) !important;
     font-weight: 700;
   }
 

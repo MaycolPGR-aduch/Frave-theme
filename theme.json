@@ -13,7 +13,8 @@
       "palette": [
         { "slug": "brand-orange", "name": "Naranja Frave", "color": "#fc4c02" },
         { "slug": "primary", "name": "Primario accesible", "color": "#c43b00" },
-        { "slug": "night", "name": "Noche", "color": "#121418" },
+        { "slug": "sand", "name": "Arena", "color": "#f1e6d8" },
+        { "slug": "navy", "name": "Azul marino", "color": "#1d2b4f" },
         { "slug": "ink", "name": "Tinta", "color": "#202329" },
         { "slug": "orange-soft", "name": "Naranja suave", "color": "#fff1ea" },
         { "slug": "muted", "name": "Texto secundario", "color": "#6b6b68" },

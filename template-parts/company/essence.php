@@ -1,11 +1,11 @@
 <?php
-/** "Nuestra esencia": management's one-sentence purpose on a dark band, with the isotype as a seal. */
+/** "Nuestra esencia": management's one-sentence purpose on a sand band, with the isotype as a seal. */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<section class="section section--dark company-essence" aria-labelledby="company-essence-title">
+<section class="section section--sand company-essence" aria-labelledby="company-essence-title">
 	<span class="orbit orbit--soft company-essence__orbit" aria-hidden="true"></span>
 	<div class="company-essence__decor" aria-hidden="true"><?php echo frave_isotype(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></div>
 	<div class="container company-essence__inner" data-reveal="up">

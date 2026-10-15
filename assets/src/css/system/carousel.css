@@ -74,8 +74,8 @@
   }
 
   .carousel__button:hover:not(:disabled) {
-    border-color: var(--color-ink);
-    background: var(--color-ink);
+    border-color: var(--color-navy);
+    background: var(--color-navy);
     color: #fff;
   }
 
@@ -84,14 +84,12 @@
     opacity: 0.35;
   }
 
-  .section--dark .carousel__button,
   .on-dark .carousel__button {
     border-color: rgb(255 255 255 / 22%);
     background: transparent;
     color: #fff;
   }
 
-  .section--dark .carousel__button:hover:not(:disabled),
   .on-dark .carousel__button:hover:not(:disabled) {
     border-color: #fff;
     background: #fff;

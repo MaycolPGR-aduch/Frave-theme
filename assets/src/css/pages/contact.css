@@ -20,7 +20,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.65rem;
-    color: #fff;
+    color: var(--color-ink);
     font-size: 0.92rem;
     font-weight: 700;
   }
@@ -31,8 +31,8 @@
     flex: none;
     padding: 0.5rem;
     border-radius: 999px;
-    background: rgb(252 76 2 / 16%);
-    color: var(--color-brand-orange);
+    background: #fff;
+    color: var(--color-primary);
   }
 
   /* The hero leaves room for the cards that rise over it. */
@@ -261,8 +261,8 @@
   }
 
   .frave-contact__option input:checked + span {
-    border-color: var(--color-ink);
-    background: var(--color-ink);
+    border-color: var(--color-navy);
+    background: var(--color-navy);
     color: #fff;
   }
 

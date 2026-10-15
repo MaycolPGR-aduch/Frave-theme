@@ -108,11 +108,11 @@
 
   .ticker__row:first-child .ticker__word {
     color: transparent;
-    -webkit-text-stroke: 1px rgb(255 255 255 / 45%);
+    -webkit-text-stroke: 1px rgb(92 82 72 / 45%);
   }
 
   .ticker__row--reverse .ticker__word {
-    color: var(--color-on-dark);
+    color: var(--color-ink);
   }
 
   /* The brand drop between words. */

@@ -9,7 +9,7 @@
 
 Una web corporativa de captación que tiene que enganchar: titulares grandes y ligeros, superficies oscuras con profundidad, un único acento naranja y movimiento al hacer scroll. La referencia de estructura y ritmo es [disaromas.com](https://disaromas.com/); la identidad es de Frave:
 
-- **Base corporativa:** blanco, tinta y noche. El naranja de marca guía la mirada y no se usa como fondo de grandes superficies.
+- **Base corporativa:** blanco, arena y tinta, con azul marino en el pie (Frave no usa negro). El naranja de marca guía la mirada y no se usa como fondo de grandes superficies.
 - **Motivo gráfico propio:** la gota y el frasco del isotipo recortan fotografías, aparecen como marca de agua y dan forma a los iconos.
 - **Movimiento progresivo:** todo se ve sin JavaScript y se detiene con `prefers-reduced-motion`.
 
@@ -35,10 +35,13 @@ El orden de capas CSS se fija al principio de `app.css` (`@layer theme, utilitie
 
 | Token | Valor | Uso | Contraste |
 | --- | --- | --- | --- |
-| `night` | `#121418` | Banda de páginas, pie, secciones de impacto | Blanco 18,4:1 · naranja 5,4:1 |
-| `night-2` | `#1c1f25` | Tarjetas sobre noche | Blanco 16,5:1 |
-| `ink` / `foreground` | `#202329` | Texto principal, botón oscuro | Sobre blanco 15,9:1 |
-| `brand-orange` / `accent` | `#fc4c02` | Líneas, iconos, píldoras, títulos grandes; texto solo sobre oscuro | Sobre blanco 3,4:1 (solo texto grande) |
+| `sand` | `#f1e6d8` | Banda de páginas, secciones destacadas y panel del catálogo (el beige de las fotos) | Tinta 12,9:1 |
+| `sand-soft` / `sand-line` | `#f8f1e8` / `#e2d3bf` | Matiz y bordes sobre arena | — |
+| `sand-muted` / `sand-accent` | `#5c5248` / `#a83200` | Texto secundario y textos de acento sobre arena | 6,2:1 / 5,5:1 |
+| `navy` / `navy-2` | `#1d2b4f` / `#24365e` | Pie, botones oscuros y controles seleccionados | Blanco 14:1 |
+| `orange-light` | `#ff8a5c` | Textos de acento sobre azul marino (el naranja de marca da 4,1:1) | 6:1 |
+| `ink` / `foreground` | `#202329` | Texto principal | Sobre blanco 15,9:1 |
+| `brand-orange` / `accent` | `#fc4c02` | Líneas, iconos, píldoras, títulos grandes | Sobre blanco 3,4:1 (solo texto grande) |
 | `primary` | `#c43b00` | Botones con texto blanco, enlaces y acentos sobre claro | Blanco 5,3:1 |
 | `primary-hover` | `#a83200` | Hover de botones primarios | Blanco 6,7:1 |
 | `orange-soft` | `#fff1ea` | Fondo de iconos y píldoras suaves | Primario encima 4,8:1 |
@@ -46,11 +49,13 @@ El orden de capas CSS se fija al principio de `app.css` (`@layer theme, utilitie
 | `surface` / `surface-2` | `#f6f4f1` / `#efebe6` | Secciones alternas, fondos de imagen | Texto secundario 4,9:1 |
 | `line` / `border` | `#e5e1dc` | Bordes y divisores | — |
 | `muted` | `#6b6b68` | Descripciones | Sobre blanco 5,4:1 |
-| `on-dark` / `on-dark-muted` | `#f4f2ef` / `#a9a7a3` | Texto sobre noche | 17:1 / 7,7:1 |
+| `on-dark` / `on-dark-muted` | `#f4f2ef` / `#c3cadb` | Texto sobre azul marino | 13:1 / 8,5:1 |
 | `success`, `warning`, `error` | `#276749`, `#9c6b1b`, `#b42318` | Estados | — |
 | `whatsapp` / `whatsapp-dark` | `#0f7d6f` / `#075e54` | Botones de WhatsApp (el verde de marca da 1,98:1) | Blanco 5,0:1 |
 
-Regla práctica: sobre blanco, el naranja de marca solo en títulos de 24 px o más y en elementos sin texto; para texto y botones, `primary`. Sobre `night`, el naranja vale también para texto.
+Frave no usa negro: desde el 15-10-2026 las superficies que eran negras son arena (secciones y bandas) o azul marino (pie, botones oscuros y controles seleccionados). El azul es un color de apoyo; el logotipo y la marca siguen en naranja.
+
+Regla práctica: sobre blanco, el naranja de marca solo en títulos de 24 px o más y en elementos sin texto; para texto y botones, `primary`. Sobre arena, los textos pequeños de acento van en `sand-accent`; sobre azul marino, en `orange-light`.
 
 ## Tipografía
 
@@ -84,13 +89,13 @@ El énfasis dentro de un título se hace con `<strong>` (700), con `.pill` (pala
 | Cabecera | `.site-header`, `.site-header__inner` | Cápsula blanca flotante, fija arriba; se eleva al hacer scroll (`.is-scrolled`). Superpone la página (`--header-height`), así las bandas oscuras corren por detrás. |
 | Submenú | `.sub-menu`, `.menu-item__icon`, `.menu-item__description` | Panel con iconos en escritorio, acordeón en móvil. Las líneas toman su icono de la categoría; otros elementos con la clase `frave-icon-NOMBRE`. |
 | Menú móvil | `.primary-navigation.is-open` | Tarjeta bajo la cápsula con «Solicitar asesoría» al final. |
-| Banda de cabecera | `template-parts/components/page-hero.php` | Fondo noche con resplandor naranja, órbitas e isotipo de marca de agua, esquinas inferiores redondeadas. Rótulo, título, entrada, línea de datos, migas y buscador opcionales. La usan las páginas, entradas, archivo, búsqueda y el catálogo. |
+| Banda de cabecera | `template-parts/components/page-hero.php` | Fondo arena con resplandor naranja suave, órbitas e isotipo de marca de agua, esquinas inferiores redondeadas. Rótulo, título, entrada, línea de datos, migas y buscador opcionales. La usan las páginas, entradas, archivo, búsqueda y el catálogo. |
 | Superficies | `.section--dark` / `.on-dark`, `.section--surface`, `.section--overlap` | Lo oscuro ajusta títulos, rótulos, píldoras, iconos y botones de contorno. |
 | Tarjeta | `.card` + `--surface`, `--dark`, `--interactive`; `.card__link` | La interactiva sube y gana sombra; `.card__link` hace clicable toda la tarjeta con foco visible. |
 | Icono en mosaico | `.icon-tile`, `--lg` | Naranja suave sobre claro, naranja translúcido sobre oscuro. |
 | Cifra | `.stat`, `.stat__value`, `.stat__label` | Con `data-count-to` cuenta al aparecer. |
 | Tarjeta de producto | `.product-card__media`, `.product-card__category` | Marco con zoom de imagen y categoría sobre el título. |
-| Pie | `.site-footer` | Noche con isotipo, franja «¿Tienes un proyecto en mente?» y botones, columnas con iconos de contacto y Libro de Reclamaciones. |
+| Pie | `.site-footer` | Azul marino con isotipo, franja «¿Tienes un proyecto en mente?» y botones, columnas con iconos de contacto y Libro de Reclamaciones. |
 
 ## Formas e iconos
 
@@ -120,10 +125,10 @@ Duraciones y curvas en `--duration-fast` (160 ms), `--duration` (320 ms), `--dur
 | --- | --- | --- |
 | Hero | Beige del vídeo `#eedcc8` | Vídeo en el 60 % derecho (en móvil, marco 4:3 bajo el texto) con degradado hacia el texto; título display con píldora; rótulo `#a83200` y entrada `#4a4642` por contraste sobre beige; fijo en escritorio. |
 | Nuestras soluciones | Blanco, sube sobre el hero con esquinas redondeadas | Tarjetas con marco de frasco; sin imagen, degradado de la línea con su icono. Carrusel en móvil, tres columnas en escritorio. |
-| Cómo trabajamos | Noche con órbita | Introducción fija a la izquierda y pasos apilados a la derecha con números grandes en naranja. |
+| Cómo trabajamos | Arena con órbita, pasos en tarjetas blancas | Introducción fija a la izquierda y pasos apilados a la derecha con números grandes en naranja. |
 | Destacados | Blanco | Cuatro tarjetas de producto. |
 | Razones | Superficie | Cuatro tarjetas con icono grande. |
-| Catálogo | Panel noche redondeado | Buscador y accesos a las líneas en píldoras. |
+| Catálogo | Panel arena redondeado | Buscador y accesos a las líneas en píldoras. |
 | Tendencias | Blanco | Tarjetas de entrada; sin imagen, el isotipo. |
 | Dónde estamos | Blanco | Canales con iconos y mapa bajo demanda. |
 
@@ -145,9 +150,9 @@ Imágenes de línea: horizontal 16:9 con el tercio izquierdo despejado y vertica
 
 - **Hero cálido** (#f2e2cc) a dos columnas: texto a la izquierda; a la derecha, los ingredientes en la gota de marca (Nosotros) o la nube de palabras del Perú (Experticia). La sección siguiente sube con las esquinas redondeadas.
 - **Nube del Perú:** silueta en marfil con borde naranja, el isotipo en el centro y los 56 términos en mayúsculas de Lato: los principales en naranja oscuro, los secundarios en tinta y el resto en gris. Aparecen uno tras otro desde el centro; con movimiento reducido se ven de inmediato.
-- **Esencia:** frase grande y ligera sobre noche, con el énfasis en naranja y el isotipo como sello de fondo.
+- **Esencia:** frase grande y ligera sobre arena, con el énfasis en naranja y el isotipo como sello de fondo.
 - **Creencias:** tarjetas blancas sobre superficie con icono, número grande en naranja claro y el comportamiento separado por una línea, en naranja oscuro.
-- **Cómo trabajamos:** sobre noche, pestañas verticales con una barra naranja en la activa y un panel con el número en contorno; en móvil, acordeón con chevron.
+- **Cómo trabajamos:** sobre arena, pestañas verticales con una barra naranja en la activa y un panel con el número en contorno; en móvil, acordeón con chevron.
 - **Bloques compartidos** (`system/blocks.css`): frase con explicación (`.statement`), destacados (`.highlights`), banda de palabras (`.ticker`) y cierre con la imagen de contacto (`.cta-panel`).
 
 ## Contacto
@@ -173,7 +178,7 @@ Imágenes de línea: horizontal 16:9 con el tercio izquierdo despejado y vertica
 - **Página de entradas:** banda de cabecera con migas de pan; temas como píldoras (el activo en tinta); el último artículo como tarjeta ancha con imagen a la izquierda, título ligero grande y «Leer artículo»; el resto en una rejilla de tres columnas en escritorio.
 - **Tarjeta de artículo:** imagen 16:10 sobre la superficie marfil (o el isotipo si no hay imagen), tema en naranja oscuro y fecha en mayúsculas espaciadas, título en negrita y extracto en gris. Toda la tarjeta es el enlace.
 - **Artículo:** título ligero de hasta 3,6 rem en la banda oscura, fecha y tiempo de lectura; imagen de portada redondeada; texto de 44 rem como máximo a 1,1 rem con interlineado 1,75, viñetas naranjas y citas con borde naranja; en escritorio, «Compartir» en una columna estrecha que acompaña la lectura. Botones de compartir como píldoras con el logo de cada red en su color.
-- **Redes sociales:** logos en círculos que, al pasar el cursor o con el foco, se rellenan desde el centro con el color de cada red (degradado de Instagram; negro con el eco cian y rojo de TikTok; azules de Facebook y LinkedIn; rojo de YouTube). En la cabecera van en tinta junto a la búsqueda, separados por una línea; en el menú móvil, con borde bajo «Síguenos»; en el pie, con borde claro sobre la noche.
+- **Redes sociales:** logos en círculos que, al pasar el cursor o con el foco, se rellenan desde el centro con el color de cada red (degradado de Instagram; negro con el eco cian y rojo de TikTok; azules de Facebook y LinkedIn; rojo de YouTube). En la cabecera van en tinta junto a la búsqueda, separados por una línea; en el menú móvil, con borde bajo «Síguenos»; en el pie, con borde claro sobre el azul marino.
 
 ## Accesibilidad
 
@@ -194,6 +199,7 @@ Regla aprendida: el color de enlace global de `theme.json` no tiene capa y gana 
 | 2026-10-05 | Botones de WooCommerce con el estilo del tema (`woocommerce-block-theme-has-button-styles`) y etiqueta «¡Oferta!» en `primary`. Páginas WooCommerce alineadas con el sistema. | Implementado |
 | 2026-10-10 | Modo catálogo: menú con submenús, «Solicitar asesoría», bloque de cotización en la ficha y «Ver detalles» con contorno. | Implementado |
 | 2026-10-11 | Sistema corporativo (fase 2): tokens noche y naranja suave, Lato 300 en títulos, botones `.btn` con icono, píldoras y marcador, cabecera en cápsula flotante, submenús con iconos, banda de cabecera en páginas y catálogo, pie oscuro con llamada a la acción, formas de gota y frasco, isotipo, iconos de línea, tarjetas, cifras, carrusel, apilado, hero fijo con telón y pie que se descubre. Guía en `/?sistema-visual`. | Implementado; pendiente de aprobación de Frave |
+| 2026-10-15 | Sin negro, a pedido de Frave: secciones destacadas, banda de páginas y panel del catálogo en arena (`sand`, el beige de las fotos) con tinta y acentos en naranja oscuro; pie, botones oscuros y controles seleccionados en azul marino (`navy`), con textos de acento en naranja claro. Contrastes AA comprobados. | Implementado |
 
 | 2026-10-13 | Página de contacto rediseñada (cabecera con ventajas, formulario en bloques con opciones como píldoras, canales con WhatsApp destacado y confirmación con siguientes pasos); widget de WhatsApp como región propia. | Implementado |
 | 2026-10-13 | Redes sociales en cabecera, menú móvil y pie; entre 1024 y 1280 px la cabecera compacta logo, letra y espacios para que el menú quepa con sus flechas. | Implementado |

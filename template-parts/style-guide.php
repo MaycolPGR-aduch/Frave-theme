@@ -9,9 +9,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $frave_colors = array(
-	array( 'Night', '#121418', __( 'Superficies oscuras: banda de páginas, pie, secciones de impacto.', 'frave' ), __( 'Blanco 18,4:1 · naranja 5,4:1', 'frave' ) ),
-	array( 'Ink', '#202329', __( 'Texto principal y botón oscuro.', 'frave' ), __( 'Sobre blanco 15,9:1', 'frave' ) ),
-	array( 'Naranja Frave', '#fc4c02', __( 'Acento: líneas, iconos, píldoras y títulos grandes. Texto solo sobre oscuro.', 'frave' ), __( 'Sobre blanco 3,4:1 (solo texto grande)', 'frave' ) ),
+	array( 'Arena', '#f1e6d8', __( 'Banda de páginas y secciones destacadas (el beige de las fotos). Frave no usa negro.', 'frave' ), __( 'Tinta 12,9:1 · texto secundario #5c5248 6,2:1 · naranja #a83200 5,5:1', 'frave' ) ),
+	array( 'Azul marino', '#1d2b4f', __( 'Pie de página y botones oscuros.', 'frave' ), __( 'Blanco 14:1 · naranja claro #ff8a5c 6:1', 'frave' ) ),
+	array( 'Ink', '#202329', __( 'Texto principal.', 'frave' ), __( 'Sobre blanco 15,9:1', 'frave' ) ),
+	array( 'Naranja Frave', '#fc4c02', __( 'Acento: líneas, iconos, píldoras y títulos grandes.', 'frave' ), __( 'Sobre blanco 3,4:1 (solo texto grande)', 'frave' ) ),
 	array( 'Primario', '#c43b00', __( 'Botones con texto blanco, enlaces y textos de acento sobre claro.', 'frave' ), __( 'Blanco 5,3:1', 'frave' ) ),
 	array( 'Naranja suave', '#fff1ea', __( 'Fondos de iconos y píldoras suaves.', 'frave' ), __( 'Primario encima 4,8:1', 'frave' ) ),
 	array( 'Superficie', '#f6f4f1', __( 'Secciones alternas y fondos de imagen.', 'frave' ), __( 'Texto secundario encima 4,9:1', 'frave' ) ),
@@ -130,7 +131,7 @@ get_header();
 		</div>
 	</section>
 
-	<section class="section section--dark" aria-labelledby="sg-icons">
+	<section class="section section--sand" aria-labelledby="sg-icons">
 		<div class="container">
 			<div class="section-head">
 				<p class="eyebrow"><?php esc_html_e( '04 · Iconos e isotipo', 'frave' ); ?></p>

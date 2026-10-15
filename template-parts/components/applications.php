@@ -1,6 +1,6 @@
 <?php
 /**
- * Applications on a dark band: two rows of large words that slide with the scroll
+ * Applications on a sand band: two rows of large words that slide with the scroll
  * (decorative, ticker.js) and the same applications as a readable list.
  *
  * Arguments:
@@ -31,7 +31,7 @@ $frave_rows = array(
 	array_merge( array_slice( $frave_row, $frave_half ), array_slice( $frave_row, 0, $frave_half ) ),
 );
 ?>
-<section class="section section--dark line-applications" aria-labelledby="line-applications-title">
+<section class="section section--sand line-applications" aria-labelledby="line-applications-title">
 	<div class="ticker" aria-hidden="true" data-ticker>
 		<?php foreach ( $frave_rows as $frave_row_index => $frave_words ) : ?>
 			<div class="ticker__row<?php echo 1 === $frave_row_index ? ' ticker__row--reverse' : ''; ?>">

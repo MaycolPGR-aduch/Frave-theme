@@ -1,5 +1,5 @@
 <?php
-/** Catalog invitation: a dark panel with the product search and quick links to each line. */
+/** Catalog invitation: a sand panel with the product search and quick links to each line. */
 
 if ( ! defined( 'ABSPATH' ) || ! class_exists( 'WooCommerce' ) ) {
 	return;
@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) || ! class_exists( 'WooCommerce' ) ) {
 ?>
 <section class="section home-catalog" aria-labelledby="home-catalog-title">
 	<div class="container">
-		<div class="home-catalog__panel on-dark" data-reveal="scale">
+		<div class="home-catalog__panel" data-reveal="scale">
 			<span class="orbit home-catalog__orbit" aria-hidden="true"></span>
 			<div class="home-catalog__decor" aria-hidden="true"><?php echo frave_isotype(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></div>
 			<div class="home-catalog__copy">

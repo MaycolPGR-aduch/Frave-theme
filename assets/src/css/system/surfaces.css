@@ -1,31 +1,39 @@
 /*
  * Surfaces of the design system: section backgrounds, cards, icon tiles, figures and the
- * page hero of interior pages. Dark surfaces use night (#121418): white text reads 18:1
- * and the brand orange 5.4:1, so orange may be used for text there.
+ * page hero of interior pages. Frave avoids black: highlighted sections and page heroes
+ * are sand (the beige of the photography) with ink text; the footer is navy, where white
+ * reads 14:1 and small orange text takes the lighter orange.
  */
 @layer components {
-  .section--dark,
+  .section--sand {
+    background: var(--color-sand);
+  }
+
+  .section--sand .lead {
+    color: var(--color-sand-muted);
+  }
+
+  .section--sand .eyebrow {
+    color: var(--color-sand-accent);
+  }
+
   .on-dark {
-    background: var(--color-night);
+    background: var(--color-navy);
     color: var(--color-on-dark);
   }
 
-  .section--dark :is(h1, h2, h3, h4),
   .on-dark :is(h1, h2, h3, h4) {
     color: #fff;
   }
 
-  .section--dark .lead,
   .on-dark .lead {
     color: var(--color-on-dark-muted);
   }
 
-  .section--dark .eyebrow,
   .on-dark .eyebrow {
-    color: var(--color-brand-orange);
+    color: var(--color-orange-light);
   }
 
-  .section--dark .pill--soft,
   .on-dark .pill--soft {
     background: rgb(255 255 255 / 10%);
     color: #fff;
@@ -80,7 +88,7 @@
 
   .card--dark {
     border-color: rgb(255 255 255 / 10%);
-    background: var(--color-night-2);
+    background: var(--color-navy-2);
     color: var(--color-on-dark);
   }
 
@@ -145,7 +153,6 @@
     height: 2rem;
   }
 
-  .section--dark .icon-tile,
   .on-dark .icon-tile,
   .card--dark .icon-tile {
     background: rgb(252 76 2 / 14%);
@@ -186,19 +193,20 @@
     font-size: 0.95rem;
   }
 
-  .section--dark .stat__value,
   .on-dark .stat__value {
     color: #fff;
   }
 
-  .section--dark .stat__value small,
   .on-dark .stat__value small {
-    color: var(--color-brand-orange);
+    color: var(--color-orange-light);
   }
 
-  .section--dark .stat__label,
   .on-dark .stat__label {
     color: var(--color-on-dark-muted);
+  }
+
+  .section--sand .stat__label {
+    color: var(--color-sand-muted);
   }
 
   /* ---------- Page hero of interior pages ---------- */
@@ -215,9 +223,9 @@
     padding-block: calc(var(--header-height) + clamp(2.75rem, 6vw, 5rem)) clamp(3rem, 6vw, 4.75rem);
     border-radius: 0 0 var(--radius-xl) var(--radius-xl);
     background:
-      radial-gradient(60rem 30rem at 85% -10%, rgb(252 76 2 / 16%), transparent 60%),
-      var(--color-night);
-    color: var(--color-on-dark);
+      radial-gradient(60rem 30rem at 85% -10%, rgb(252 76 2 / 12%), transparent 60%),
+      var(--color-sand);
+    color: var(--color-ink);
   }
 
   /* Aligned with the header's logo; the text keeps a readable measure. */
@@ -235,25 +243,25 @@
 
   .page-hero h1 {
     margin: 0;
-    color: #fff;
+    color: var(--color-ink);
   }
 
   .page-hero .eyebrow {
     margin: 0;
-    color: var(--color-brand-orange);
+    color: var(--color-sand-accent);
   }
 
   .page-hero__lead,
   .page-hero__lead p {
     max-width: 42rem;
     margin: 0;
-    color: var(--color-on-dark-muted);
+    color: var(--color-sand-muted);
     font-size: var(--text-lead);
   }
 
   .page-hero__meta {
     margin: 0;
-    color: var(--color-on-dark-muted);
+    color: var(--color-sand-muted);
     font-size: 0.9rem;
   }
 
@@ -263,7 +271,7 @@
     right: max(-3rem, calc(50% - 46rem));
     bottom: -4.5rem;
     width: clamp(13rem, 26vw, 23rem);
-    color: rgb(255 255 255 / 7%);
+    color: rgb(168 50 0 / 8%);
     pointer-events: none;
   }
 
@@ -290,12 +298,12 @@
   /* WooCommerce's breadcrumb, printed in the hero on catalog pages. */
   .page-hero .woocommerce-breadcrumb {
     margin: 0 !important;
-    color: var(--color-on-dark-muted) !important;
+    color: var(--color-sand-muted) !important;
     font-size: 0.85rem !important;
   }
 
   .page-hero .woocommerce-breadcrumb a {
-    color: #fff !important;
+    color: var(--color-ink) !important;
   }
 
   .page-hero__search {
@@ -325,7 +333,7 @@
       z-index: 1;
       aspect-ratio: 3 / 2;
       border-radius: var(--radius-xl);
-      box-shadow: 0 1.5rem 3.5rem rgb(0 0 0 / 35%);
+      box-shadow: 0 1.5rem 3.5rem rgb(92 82 72 / 22%);
     }
 
     .page-hero__media > img {

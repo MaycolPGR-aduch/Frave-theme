@@ -43,11 +43,22 @@
   --color-warning: #9c6b1b;
   --color-error: #b42318;
   --color-white: #ffffff;
-  /* Corporate dark surfaces: the brand orange reads 5.4:1 on night, so it works as text there. */
-  --color-night: #121418;
-  --color-night-2: #1c1f25;
+  /*
+   * Frave avoids black. Navy is for the footer and dark buttons; sand (the beige of the
+   * photography) for highlighted sections and the hero of interior pages.
+   */
+  --color-navy: #1d2b4f;
+  --color-navy-2: #24365e;
   --color-on-dark: #f4f2ef;
-  --color-on-dark-muted: #a9a7a3;
+  --color-on-dark-muted: #c3cadb;
+  /* The brand orange reads 4.1:1 on navy: small text there takes this lighter orange (6:1). */
+  --color-orange-light: #ff8a5c;
+  --color-sand: #f1e6d8;
+  --color-sand-soft: #f8f1e8;
+  --color-sand-line: #e2d3bf;
+  /* Small text on sand: muted 6.2:1 and orange 5.5:1 (the primary orange is only 4.3:1). */
+  --color-sand-muted: #5c5248;
+  --color-sand-accent: #a83200;
   --color-primary-hover: #a83200;
   --color-orange-soft: #fff1ea;
   --color-orange-tint: #ffe1d1;
@@ -595,7 +606,7 @@
     position: fixed;
     z-index: 70;
     inset: 0;
-    background: rgb(18 20 24 / 50%);
+    background: rgb(29 43 79 / 45%);
     backdrop-filter: blur(3px);
   }
 
@@ -780,9 +791,8 @@
     background: #fff;
   }
 
-  /* Focus rings stay visible on dark surfaces. */
+  /* Focus rings stay visible on navy. */
   .on-dark :focus-visible,
-  .section--dark :focus-visible,
   .site-footer :focus-visible {
     outline-color: #ffab80;
   }
@@ -1275,7 +1285,7 @@
     isolation: isolate;
     overflow: hidden;
     padding-top: clamp(3.5rem, 7vw, 6rem);
-    background: var(--color-night);
+    background: var(--color-navy);
     color: var(--color-on-dark);
   }
 
@@ -1378,14 +1388,14 @@
 
   .site-footer a.link-arrow {
     display: inline-flex;
-    color: var(--color-brand-orange) !important;
+    color: var(--color-orange-light) !important;
   }
 
   .site-footer__bottom {
     @apply flex flex-wrap items-center justify-between gap-2;
     padding-block: 1.2rem;
     border-top: 1px solid rgb(255 255 255 / 16%);
-    color: #c4c2be;
+    color: var(--color-on-dark-muted);
     font-size: 0.8rem;
   }
 
@@ -2693,7 +2703,7 @@
 }
 
 .woocommerce ul.products li.product a.product-card__details:hover {
-  background: var(--color-ink);
+  background: var(--color-navy);
   color: #fff;
 }
 

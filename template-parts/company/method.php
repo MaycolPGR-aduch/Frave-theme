@@ -26,7 +26,7 @@ if ( ! $frave_steps ) {
 	return;
 }
 ?>
-<section class="section section--dark company-method" id="como-trabajamos" aria-labelledby="company-method-title">
+<section class="section section--sand company-method" id="como-trabajamos" aria-labelledby="company-method-title">
 	<span class="orbit orbit--soft company-method__orbit" aria-hidden="true"></span>
 	<div class="container">
 		<div class="section-head section-head--split" data-reveal="up">

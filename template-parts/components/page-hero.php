@@ -1,6 +1,6 @@
 <?php
 /**
- * Dark band at the top of interior pages. It starts behind the floating header.
+ * Sand band at the top of interior pages. It starts behind the floating header.
  *
  * Arguments:
  * - eyebrow:    small label above the title.
