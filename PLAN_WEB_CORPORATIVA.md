@@ -1,7 +1,7 @@
 # Plan de la web corporativa de Frave
 
 - **Inicio:** 10 de octubre de 2026.
-- **Estado:** fases 1 a 7 publicadas en frave.pe (tema 1.14.0, plugin 1.6.0; blog con sus cuatro artículos de inicio publicado el 13-10). Faltan los productos de Frave y, en el administrador, WhatsApp y datos de contacto, redes sociales, Libro de Reclamaciones, Search Console y aprobación del sistema visual.
+- **Estado:** fases 1 a 7 publicadas en frave.pe (tema 1.13.0, plugin 1.6.0; blog con sus cuatro artículos de inicio publicado el 13-10). Faltan los productos de Frave y, en el administrador, WhatsApp y datos de contacto, redes sociales, Libro de Reclamaciones, Search Console y aprobación del sistema visual.
 - **Sustituye como plan vigente a:** [ROADMAP.md](ROADMAP.md), que queda como registro de la base construida y como plan de la futura tienda en línea.
 
 ## Cambio de rumbo
