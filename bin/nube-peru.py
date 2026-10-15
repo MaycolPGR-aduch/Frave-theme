@@ -1,7 +1,7 @@
 """
-Word cloud with the silhouette of Peru for the Experticia page (idea of Frave's management).
+Word cloud with the silhouette of Peru for the Servicios page (idea of Frave's management).
 
-Writes assets/media/experticia/nube-peru.svg: the outline of Peru and the 56 agreed terms
+Writes assets/media/experticia/nube-peru.svg: the outline of Peru and the agreed terms
 as real SVG text (Lato, uppercase), placed so that none overlaps and all stay inside the
 country, plus the Frave isotype in the centre. The page inlines the file, so the words take
 the site's font and fade in with the section. nube-peru.json keeps the same terms for the
@@ -37,44 +37,31 @@ PERU = [
     [-69.59, -17.58],
 ]
 
-# Tier 1 is the largest. Terms agreed with Frave's management (October 2026).
+# Tier 1 is the largest. Terms agreed with Frave's management (October 2026); on 15-10 the
+# cloud was reduced from 56 to the 23 most telling ones so they read larger.
 TERMS = {
     1: [
         'Consultoría especializada', 'Excelencia en calidad', 'Soluciones personalizadas',
-        'Versatilidad de uso', 'Orientación técnica', 'Eficiencia superior',
+        'Asesoría técnica', 'Marketing olfativo',
     ],
     2: [
         'Desarrollo de fragancias para marcas exclusivas', 'Fragancias exclusivas y de autor',
-        'Perfumería femenina y masculina', 'Durabilidad del desempeño',
-        'Propuestas de alto valor y eficiencia', 'Sensaciones diferenciadoras', 'Evolución permanente',
-        'Corrientes globales de innovación', 'Aplicación multifuncional', 'Persistencia prolongada',
-        'Fragancias para tejidos', 'Velas con fragancia',
+        'Perfumería femenina y masculina', 'Persistencia prolongada', 'Sensaciones diferenciadoras',
+        'Corrientes globales de innovación', 'Versatilidad de uso', 'Eficiencia superior',
     ],
     3: [
-        'Acondicionadores textiles', 'Alta eficacia neutralizadora de olores', 'Ambientadores sólidos decorativos',
-        'Amplia compatibilidad de formulación', 'Aromatizadores de espacios', 'Biodegradabilidad',
-        'Componentes de calidad controlada', 'Composiciones olfativas elaboradas', 'Desempeño estable',
-        'Diseñadas para el cuidado de la piel', 'Emulsiones de cuidado facial y corporal',
-        'Estabilidad en distintas formulaciones', 'Fragancias de concentración EDP y EDT',
-        'Fragancias de uso diario', 'Lanzamientos especiales y ediciones de colección',
-        'Limpiadores corporales en gel', 'Limpiadores para manos', 'Preferencias del consumidor',
-        'Productos de aplicación industrial', 'Productos de hidratación corporal',
-        'Productos de protección y cuidado después del sol', 'Productos para el bienestar animal',
-        'Productos para el cuidado del baño', 'Productos para el cuidado del bebé',
-        'Productos para el cuidado del cabello', 'Productos para el lavado de vajilla',
-        'Productos para la desinfección', 'Productos para perfumar espacios',
-        'Sensación de frescura persistente', 'Sistemas de difusión de fragancias',
-        'Soluciones de limpieza corporal', 'Soluciones de limpieza versátil',
-        'Soluciones de protección contra la transpiración', 'Soluciones para el lavado de prendas',
-        'Soluciones para la limpieza de superficies', 'Tolerancia a variaciones de pH',
-        'Marketing olfativo', 'Asesoría técnica',
+        'Fragancias para tejidos', 'Velas con fragancia', 'Sistemas de difusión de fragancias',
+        'Aromatizadores de espacios', 'Composiciones olfativas elaboradas',
+        'Sensación de frescura persistente', 'Amplia compatibilidad de formulación',
+        'Fragancias de concentración EDP y EDT', 'Productos para el cuidado del cabello',
+        'Soluciones para el lavado de prendas',
     ],
 }
-BASE_SIZE = {1: 1.75, 2: 1.3, 3: 1.0}
+BASE_SIZE = {1: 1.6, 2: 1.25, 3: 1.0}
 TONES = {1: 'w1', 2: 'w2', 3: 'w3'}
 WIDTH = 600
 PAD = 12
-GAP = 2.2
+GAP = 7
 OUT = os.path.join(os.path.dirname(__file__), '..', 'assets', 'media', 'experticia', 'nube-peru.svg')
 
 # --- Projection: equirectangular around Peru's middle latitude. ---
@@ -208,7 +195,7 @@ def layout(unit):
     return words
 
 
-low, high, result = 6.0, 20.0, None
+low, high, result = 6.0, 32.0, None
 for _ in range(10):
     unit = (low + high) / 2
     words = layout(unit)
