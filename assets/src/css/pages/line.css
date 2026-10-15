@@ -191,6 +191,27 @@
     color: var(--color-muted);
   }
 
+  .line-group__title a {
+    color: inherit !important; /* The unlayered link colour of theme.json would win. */
+    text-decoration: none;
+  }
+
+  .line-group__title a:hover {
+    color: var(--color-primary) !important;
+  }
+
+  /* «Se usa en: Perfumería, …»: the industries that use the category. */
+  .line-group__uses-row {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .line-group__uses a {
+    color: var(--color-primary) !important;
+    font-weight: 700;
+  }
+
   .line-group__types {
     display: flex;
     flex-wrap: wrap;
@@ -404,6 +425,50 @@
   .line-other p {
     margin: 0;
     color: var(--color-muted);
+  }
+
+  /* ---------- Category detail page (inc/category-detail.php) ---------- */
+
+  .category-types {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .category-types .section-head {
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  /* Without products, an invitation to request a quote instead of an empty listing. */
+  .category-empty.card {
+    display: grid;
+    align-items: center;
+    gap: 1.25rem;
+    border-color: var(--color-sand-line);
+    background: var(--color-sand-soft);
+  }
+
+  .category-empty h2 {
+    margin: 0 0 0.5rem;
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+
+  .category-empty p {
+    margin: 0;
+    color: var(--color-sand-muted);
+  }
+
+  .category-empty__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 56rem) {
+    .category-empty.card {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 2rem;
+    }
   }
 
   /* ---------- Catalog link to the line (catalog hero) ---------- */

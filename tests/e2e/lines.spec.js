@@ -33,10 +33,12 @@ test.describe('páginas de línea', () => {
     await expect(page.locator('#portafolio .line-chip__thumb img')).toHaveCount(13);
     await expectLoaded(page.locator('#portafolio .line-chip__thumb img').first());
 
-    // A chip links to the catalog only when its subcategory has products.
-    for (const chip of await page.locator('.line-chip--link').all()) {
+    // Every chip leads to its subcategory's detail page, with or without products.
+    await expect(page.locator('#portafolio .line-chip:not(.line-chip--link)')).toHaveCount(0);
+    for (const chip of await page.locator('#portafolio .line-chip--link').all()) {
       await expect(chip).toHaveAttribute('href', /perfumeria|cuidado|ambientacion|aerosoles|difusores|marketing|cocina/);
     }
+    await expect(groups.first().locator('.line-group__uses')).toContainText('Perfumería');
 
     await expect(page.locator('.line-applications .ticker')).toHaveAttribute('aria-hidden', 'true');
     await expect(page.locator('.line-applications__list li').first()).toBeVisible();
@@ -102,6 +104,28 @@ test.describe('páginas de línea', () => {
     await expect(link).toContainText('Conoce la línea Fragancias');
     await link.click();
     await expect(page.locator('.line-hero h1')).toContainText('aromas');
+  });
+
+  test('cada subcategoría tiene su página de detalle, unida a su línea y a sus soluciones', async ({ page }) => {
+    await page.goto(FRAGANCIAS);
+    await page.locator('#portafolio .line-group').first().getByRole('link', { name: /Ver detalle/ }).click();
+    await expect(page.locator('.page-hero h1')).toHaveText('Perfumería');
+    await expect(page.locator('.page-hero__line-link')).toContainText('Fragancias');
+    await expect(page.locator('.page-hero__solutions a')).toHaveText(['Perfumería']);
+    // Its types as cards, each with its own detail page.
+    await expect(page.locator('.category-types .line-group')).toHaveCount(3);
+    await page.locator('.category-types .line-group__title a', { hasText: 'Perfumería de diseñador' }).click();
+    await expect(page.locator('.page-hero h1')).toHaveText('Perfumería de diseñador');
+  });
+
+  test('sin productos, la página de detalle invita a cotizar en lugar de mostrar una lista vacía', async ({ page }) => {
+    await page.goto('/?product_cat=perfumeria-disenador');
+    await expectNoPhpErrors(page);
+    const empty = page.locator('.category-empty');
+    test.skip((await empty.count()) === 0, 'Esta subcategoría ya tiene productos.');
+    await expect(empty.locator('h2')).toContainText('Perfumería de diseñador');
+    await expect(page.locator('.catalog-filters')).toHaveCount(0);
+    await expect(page.locator('.page-hero__actions a')).toContainText('Solicitar cotización');
   });
 
   test('el menú agrupa las líneas', async ({ page }) => {

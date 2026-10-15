@@ -30,6 +30,7 @@ No se usa constructor visual, frontend desacoplado ni React. `theme.json` config
 | `assets/src/js/modules/drawer.js` | Cajón lateral modal compartido por el mini-carrito y los filtros: foco, Escape, fondo y un solo cajón abierto. |
 | `inc/institutional.php`, `page-templates/` | Plantillas Contacto, Preguntas frecuentes y Política o texto legal; anclas e índice de secciones, datos `FAQPage`, enlaces legales del pie (menú `legal` o automático). |
 | `patterns/` | Estructuras iniciales de las páginas institucionales (categoría «Frave: páginas institucionales»), con marcadores `[PENDIENTE]`. |
+| `inc/category-detail.php` | Página de detalle de cada categoría del catálogo, donde se unen Líneas y Soluciones: «Se usa en» (soluciones que la usan), botón de cotizar, sus subcategorías en tarjetas y, sin productos, invitación a cotizar en lugar de la lista vacía y los filtros. |
 | `inc/contact.php` | Ajustes de WhatsApp, canales de contacto y redes sociales en el Personalizador, enlaces `wa.me`, botón de consulta en la ficha y, en modo catálogo, bloque «¿Te interesa este producto?» con el enlace de cotización (`?producto=ID`). |
 | `front-page.php`, `page.php`, `search.php`, `index.php`, `404.php` | Jerarquía de templates clásicos (los del blog, en su propia fila). |
 | `header.php`, `footer.php` | Estructura global, navegación, búsqueda, carrito y pie. |

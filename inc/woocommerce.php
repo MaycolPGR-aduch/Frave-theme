@@ -55,7 +55,8 @@ function frave_is_catalog_archive(): bool {
 
 /** Page hero of catalog pages: breadcrumb, title, description and product search. */
 function frave_catalog_hero(): void {
-	$image = '';
+	$image   = '';
+	$actions = '';
 	if ( is_search() ) {
 		$eyebrow = __( 'BÚSQUEDA', 'frave' );
 		$lead    = '';
@@ -66,7 +67,12 @@ function frave_catalog_hero(): void {
 		$eyebrow = $parent instanceof WP_Term ? $parent->name : __( 'CATÁLOGO', 'frave' );
 		$lead    = $term instanceof WP_Term ? term_description( $term ) : '';
 		$meta    = $term instanceof WP_Term ? frave_catalog_line_link( $term ) : '';
-		$image   = $term instanceof WP_Term && 'product_cat' === $term->taxonomy ? frave_term_image( $term, '(max-width: 60rem) 90vw, 36vw' ) : '';
+		if ( $term instanceof WP_Term && 'product_cat' === $term->taxonomy ) {
+			// The detail page of the category: its line, the industries that use it and a quote.
+			$meta    = trim( $meta . ' ' . frave_term_solutions_html( $term, 'page-hero__solutions' ) );
+			$image   = frave_term_image( $term, '(max-width: 60rem) 90vw, 36vw' );
+			$actions = frave_detail_hero_actions( $term );
+		}
 	} else {
 		$meta    = '';
 		$shop    = get_post( wc_get_page_id( 'shop' ) );
@@ -84,6 +90,7 @@ function frave_catalog_hero(): void {
 			'breadcrumb' => true,
 			'search'     => true,
 			'image'      => $image,
+			'actions'    => $actions,
 		)
 	);
 }

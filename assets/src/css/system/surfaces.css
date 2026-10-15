@@ -311,6 +311,21 @@
     margin-top: 0.75rem;
   }
 
+  /* Catalog categories: «Se usa en» after the line link, and the quote button. */
+  .page-hero__solutions {
+    display: inline-block;
+    margin-left: 1rem;
+  }
+
+  .page-hero__solutions a {
+    color: var(--color-ink) !important;
+    font-weight: 700;
+  }
+
+  .page-hero__actions {
+    margin-top: 0.5rem;
+  }
+
   /*
    * Hero with an image (catalog categories): text and image side by side on wide screens.
    * On phones the image is left out so the products stay close to the top.

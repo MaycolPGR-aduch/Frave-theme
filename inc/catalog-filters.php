@@ -17,7 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function frave_is_filterable_catalog(): bool {
-	return class_exists( 'WooCommerce' ) && ( is_shop() || is_product_taxonomy() );
+	if ( ! class_exists( 'WooCommerce' ) || ! ( is_shop() || is_product_taxonomy() ) ) {
+		return false;
+	}
+	// A category without products has nothing to filter: its page invites to request a quote.
+	$term = get_queried_object();
+	return ! ( is_product_category() && $term instanceof WP_Term && frave_term_product_count( $term ) < 1 );
 }
 
 /* ---------- Custom filters: in stock and on sale ---------- */
