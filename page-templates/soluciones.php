@@ -22,7 +22,7 @@ get_header();
 				'lead'      => __( 'Combinamos fragancias, sabores y envases según lo que necesita tu sector: perfumería, cosmética, hogar, ambientación y alimentos.', 'frave' ),
 				'action'    => frave_company_action(),
 				'secondary' => array( __( 'Ver las industrias', 'frave' ), '#industrias' ),
-				'image'     => 'assets/media/hero-frutas-poster.jpg',
+				'image'     => 'assets/media/soluciones/soluciones.webp',
 			)
 		);
 		get_template_part(

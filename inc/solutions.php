@@ -31,7 +31,7 @@ function frave_solutions(): array {
 			'cta_text'     => __( 'Cuéntanos el estilo de tu marca y te proponemos fragancias y envases.', 'frave' ),
 			'terms'        => array( 'perfumeria', 'frascos-de-vidrio-perfumeria', 'valvulas' ),
 			'icon'         => 'fragrance',
-			'image'        => 'assets/media/lineas/envases-tarjeta.webp',
+			'image'        => 'assets/media/soluciones/perfumeria.webp',
 		),
 		'cosmetica-y-cuidado-personal'      => array(
 			'title'        => __( 'Cosmética y cuidado personal', 'frave' ),
@@ -45,7 +45,7 @@ function frave_solutions(): array {
 			'cta_text'     => __( 'Te ayudamos a elegir fragancias compatibles con tu formulación.', 'frave' ),
 			'terms'        => array( 'fragancias-cosmeticas', 'cuidado-bucal', 'envases' ),
 			'icon'         => 'leaf',
-			'image'        => 'assets/media/lineas/fragancias-tarjeta.webp',
+			'image'        => 'assets/media/soluciones/cosmetica-y-cuidado-personal.webp',
 		),
 		'cuidado-del-hogar'                 => array(
 			'title'        => __( 'Cuidado del hogar', 'frave' ),
@@ -59,7 +59,7 @@ function frave_solutions(): array {
 			'cta_text'     => __( 'Cuéntanos tu producto y su base, y te proponemos alternativas.', 'frave' ),
 			'terms'        => array( 'fragancias-hogar' ),
 			'icon'         => 'sparkle',
-			'image'        => 'assets/media/hero-frutas-poster.jpg',
+			'image'        => 'assets/media/soluciones/cuidado-del-hogar.webp',
 		),
 		'ambientacion-y-marketing-olfativo' => array(
 			'title'        => __( 'Ambientación y marketing olfativo', 'frave' ),
@@ -73,7 +73,7 @@ function frave_solutions(): array {
 			'cta_text'     => __( 'Conversemos sobre tus espacios y el formato de difusión que necesitas.', 'frave' ),
 			'terms'        => array( 'ambientacion', 'frascos-para-difusores' ),
 			'icon'         => 'pin',
-			'image'        => 'assets/media/empresa/ingredientes.webp',
+			'image'        => 'assets/media/soluciones/ambientacion-y-marketing-olfativo.webp',
 		),
 		'alimentos-y-bebidas'               => array(
 			'title'        => __( 'Alimentos y bebidas', 'frave' ),
@@ -87,7 +87,7 @@ function frave_solutions(): array {
 			'cta_text'     => __( 'Cuéntanos sobre tu producto y te recomendamos alternativas de nuestro portafolio.', 'frave' ),
 			'terms'        => array( 'bebidas-y-lacteos', 'confiteria-y-panaderia', 'salados' ),
 			'icon'         => 'flavor',
-			'image'        => 'assets/media/lineas/sabores-tarjeta.webp',
+			'image'        => 'assets/media/soluciones/alimentos-y-bebidas.webp',
 		),
 	);
 }

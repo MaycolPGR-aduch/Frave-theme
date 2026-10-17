@@ -54,15 +54,10 @@ function frave_seo_data(): array {
 	} elseif ( is_page_template( FRAVE_TEMPLATE_SOLUTION ) ) {
 		$slug        = frave_solution_slug();
 		$description = frave_solution_text( 'lead', $slug );
-		$images      = array(
-			'perfumeria'                        => 'envases',
-			'cosmetica-y-cuidado-personal'      => 'fragancias',
-			'ambientacion-y-marketing-olfativo' => 'empresa',
-			'alimentos-y-bebidas'               => 'sabores',
-		);
-		$image       = $share( $images[ $slug ] ?? 'portada' );
+		$image       = $share( '' !== $slug ? 'solucion-' . $slug : 'portada' );
 	} elseif ( is_page_template( FRAVE_TEMPLATE_SOLUTIONS ) ) {
 		$description = __( 'Fragancias, sabores y envases según tu industria: perfumería, cosmética y cuidado personal, hogar, ambientación y alimentos y bebidas.', 'frave' );
+		$image       = $share( 'solucion-soluciones' );
 	} elseif ( is_page_template( FRAVE_TEMPLATE_CONTACT ) ) {
 		$description = __( 'Escríbenos o solicita una cotización de sabores, fragancias y envases para tu marca. Te respondemos por correo o por WhatsApp.', 'frave' );
 	} elseif ( function_exists( 'is_product' ) && is_product() ) {

@@ -4,7 +4,8 @@
  * and an image in an arch.
  *
  * Arguments: eyebrow, title (*words* highlighted), lead, action ([ url, external ] of the
- * quote button), secondary ([ label, url ]), image (theme asset path).
+ * quote button), secondary ([ label, url ]), image (theme asset path; a 4:5 WebP of
+ * assets/media/soluciones also offers its 640 px version to phones).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,6 +24,20 @@ $frave_hero   = wp_parse_args(
 	)
 );
 $frave_action = $frave_hero['action'];
+$frave_base   = preg_replace( '/\.webp$/', '', $frave_hero['image'] );
+$frave_image  = '' !== $frave_hero['image'] && $frave_base !== $frave_hero['image']
+	? frave_theme_image(
+		(string) $frave_base,
+		1080,
+		1350,
+		640,
+		array(
+			'sizes'         => '(max-width: 30rem) 90vw, 26rem',
+			'loading'       => 'eager',
+			'fetchpriority' => 'high',
+		)
+	)
+	: '';
 ?>
 <section class="company-hero solution-hero" aria-labelledby="solution-hero-title">
 	<span class="orbit orbit--soft company-hero__orbit" aria-hidden="true"></span>
@@ -50,7 +65,11 @@ $frave_action = $frave_hero['action'];
 		</div>
 		<?php if ( '' !== $frave_hero['image'] ) : ?>
 			<div class="solution-hero__media media-frame shape-arch">
-				<img src="<?php echo esc_url( frave_asset_url( $frave_hero['image'] ) ); ?>" alt="" fetchpriority="high" decoding="async">
+				<?php if ( '' !== $frave_image && file_exists( FRAVE_THEME_DIR . '/' . $frave_base . '-640.webp' ) ) : ?>
+					<?php echo $frave_image; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?>
+				<?php else : ?>
+					<img src="<?php echo esc_url( frave_asset_url( $frave_hero['image'] ) ); ?>" alt="" fetchpriority="high" decoding="async">
+				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 	</div>
