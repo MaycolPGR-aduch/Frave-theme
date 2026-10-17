@@ -299,6 +299,25 @@ function frave_term_image( WP_Term $term, string $sizes, array $attr = array() )
 }
 
 /**
+ * A category's image as a hidden layer of a card's picture (term-cards.js swaps it in
+ * when the visitor points at that category). Its src and srcset wait in data- attributes:
+ * the script loads them only when the pointer or the focus reaches the card. '' when the
+ * category has no image.
+ */
+function frave_term_image_layer( WP_Term $term, string $sizes, int $index ): string {
+	$html = frave_term_image(
+		$term,
+		$sizes,
+		array(
+			'class'           => 'line-group__layer',
+			'data-swap-layer' => (string) $index,
+			'loading'         => 'lazy',
+		)
+	);
+	return '' === $html ? '' : (string) preg_replace( '/ (src|srcset)="/', ' data-$1="', $html );
+}
+
+/**
  * Small square image of a product category for chips: the thumbnail of the image chosen
  * in the admin, or the theme's 120 px version. '' when there is none.
  */

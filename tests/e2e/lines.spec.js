@@ -24,19 +24,18 @@ test.describe('páginas de línea', () => {
     const groups = page.locator('#portafolio .line-group');
     await expect(groups).toHaveCount(4);
     await expect(groups.first().locator('h3')).toHaveText('Perfumería');
-    await expect(groups.first().locator('.line-chip')).toHaveCount(3);
+    await expect(groups.first().locator('.type-link')).toHaveCount(3);
 
     // Without an image chosen in the admin, every category shows the theme's own.
     for (const group of await groups.all()) {
-      await expectLoaded(group.locator('.line-group__media img'));
+      await expectLoaded(group.locator('.line-group__media img').first());
     }
-    await expect(page.locator('#portafolio .line-chip__thumb img')).toHaveCount(13);
-    await expectLoaded(page.locator('#portafolio .line-chip__thumb img').first());
+    await expect(page.locator('#portafolio .type-link__thumb img')).toHaveCount(13);
+    await expectLoaded(page.locator('#portafolio .type-link__thumb img').first());
 
-    // Every chip leads to its subcategory's detail page, with or without products.
-    await expect(page.locator('#portafolio .line-chip:not(.line-chip--link)')).toHaveCount(0);
-    for (const chip of await page.locator('#portafolio .line-chip--link').all()) {
-      await expect(chip).toHaveAttribute('href', /perfumeria|cuidado|ambientacion|aerosoles|difusores|marketing|cocina/);
+    // Every type leads to its subcategory's detail page, with or without products.
+    for (const link of await page.locator('#portafolio .type-link').all()) {
+      await expect(link).toHaveAttribute('href', /perfumeria|cuidado|ambientacion|aerosoles|difusores|marketing|cocina/);
     }
     await expect(groups.first().locator('.line-group__uses')).toContainText('Perfumería');
 
@@ -104,6 +103,23 @@ test.describe('páginas de línea', () => {
     await expect(link).toContainText('Conoce la línea Fragancias');
     await link.click();
     await expect(page.locator('.line-hero h1')).toContainText('aromas');
+  });
+
+  test('al señalar un tipo, la imagen de la tarjeta cambia a la suya', async ({ page }) => {
+    await page.goto(FRAGANCIAS);
+    const card = page.locator('#portafolio .line-group').first();
+    const arabic = card.locator('.type-link', { hasText: 'Perfumería árabe' });
+    await arabic.scrollIntoViewIfNeeded();
+    await arabic.hover();
+    const layer = card.locator('.line-group__layer.is-active');
+    await expect(layer).toHaveCount(1);
+    await expect.poll(() => layer.evaluate((img) => img.complete && img.naturalWidth > 0)).toBe(true);
+    await expect(layer).toHaveAttribute('src', /perfumeria-arabe/);
+    await expect(card.locator('[data-swap-caption]')).toHaveText('Perfumería árabe');
+    // Leaving the card brings its own picture back.
+    await page.mouse.move(5, 5);
+    await expect(card.locator('.line-group__layer.is-active')).toHaveCount(0);
+    await expect(card.locator('[data-swap-caption]')).toBeHidden();
   });
 
   test('cada subcategoría tiene su página de detalle, unida a su línea y a sus soluciones', async ({ page }) => {

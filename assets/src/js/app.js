@@ -15,6 +15,7 @@ import { initializeNavigation } from './modules/navigation.js';
 import { initializeSectionTransitions } from './modules/section-transitions.js';
 import { initializeShare } from './modules/share.js';
 import { initializeStacks } from './modules/stack.js';
+import { initializeTermCards } from './modules/term-cards.js';
 import { initializeTickers } from './modules/ticker.js';
 import { initializeWhatsAppChat } from './modules/whatsapp-chat.js';
 
@@ -27,6 +28,7 @@ initializeSectionTransitions();
 initializeCarousels();
 initializeStacks();
 initializeTickers();
+initializeTermCards();
 initializeCounters();
 initializeHeroVideo();
 initializeMaps();
