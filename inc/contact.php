@@ -227,7 +227,7 @@ function frave_contact_hide_footer_cta( bool $show ): bool {
 }
 add_filter( 'frave_show_footer_cta', 'frave_contact_hide_footer_cta' );
 
-/** The lines of the contact form in the site's order (Sabores, Fragancias, Envases), not alphabetically. */
+/** The lines of the contact form in the site's order (Fragancias, Sabores, Envases), not alphabetically. */
 function frave_contact_line_order( array $lines ): array {
 	$order = array_flip( array_keys( frave_product_lines() ) );
 	$rank  = static fn( $slug ): int => '' === (string) $slug ? -1 : ( 'varias' === $slug ? 1000 : ( $order[ $slug ] ?? 500 ) );

@@ -1,7 +1,7 @@
 <?php
 /**
  * Product lines agreed with Frave's management (October 2026): the subcategories of
- * Sabores, Fragancias and Envases with their descriptions, and the line pages (template
+ * Fragancias, Sabores and Envases with their descriptions, and the line pages (template
  * "Línea") at /sabores/, /fragancias/ and /envases/.
  *
  * From the site folder, with the theme's clone (bin/ is not deployed with the theme):
@@ -22,16 +22,6 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
  */
 function frave_lines_tree(): array {
 	return array(
-		'sabores'    => array(
-			'Sabores',
-			'Soluciones de saborización para bebidas, alimentos, lácteos y salud bucal.',
-			array(
-				'bebidas-y-lacteos'      => array( 'Bebidas y productos lácteos', 'Sabores para bebidas, jugos, yogures y otros productos lácteos.' ),
-				'confiteria-y-panaderia' => array( 'Confitería y panadería', 'Sabores para caramelos, chocolates, postres, panes y panetones.' ),
-				'salados'                => array( 'Salados', 'Sabores para snacks, sazonadores y otros productos salados.' ),
-				'cuidado-bucal'          => array( 'Cuidado bucal', 'Sabores para pastas dentales, enjuagues y productos de higiene bucal.' ),
-			),
-		),
 		'fragancias' => array(
 			'Fragancias',
 			'Más de 500 referencias de fragancias y esencias hidrosolubles para perfumería, cosmética, cuidado personal, hogar y ambientación.',
@@ -73,6 +63,16 @@ function frave_lines_tree(): array {
 						'marketing-olfativo'        => array( 'Marketing olfativo', 'Aromas para la identidad olfativa de tiendas, hoteles, oficinas y eventos. Te acompañamos a crear una firma aromática que refuerce la experiencia de tus clientes y el recuerdo de tu marca.' ),
 					),
 				),
+			),
+		),
+		'sabores'    => array(
+			'Sabores',
+			'Soluciones de saborización para bebidas, alimentos, lácteos y salud bucal.',
+			array(
+				'bebidas-y-lacteos'      => array( 'Bebidas y productos lácteos', 'Sabores para bebidas, jugos, yogures y otros productos lácteos.' ),
+				'confiteria-y-panaderia' => array( 'Confitería y panadería', 'Sabores para caramelos, chocolates, postres, panes y panetones.' ),
+				'salados'                => array( 'Salados', 'Sabores para snacks, sazonadores y otros productos salados.' ),
+				'cuidado-bucal'          => array( 'Cuidado bucal', 'Sabores para pastas dentales, enjuagues y productos de higiene bucal.' ),
 			),
 		),
 		'envases'    => array(
@@ -159,9 +159,25 @@ function frave_lines_create_pages(): void {
 	}
 }
 
+/**
+ * The three lines in the site's order (Fragancias, the main line, first) wherever
+ * WooCommerce lists categories: catalog, filters and the admin. Unlike the other
+ * categories, their order is set on every run.
+ */
+function frave_lines_order_lines(): void {
+	foreach ( array_keys( frave_lines_tree() ) as $index => $slug ) {
+		$term = get_term_by( 'slug', $slug, 'product_cat' );
+		if ( $term instanceof WP_Term && (int) get_term_meta( $term->term_id, 'order', true ) !== $index + 1 ) {
+			update_term_meta( $term->term_id, 'order', $index + 1 );
+			WP_CLI::log( "Orden de la línea {$term->name}: " . ( $index + 1 ) );
+		}
+	}
+}
+
 if ( ! taxonomy_exists( 'product_cat' ) ) {
 	WP_CLI::error( 'WooCommerce no está activo.' );
 }
 frave_lines_create_tree( frave_lines_tree() );
+frave_lines_order_lines();
 frave_lines_create_pages();
 WP_CLI::success( 'Líneas listas.' );

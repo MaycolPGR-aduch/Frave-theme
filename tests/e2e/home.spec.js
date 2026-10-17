@@ -83,7 +83,7 @@ test.describe('portada', () => {
     await page.goto('/');
     const lines = page.locator('.home-lines .line-card');
     await expect(lines).toHaveCount(3);
-    await expect(lines.locator('a.card__link')).toHaveText([/Sabores/, /Fragancias/, /Envases/]);
+    await expect(lines.locator('a.card__link')).toHaveText([/Fragancias/, /Sabores/, /Envases/]);
     await expect(page.locator('.home-steps .home-step')).toHaveCount(3);
   });
 

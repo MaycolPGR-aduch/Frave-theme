@@ -1,6 +1,6 @@
 <?php
 /**
- * Line pages (Sabores, Fragancias, Envases): a page with the template "Línea" presents one
+ * Line pages (Fragancias, Sabores, Envases): a page with the template "Línea" presents one
  * product category before its products. The category is the one chosen in the page's ACF
  * group "Línea Frave", or the category with the page's slug.
  *

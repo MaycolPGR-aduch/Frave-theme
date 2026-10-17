@@ -150,6 +150,6 @@ test.describe('páginas de línea', () => {
     test.skip((await toggle.count()) === 0, 'Este sitio tiene un menú propio en Apariencia → Menús.');
     await toggle.click();
     const submenu = toggle.locator('xpath=ancestor::li[1]/ul[contains(@class, "sub-menu")]');
-    await expect(submenu.getByRole('link')).toHaveText([/Sabores/, /Fragancias/, /Envases/]);
+    await expect(submenu.getByRole('link')).toHaveText([/Fragancias/, /Sabores/, /Envases/]);
   });
 });

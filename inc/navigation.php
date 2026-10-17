@@ -13,9 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /** Product lines of Frave, as product category slugs and labels. */
 function frave_product_lines(): array {
+	// Fragancias is Frave's main line: it always comes first.
 	return array(
-		'sabores'    => __( 'Sabores', 'frave' ),
 		'fragancias' => __( 'Fragancias', 'frave' ),
+		'sabores'    => __( 'Sabores', 'frave' ),
 		'envases'    => __( 'Envases', 'frave' ),
 	);
 }
