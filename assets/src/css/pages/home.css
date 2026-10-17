@@ -1,14 +1,14 @@
 /*
  * Home page (front-page.php, template-parts/home/).
  *
- * The hero sits on the warm beige of its video (#eedcc8): on that background the eyebrow
- * uses #a83200 (5:1) and the lead #4a4642 (7:1), as primary and muted fall to 4:1.
+ * The hero sits on the warm beige of its video (#e9d6c0): on that background the eyebrow
+ * uses #a83200 (4.9:1) and the lead #4a4642 (6.6:1), as primary and muted fall to 4:1.
  */
 @layer components {
   /* ---------- Hero ---------- */
 
   .home-hero {
-    --hero-bg: #eedcc8;
+    --hero-bg: #e9d6c0;
     position: relative;
     isolation: isolate;
     display: flex;
@@ -61,7 +61,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 80% 50%;
+    object-position: 20% 50%;
   }
 
   /* Top right: the floating WhatsApp button holds the bottom right corner. */
@@ -109,18 +109,24 @@
       padding-block: 3rem calc(var(--radius-xl) + 5rem);
     }
 
+    /* The copy on the right, over the clean beige; the fruit falls on the left. */
+    .home-hero__inner {
+      display: flex;
+      justify-content: flex-end;
+    }
+
     .home-hero__copy {
       max-width: min(42vw, 40rem);
     }
 
-    /* The video fills the right side; its left edge melts into the beige behind the copy. */
+    /* The video fills the left side; its right edge melts into the beige behind the copy. */
     .home-hero__media {
       position: absolute;
       z-index: -1;
       top: 0;
-      right: 0;
       bottom: 0;
-      width: 60%;
+      left: 0;
+      width: 62%;
       margin: 0;
       aspect-ratio: auto;
       border-radius: 0;
@@ -129,18 +135,47 @@
     .home-hero__media::after {
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, var(--hero-bg) 0%, rgb(238 220 200 / 0%) 22%);
+      background: linear-gradient(270deg, var(--hero-bg) 0%, rgb(233 214 192 / 0%) 32%);
       content: "";
       pointer-events: none;
     }
 
     .home-hero__video {
-      object-position: 74% 50%;
+      object-position: 12% 50%;
     }
 
     .home-hero__toggle {
       top: calc(var(--header-height) + 1rem);
-      right: max(var(--site-gutter), calc(50% - 40rem));
+      right: auto;
+      left: max(var(--site-gutter), calc(50% - 40rem));
+    }
+  }
+
+  /*
+   * Up to 80rem the screen is closer to square, so the full-height video shows the fruit
+   * larger: it slides left (its left margin is empty backdrop), the copy narrows and the
+   * fade widens, so no fruit sits behind the text.
+   */
+  @media (min-width: 64rem) and (max-width: 79.99rem) {
+    .home-hero__media {
+      left: -12%;
+      width: 72%;
+    }
+
+    .home-hero__media::after {
+      background: linear-gradient(270deg, var(--hero-bg) 0%, rgb(233 214 192 / 0%) 38%);
+    }
+
+    .home-hero__video {
+      object-position: 0% 50%;
+    }
+
+    .home-hero__copy {
+      max-width: min(38vw, 40rem);
+    }
+
+    .home-hero__toggle {
+      left: var(--site-gutter);
     }
   }
 

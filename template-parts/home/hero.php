@@ -1,7 +1,7 @@
 <?php
 /**
- * Home hero: full-screen video that plays once and rests on its last frame, a title with
- * a highlighted word and the two main actions. Without JavaScript, with reduced motion or
+ * Home hero: full-screen video that plays once and rests on its last frame (the fruit fall
+ * on the left), a title with a highlighted word and the two main actions on the right. Without JavaScript, with reduced motion or
  * when the visitor saves data, the poster (last frame) is shown instead.
  */
 

@@ -123,11 +123,11 @@ function frave_home_hero_media(): array {
 	} else {
 		$sources = array(
 			array(
-				'src'  => frave_asset_url( 'assets/media/hero-frutas.webm' ),
+				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2.webm' ),
 				'type' => 'video/webm',
 			),
 			array(
-				'src'  => frave_asset_url( 'assets/media/hero-frutas.mp4' ),
+				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2.mp4' ),
 				'type' => 'video/mp4',
 			),
 		);
@@ -135,7 +135,7 @@ function frave_home_hero_media(): array {
 
 	return array(
 		'sources' => $sources,
-		'poster'  => '' !== $poster_url ? $poster_url : frave_asset_url( 'assets/media/hero-frutas-poster.jpg' ),
+		'poster'  => '' !== $poster_url ? $poster_url : frave_asset_url( 'assets/media/hero-frutas-v2-poster.jpg' ),
 	);
 }
 
