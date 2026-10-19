@@ -1,0 +1,525 @@
+/*
+ * Olfactory pyramid (page-templates/piramide-olfativa.php and
+ * template-parts/components/fragrance-pyramid.php).
+ *
+ * The pyramid is built from its three tab buttons, each cut to its slice with clip-path, so
+ * the whole tier is the click target. A clip-path also cuts outlines: the focus ring is a
+ * drop-shadow on the tier's wrapper. Each level has a light tone and a stronger accent
+ * (inc/fragrance-pyramid.php); text on both is ink, 6:1 or more.
+ */
+@layer components {
+  /* ---------- Interactive pyramid ---------- */
+
+  .pyramid__layout {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+
+  .pyramid__figure {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(0.75rem, 2vw, 1.25rem);
+    width: min(100%, 32rem);
+    margin-inline: auto;
+  }
+
+  .pyramid__shape {
+    position: relative;
+    aspect-ratio: 6 / 5;
+  }
+
+  .pyramid__level {
+    position: absolute;
+    inset-inline: 0;
+    filter: drop-shadow(0 0.8rem 1.25rem rgb(32 35 41 / 10%));
+  }
+
+  .pyramid__level--salida {
+    --tier-clip: polygon(50% 0, 65% 100%, 35% 100%);
+    top: 0;
+    height: 30%;
+  }
+
+  .pyramid__level--corazon {
+    --tier-clip: polygon(33.25% 0, 66.75% 0, 82.25% 100%, 17.75% 100%);
+    top: 33.5%;
+    height: 31%;
+  }
+
+  .pyramid__level--fondo {
+    --tier-clip: polygon(16.25% 0, 83.75% 0, 100% 100%, 0 100%);
+    top: 67.5%;
+    height: 32.5%;
+  }
+
+  .pyramid__level:has(.pyramid__tier:focus-visible) {
+    filter:
+      drop-shadow(0 0 1px var(--color-primary))
+      drop-shadow(0 0 1px var(--color-primary))
+      drop-shadow(0 0 2px var(--color-primary));
+  }
+
+  .pyramid__tier {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.1rem;
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 0;
+    border: 0;
+    background: var(--level-tone);
+    color: var(--color-ink);
+    cursor: pointer;
+    clip-path: var(--tier-clip);
+    transition: background-color var(--duration) ease;
+  }
+
+  /* The top slice is a narrow point: its label sits in the wide bottom part. */
+  .pyramid__level--salida .pyramid__tier {
+    justify-content: flex-end;
+    padding-bottom: clamp(0.5rem, 2.5vw, 0.9rem);
+  }
+
+  .pyramid__tier:hover {
+    background: color-mix(in srgb, var(--level-tone), var(--level-accent) 45%);
+  }
+
+  .pyramid__tier[aria-selected="true"] {
+    background: var(--level-accent);
+  }
+
+  .pyramid__tier:focus-visible {
+    outline: none;
+  }
+
+  .pyramid__tier-name {
+    font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .pyramid__tier-time {
+    font-size: clamp(0.72rem, 1.6vw, 0.84rem);
+    font-weight: 600;
+  }
+
+  /* Volatility axis beside the pyramid: volatile at the top, persistent at the base. */
+  .pyramid__axis {
+    order: -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .pyramid__axis span {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+
+  .pyramid__axis::before {
+    content: "";
+    order: 1;
+    flex: 1;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(var(--color-brand-orange), var(--color-sand-line));
+  }
+
+  .pyramid__axis span:last-child {
+    order: 2;
+  }
+
+  .pyramid__panel {
+    position: relative;
+    padding: clamp(1.6rem, 3.5vw, 2.5rem);
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--level-tone) 55%, #fff), #fff 60%);
+  }
+
+  .pyramid__panel::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.4rem;
+    background: var(--level-accent);
+  }
+
+  .pyramid.is-ready .pyramid__panel:not([hidden]) {
+    animation: pyramid-in 500ms var(--ease-out);
+  }
+
+  .pyramid__panel:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .pyramid__kicker {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .pyramid__title {
+    margin: 0.4rem 0 0.6rem;
+    font-size: var(--text-h2);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .pyramid__time {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    font-weight: 700;
+  }
+
+  .pyramid__time .icon {
+    color: var(--color-primary);
+  }
+
+  .pyramid__role {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .pyramid__facts {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0 0;
+  }
+
+  .pyramid__facts > div {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .pyramid__facts dt {
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .pyramid__facts dd {
+    margin: 0;
+  }
+
+  .pyramid__notes,
+  .pyramid__families {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pyramid__notes li {
+    padding: 0.28rem 0.75rem;
+    border-radius: 999px;
+    background: var(--level-tone);
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .pyramid__families .family-chip {
+    padding: 0.32rem 0.8rem;
+    font-size: 0.84rem;
+  }
+
+  .pyramid__product {
+    margin: 1.5rem 0 0;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  @keyframes pyramid-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+  }
+
+  @media (min-width: 56rem) {
+    .pyramid__layout {
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    }
+  }
+
+  /* ---------- Timeline ---------- */
+
+  .pyramid-timeline__chart {
+    margin: 0;
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+  }
+
+  .pyramid-timeline__rows {
+    display: grid;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pyramid-timeline__row {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .pyramid-timeline__label {
+    color: var(--color-muted);
+    font-size: 0.92rem;
+    line-height: 1.4;
+  }
+
+  .pyramid-timeline__label strong {
+    display: block;
+    color: var(--color-ink);
+    font-size: 1rem;
+  }
+
+  .pyramid-timeline__track {
+    position: relative;
+    height: 1.6rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--color-surface);
+  }
+
+  .pyramid-timeline__bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-radius: 999px;
+  }
+
+  /* Scale: 0 min, 15 min, 1 h, 4 h and 8 h at 0, 20, 40, 70 and 100 %. */
+  .pyramid-timeline__row--salida .pyramid-timeline__bar {
+    left: 0;
+    width: 25%;
+    background: linear-gradient(90deg, var(--level-accent) 55%, transparent);
+  }
+
+  .pyramid-timeline__row--corazon .pyramid-timeline__bar {
+    left: 13%;
+    width: 64%;
+    background: linear-gradient(90deg, transparent, var(--level-accent) 22%, var(--level-accent) 75%, transparent);
+  }
+
+  .pyramid-timeline__row--fondo .pyramid-timeline__bar {
+    left: 33%;
+    right: 0;
+    background: linear-gradient(90deg, transparent, var(--level-accent) 30%);
+  }
+
+  .pyramid-timeline__scale {
+    position: relative;
+    height: 1.2rem;
+    margin-top: 0.75rem;
+    color: var(--color-muted);
+    font-size: 0.76rem;
+    font-weight: 700;
+  }
+
+  .pyramid-timeline__scale span {
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    translate: -50% 0;
+  }
+
+  .pyramid-timeline__scale span:nth-child(1) {
+    left: 0;
+    translate: 0 0;
+  }
+
+  .pyramid-timeline__scale span:nth-child(2) {
+    left: 20%;
+  }
+
+  .pyramid-timeline__scale span:nth-child(3) {
+    left: 40%;
+  }
+
+  .pyramid-timeline__scale span:nth-child(4) {
+    left: 70%;
+  }
+
+  .pyramid-timeline__scale span:nth-child(5) {
+    left: 100%;
+    translate: -100% 0;
+  }
+
+  .pyramid-timeline__chart figcaption {
+    margin-top: 1.5rem;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+  }
+
+  @media (min-width: 48rem) {
+    .pyramid-timeline__row {
+      grid-template-columns: 16rem minmax(0, 1fr);
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .pyramid-timeline__scale {
+      margin-left: calc(16rem + 1.5rem);
+    }
+  }
+
+  /* ---------- What it means for each product ---------- */
+
+  .pyramid-products__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pyramid-product h3 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  .pyramid-product p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .pyramid-product .pyramid-product__key {
+    margin-top: auto;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--color-line);
+    color: var(--color-ink);
+    font-size: 0.94rem;
+  }
+
+  /* ---------- Scent-strip test (on sand) ---------- */
+
+  .pyramid-test__steps {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .pyramid-test__step {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    border: 1px solid var(--color-sand-line);
+    border-radius: var(--radius-card);
+    background: var(--color-sand-soft);
+  }
+
+  .pyramid-test__number {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    margin-bottom: 0.5rem;
+    border-radius: 50%;
+    background: var(--color-navy);
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .pyramid-test__time {
+    margin: 0;
+    color: var(--color-sand-accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .pyramid-test__step h3 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .pyramid-test__step p:last-child {
+    margin: 0;
+    color: var(--color-sand-muted);
+  }
+
+  @media (min-width: 48rem) {
+    .pyramid-test__steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 72rem) {
+    .pyramid-test__steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* A dashed thread joins the four moments, visible between the cards. */
+    .pyramid-test__steps::before {
+      content: "";
+      position: absolute;
+      top: 2.8rem;
+      right: 2rem;
+      left: 2rem;
+      border-top: 2px dashed var(--color-sand-line);
+    }
+  }
+
+  /* ---------- Links to the pyramid from the families ---------- */
+
+  .line-families__more {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 1rem;
+    margin: 1.75rem 0 0;
+    color: var(--color-muted);
+  }
+
+  .statement__links {
+    display: grid;
+    justify-items: start;
+    gap: 0.6rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pyramid__tier {
+      transition: none;
+    }
+
+    .pyramid.is-ready .pyramid__panel:not([hidden]) {
+      animation: none;
+    }
+  }
+}

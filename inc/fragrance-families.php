@@ -8,7 +8,7 @@
  *
  * Copy written for Frave's clients, who make products (October 2026). Images, when they
  * exist: assets/media/familias/{slug}.webp (1080 × 1350) and {slug}-640.webp; the hero uses
- * familias-olfativas.webp. bin/crear-familias-olfativas.php creates the page.
+ * familias-olfativas.webp. bin/crear-guia-fragancias.php creates the page.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

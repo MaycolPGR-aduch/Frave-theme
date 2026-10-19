@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { collectPageErrors, expectNoPhpErrors } from './helpers.js';
 
-// bin/crear-familias-olfativas.php (run by the CI seed) creates the guide under /fragancias/.
+// bin/crear-guia-fragancias.php (run by the CI seed) creates the guide pages under /fragancias/.
 const GUIDE = '/?pagename=fragancias/familias-olfativas';
 
 test.describe('guía de familias olfativas', () => {
@@ -93,5 +93,51 @@ test.describe('rueda de familias olfativas', () => {
     await page.goto('/?pagename=soluciones/cuidado-del-hogar');
     await expect(page.locator('.solution-hero h1')).toBeVisible();
     await expect(page.locator('.family-wheel')).toHaveCount(0);
+  });
+});
+
+test.describe('pirámide olfativa', () => {
+  const PYRAMID = '/?pagename=fragancias/piramide-olfativa';
+
+  test('cada nivel de la pirámide muestra su ficha, también con el teclado', async ({ page }) => {
+    const errors = collectPageErrors(page);
+    await page.goto(PYRAMID);
+    await expectNoPhpErrors(page);
+    await expect(page.locator('.solution-hero h1')).toContainText('La pirámide olfativa');
+
+    const pyramid = page.locator('#piramide');
+    const tabs = pyramid.getByRole('tab');
+    await expect(tabs).toHaveCount(3);
+    await expect(pyramid.getByRole('tabpanel')).toHaveCount(1);
+    await expect(pyramid.getByRole('tabpanel')).toContainText('Notas de salida');
+
+    await pyramid.getByRole('tab', { name: /Fondo/ }).click();
+    await expect(pyramid.getByRole('tab', { name: /Fondo/ })).toHaveAttribute('aria-selected', 'true');
+    await expect(pyramid.getByRole('tabpanel')).toContainText('Sándalo');
+    // The families that bring a level open the families guide at them.
+    await expect(pyramid.getByRole('tabpanel').getByRole('link', { name: 'Amaderada' })).toHaveAttribute('href', /#familia-amaderada$/);
+
+    await page.keyboard.press('ArrowUp');
+    await expect(pyramid.getByRole('tab', { name: /Corazón/ })).toBeFocused();
+    await expect(pyramid.getByRole('tabpanel')).toContainText('Notas de corazón');
+
+    await expect(page.locator('.pyramid-timeline__row')).toHaveCount(3);
+    await expect(page.locator('.pyramid-product')).toHaveCount(6);
+    await expect(page.locator('.pyramid-test__step')).toHaveCount(4);
+    await expect(page.locator('.site-footer__cta')).toHaveCount(0);
+    expect(errors).toEqual([]);
+  });
+
+  test('la guía de familias y la línea Fragancias llevan a la pirámide', async ({ page }) => {
+    await page.goto(GUIDE);
+    await page.getByRole('link', { name: /la pirámide olfativa/ }).first().click();
+    await expect(page.locator('.solution-hero h1')).toContainText('La pirámide olfativa');
+    // At the end of the pyramid page, the families band without a link to itself.
+    await expect(page.locator('.line-families .family-chip')).toHaveCount(9);
+    await expect(page.locator('.line-families__more')).toHaveCount(0);
+
+    await page.goto('/?pagename=fragancias');
+    await page.locator('.line-families__more').getByRole('link', { name: 'Conoce la pirámide olfativa' }).click();
+    await expect(page.locator('.solution-hero h1')).toContainText('La pirámide olfativa');
   });
 });

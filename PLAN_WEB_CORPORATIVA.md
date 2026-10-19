@@ -287,7 +287,7 @@ Contenido propio, inspirado en la estructura de la Academia del Perfume (academi
 
 - [x] **Guía de familias olfativas** (19-10, tema 1.20.0): las nueve familias del atributo del catálogo, con enlace a sus fragancias y familias por aplicación. Imágenes de las diez (portada y familias) integradas el 19-10 (tema 1.20.1). Pendiente: validación de los textos por Frave.
 - [x] **Rueda de los aromas** (19-10, tema 1.20.0): sección interactiva en Soluciones → Perfumería; se puede activar en otras industrias.
-- [ ] **Pirámide olfativa aplicada:** notas de salida, corazón y fondo, y qué significan para la fijación en cada base.
+- [x] **Pirámide olfativa aplicada** (19-10, tema 1.21.0): /fragancias/piramide-olfativa/ con pirámide interactiva, línea de tiempo, qué significa para seis tipos de producto y la prueba de la tira. Pendiente: su imagen de cabecera (prompt en `recursos-graficos/piramide-olfativa/PROMPT.md`) y validación de los textos por Frave.
 - [ ] **Concentraciones y dosificación por aplicación:** Parfum, EDP, EDT, colonia y body splash, y porcentajes orientativos por producto. *Requiere los porcentajes de Frave.*
 - [ ] **Cómo elegir la fragancia para tu producto:** público, base, muestras y pruebas de estabilidad, con la solicitud de muestras.
 - [ ] **Glosario de perfumería** (40–60 términos, con datos estructurados).
@@ -295,12 +295,20 @@ Contenido propio, inspirado en la estructura de la Academia del Perfume (academi
 - [ ] **Artículos de tendencias** en el blog (unos dos al mes).
 - [ ] Rueda olfativa de Frave descargable.
 
+#### Publicar la pirámide olfativa (tema 1.21.0)
+
+Solo cambia el tema. Después de desplegarlo:
+
+```bash
+cd ~/domains/frave.pe/public_html && wp eval-file ~/repos/frave-theme/bin/crear-guia-fragancias.php && wp litespeed-purge all
+```
+
 #### Publicar la guía de familias olfativas (tema 1.20.0)
 
 Solo cambia el tema. Después de desplegarlo, desde la carpeta del sitio:
 
 ```bash
-wp eval-file ~/repos/frave-theme/bin/crear-familias-olfativas.php
+wp eval-file ~/repos/frave-theme/bin/crear-guia-fragancias.php
 wp litespeed-purge all
 ```
 
@@ -362,3 +370,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-19 | Tema 1.20.0 desplegado en Hostinger. Imágenes de la guía de familias olfativas integradas (tema 1.20.1): portada y nueve familias generadas con `recursos-graficos/familias-olfativas/PROMPTS.md` (mismo frasco genérico, luz y ángulo; fondo del color de cada familia), revisadas sin textos ni logotipos y con el grupo en la parte baja para el recorte en arco. En `assets/media/familias/` a 1080 × 1350 (59–97 KB) y 640 × 800 (25–40 KB); imagen para compartir `og/familias-olfativas.jpg` (1200 × 630, 121 KB). Evidencia: capturas a 1440 y 390 px sin desbordes ni errores. frave.pe muestra a los visitantes «Frave is under maintenance», así que la revisión en producción queda pendiente del enlace privado. La guía aún no se creó en producción: `wp eval-file` debe ejecutarse desde `~/domains/frave.pe/public_html`. |
 | 2026-10-19 | Guía creada en producción y modo mantenimiento desactivado: revisadas en frave.pe /fragancias/familias-olfativas/ (nueve familias, «Cotizar fragancias …» en cada una; sin «Ver fragancias» porque el catálogo aún no tiene productos), la banda de familias en /fragancias/ y la rueda en /soluciones/perfumeria/ (gira hacia la familia elegida en escritorio y móvil). Sin errores de consola ni desbordes a 1440 y 390 px. CI del tema 1.20.1 (imágenes) en verde; pendiente desplegarlo. |
 | 2026-10-19 | Tema 1.20.1 desplegado y revisado en frave.pe: la guía muestra la portada y las nueve familias con sus imágenes (las diez cargan, sin imágenes rotas; el navegador elige la versión de 640 px en pantallas normales), comparte con `og/familias-olfativas.jpg`, sin errores de consola ni desbordes a 1440 y 390 px. |
+| 2026-10-19 | Pirámide olfativa aplicada (tema 1.21.0): página /fragancias/piramide-olfativa/ con introducción («una fragancia no huele igual al minuto que a las cuatro horas»), pirámide interactiva —tres niveles recortados con `clip-path` que son pestañas: cuándo se percibe, su papel, notas típicas, familias que lo aportan con enlace a la guía y qué significa para el producto—, línea de tiempo de los tres niveles, «Qué significa para tu producto» (perfumes, body splash, cosméticos, detergentes, velas, difusores, cada uno con su clave), la prueba de la tira en cuatro momentos, banda de familias y cierre con asesoría. Enlaces desde la guía de familias y desde Fragancias. `bin/crear-familias-olfativas.php` pasa a ser `bin/crear-guia-fragancias.php` y crea las dos páginas. Módulo genérico de pestañas (`tabs.js`). Evidencia: capturas a 1440 y 390 px sin desbordes ni errores; axe WCAG 2.2 AA sin avisos en la pirámide (escritorio y móvil), la guía y Fragancias; PHPCS, ESLint, build; Playwright 72 correctas (2 nuevas). |

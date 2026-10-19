@@ -23,6 +23,7 @@
 @import "./pages/blog.css";
 @import "./pages/contact.css";
 @import "./pages/families.css";
+@import "./pages/pyramid.css";
 @source "../../../**/*.php";
 @source "../js/**/*.js";
 @source not "../../../tests";

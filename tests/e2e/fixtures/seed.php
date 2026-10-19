@@ -264,7 +264,7 @@ update_option(
 require dirname( __DIR__, 3 ) . '/bin/crear-lineas.php';
 require dirname( __DIR__, 3 ) . '/bin/crear-paginas-empresa.php';
 require dirname( __DIR__, 3 ) . '/bin/crear-soluciones.php';
-require dirname( __DIR__, 3 ) . '/bin/crear-familias-olfativas.php';
+require dirname( __DIR__, 3 ) . '/bin/crear-guia-fragancias.php';
 
 // The blog with its starter articles published, as the menus link to it only with posts.
 $args = array( 'publicar' );

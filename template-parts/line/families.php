@@ -1,7 +1,8 @@
 <?php
 /**
  * Fragancias line: invitation to the guide of olfactory families, with a chip per family
- * that opens the guide at it. Only on the Fragancias page, once the guide is published.
+ * that opens the guide at it, and a link to the olfactory pyramid. On the Fragancias page
+ * and at the end of the pyramid page, once the guide is published.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,6 +13,7 @@ $frave_guide = 'fragancias' === ( $args['slug'] ?? '' ) ? frave_fragrance_guide_
 if ( '' === $frave_guide ) {
 	return;
 }
+$frave_pyramid = is_page_template( FRAVE_TEMPLATE_FRAGRANCE_PYRAMID ) ? '' : frave_fragrance_pyramid_url();
 ?>
 <section class="section line-families" aria-labelledby="line-families-title">
 	<div class="container">
@@ -26,5 +28,11 @@ if ( '' === $frave_guide ) {
 				<li><a class="family-chip" href="<?php echo esc_url( $frave_guide . '#familia-' . $frave_slug ); ?>" style="--family-tone: <?php echo esc_attr( $frave_family['tone'] ); ?>"><?php echo esc_html( $frave_family['name'] ); ?></a></li>
 			<?php endforeach; ?>
 		</ul>
+		<?php if ( '' !== $frave_pyramid ) : ?>
+			<p class="line-families__more" data-reveal="up">
+				<?php esc_html_e( '¿Cómo cambia una fragancia con el tiempo?', 'frave' ); ?>
+				<a class="link-arrow" href="<?php echo esc_url( $frave_pyramid ); ?>"><?php esc_html_e( 'Conoce la pirámide olfativa', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
+			</p>
+		<?php endif; ?>
 	</div>
 </section>

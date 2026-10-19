@@ -20,6 +20,7 @@ get_header();
 		$frave_families = frave_fragrance_families();
 		$frave_hero_img = frave_fragrance_family_image_base( 'familias-olfativas' );
 		$frave_line_url = frave_line_url( 'fragancias' );
+		$frave_pyramid  = frave_fragrance_pyramid_url();
 
 		get_template_part(
 			'template-parts/solutions/hero',
@@ -41,8 +42,15 @@ get_header();
 					<div class="statement__text" data-reveal="up">
 						<p><?php esc_html_e( 'Agrupar las fragancias por familias ayuda a describirlas con un lenguaje común y a decidir más rápido: si tu público prefiere aromas frescos, cálidos o dulces, la familia te dice por dónde empezar.', 'frave' ); ?></p>
 						<p><?php esc_html_e( 'No existe una clasificación única en el mundo y muchas fragancias combinan rasgos de varias familias. Aquí usamos las mismas nueve con las que puedes filtrar nuestro catálogo.', 'frave' ); ?></p>
-						<?php if ( '' !== $frave_line_url ) : ?>
-							<p><a class="link-arrow" href="<?php echo esc_url( $frave_line_url ); ?>"><?php esc_html_e( 'Conoce la línea Fragancias', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a></p>
+						<?php if ( '' !== $frave_pyramid || '' !== $frave_line_url ) : ?>
+							<p class="statement__links">
+								<?php if ( '' !== $frave_pyramid ) : ?>
+									<a class="link-arrow" href="<?php echo esc_url( $frave_pyramid ); ?>"><?php esc_html_e( 'Cómo evoluciona una fragancia: la pirámide olfativa', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
+								<?php endif; ?>
+								<?php if ( '' !== $frave_line_url ) : ?>
+									<a class="link-arrow" href="<?php echo esc_url( $frave_line_url ); ?>"><?php esc_html_e( 'Conoce la línea Fragancias', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
+								<?php endif; ?>
+							</p>
 						<?php endif; ?>
 					</div>
 				</div>
