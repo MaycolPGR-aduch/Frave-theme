@@ -1,6 +1,7 @@
 /*
- * Guide of olfactory families (page-templates/familias-olfativas.php) and its invitation on
- * the Fragancias line page (template-parts/line/families.php).
+ * Guide of olfactory families (page-templates/familias-olfativas.php), its invitation on
+ * the Fragancias line page (template-parts/line/families.php) and the wheel of families on
+ * navy (template-parts/components/family-wheel.php).
  *
  * Each family has a light tone (--family-tone, from inc/fragrance-families.php) behind its
  * chips, notes and image frame; text on it is always ink, 12:1 or more on every tone.
@@ -228,9 +229,295 @@
     font-size: 0.84rem;
   }
 
+
+  /* ---------- Wheel of families (on navy) ---------- */
+
+  .family-wheel {
+    /* Where the chosen family turns to, in degrees clockwise from the top: down on phones. */
+    --wheel-pointer: 180;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .family-wheel__orbit {
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    width: min(70rem, 160vw);
+    height: min(70rem, 160vw);
+    translate: -50% -42%;
+  }
+
+  .family-wheel__layout {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    align-items: center;
+  }
+
+  .family-wheel__stage {
+    position: relative;
+    width: min(100%, 32rem);
+    aspect-ratio: 1;
+    margin-inline: auto;
+    container-type: inline-size;
+  }
+
+  .family-wheel__dial {
+    position: absolute;
+    inset: 0;
+    transform: rotate(var(--wheel-rotation, 0deg));
+  }
+
+  .family-wheel__ring {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    filter: drop-shadow(0 1.25rem 2.5rem rgb(9 15 32 / 45%));
+  }
+
+  .family-wheel__segment {
+    cursor: pointer;
+    opacity: 0.88;
+    transition:
+      opacity var(--duration) ease,
+      transform var(--duration) var(--ease-out);
+  }
+
+  .family-wheel__segment:hover {
+    opacity: 0.96;
+  }
+
+  .family-wheel__segment.is-active {
+    opacity: 1;
+    transform: translate(var(--dx), var(--dy));
+  }
+
+  .family-wheel__tabs {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+  }
+
+  /* Labels stay upright while the ring turns. */
+  .family-wheel__tab {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    padding: 0.35em 0.7em;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--color-ink);
+    font-size: clamp(0.66rem, 2.9cqi, 0.92rem);
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+    cursor: pointer;
+    transform: translate(-50%, -50%) rotate(calc(-1 * var(--wheel-rotation, 0deg)));
+    transition: background-color var(--duration-fast) ease;
+  }
+
+  .family-wheel__tab:hover,
+  .family-wheel__tab[aria-selected="true"] {
+    background: #fff;
+    box-shadow: 0 0.35rem 1rem rgb(9 15 32 / 25%);
+  }
+
+  .family-wheel__tab:focus-visible {
+    outline: 3px solid var(--color-orange-light);
+    outline-offset: 2px;
+  }
+
+  .family-wheel.is-ready .family-wheel__dial,
+  .family-wheel.is-ready .family-wheel__tab {
+    transition:
+      transform 900ms var(--ease-out),
+      background-color var(--duration-fast) ease;
+  }
+
+  /* The chosen family's name, in the hole of the ring. */
+  .family-wheel__center {
+    position: absolute;
+    inset: 24%;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 0.35rem;
+    padding: 1rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 35%, var(--color-navy-2), var(--color-navy) 70%);
+    box-shadow: inset 0 0 0 1px rgb(255 255 255 / 10%);
+    text-align: center;
+  }
+
+  .family-wheel__center .icon {
+    width: clamp(1.4rem, 7cqi, 2.2rem);
+    height: clamp(1.4rem, 7cqi, 2.2rem);
+    color: var(--color-orange-light);
+  }
+
+  .family-wheel__name {
+    color: #fff;
+    font-size: clamp(1.25rem, 7.5cqi, 2.4rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .family-wheel__count {
+    color: var(--color-on-dark-muted);
+    font-size: clamp(0.7rem, 2.6cqi, 0.85rem);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  /* Marks the side the chosen family turns to. */
+  .family-wheel__pointer {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 50%;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: var(--color-brand-orange);
+    box-shadow: 0 0 0 0.35rem rgb(252 76 2 / 22%);
+    translate: -50% 0;
+  }
+
+  .family-wheel__panels {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+
+  .family-wheel__panel {
+    position: relative;
+    width: 100%;
+    padding: clamp(1.6rem, 3.5vw, 2.5rem);
+    overflow: hidden;
+    border: 1px solid rgb(255 255 255 / 12%);
+    border-radius: var(--radius-lg);
+    background: rgb(255 255 255 / 6%);
+  }
+
+  .family-wheel__panel::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 0.4rem;
+    background: var(--family-tone);
+  }
+
+  .family-wheel.is-ready .family-wheel__panel:not([hidden]) {
+    animation: family-wheel-in 600ms var(--ease-out);
+  }
+
+  .family-wheel__panel:focus-visible {
+    outline: 3px solid var(--color-orange-light);
+    outline-offset: 3px;
+  }
+
+  .family-wheel__kicker {
+    margin: 0;
+    color: var(--color-orange-light);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .family-wheel__title {
+    margin: 0.4rem 0 0.5rem;
+    font-size: var(--text-h2);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .family-wheel__tagline {
+    margin: 0 0 1rem;
+    color: var(--color-on-dark);
+    font-size: var(--text-lead);
+    line-height: 1.45;
+  }
+
+  .family-wheel__role,
+  .family-wheel__conveys {
+    margin: 0;
+    color: var(--color-on-dark-muted);
+  }
+
+  .family-wheel__role strong,
+  .family-wheel__conveys span {
+    color: #fff;
+  }
+
+  .family-wheel__notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1.25rem 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .family-wheel__notes li {
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    background: var(--family-tone);
+    color: var(--color-ink);
+    font-size: 0.88rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .family-wheel__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.75rem;
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgb(255 255 255 / 12%);
+  }
+
+  .family-wheel .link-arrow {
+    color: var(--color-orange-light);
+  }
+
+  @keyframes family-wheel-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+  }
+
+  @media (min-width: 56rem) {
+    .family-wheel {
+      --wheel-pointer: 90;
+    }
+
+    .family-wheel__layout {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    }
+
+    .family-wheel__pointer {
+      top: 50%;
+      left: calc(100% + 0.6rem);
+      translate: 0 -50%;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .family-chip {
+    .family-chip,
+    .family-wheel__segment,
+    .family-wheel.is-ready .family-wheel__dial,
+    .family-wheel.is-ready .family-wheel__tab {
       transition: none;
+    }
+
+    .family-wheel.is-ready .family-wheel__panel:not([hidden]) {
+      animation: none;
     }
   }
 }

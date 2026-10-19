@@ -107,6 +107,7 @@ La plantilla **Familias olfativas** (`page-templates/familias-olfativas.php`, /f
 - **Textos:** `inc/fragrance-families.php` (`frave_fragrance_families()` y `frave_fragrance_family_matrix()`).
 - **Imágenes:** `assets/media/familias/{familia}.webp` (1080 × 1350) y `{familia}-640.webp`; la cabecera usa `familias-olfativas.webp`. Mientras falten, cada familia muestra su color con el icono de fragancia.
 - **Crear la página:** `wp eval-file RUTA/bin/crear-familias-olfativas.php` (bajo la página de Fragancias).
+- **Rueda de familias:** `template-parts/components/family-wheel.php` y `assets/src/js/modules/family-wheel.js`, sobre azul marino: anillo con las nueve familias que gira hacia la elegida y su ficha (notas, papel en la perfumería, enlaces a la guía y al catálogo). Se muestra en la solución Perfumería (`'families' => true` en `frave_solutions()`); sin JavaScript se ven todas las fichas.
 
 ### Blog
 

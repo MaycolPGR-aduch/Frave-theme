@@ -60,3 +60,38 @@ test.describe('guía de familias olfativas', () => {
     await expect(page.locator('.line-families')).toHaveCount(0);
   });
 });
+
+test.describe('rueda de familias olfativas', () => {
+  test('en Perfumería gira hacia la familia elegida y muestra su ficha', async ({ page }) => {
+    const errors = collectPageErrors(page);
+    await page.goto('/?pagename=soluciones/perfumeria');
+    await expectNoPhpErrors(page);
+    const wheel = page.locator('.family-wheel');
+    const tabs = wheel.getByRole('tab');
+    await expect(tabs).toHaveCount(9);
+    await expect(tabs.first()).toHaveAttribute('aria-selected', 'true');
+    await expect(wheel.getByRole('tabpanel')).toHaveCount(1);
+    await expect(wheel.getByRole('tabpanel')).toContainText('Cítrica');
+
+    const dial = wheel.locator('[data-wheel-dial]');
+    const before = await dial.evaluate((element) => element.style.getPropertyValue('--wheel-rotation'));
+    await wheel.getByRole('tab', { name: 'Gourmand' }).click();
+    await expect(wheel.getByRole('tabpanel')).toContainText('En perfumería:');
+    await expect(wheel.getByRole('tabpanel')).toContainText('Vainilla');
+    await expect(wheel.locator('[data-wheel-name]')).toHaveText('Gourmand');
+    expect(await dial.evaluate((element) => element.style.getPropertyValue('--wheel-rotation'))).not.toBe(before);
+
+    // Arrow keys move between families, as in any tab list.
+    await page.keyboard.press('ArrowRight');
+    await expect(wheel.getByRole('tab', { name: 'Fresca' })).toBeFocused();
+    await expect(wheel.getByRole('tabpanel')).toContainText('Brisa marina');
+    await expect(wheel.getByRole('tabpanel').getByRole('link', { name: 'Más sobre la familia Fresca' })).toHaveAttribute('href', /#familia-fresca$/);
+    expect(errors).toEqual([]);
+  });
+
+  test('las otras industrias no la muestran', async ({ page }) => {
+    await page.goto('/?pagename=soluciones/cuidado-del-hogar');
+    await expect(page.locator('.solution-hero h1')).toBeVisible();
+    await expect(page.locator('.family-wheel')).toHaveCount(0);
+  });
+});

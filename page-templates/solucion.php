@@ -4,8 +4,9 @@
  * Template Post Type: page
  *
  * One industry (the page's slug, see inc/solutions.php): hero, introduction, what Frave
- * offers it from every line (product subcategories), applications, the other industries
- * and a closing call to action. Copy: inc/solutions.php and the ACF group "Solución Frave".
+ * offers it from every line (product subcategories), the wheel of olfactory families
+ * (Perfumería), applications, the other industries and a closing call to action.
+ * Copy: inc/solutions.php and the ACF group "Solución Frave".
  */
 
 get_header();
@@ -74,6 +75,10 @@ get_header();
 			</section>
 			<?php
 		endif;
+
+		if ( ! empty( frave_solutions()[ $frave_slug ]['families'] ) ) {
+			get_template_part( 'template-parts/components/family-wheel' );
+		}
 
 		get_template_part(
 			'template-parts/components/applications',

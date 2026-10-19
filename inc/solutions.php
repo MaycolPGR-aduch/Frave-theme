@@ -32,6 +32,8 @@ function frave_solutions(): array {
 			'terms'        => array( 'perfumeria', 'frascos-de-vidrio-perfumeria', 'valvulas' ),
 			'icon'         => 'fragrance',
 			'image'        => 'assets/media/soluciones/perfumeria.webp',
+			// Shows the wheel of olfactory families (template-parts/components/family-wheel.php).
+			'families'     => true,
 		),
 		'cosmetica-y-cuidado-personal'      => array(
 			'title'        => __( 'Cosmética y cuidado personal', 'frave' ),
