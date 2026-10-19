@@ -1,0 +1,236 @@
+/*
+ * Guide of olfactory families (page-templates/familias-olfativas.php) and its invitation on
+ * the Fragancias line page (template-parts/line/families.php).
+ *
+ * Each family has a light tone (--family-tone, from inc/fragrance-families.php) behind its
+ * chips, notes and image frame; text on it is always ink, 12:1 or more on every tone.
+ */
+@layer components {
+  /* ---------- Family chips: index, matrix and the line page ---------- */
+
+  .families-index ul,
+  .line-families__list,
+  .families-matrix__families {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .families-index {
+    margin-bottom: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .family-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid rgb(32 35 41 / 8%);
+    border-radius: 999px;
+    background: var(--family-tone, var(--color-surface));
+    color: var(--color-ink);
+    font-size: 0.92rem;
+    font-weight: 700;
+    line-height: 1.3;
+    transition:
+      border-color var(--duration-fast) ease,
+      box-shadow var(--duration-fast) ease;
+  }
+
+  .family-chip:hover {
+    border-color: var(--color-brand-orange);
+    box-shadow: 0 0.4rem 1rem rgb(32 35 41 / 8%);
+  }
+
+  /* ---------- One block per family ---------- */
+
+  .families__list {
+    display: grid;
+    gap: clamp(4rem, 9vw, 7.5rem);
+  }
+
+  .family {
+    display: grid;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    /* Clear the sticky header when the index jumps here. */
+    scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  }
+
+  .family__media {
+    width: 100%;
+    max-width: 20rem;
+    aspect-ratio: 4 / 5;
+    justify-self: center;
+    background: var(--family-tone);
+  }
+
+  .family__media--placeholder {
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(circle at 50% 38%, rgb(255 255 255 / 65%), transparent 58%),
+      var(--family-tone);
+  }
+
+  .family__glyph .icon {
+    width: clamp(3.5rem, 8vw, 5rem);
+    height: clamp(3.5rem, 8vw, 5rem);
+    color: var(--color-primary);
+    stroke-width: 1.4;
+  }
+
+  .family__number {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+
+  .family__title {
+    margin: 0.35rem 0 0.6rem;
+    font-size: var(--text-h2);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .family__tagline {
+    margin: 0 0 1rem;
+    font-size: var(--text-lead);
+    line-height: 1.45;
+  }
+
+  .family__text {
+    max-width: 40rem;
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .family__facts {
+    display: grid;
+    gap: 1rem;
+    margin: 1.6rem 0 0;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .family__facts > div {
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .family__facts dt {
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .family__facts dd {
+    margin: 0;
+  }
+
+  .family__notes,
+  .family__uses {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .family__notes li,
+  .family__uses li {
+    padding: 0.28rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .family__notes li {
+    background: var(--family-tone);
+  }
+
+  .family__uses li {
+    border: 1px solid var(--color-line);
+  }
+
+  .family__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.75rem;
+    margin-top: 1.6rem;
+  }
+
+  @media (min-width: 36rem) {
+    .family__facts > div {
+      grid-template-columns: 8.5rem minmax(0, 1fr);
+      align-items: baseline;
+    }
+  }
+
+  @media (min-width: 56rem) {
+    .family {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+
+    .family__media {
+      max-width: 26rem;
+    }
+
+    /* Alternate sides, so the page reads as a sequence and not a list. */
+    .family:nth-child(even) {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+
+    .family:nth-child(even) .family__media {
+      order: 2;
+    }
+  }
+
+  /* ---------- Families by application ---------- */
+
+  .families-matrix__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .families-matrix__row {
+    display: grid;
+    align-content: start;
+    gap: 0.9rem;
+    padding: 1.35rem 1.4rem 1.5rem;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: var(--color-white);
+  }
+
+  .families-matrix__name {
+    margin: 0;
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .families-matrix .family-chip {
+    padding: 0.32rem 0.8rem;
+    font-size: 0.84rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .family-chip {
+      transition: none;
+    }
+  }
+}

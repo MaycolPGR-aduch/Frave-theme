@@ -58,6 +58,9 @@ function frave_seo_data(): array {
 	} elseif ( is_page_template( FRAVE_TEMPLATE_SOLUTIONS ) ) {
 		$description = __( 'Fragancias, sabores y envases según tu industria: perfumería, cosmética y cuidado personal, hogar, ambientación y alimentos y bebidas.', 'frave' );
 		$image       = $share( 'solucion-soluciones' );
+	} elseif ( is_page_template( FRAVE_TEMPLATE_FRAGRANCE_FAMILIES ) ) {
+		$description = __( 'Guía de familias olfativas: cítrica, floral, frutal, amaderada, oriental, aromática, gourmand, fresca y especiada. Sus notas, lo que transmiten y en qué productos funcionan mejor.', 'frave' );
+		$image       = $share( file_exists( FRAVE_THEME_DIR . '/assets/media/og/familias-olfativas.jpg' ) ? 'familias-olfativas' : 'fragancias' );
 	} elseif ( is_page_template( FRAVE_TEMPLATE_CONTACT ) ) {
 		$description = __( 'Escríbenos o solicita una cotización de sabores, fragancias y envases para tu marca. Te respondemos por correo o por WhatsApp.', 'frave' );
 	} elseif ( function_exists( 'is_product' ) && is_product() ) {

@@ -22,6 +22,7 @@
 @import "./pages/product.css";
 @import "./pages/blog.css";
 @import "./pages/contact.css";
+@import "./pages/families.css";
 @source "../../../**/*.php";
 @source "../js/**/*.js";
 @source not "../../../tests";

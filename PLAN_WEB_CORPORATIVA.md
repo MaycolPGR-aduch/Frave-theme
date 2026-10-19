@@ -281,6 +281,28 @@ Antes de anunciar la web: que los mensajes lleguen, que el sitio esté protegido
 
 Después: **carga del catálogo** (con el listado y las fotos de Frave: importación, tienda en «Visible», medición de ficha y catálogo) y, cuando Frave decida vender, **tienda en línea** sobre la base ya construida ([ROADMAP.md](ROADMAP.md)). Al reactivarla, rehacer la cabecera: con la tienda activa el menú suma «Tienda» y «Mi cuenta» y los iconos de carrito y cuenta, y entre 1024 y 1280 px desborda unos 114 px (medido en el CI el 15-10).
 
+### Contenidos de la línea Fragancias
+
+Contenido propio, inspirado en la estructura de la Academia del Perfume (academiadelperfume.com) pero escrito para quien fabrica un producto y no para el consumidor final, sin copiar textos ni citar marcas comerciales.
+
+- [x] **Guía de familias olfativas** (19-10, tema 1.20.0): las nueve familias del atributo del catálogo, con enlace a sus fragancias y familias por aplicación. Pendiente: imágenes de cada familia y validación de los textos por Frave.
+- [ ] **Pirámide olfativa aplicada:** notas de salida, corazón y fondo, y qué significan para la fijación en cada base.
+- [ ] **Concentraciones y dosificación por aplicación:** Parfum, EDP, EDT, colonia y body splash, y porcentajes orientativos por producto. *Requiere los porcentajes de Frave.*
+- [ ] **Cómo elegir la fragancia para tu producto:** público, base, muestras y pruebas de estabilidad, con la solicitud de muestras.
+- [ ] **Glosario de perfumería** (40–60 términos, con datos estructurados).
+- [ ] **Notas e ingredientes**, con un apartado «Aromas del Perú».
+- [ ] **Artículos de tendencias** en el blog (unos dos al mes).
+- [ ] Rueda olfativa de Frave descargable.
+
+#### Publicar la guía de familias olfativas (tema 1.20.0)
+
+Solo cambia el tema. Después de desplegarlo, desde la carpeta del sitio:
+
+```bash
+wp eval-file ~/repos/frave-theme/bin/crear-familias-olfativas.php
+wp litespeed-purge all
+```
+
 ## Lo que debe aportar Frave
 
 Se puede construir con textos de ejemplo marcados; para publicar hace falta:
@@ -296,6 +318,7 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 - [ ] Revisión legal de la política de privacidad, los términos y las preguntas frecuentes (publicadas el 12-10 con textos base); razón social, RUC y domicilio para la política y el Libro de Reclamaciones.
 - [ ] Revisión de los cuatro artículos de inicio del blog (temas técnicos generales, sin datos de la empresa) y temas para los siguientes.
 - [x] Direcciones de las redes sociales: Instagram y TikTok (13-10).
+- [ ] Validación de los textos de la guía de familias olfativas; porcentajes de dosificación por aplicación; notas peruanas que trabajan de verdad (palo santo, muña, cacao…); condiciones para enviar muestras.
 - [ ] Acceso a Google Search Console (o a la cuenta de Google con la que se verificará el dominio).
 
 ## Registro de avances
@@ -333,3 +356,4 @@ Se puede construir con textos de ejemplo marcados; para publicar hace falta:
 | 2026-10-17 | Fragancias, línea principal de Frave, va siempre primero (tema 1.18.1): orden Fragancias, Sabores, Envases en el menú «Líneas», «Nuestras líneas» de la portada, el panel del catálogo, las tarjetas y el filtro de `/catalogo/`, «Otras líneas» y el formulario de contacto. `bin/crear-lineas.php` fija además ese orden en las categorías de WooCommerce en cada ejecución. En producción: desplegar el tema y ejecutar `wp eval-file ~/repos/frave-theme/bin/crear-lineas.php`. |
 | 2026-10-17 | Imágenes propias en las cabeceras de Soluciones (tema 1.19.0), en lugar de las recicladas: página central, Perfumería, Cosmética y cuidado personal, Cuidado del hogar, Ambientación y marketing olfativo, y Alimentos y bebidas (`recursos-graficos/soluciones`, generadas con la serie beige como referencia). Revisadas al detalle: sin textos ni logotipos, envases genéricos, recorte en arco sin cortes. En `assets/media/soluciones/` a 1080×1350 (52–88 KB) y 640×800 (20–32 KB) con `srcset`; imágenes para compartir de 1200×630 (`og/solucion-*.jpg`, 52–72 KB) con todo el grupo de productos. Se retiró la imagen fija del video anterior, que ya no se usaba. Evidencia: capturas de las seis cabeceras y en móvil, `og:image` de cada página comprobado; Playwright de soluciones, SEO y móvil. |
 | 2026-10-18 | El personal no podía entrar al correo: usaban `frave.pe/webmail` y enlaces `frave.pe:2096/cpsess…`, que desde el traslado llevan a la web en Hostinger. Acceso vigente comprobado: `https://webmail.frave.pe` (y `https://fragantik.com:2096`) responde con certificado válido. Direcciones de webmail, cPanel y servidores IMAP/SMTP anotadas en `CORREO_FRAVE.md`, fuera del repositorio. Queda pendiente redirigir `frave.pe/webmail` (fase 8). |
+| 2026-10-19 | Guía de familias olfativas (tema 1.20.0), primer contenido de la línea Fragancias tras estudiar la sección «El Perfume» de la Academia del Perfume: página /fragancias/familias-olfativas/ con las nueve familias del atributo del catálogo (Cítrica, Floral, Frutal, Amaderada, Oriental, Aromática, Gourmand, Fresca, Especiada), cada una con sus notas, lo que transmite, los productos en que funciona, «Ver fragancias …» hacia el catálogo filtrado (solo cuando hay fragancias de esa familia en Fragancias) y cotización; índice de familias, «¿Qué familia elegir para tu producto?» con nueve aplicaciones y cierre con asesoría. Textos propios para fabricantes, sin marcas comerciales. La página de Fragancias suma una banda con las familias. Hasta tener las imágenes, cada familia muestra su color. `frave_page_with_template()` ahora encuentra también páginas hijas. Evidencia: capturas a 1440 y 390 px sin desbordes; axe WCAG 2.2 AA sin avisos en la guía (escritorio y móvil) y en Fragancias; PHPCS, ESLint, build; Playwright 69 correctas (3 nuevas de la guía). |

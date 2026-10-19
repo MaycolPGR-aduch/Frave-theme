@@ -100,6 +100,14 @@ La página **Soluciones** (`page-templates/soluciones.php`, /soluciones/) presen
 - **Crear las páginas:** `wp eval-file RUTA/bin/crear-soluciones.php`.
 - **Menú automático:** «Soluciones» con la página central y un acceso por industria. Con siete entradas, «Inicio» deja su lugar (el logotipo ya lleva a la portada).
 
+### Guía de familias olfativas
+
+La plantilla **Familias olfativas** (`page-templates/familias-olfativas.php`, /fragancias/familias-olfativas/) explica a quien fabrica un producto las nueve familias del atributo «Familia olfativa» del catálogo: notas típicas, qué transmite, en qué productos funciona, enlace a las fragancias de esa familia (solo si hay alguna en Fragancias) y cotización; cierra con las familias recomendadas para cada aplicación. La página de Fragancias la presenta con una banda de familias.
+
+- **Textos:** `inc/fragrance-families.php` (`frave_fragrance_families()` y `frave_fragrance_family_matrix()`).
+- **Imágenes:** `assets/media/familias/{familia}.webp` (1080 × 1350) y `{familia}-640.webp`; la cabecera usa `familias-olfativas.webp`. Mientras falten, cada familia muestra su color con el icono de fragancia.
+- **Crear la página:** `wp eval-file RUTA/bin/crear-familias-olfativas.php` (bajo la página de Fragancias).
+
 ### Blog
 
 La página de entradas (Ajustes → Lectura) muestra los temas (categorías con artículos), el último artículo destacado y los demás en tarjetas. Cada artículo tiene migas de pan, categoría, fecha y tiempo de lectura, la imagen destacada, el texto con los enlaces para compartir al lado (debajo en móvil) y «Sigue leyendo» con artículos del mismo tema.

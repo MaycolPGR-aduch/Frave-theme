@@ -176,10 +176,12 @@ add_action( 'wp_head', 'frave_faq_structured_data' );
 function frave_page_with_template( string $template ): ?WP_Post {
 	$pages = get_pages(
 		array(
-			'meta_key'    => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery -- small, cached query on pages.
-			'meta_value'  => $template, // phpcs:ignore WordPress.DB.SlowDBQuery
-			'post_status' => 'publish',
-			'number'      => 1,
+			'meta_key'     => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery -- small, cached query on pages.
+			'meta_value'   => $template, // phpcs:ignore WordPress.DB.SlowDBQuery
+			'post_status'  => 'publish',
+			'number'       => 1,
+			// Also child pages (the guide hangs from Fragancias), which the query does not return otherwise.
+			'hierarchical' => false,
 		)
 	);
 	return $pages ? $pages[0] : null;
