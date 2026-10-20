@@ -288,14 +288,24 @@
     }
   }
 
+  /* The wordmark alone (FRAVE / Fragancias y envases), without the bottle icon. */
   .site-branding {
     grid-column: 1;
     grid-row: 1;
-    width: clamp(8rem, 12vw, 11.5rem);
+    width: clamp(6.75rem, 9vw, 8rem);
   }
 
-  /* The logo file has white margins above and below: the link shows the band with the mark. */
-  .site-branding__link,
+  .site-branding__link {
+    display: block;
+    width: 100%;
+  }
+
+  .site-branding__logo {
+    width: 100%;
+    height: auto;
+  }
+
+  /* A logo uploaded in the Customizer may have white margins: the link shows its middle band. */
   .custom-logo-link {
     position: relative;
     display: block;
@@ -304,7 +314,6 @@
     overflow: hidden;
   }
 
-  .site-branding__logo,
   .custom-logo {
     position: absolute;
     top: 50%;
@@ -349,7 +358,7 @@
    */
   @media (min-width: 64rem) and (max-width: 79.99rem) {
     .site-branding {
-      width: clamp(7.5rem, 11.5vw, 11.5rem);
+      width: clamp(6.5rem, 8.5vw, 8rem);
     }
 
     .menu-list {
@@ -2948,7 +2957,7 @@ html .woocommerce-checkout #payment div.payment_box::before {
   .site-branding {
     grid-column: 2;
     justify-self: center;
-    width: clamp(7.5rem, 34vw, 10rem);
+    width: clamp(6.5rem, 28vw, 7.5rem);
   }
 
   /* The menu drops down as a card under the capsule. */

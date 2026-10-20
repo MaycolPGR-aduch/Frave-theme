@@ -23,7 +23,7 @@
 					<?php the_custom_logo(); ?>
 				<?php else : ?>
 					<a class="site-branding__link" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-						<img class="site-branding__logo" src="<?php echo esc_url( frave_asset_url( 'assets/images/frave-logo.webp' ) ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="720" height="432">
+						<img class="site-branding__logo" src="<?php echo esc_url( frave_asset_url( 'assets/images/frave-wordmark.webp' ) ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="720" height="240">
 					</a>
 				<?php endif; ?>
 			</div>

@@ -53,6 +53,8 @@ El orden de capas CSS se fija al principio de `app.css` (`@layer theme, utilitie
 | `success`, `warning`, `error` | `#276749`, `#9c6b1b`, `#b42318` | Estados | — |
 | `whatsapp` / `whatsapp-dark` | `#0f7d6f` / `#075e54` | Botones de WhatsApp (el verde de marca da 1,98:1) | Blanco 5,0:1 |
 
+**Logotipo:** la cabecera usa solo las letras (`assets/images/frave-wordmark.webp`, «FRAVE / Fragancias y envases» en naranja, sin el frasco); el pie conserva el logotipo completo. **Introducción de entrada:** la primera página de una visita (de nuevo pasadas 12 horas) se abre con el naranja de marca en degradado radial y las letras en blanco, con una línea que se completa; luego se levanta como un telón (o se desvanece, con movimiento reducido).
+
 Frave no usa negro: desde el 15-10-2026 las superficies que eran negras son arena (secciones y bandas) o azul marino (pie, botones oscuros y controles seleccionados). El azul es un color de apoyo; el logotipo y la marca siguen en naranja.
 
 Regla práctica: sobre blanco, el naranja de marca solo en títulos de 24 px o más y en elementos sin texto; para texto y botones, `primary`. Sobre arena, los textos pequeños de acento van en `sand-accent`; sobre azul marino, en `orange-light`.
