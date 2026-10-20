@@ -114,7 +114,7 @@ La plantilla **Familias olfativas** (`page-templates/familias-olfativas.php`, /f
 La plantilla **Pirámide olfativa** (`page-templates/piramide-olfativa.php`, /fragancias/piramide-olfativa/) aplica la pirámide al producto del cliente: por qué una fragancia cambia con el tiempo, **pirámide interactiva** (tres niveles que son pestañas: cuándo se percibe cada uno, notas, familias que lo aportan y qué significa para el producto), línea de tiempo de los tres niveles, qué significa para perfumes, body splash, cosméticos, detergentes, velas y difusores, y la prueba de la tira en cuatro momentos.
 
 - **Textos:** `inc/fragrance-pyramid.php`; la pirámide es `template-parts/components/fragrance-pyramid.php` con `assets/src/js/modules/tabs.js` (pestañas genéricas `[data-tabs]`).
-- **Imagen:** `assets/media/piramide/piramide-olfativa.webp` y `-640.webp` cuando exista (prompt en `recursos-graficos/piramide-olfativa/PROMPT.md`); mientras tanto, la de la familia Oriental.
+- **Imagen:** `assets/media/piramide/piramide-olfativa.webp` y `-640.webp` (prompt en `recursos-graficos/piramide-olfativa/PROMPT.md`); para compartir, `assets/media/og/piramide-olfativa.jpg`. Sin ellas, la página usa la imagen de la familia Oriental.
 - **Enlaces:** desde la introducción de la guía de familias y la banda de familias de Fragancias, que también cierra la pirámide.
 - **Crear las páginas de la guía:** `wp eval-file RUTA/bin/crear-guia-fragancias.php` (familias y pirámide; deja como están las que ya existen).
 
