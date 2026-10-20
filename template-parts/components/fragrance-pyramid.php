@@ -5,7 +5,8 @@
  * its role, typical notes, the families that bring it and what it means for the product).
  * assets/src/js/modules/tabs.js switches the cards; without JavaScript every card is shown.
  *
- * Arguments: eyebrow, title (*words* highlighted), text.
+ * Arguments: eyebrow, title (*words* highlighted), text, more (URL of a «Ver la pirámide
+ * completa» button under the card, '' for none), surface (true for the warm surface).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,6 +19,8 @@ $frave_pyramid  = wp_parse_args(
 		'eyebrow' => __( 'Cómo evoluciona una fragancia', 'frave' ),
 		'title'   => __( 'Tres fases, *una sola fragancia*', 'frave' ),
 		'text'    => __( 'Toca cada nivel de la pirámide para ver cuándo se percibe, qué notas lo forman y qué aporta a tu producto.', 'frave' ),
+		'more'    => '',
+		'surface' => false,
 	)
 );
 $frave_levels   = frave_fragrance_pyramid();
@@ -25,7 +28,7 @@ $frave_families = frave_fragrance_families();
 $frave_guide    = frave_fragrance_guide_url();
 $frave_count    = count( $frave_levels );
 ?>
-<section class="section pyramid" id="piramide" aria-labelledby="pyramid-title" data-tabs>
+<section class="section pyramid<?php echo $frave_pyramid['surface'] ? ' section--surface' : ''; ?>" id="piramide" aria-labelledby="pyramid-title" data-tabs>
 	<div class="container">
 		<div class="section-head" data-reveal="up">
 			<p class="eyebrow"><?php echo esc_html( $frave_pyramid['eyebrow'] ); ?></p>
@@ -112,6 +115,9 @@ $frave_count    = count( $frave_levels );
 						<p class="pyramid__product"><strong><?php esc_html_e( 'En tu producto:', 'frave' ); ?></strong> <?php echo esc_html( $frave_level['product'] ); ?></p>
 					</div>
 				<?php endforeach; ?>
+				<?php if ( '' !== $frave_pyramid['more'] ) : ?>
+					<?php frave_button( __( 'Ver la pirámide completa', 'frave' ), $frave_pyramid['more'], 'btn btn--dark pyramid__more' ); ?>
+				<?php endif; ?>
 			</div>
 		</div>
 	</div>

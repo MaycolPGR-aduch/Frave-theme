@@ -1340,6 +1340,12 @@
     padding-bottom: 3rem;
   }
 
+  /* With the fragrance guide: brand, Explora, Guía de fragancias and Contacto. */
+  .site-footer__main--guide {
+    grid-template-columns: 1.3fr 0.75fr 0.85fr 1fr;
+    gap: 2.5rem;
+  }
+
   .site-footer__brand > a {
     position: relative;
     display: block;
@@ -3082,6 +3088,11 @@ html .woocommerce-checkout #payment div.payment_box::before {
     grid-template-columns: 1fr 1fr;
   }
 
+  .site-footer__main--guide {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 0.9fr) minmax(0, 1.3fr);
+    gap: 2rem;
+  }
+
   .site-footer__brand {
     grid-column: 1 / -1;
   }
@@ -3184,7 +3195,8 @@ html .woocommerce-checkout #payment div.payment_box::before {
     grid-template-columns: 1fr;
   }
 
-  .site-footer__main {
+  .site-footer__main,
+  .site-footer__main--guide {
     grid-template-columns: 1fr;
     gap: 2rem;
   }

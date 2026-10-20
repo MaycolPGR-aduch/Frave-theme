@@ -1,11 +1,12 @@
 <?php
 /**
- * Global site footer: an invitation to get in touch, the main links, contact channels
- * and legal links. On large screens the page content lifts off it at the end (motion.css).
+ * Global site footer: an invitation to get in touch, the main links, the fragrance guide,
+ * contact channels and legal links. On large screens the page content lifts off it at the end (motion.css).
  */
 
 $frave_cta          = frave_header_cta();
 $frave_whatsapp_url = frave_whatsapp_url( frave_whatsapp_message() );
+$frave_guide_links  = frave_fragrance_guide_links();
 $frave_channel_icon = array(
 	'email'   => 'mail',
 	'phone'   => 'phone',
@@ -45,7 +46,7 @@ $frave_channel_icon = array(
 				</div>
 			<?php endif; ?>
 
-			<div class="site-footer__main">
+			<div class="site-footer__main<?php echo $frave_guide_links ? ' site-footer__main--guide' : ''; ?>">
 				<div class="site-footer__brand">
 					<a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
 						<img src="<?php echo esc_url( frave_asset_url( 'assets/images/frave-logo-footer.webp' ) ); ?>" alt="" width="840" height="504" loading="lazy">
@@ -67,6 +68,16 @@ $frave_channel_icon = array(
 					);
 					?>
 				</nav>
+				<?php if ( $frave_guide_links ) : ?>
+					<nav class="site-footer__links site-footer__guide" aria-labelledby="footer-guide-title">
+						<h2 id="footer-guide-title"><?php esc_html_e( 'Guía de fragancias', 'frave' ); ?></h2>
+						<ul class="footer-menu">
+							<?php foreach ( $frave_guide_links as $frave_guide_link ) : ?>
+								<li><a href="<?php echo esc_url( $frave_guide_link['url'] ); ?>"><?php echo esc_html( $frave_guide_link['label'] ); ?></a></li>
+							<?php endforeach; ?>
+						</ul>
+					</nav>
+				<?php endif; ?>
 				<div class="site-footer__contact">
 					<h2><?php esc_html_e( 'Contacto', 'frave' ); ?></h2>
 					<?php $frave_channels = array_intersect_key( frave_contact_channels(), $frave_channel_icon ); ?>

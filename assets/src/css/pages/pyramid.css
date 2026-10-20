@@ -140,8 +140,15 @@
     order: 2;
   }
 
+  .pyramid__panels {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+
   .pyramid__panel {
     position: relative;
+    width: 100%;
     padding: clamp(1.6rem, 3.5vw, 2.5rem);
     overflow: hidden;
     border: 1px solid var(--color-line);
@@ -496,16 +503,7 @@
     }
   }
 
-  /* ---------- Links to the pyramid from the families ---------- */
-
-  .line-families__more {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.35rem 1rem;
-    margin: 1.75rem 0 0;
-    color: var(--color-muted);
-  }
+  /* ---------- Link to the pyramid from the families guide ---------- */
 
   .statement__links {
     display: grid;

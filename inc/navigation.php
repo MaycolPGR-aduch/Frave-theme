@@ -36,7 +36,8 @@ function frave_contact_page_url(): string {
 /**
  * Items of the fallback main menu: Inicio, Nosotros, Líneas (one entry per product line
  * with a line page or a category with products, so no entry leads to an empty page),
- * Soluciones (the hub and one entry per industry), Servicios, Catálogo and Contacto.
+ * Soluciones (the hub and one entry per industry), Servicios, Catálogo (with the fragrance
+ * guide: olfactory families and pyramid) and Contacto.
  * Pages appear once they are published. With seven entries Inicio gives way, as the logo
  * already leads home and the floating header has room for six.
  *
@@ -103,9 +104,11 @@ function frave_primary_menu_fallback_items(): array {
 			);
 		}
 
+		// The fragrance guide hangs from the catalog, which keeps «Líneas» to the three lines.
 		$items[] = array(
-			'label' => frave_catalog_mode() ? __( 'Catálogo', 'frave' ) : __( 'Tienda', 'frave' ),
-			'url'   => frave_catalog_shop_url(),
+			'label'    => frave_catalog_mode() ? __( 'Catálogo', 'frave' ) : __( 'Tienda', 'frave' ),
+			'url'      => frave_catalog_shop_url(),
+			'children' => frave_fragrance_guide_links(),
 		);
 	}
 

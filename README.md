@@ -115,7 +115,8 @@ La plantilla **Pirámide olfativa** (`page-templates/piramide-olfativa.php`, /fr
 
 - **Textos:** `inc/fragrance-pyramid.php`; la pirámide es `template-parts/components/fragrance-pyramid.php` con `assets/src/js/modules/tabs.js` (pestañas genéricas `[data-tabs]`).
 - **Imagen:** `assets/media/piramide/piramide-olfativa.webp` y `-640.webp` (prompt en `recursos-graficos/piramide-olfativa/PROMPT.md`); para compartir, `assets/media/og/piramide-olfativa.jpg`. Sin ellas, la página usa la imagen de la familia Oriental.
-- **Enlaces:** desde la introducción de la guía de familias y la banda de familias de Fragancias, que también cierra la pirámide.
+- **Enlaces:** la página de Fragancias muestra la pirámide interactiva con «Ver la pirámide completa» (`template-parts/line/pyramid.php`); la guía de familias la enlaza en su introducción, y la banda de familias cierra la pirámide.
+- **Menú y pie de página:** el menú automático cuelga la guía de **Catálogo** (Familias olfativas y Pirámide olfativa), para que «Líneas» quede solo con las tres líneas; el pie suma la columna **Guía de fragancias** (`frave_fragrance_guide_links()`). Un menú asignado en *Apariencia → Menús* reemplaza al automático: ahí hay que añadir las dos páginas a mano.
 - **Crear las páginas de la guía:** `wp eval-file RUTA/bin/crear-guia-fragancias.php` (familias y pirámide; deja como están las que ya existen).
 
 ### Blog

@@ -149,3 +149,27 @@ function frave_fragrance_pyramid_hide_footer_cta( bool $show ): bool {
 	return is_page_template( FRAVE_TEMPLATE_FRAGRANCE_PYRAMID ) ? false : $show;
 }
 add_filter( 'frave_show_footer_cta', 'frave_fragrance_pyramid_hide_footer_cta' );
+
+/**
+ * Published pages of the fragrance guide, for the header's Catálogo menu and the footer.
+ *
+ * @return array<int, array{label: string, url: string, icon: string}>
+ */
+function frave_fragrance_guide_links(): array {
+	$links = array();
+	foreach (
+		array(
+			array( __( 'Familias olfativas', 'frave' ), frave_fragrance_guide_url(), 'fragrance' ),
+			array( __( 'Pirámide olfativa', 'frave' ), frave_fragrance_pyramid_url(), 'clock' ),
+		) as list( $label, $url, $icon )
+	) {
+		if ( '' !== $url ) {
+			$links[] = array(
+				'label' => $label,
+				'url'   => $url,
+				'icon'  => $icon,
+			);
+		}
+	}
+	return $links;
+}

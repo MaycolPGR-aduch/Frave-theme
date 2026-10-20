@@ -4,7 +4,7 @@
  * Template Post Type: page
  *
  * A product line (Sabores, Fragancias, Envases): hero with the line image, introduction
- * and highlights, the portfolio of subcategories, the guide of olfactory families
+ * and highlights, the portfolio of subcategories, the olfactory families and pyramid
  * (Fragancias), an inspiration gallery (Sabores), applications, the line's products, the
  * other lines and a closing call to action. Copy and images: inc/lines.php and the ACF
  * group "Línea Frave".
@@ -29,6 +29,7 @@ get_header();
 		<?php
 		get_template_part( 'template-parts/line/portfolio', null, $frave_line );
 		get_template_part( 'template-parts/line/families', null, $frave_line );
+		get_template_part( 'template-parts/line/pyramid', null, $frave_line );
 		get_template_part( 'template-parts/line/gallery', null, $frave_line );
 		get_template_part( 'template-parts/line/applications', null, $frave_line );
 		get_template_part( 'template-parts/line/products', null, $frave_line );
