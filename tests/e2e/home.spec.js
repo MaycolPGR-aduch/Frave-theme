@@ -51,9 +51,23 @@ test.describe('portada', () => {
     await expect(hero.locator('a.btn--dark')).toHaveAttribute('href', /post_type=product|\/catalogo\//);
 
     const video = hero.locator('video[data-hero-video]');
-    await expect(video).toHaveAttribute('poster', /\.(jpe?g|webp)/);
+    // The still (last frame) lies under the video until it plays.
+    await expect(hero.locator('.home-hero__still img')).toHaveAttribute('src', /\.(jpe?g|webp)/);
     await expect(video).toHaveAttribute('aria-hidden', 'true');
     expect(await video.locator('source').count()).toBeGreaterThan(0);
+  });
+
+  test('los celulares reciben la imagen y el vídeo verticales; las pantallas grandes, los horizontales', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto('/');
+    const still = page.locator('.home-hero__still img');
+    await expect.poll(() => still.evaluate((image) => image.currentSrc)).toMatch(/movil-poster/);
+    const portrait = JSON.parse((await page.locator('[data-hero-video]').getAttribute('data-portrait')) ?? '{}');
+    expect(portrait.sources.map((source) => source.src).join(' ')).toMatch(/hero-frutas-v2-movil\.(webm|mp4)/);
+
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto('/');
+    await expect.poll(() => still.evaluate((image) => image.currentSrc)).not.toMatch(/movil/);
   });
 
   test('las palabras del título se alternan y el botón también las pausa', async ({ page }) => {

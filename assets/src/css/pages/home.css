@@ -170,12 +170,47 @@
     mask-image: linear-gradient(to bottom, transparent 0%, #000 30%);
   }
 
+  /* The still (last frame) lies under the video, which is transparent until it plays. */
+  .home-hero__still,
+  .home-hero__still img,
   .home-hero__video {
+    position: absolute;
+    inset: 0;
     display: block;
     width: 100%;
     height: 100%;
+  }
+
+  .home-hero__still img,
+  .home-hero__video {
     object-fit: cover;
     object-position: 14% 60%;
+  }
+
+  /*
+   * Phones with the portrait video (.home-hero--portrait): it fills the width at 9:16 and
+   * rises under the copy, so the end of the text lies over its clean beige top and the fruit
+   * lands below. Its top already has the page's beige; the mask only hides the seam.
+   */
+  @media (max-width: 39.99rem) {
+    .home-hero--portrait .home-hero__media {
+      margin-top: -80vw;
+      aspect-ratio: 9 / 16;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%);
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 12%);
+    }
+
+    .home-hero--portrait .home-hero__still img,
+    .home-hero--portrait .home-hero__video {
+      object-position: 50% 100%;
+    }
+
+    /* Below the copy, on the empty beige left of the fruit. */
+    .home-hero--portrait .home-hero__toggle {
+      top: 58%;
+      right: auto;
+      left: 1rem;
+    }
   }
 
   @media (min-width: 40rem) and (max-width: 63.99rem) {
@@ -183,6 +218,7 @@
       aspect-ratio: 16 / 10;
     }
 
+    .home-hero__still img,
     .home-hero__video {
       object-position: 18% 60%;
     }
@@ -274,6 +310,7 @@
       pointer-events: none;
     }
 
+    .home-hero__still img,
     .home-hero__video {
       object-position: 12% 50%;
     }
@@ -300,6 +337,7 @@
       background: linear-gradient(270deg, var(--hero-bg) 0%, rgb(233 214 192 / 0%) 38%);
     }
 
+    .home-hero__still img,
     .home-hero__video {
       object-position: 0% 50%;
     }

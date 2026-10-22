@@ -6,7 +6,9 @@
  *
  * With reduced motion nothing moves and the poster stays. The video also stays as its
  * poster on slow connections or with data saving on, and its download starts after the
- * page has loaded, so it does not compete with the poster, fonts and styles.
+ * page has loaded, so it does not compete with the poster, fonts and styles. Phones swap in
+ * the portrait version first (data-portrait: its media query and sources), so each screen
+ * downloads only one video.
  */
 const WORD_TIME = 2600;
 const ROUNDS = 2;
@@ -123,10 +125,28 @@ export function initializeHeroVideo() {
     else replay();
   });
 
+  const usePortraitSources = () => {
+    let portrait;
+    try {
+      portrait = JSON.parse(video.dataset.portrait || 'null');
+    } catch {
+      return;
+    }
+    if (!portrait?.sources?.length || !window.matchMedia(portrait.query).matches) return;
+    video.replaceChildren(...portrait.sources.map(({ src, type }) => {
+      const source = document.createElement('source');
+      source.src = src;
+      source.type = type;
+      return source;
+    }));
+    video.load();
+  };
+
   // Browsers may refuse to autoplay even muted video (power saving); the poster stays then.
   const start = () => {
     startAmbient();
     if (!playsVideo) return;
+    usePortraitSources();
     video.preload = 'auto';
     video.play().catch(() => {});
   };

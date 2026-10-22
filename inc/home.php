@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/** Screens that get the portrait hero video and its still (phones). */
+const FRAVE_HERO_PORTRAIT_QUERY = '(max-width: 39.99rem)';
+
 /**
  * Default copy of every home field. Wrap a word in *asterisks* to highlight it; in the hero
  * title, *a|b|c* are words that take turns in the same place (frave_hero_title_html()).
@@ -146,9 +149,11 @@ function frave_plain( string $text ): string {
 }
 
 /**
- * Hero video: the files chosen in ACF, or the theme's defaults (assets/media).
+ * Hero video: the files chosen in ACF, or the theme's defaults (assets/media). With the
+ * defaults, phones get a portrait version too (FRAVE_HERO_PORTRAIT_QUERY): the same fruit
+ * fall in the lower half of a 9:16 frame, made from the landscape video.
  *
- * @return array{sources: array<int, array{src: string, type: string}>, poster: string}
+ * @return array{sources: array<int, array{src: string, type: string}>, poster: string, portrait: array{sources: array<int, array{src: string, type: string}>, poster: string}|null}
  */
 function frave_home_hero_media(): array {
 	$video  = frave_field( 'frave_home_hero_video' );
@@ -177,21 +182,51 @@ function frave_home_hero_media(): array {
 		);
 	}
 
+	$portrait = '' === $video_url ? array(
+		'sources' => array(
+			array(
+				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2-movil.webm' ),
+				'type' => 'video/webm',
+			),
+			array(
+				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2-movil.mp4' ),
+				'type' => 'video/mp4',
+			),
+		),
+		'poster'  => frave_asset_url( 'assets/media/hero-frutas-v2-movil-poster.jpg' ),
+	) : null;
+
 	return array(
-		'sources' => $sources,
-		'poster'  => '' !== $poster_url ? $poster_url : frave_asset_url( 'assets/media/hero-frutas-v2-poster.jpg' ),
+		'sources'  => $sources,
+		'poster'   => '' !== $poster_url ? $poster_url : frave_asset_url( 'assets/media/hero-frutas-v2-poster.jpg' ),
+		'portrait' => $portrait,
 	);
 }
 
-/** The hero poster is the largest element at first paint: fetch it early on the home page. */
+/**
+ * The hero poster is the largest element at first paint: fetch it early on the home page,
+ * only the one each screen shows.
+ */
 function frave_home_preload_poster( array $resources ): array {
-	if ( is_front_page() ) {
-		$resources[] = array(
-			'href'          => frave_home_hero_media()['poster'],
+	if ( ! is_front_page() ) {
+		return $resources;
+	}
+	$media = frave_home_hero_media();
+	$still = array(
+		'href'          => $media['poster'],
+		'as'            => 'image',
+		'fetchpriority' => 'high',
+	);
+	if ( $media['portrait'] ) {
+		$resources[]    = array(
+			'href'          => $media['portrait']['poster'],
 			'as'            => 'image',
 			'fetchpriority' => 'high',
+			'media'         => FRAVE_HERO_PORTRAIT_QUERY,
 		);
+		$still['media'] = '(min-width: 40rem)';
 	}
+	$resources[] = $still;
 	return $resources;
 }
 add_filter( 'wp_preload_resources', 'frave_home_preload_poster' );

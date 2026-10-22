@@ -70,7 +70,7 @@ El mensaje inicial general, el botón flotante y el de las fichas se ajustan en 
 
 La portada (`front-page.php`, `template-parts/home/`) tiene estas secciones:
 
-1. **Hero** con vídeo a pantalla completa (en móvil y tableta, de fondo a todo el ancho bajo el texto, fundido con el beige). Se reproduce una vez y se queda en el último fotograma; tiene botón de pausa. Con movimiento reducido o ahorro de datos se muestra la imagen fija. En escritorio queda fijo mientras sube la sección siguiente.
+1. **Hero** con vídeo a pantalla completa. En celulares usa una versión vertical (`hero-frutas-v2-movil.*`, armada a partir del horizontal) de fondo detrás del final del texto; en tableta, el horizontal a todo el ancho bajo el texto. Cada pantalla descarga solo su vídeo y su imagen fija. Si se elige otro vídeo en ACF, se usa ese en todas las pantallas. Se reproduce una vez y se queda en el último fotograma; tiene botón de pausa. Con movimiento reducido o ahorro de datos se muestra la imagen fija. En escritorio queda fijo mientras sube la sección siguiente.
 2. **Nuestras líneas:** Sabores, Fragancias y Envases en tarjetas con forma de frasco que llevan a su página de línea. Usa la imagen de cada categoría de producto o, sin ella, la del tema.
 3. **Cómo trabajamos:** tres pasos que se apilan al hacer scroll.
 4. **Productos destacados:** la estrella de WooCommerce.
