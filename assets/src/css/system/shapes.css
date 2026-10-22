@@ -56,6 +56,79 @@
     border-radius: 999px 999px var(--radius-lg) var(--radius-lg);
   }
 
+  /*
+   * Aroma waves (template-parts/components/aroma-waves.php): three rings around the brand's
+   * drop, fading outwards. The hero that uses them sets its size and position; the home
+   * hero also makes them spread.
+   */
+  .aroma-waves {
+    position: absolute;
+    z-index: -1;
+    aspect-ratio: 1;
+    pointer-events: none;
+    translate: -50% -50%;
+    transition: opacity 1s ease;
+  }
+
+  .aroma-waves span {
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid rgb(252 76 2 / 55%);
+    border-radius: 50%;
+  }
+
+  .aroma-waves span:nth-child(1) {
+    opacity: 0.75;
+    transform: scale(0.42);
+  }
+
+  .aroma-waves span:nth-child(2) {
+    opacity: 0.45;
+    transform: scale(0.7);
+  }
+
+  .aroma-waves span:nth-child(3) {
+    opacity: 0.22;
+    transform: scale(0.98);
+  }
+
+  .aroma-waves__drop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 9%;
+    fill: none;
+    stroke: #c43b00;
+    stroke-width: 3;
+    opacity: 0.35;
+    translate: -50% -50%;
+  }
+
+  /* A hero image with the waves spreading around it (company and solution heroes). */
+  .hero-visual {
+    position: relative;
+    isolation: isolate;
+    justify-self: center;
+    width: min(100%, 28rem);
+  }
+
+  .hero-visual > .media-frame {
+    width: 100%;
+  }
+
+  .hero-visual__waves {
+    top: 50%;
+    left: 50%;
+    width: 175%;
+  }
+
+  /* Highlighted words in hero titles: the brand orange in bold, as on the home page. */
+  .accent-word {
+    color: var(--color-primary);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+
   /* Thin orange rings, for depth on dark and light surfaces. */
   .orbit {
     position: absolute;

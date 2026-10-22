@@ -32,8 +32,9 @@ $frave_groups = $frave_term ? frave_line_groups( $frave_term ) : array();
 	<?php endif; ?>
 	<div class="container line-hero__inner">
 		<div class="line-hero__copy">
+			<?php get_template_part( 'template-parts/components/aroma-waves', null, array( 'class' => 'line-hero__waves' ) ); ?>
 			<p class="eyebrow"><?php echo esc_html( frave_line_text( 'eyebrow', $frave_slug ) ); ?></p>
-			<h1 class="display line-hero__title" id="line-hero-title"><?php echo frave_emphasis( frave_line_text( 'title', $frave_slug ), 'pill' ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h1>
+			<h1 class="display line-hero__title" id="line-hero-title"><?php echo frave_emphasis( frave_line_text( 'title', $frave_slug ), 'accent' ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h1>
 			<?php $frave_lead = frave_line_text( 'lead', $frave_slug ); ?>
 			<?php if ( '' !== $frave_lead ) : ?>
 				<p class="lead line-hero__lead"><?php echo esc_html( $frave_lead ); ?></p>

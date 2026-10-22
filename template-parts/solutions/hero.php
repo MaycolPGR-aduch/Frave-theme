@@ -1,7 +1,7 @@
 <?php
 /**
  * Hero of the solution pages, on the warm tone of the company pages: copy and actions,
- * and an image in an arch.
+ * and an image in an arch with the aroma waves around it.
  *
  * Arguments: eyebrow, title (*words* highlighted), lead, action ([ url, external ] of the
  * quote button), secondary ([ label, url ]), image (theme asset path; a 4:5 WebP of
@@ -40,11 +40,10 @@ $frave_image  = '' !== $frave_hero['image'] && $frave_base !== $frave_hero['imag
 	: '';
 ?>
 <section class="company-hero solution-hero" aria-labelledby="solution-hero-title">
-	<span class="orbit orbit--soft company-hero__orbit" aria-hidden="true"></span>
 	<div class="container company-hero__grid">
 		<div class="company-hero__copy">
 			<p class="eyebrow"><?php echo esc_html( $frave_hero['eyebrow'] ); ?></p>
-			<h1 class="display company-hero__title" id="solution-hero-title"><?php echo frave_emphasis( $frave_hero['title'], 'pill' ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h1>
+			<h1 class="display company-hero__title" id="solution-hero-title"><?php echo frave_emphasis( $frave_hero['title'], 'accent' ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h1>
 			<?php if ( '' !== $frave_hero['lead'] ) : ?>
 				<p class="lead company-hero__lead"><?php echo esc_html( $frave_hero['lead'] ); ?></p>
 			<?php endif; ?>
@@ -64,12 +63,24 @@ $frave_image  = '' !== $frave_hero['image'] && $frave_base !== $frave_hero['imag
 			</div>
 		</div>
 		<?php if ( '' !== $frave_hero['image'] ) : ?>
-			<div class="solution-hero__media media-frame shape-arch">
-				<?php if ( '' !== $frave_image && file_exists( FRAVE_THEME_DIR . '/' . $frave_base . '-640.webp' ) ) : ?>
-					<?php echo $frave_image; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?>
-				<?php else : ?>
-					<img src="<?php echo esc_url( frave_asset_url( $frave_hero['image'] ) ); ?>" alt="" fetchpriority="high" decoding="async">
-				<?php endif; ?>
+			<div class="hero-visual">
+				<?php
+				get_template_part(
+					'template-parts/components/aroma-waves',
+					null,
+					array(
+						'class' => 'hero-visual__waves',
+						'drop'  => false,
+					)
+				);
+				?>
+				<div class="solution-hero__media media-frame shape-arch">
+					<?php if ( '' !== $frave_image && file_exists( FRAVE_THEME_DIR . '/' . $frave_base . '-640.webp' ) ) : ?>
+						<?php echo $frave_image; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?>
+					<?php else : ?>
+						<img src="<?php echo esc_url( frave_asset_url( $frave_hero['image'] ) ); ?>" alt="" fetchpriority="high" decoding="async">
+					<?php endif; ?>
+				</div>
 			</div>
 		<?php endif; ?>
 	</div>

@@ -27,7 +27,23 @@
   }
 
   .line-hero__copy {
+    position: relative;
+    isolation: isolate;
     max-width: 40rem;
+  }
+
+  /* Aroma waves (system/shapes.css) behind the title, the drop past its end. */
+  .line-hero__waves {
+    top: 34%;
+    left: 70%;
+    width: min(34rem, 110vw);
+  }
+
+  /* On phones the drop would sit between the title and the lead. */
+  @media (max-width: 63.99rem) {
+    .line-hero__waves .aroma-waves__drop {
+      display: none;
+    }
   }
 
   /* 5.2:1 even on the darkest tone (Envases, #ddc9b6). */

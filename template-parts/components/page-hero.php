@@ -1,6 +1,7 @@
 <?php
 /**
- * Sand band at the top of interior pages. It starts behind the floating header.
+ * Sand band at the top of interior pages, with the aroma waves on the right (around the
+ * image, when there is one). It starts behind the floating header.
  *
  * Arguments:
  * - eyebrow:    small label above the title.
@@ -37,9 +38,7 @@ $frave_hero       = wp_parse_args(
 $frave_hero_media = '' !== $frave_hero['image'];
 ?>
 <header class="page-hero<?php echo $frave_hero_media ? ' page-hero--media' : ''; ?>">
-	<span class="orbit" aria-hidden="true"></span>
-	<span class="orbit orbit--inner orbit--soft" aria-hidden="true"></span>
-	<div class="page-hero__decor"><?php echo frave_isotype(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></div>
+	<?php get_template_part( 'template-parts/components/aroma-waves', null, array( 'class' => 'page-hero__waves' ) ); ?>
 	<?php if ( $frave_hero_media ) : ?>
 		<div class="container page-hero__layout">
 	<?php endif; ?>

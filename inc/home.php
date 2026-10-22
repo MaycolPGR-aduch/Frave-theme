@@ -90,13 +90,16 @@ function frave_home_acf_defaults( array $field ): array {
 add_filter( 'acf/load_field', 'frave_home_acf_defaults' );
 
 /**
- * Escape a title and turn *words* into the highlight: a pill in the hero, bold elsewhere.
- * Line breaks become <br>.
+ * Escape a title and turn *words* into the highlight: bold elsewhere; in hero titles
+ * ('accent') the brand orange in bold, and 'pill' for an orange pill. Line breaks become <br>.
  */
 function frave_emphasis( string $text, string $style = 'strong' ): string {
-	$html = nl2br( esc_html( $text ), false );
-	$open = 'pill' === $style ? '<span class="pill">' : '<strong>';
-	$end  = 'pill' === $style ? '</span>' : '</strong>';
+	$html               = nl2br( esc_html( $text ), false );
+	$tags               = array(
+		'accent' => array( '<span class="accent-word">', '</span>' ),
+		'pill'   => array( '<span class="pill">', '</span>' ),
+	);
+	list( $open, $end ) = $tags[ $style ] ?? array( '<strong>', '</strong>' );
 	return (string) preg_replace( '/\*([^*]+)\*/u', $open . '$1' . $end, $html );
 }
 
@@ -105,15 +108,15 @@ function frave_emphasis( string $text, string $style = 'strong' ): string {
  * the one screen readers read and the one shown without motion. The title breaks before the
  * word that leads into them and after them («Fragancias y sabores / que conectan con /
  * tu marca»), so they always close a line and a shorter word leaves no gap. Without «|»,
- * the *word* is a pill as before.
+ * the *word* is highlighted in place, as in the other heroes.
  */
 function frave_hero_title_html( string $text ): string {
 	if ( 1 !== preg_match( '/^(.*?)\*([^*]*\|[^*]*)\*(.*)$/su', $text, $parts ) ) {
-		return frave_emphasis( $text, 'pill' );
+		return frave_emphasis( $text, 'accent' );
 	}
 	$words = array_values( array_filter( array_map( 'trim', explode( '|', $parts[2] ) ), 'strlen' ) );
 	if ( ! $words ) {
-		return frave_emphasis( str_replace( '|', '', $text ), 'pill' );
+		return frave_emphasis( str_replace( '|', '', $text ), 'accent' );
 	}
 	$before = trim( (string) preg_replace( '/\s+/u', ' ', frave_plain( $parts[1] ) ) );
 	$after  = trim( (string) preg_replace( '/\s+/u', ' ', frave_plain( $parts[3] ) ) );

@@ -73,7 +73,7 @@ Lato local (`@fontsource/lato`) en 300, 400 y 700, con precarga de los tres WOFF
 | Texto | 1rem, interlineado 1,6 | 400 |
 | Rótulo `.eyebrow` | 0,75rem, mayúsculas, espaciado 0,2em, línea naranja delante | 700, color `primary` (naranja sobre oscuro) |
 
-El énfasis dentro de un título se hace con `<strong>` (700), con `.pill` (palabra sobre naranja; `--soft`, `--ink`, `--outline`) o con `.mark` (subrayado de rotulador). `.section-head` agrupa rótulo, título y entrada; `--center` los centra y `--split` pone una acción a la derecha.
+El énfasis dentro de un título se hace con `<strong>` (700), con `.pill` (palabra sobre naranja; `--soft`, `--ink`, `--outline`) o con `.mark` (subrayado de rotulador). **En las cabeceras** (portada, líneas, empresa, soluciones, guía y banda de cabecera) la palabra destacada va en naranja `primary` y negrita (`.accent-word`, o `<strong>` en la banda), sin píldora, y detrás van las **ondas de aroma** (`template-parts/components/aroma-waves.php`): tres anillos naranjas alrededor de la gota de marca. Solo en la portada se mueven y las palabras se alternan; en las demás quedan quietas, alrededor de la imagen (Nosotros, soluciones, guía, categorías), a la derecha (banda de cabecera) o detrás del texto (líneas, Servicios). `.section-head` agrupa rótulo, título y entrada; `--center` los centra y `--split` pone una acción a la derecha.
 
 ## Espacio, radios y sombras
 
@@ -91,7 +91,7 @@ El énfasis dentro de un título se hace con `<strong>` (700), con `.pill` (pala
 | Cabecera | `.site-header`, `.site-header__inner` | Cápsula blanca flotante, fija arriba; se eleva al hacer scroll (`.is-scrolled`). Superpone la página (`--header-height`), así las bandas oscuras corren por detrás. |
 | Submenú | `.sub-menu`, `.menu-item__icon`, `.menu-item__description` | Panel con iconos en escritorio, acordeón en móvil. Las líneas toman su icono de la categoría; otros elementos con la clase `frave-icon-NOMBRE`. |
 | Menú móvil | `.primary-navigation.is-open` | Tarjeta bajo la cápsula con «Solicitar asesoría» al final. |
-| Banda de cabecera | `template-parts/components/page-hero.php` | Fondo arena con resplandor naranja suave, órbitas e isotipo de marca de agua, esquinas inferiores redondeadas. Rótulo, título, entrada, línea de datos, migas y buscador opcionales. La usan las páginas, entradas, archivo, búsqueda y el catálogo. |
+| Banda de cabecera | `template-parts/components/page-hero.php` | Fondo arena con resplandor naranja suave, ondas de aroma a la derecha (alrededor de la imagen si la hay), esquinas inferiores redondeadas. Rótulo, título, entrada, línea de datos, migas y buscador opcionales. La usan las páginas, entradas, archivo, búsqueda y el catálogo. |
 | Superficies | `.section--dark` / `.on-dark`, `.section--surface`, `.section--overlap` | Lo oscuro ajusta títulos, rótulos, píldoras, iconos y botones de contorno. |
 | Tarjeta | `.card` + `--surface`, `--dark`, `--interactive`; `.card__link` | La interactiva sube y gana sombra; `.card__link` hace clicable toda la tarjeta con foco visible. |
 | Icono en mosaico | `.icon-tile`, `--lg` | Naranja suave sobre claro, naranja translúcido sobre oscuro. |

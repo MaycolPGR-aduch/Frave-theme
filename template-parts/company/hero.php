@@ -1,7 +1,8 @@
 <?php
 /**
  * Hero of the company pages on a warm tone: copy and actions on one side, the visual on
- * the other (the ingredients in a drop in Nosotros, the word cloud of Peru in Servicios).
+ * the other (the ingredients in a drop, with the aroma waves around it, in Nosotros; the
+ * word cloud of Peru in Servicios, with the waves behind the copy).
  *
  * Arguments:
  * - prefix:    field prefix, frave_about or frave_expertise.
@@ -19,11 +20,22 @@ $frave_secondary = $args['secondary'] ?? null;
 $frave_action    = frave_company_action();
 ?>
 <section class="company-hero company-hero--<?php echo esc_attr( $frave_visual ); ?>" aria-labelledby="company-hero-title">
-	<span class="orbit orbit--soft company-hero__orbit" aria-hidden="true"></span>
+	<?php if ( 'cloud' === $frave_visual ) : ?>
+		<?php
+		get_template_part(
+			'template-parts/components/aroma-waves',
+			null,
+			array(
+				'class' => 'company-hero__waves',
+				'drop'  => false,
+			)
+		);
+		?>
+	<?php endif; ?>
 	<div class="container company-hero__grid">
 		<div class="company-hero__copy">
 			<p class="eyebrow"><?php echo esc_html( frave_company_text( $frave_prefix . '_hero_eyebrow' ) ); ?></p>
-			<h1 class="display company-hero__title" id="company-hero-title"><?php echo frave_emphasis( frave_company_text( $frave_prefix . '_hero_title' ), 'pill' ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h1>
+			<h1 class="display company-hero__title" id="company-hero-title"><?php echo frave_emphasis( frave_company_text( $frave_prefix . '_hero_title' ), 'accent' ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h1>
 			<p class="lead company-hero__lead"><?php echo esc_html( frave_company_text( $frave_prefix . '_hero_text' ) ); ?></p>
 			<div class="btn-row">
 				<?php if ( $frave_action ) : ?>
@@ -58,8 +70,20 @@ $frave_action    = frave_company_action();
 				<?php endif; ?>
 			</figure>
 		<?php else : ?>
-			<div class="company-hero__media media-frame shape-drop">
-				<img src="<?php echo esc_url( frave_asset_url( 'assets/media/empresa/ingredientes.webp' ) ); ?>" width="960" height="960" alt="" fetchpriority="high" decoding="async">
+			<div class="hero-visual">
+				<?php
+				get_template_part(
+					'template-parts/components/aroma-waves',
+					null,
+					array(
+						'class' => 'hero-visual__waves',
+						'drop'  => false,
+					)
+				);
+				?>
+				<div class="company-hero__media media-frame shape-drop">
+					<img src="<?php echo esc_url( frave_asset_url( 'assets/media/empresa/ingredientes.webp' ) ); ?>" width="960" height="960" alt="" fetchpriority="high" decoding="async">
+				</div>
 			</div>
 		<?php endif; ?>
 	</div>

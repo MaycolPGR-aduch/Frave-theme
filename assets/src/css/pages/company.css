@@ -20,12 +20,11 @@
       var(--company-tone);
   }
 
-  .company-hero__orbit {
-    z-index: -1;
-    top: -14rem;
-    right: -12rem;
-    width: 42rem;
-    height: 42rem;
+  /* Servicios: the waves sit behind the copy, away from the word cloud. */
+  .company-hero__waves {
+    top: 50%;
+    left: 30%;
+    width: clamp(24rem, 40vw, 38rem);
   }
 
   .company-hero__grid {
@@ -246,6 +245,11 @@
     font-weight: 300;
     line-height: 1;
     letter-spacing: -0.05em;
+  }
+
+  /* Pure decoration in a pale tint: drawn by CSS, so it is not text to read or audit. */
+  .company-belief__number::before {
+    content: attr(data-number);
   }
 
   .company-belief h3 {
@@ -514,6 +518,10 @@
  * with an image in an arch, and the grid of industries.
  */
 @layer components {
+  .solution-hero .hero-visual {
+    width: min(100%, 26rem);
+  }
+
   .solution-hero__media {
     justify-self: center;
     width: min(100%, 26rem);

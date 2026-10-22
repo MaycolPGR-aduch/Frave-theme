@@ -3,7 +3,7 @@
  *
  * The hero sits on the warm beige of its video (#e9d6c0): on that background the eyebrow
  * uses #a83200 (4.9:1) and the lead #4a4642 (6.6:1), as primary and muted fall to 4:1. The
- * alternating title words are large bold text in #c43b00 (4.1:1, over the 3:1 of large text).
+ * alternating title words are large bold text in #c43b00 (3.7:1, over the 3:1 of large text).
  */
 @layer components {
   /* ---------- Hero ---------- */
@@ -79,43 +79,15 @@
   }
 
   /*
-   * Aroma waves behind the title: rings around the brand's drop. Still, three faint rings;
-   * while the hero plays (.is-ambient) they spread out from the drop, and when it ends they
-   * fade and the still rings come back (.is-settling).
+   * Aroma waves behind the title (system/shapes.css): while the hero plays (.is-ambient)
+   * they spread out from the drop, and when it ends they fade and the still rings come back
+   * (.is-settling).
    */
   .home-hero__waves {
-    position: absolute;
-    z-index: -1;
     /* The drop sits in the free space right of «tu marca». */
     top: 30%;
     left: 72%;
     width: min(36rem, 120vw);
-    aspect-ratio: 1;
-    pointer-events: none;
-    translate: -50% -50%;
-    transition: opacity 1s ease;
-  }
-
-  .home-hero__waves span {
-    position: absolute;
-    inset: 0;
-    border: 1.5px solid rgb(252 76 2 / 55%);
-    border-radius: 50%;
-  }
-
-  .home-hero__waves span:nth-child(1) {
-    opacity: 0.75;
-    transform: scale(0.42);
-  }
-
-  .home-hero__waves span:nth-child(2) {
-    opacity: 0.45;
-    transform: scale(0.7);
-  }
-
-  .home-hero__waves span:nth-child(3) {
-    opacity: 0.22;
-    transform: scale(0.98);
   }
 
   .home-hero.is-ambient .home-hero__waves span {
@@ -136,18 +108,6 @@
 
   .home-hero.is-settling .home-hero__waves {
     opacity: 0;
-  }
-
-  .home-hero__drop {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 9%;
-    fill: none;
-    stroke: #c43b00;
-    stroke-width: 3;
-    opacity: 0.35;
-    translate: -50% -50%;
   }
 
   @keyframes hero-wave {

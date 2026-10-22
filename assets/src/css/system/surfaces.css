@@ -246,6 +246,12 @@
     color: var(--color-ink);
   }
 
+  /* As in every hero: the highlighted words in the brand orange (4.3:1 on sand, large text). */
+  .page-hero h1 strong {
+    color: var(--color-primary);
+    letter-spacing: -0.035em;
+  }
+
   .page-hero .eyebrow {
     margin: 0;
     color: var(--color-sand-accent);
@@ -265,34 +271,19 @@
     font-size: 0.9rem;
   }
 
-  .page-hero__decor {
-    position: absolute;
-    z-index: 0;
-    right: max(-3rem, calc(50% - 46rem));
-    bottom: -4.5rem;
-    width: clamp(13rem, 26vw, 23rem);
-    color: rgb(168 50 0 / 8%);
-    pointer-events: none;
+  /* Aroma waves (system/shapes.css) on the right of the band; around the image when there is one. */
+  .page-hero__waves {
+    top: 30%;
+    left: 92%;
+    width: 20rem;
   }
 
-  .page-hero__decor .isotype {
-    width: 100%;
-    height: auto;
-    stroke-width: 1.4;
-  }
-
-  .page-hero .orbit {
-    top: -14rem;
-    right: -10rem;
-    width: 34rem;
-    height: 34rem;
-  }
-
-  .page-hero .orbit--inner {
-    top: -6rem;
-    right: -2rem;
-    width: 18rem;
-    height: 18rem;
+  @media (min-width: 48rem) {
+    .page-hero__waves {
+      top: 52%;
+      left: min(80%, calc(50% + 30rem));
+      width: clamp(24rem, 40vw, 36rem);
+    }
   }
 
   /* WooCommerce's breadcrumb, printed in the hero on catalog pages. */
@@ -355,8 +346,9 @@
       height: 100% !important; /* WooCommerce's unlayered ".woocommerce img { height: auto }" otherwise wins. */
     }
 
-    .page-hero--media .page-hero__decor {
-      display: none;
+    .page-hero--media .page-hero__waves {
+      left: min(78%, calc(50% + 26rem));
+      width: clamp(30rem, 48vw, 44rem);
     }
   }
 }

@@ -51,3 +51,24 @@ test.describe('sistema visual', () => {
     await expect(page.locator('.style-guide')).toHaveCount(0);
   });
 });
+
+test.describe('cabeceras unificadas', () => {
+  // Same language as the home hero: the highlighted words in orange bold and the aroma waves.
+  for (const [name, url] of [
+    ['Nosotros', '/?pagename=nosotros'],
+    ['Perfumería', '/?pagename=soluciones/perfumeria'],
+    ['Fragancias', '/?pagename=fragancias'],
+    ['Contacto', '/?pagename=contacto'],
+  ]) {
+    test(`${name} destaca en naranja y lleva las ondas de aroma`, async ({ page }) => {
+      const response = await page.goto(url);
+      test.skip(!response.ok(), 'Página no publicada en este sitio.');
+      const title = page.locator('main h1').first();
+      await expect(title.locator('.pill')).toHaveCount(0);
+      await expect(title.locator('.accent-word, strong').first()).toBeVisible();
+      const waves = page.locator('.aroma-waves');
+      await expect(waves).toHaveCount(1);
+      await expect(waves).toHaveAttribute('aria-hidden', 'true');
+    });
+  }
+});

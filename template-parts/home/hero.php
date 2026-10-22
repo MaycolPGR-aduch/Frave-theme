@@ -31,10 +31,7 @@ $frave_cta   = frave_header_cta();
 	<div class="container home-hero__inner">
 		<div class="home-hero__copy">
 			<p class="eyebrow"><?php echo esc_html( frave_home_text( 'frave_home_hero_eyebrow' ) ); ?></p>
-			<div class="home-hero__waves" aria-hidden="true">
-				<span></span><span></span><span></span>
-				<svg class="home-hero__drop" viewBox="0 0 100 125" focusable="false"><path d="M50 2C40 22 4 52 4 78a46 46 0 0 0 92 0C96 52 60 22 50 2Z"/></svg>
-			</div>
+			<?php get_template_part( 'template-parts/components/aroma-waves', null, array( 'class' => 'home-hero__waves' ) ); ?>
 			<h1 class="display home-hero__title" id="home-hero-title"><?php echo frave_hero_title_html( frave_home_text( 'frave_home_hero_title' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h1>
 			<p class="lead home-hero__lead"><?php echo esc_html( frave_home_text( 'frave_home_hero_text' ) ); ?></p>
 			<div class="btn-row">
