@@ -11,12 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/** Default copy of every home field. Wrap a word in *asterisks* to highlight it. */
+/**
+ * Default copy of every home field. Wrap a word in *asterisks* to highlight it; in the hero
+ * title, *a|b|c* are words that take turns in the same place (frave_hero_title_html()).
+ */
 function frave_home_defaults(): array {
 	return array(
-		'frave_home_hero_eyebrow'     => __( 'Sabores · Fragancias · Envases', 'frave' ),
-		'frave_home_hero_title'       => __( 'Sabores y fragancias que *conectan* con tu marca', 'frave' ),
-		'frave_home_hero_text'        => __( 'Conectamos a las marcas de perfumería, cosmética, cuidado personal y del hogar con fabricantes internacionales de fragancias y sabores, con asesoría técnica especializada.', 'frave' ),
+		'frave_home_hero_eyebrow'     => __( 'Fragancias · Sabores · Envases', 'frave' ),
+		'frave_home_hero_title'       => __( 'Fragancias y sabores que *conectan con|distinguen a|elevan|dan vida a* tu marca', 'frave' ),
+		'frave_home_hero_text'        => __( 'Te conectamos con fabricantes internacionales de fragancias y sabores, con asesoría técnica para cada producto.', 'frave' ),
+		'frave_home_hero_facts'       => __( "+500 referencias\nAsesoría técnica\nFabricantes internacionales", 'frave' ),
 		'frave_home_hero_primary'     => __( 'Solicitar asesoría', 'frave' ),
 		'frave_home_hero_secondary'   => __( 'Ver el catálogo', 'frave' ),
 
@@ -94,6 +98,43 @@ function frave_emphasis( string $text, string $style = 'strong' ): string {
 	$open = 'pill' === $style ? '<span class="pill">' : '<strong>';
 	$end  = 'pill' === $style ? '</span>' : '</strong>';
 	return (string) preg_replace( '/\*([^*]+)\*/u', $open . '$1' . $end, $html );
+}
+
+/**
+ * The hero title. *a|b|c* marks words that take turns in the same place: the first one is
+ * the one screen readers read and the one shown without motion. The title breaks before the
+ * word that leads into them and after them («Fragancias y sabores / que conectan con /
+ * tu marca»), so they always close a line and a shorter word leaves no gap. Without «|»,
+ * the *word* is a pill as before.
+ */
+function frave_hero_title_html( string $text ): string {
+	if ( 1 !== preg_match( '/^(.*?)\*([^*]*\|[^*]*)\*(.*)$/su', $text, $parts ) ) {
+		return frave_emphasis( $text, 'pill' );
+	}
+	$words = array_values( array_filter( array_map( 'trim', explode( '|', $parts[2] ) ), 'strlen' ) );
+	if ( ! $words ) {
+		return frave_emphasis( str_replace( '|', '', $text ), 'pill' );
+	}
+	$before = trim( (string) preg_replace( '/\s+/u', ' ', frave_plain( $parts[1] ) ) );
+	$after  = trim( (string) preg_replace( '/\s+/u', ' ', frave_plain( $parts[3] ) ) );
+	$cut    = strrpos( $before, ' ' );
+	$head   = false === $cut ? '' : substr( $before, 0, $cut );
+	$lead   = false === $cut ? $before : substr( $before, $cut + 1 );
+
+	$items = '';
+	foreach ( $words as $index => $word ) {
+		$items .= sprintf( '<span class="hero-rotator__word%s">%s</span>', 0 === $index ? ' is-active' : '', esc_html( $word ) );
+	}
+	$visual  = '' !== $head ? esc_html( $head ) . '<br>' : '';
+	$visual .= '' !== $lead ? esc_html( $lead ) . ' ' : '';
+	$visual .= '<span class="hero-rotator" data-hero-rotator>' . $items . '</span>';
+	$visual .= '' !== $after ? '<br>' . esc_html( $after ) : '';
+
+	return sprintf(
+		'<span class="screen-reader-text">%1$s</span><span class="home-hero__title-text" aria-hidden="true">%2$s</span>',
+		esc_html( trim( $before . ' ' . $words[0] . ' ' . $after ) ),
+		$visual
+	);
 }
 
 /** Text without the highlight markers, for attributes and plain contexts. */

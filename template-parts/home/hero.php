@@ -1,8 +1,11 @@
 <?php
 /**
  * Home hero: full-screen video that plays once and rests on its last frame (the fruit fall
- * on the left), a title with a highlighted word and the two main actions on the right. Without JavaScript, with reduced motion or
- * when the visitor saves data, the poster (last frame) is shown instead.
+ * on the left); on the right, a title whose highlighted words take turns over aroma waves
+ * that spread from the brand's drop, the two main actions and three facts. One button pauses,
+ * resumes or replays all that motion (assets/src/js/modules/hero-video.js). Without
+ * JavaScript or with reduced motion nothing moves; the video also stays as its poster (last
+ * frame) when the visitor saves data.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -28,7 +31,11 @@ $frave_cta   = frave_header_cta();
 	<div class="container home-hero__inner">
 		<div class="home-hero__copy">
 			<p class="eyebrow"><?php echo esc_html( frave_home_text( 'frave_home_hero_eyebrow' ) ); ?></p>
-			<h1 class="display home-hero__title" id="home-hero-title"><?php echo frave_emphasis( frave_home_text( 'frave_home_hero_title' ), 'pill' ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h1>
+			<div class="home-hero__waves" aria-hidden="true">
+				<span></span><span></span><span></span>
+				<svg class="home-hero__drop" viewBox="0 0 100 125" focusable="false"><path d="M50 2C40 22 4 52 4 78a46 46 0 0 0 92 0C96 52 60 22 50 2Z"/></svg>
+			</div>
+			<h1 class="display home-hero__title" id="home-hero-title"><?php echo frave_hero_title_html( frave_home_text( 'frave_home_hero_title' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h1>
 			<p class="lead home-hero__lead"><?php echo esc_html( frave_home_text( 'frave_home_hero_text' ) ); ?></p>
 			<div class="btn-row">
 				<?php if ( $frave_cta ) : ?>
@@ -44,6 +51,14 @@ $frave_cta   = frave_header_cta();
 					<?php frave_button( frave_home_text( 'frave_home_hero_secondary' ), frave_catalog_shop_url(), 'btn btn--dark' ); ?>
 				<?php endif; ?>
 			</div>
+			<?php $frave_facts = frave_lines_of( frave_home_text( 'frave_home_hero_facts' ) ); ?>
+			<?php if ( $frave_facts ) : ?>
+				<ul class="home-hero__facts">
+					<?php foreach ( $frave_facts as $frave_fact ) : ?>
+						<li><?php echo frave_icon( 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?><?php echo esc_html( $frave_fact ); ?></li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 		</div>
 	</div>
 </section>

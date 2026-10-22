@@ -1,50 +1,132 @@
 /**
- * Home hero video: it loads and plays once only when motion is welcome, then rests on its
- * last frame. The toggle pauses, resumes or replays it (WCAG 2.2.2: moving content that
- * lasts more than five seconds needs a way to stop it). Otherwise the poster stays.
- * The download starts after the page has loaded, so it does not compete with the poster,
- * fonts and styles, and not at all on slow connections or with data saving on.
+ * Home hero motion: the video, which plays once and rests on its last frame, and the
+ * title's alternating words with the aroma waves behind them, which take two rounds and
+ * then rest on the first word. One toggle pauses, resumes or replays all of it (WCAG 2.2.2:
+ * moving content that lasts more than five seconds needs a way to stop it).
+ *
+ * With reduced motion nothing moves and the poster stays. The video also stays as its
+ * poster on slow connections or with data saving on, and its download starts after the
+ * page has loaded, so it does not compete with the poster, fonts and styles.
  */
+const WORD_TIME = 2600;
+const ROUNDS = 2;
+
 export function initializeHeroVideo() {
-  const video = document.querySelector('[data-hero-video]');
-  if (!video) return;
+  const hero = document.querySelector('[data-hero]');
+  if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const saveData = navigator.connection?.saveData === true;
-  const slow = /(^|-)(2g|3g)$/.test(navigator.connection?.effectiveType || '');
-  if (reduceMotion || saveData || slow) return;
-
-  const toggle = document.querySelector('[data-hero-toggle]');
+  const video = hero.querySelector('[data-hero-video]');
+  const words = Array.from(hero.querySelectorAll('[data-hero-rotator] > *'));
+  const toggle = hero.querySelector('[data-hero-toggle]');
   const icons = toggle ? Array.from(toggle.querySelectorAll('[data-hero-icon]')) : [];
 
-  const setState = (state) => {
+  const saveData = navigator.connection?.saveData === true;
+  const slow = /(^|-)(2g|3g)$/.test(navigator.connection?.effectiveType || '');
+  const playsVideo = Boolean(video) && !saveData && !slow;
+  const steps = words.length > 1 ? words.length * ROUNDS : 0;
+
+  let ambient = false;
+  let paused = false;
+  let step = 0;
+  let current = 0;
+  let timer = 0;
+
+  const videoRunning = () => playsVideo && video.classList.contains('is-playing') && !video.paused && !video.ended;
+
+  const setState = () => {
     if (!toggle) return;
+    let state = 'replay';
+    if (paused) state = 'play';
+    else if (ambient || videoRunning()) state = 'pause';
     const labels = { pause: toggle.dataset.labelPause, play: toggle.dataset.labelPlay, replay: toggle.dataset.labelReplay };
     toggle.setAttribute('aria-label', labels[state]);
     icons.forEach((icon) => { icon.hidden = icon.dataset.heroIcon !== state; });
   };
 
-  video.addEventListener('playing', () => {
-    video.classList.add('is-playing');
+  const reveal = () => {
     if (toggle) toggle.hidden = false;
-    setState('pause');
-  });
-  video.addEventListener('pause', () => setState(video.ended ? 'replay' : 'play'));
-  video.addEventListener('ended', () => setState('replay'));
+    setState();
+  };
+
+  const show = (index) => {
+    if (index === current) return;
+    const leaving = words[current];
+    leaving.classList.remove('is-active');
+    leaving.classList.add('is-leaving');
+    window.setTimeout(() => leaving.classList.remove('is-leaving'), 700);
+    current = index;
+    words[current].classList.add('is-active');
+  };
+
+  const stopAmbient = () => {
+    window.clearInterval(timer);
+    ambient = false;
+    hero.classList.add('is-settling');
+    window.setTimeout(() => hero.classList.remove('is-ambient', 'is-settling'), 1000);
+    setState();
+  };
+
+  const tick = () => {
+    step += 1;
+    show(step % words.length);
+    if (step >= steps) stopAmbient();
+  };
+
+  const startAmbient = () => {
+    if (!steps) return;
+    window.clearInterval(timer);
+    step = 0;
+    show(0);
+    ambient = true;
+    hero.classList.remove('is-settling');
+    hero.classList.add('is-ambient');
+    timer = window.setInterval(tick, WORD_TIME);
+    reveal();
+  };
+
+  const pause = () => {
+    paused = true;
+    window.clearInterval(timer);
+    hero.classList.add('is-paused');
+    if (videoRunning()) video.pause();
+    setState();
+  };
+
+  const resume = () => {
+    paused = false;
+    hero.classList.remove('is-paused');
+    if (ambient) timer = window.setInterval(tick, WORD_TIME);
+    if (playsVideo && video.classList.contains('is-playing') && video.paused && !video.ended) video.play().catch(() => {});
+    setState();
+  };
+
+  const replay = () => {
+    if (playsVideo) {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }
+    startAmbient();
+  };
+
+  if (playsVideo) {
+    video.addEventListener('playing', () => {
+      video.classList.add('is-playing');
+      reveal();
+    });
+    video.addEventListener('pause', setState);
+    video.addEventListener('ended', setState);
+  }
 
   toggle?.addEventListener('click', () => {
-    if (video.ended) {
-      video.currentTime = 0;
-      video.play();
-    } else if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
-    }
+    if (paused) resume();
+    else if (ambient || videoRunning()) pause();
+    else replay();
   });
 
   // Browsers may refuse to autoplay even muted video (power saving); the poster stays then.
   const start = () => {
+    startAmbient();
+    if (!playsVideo) return;
     video.preload = 'auto';
     video.play().catch(() => {});
   };

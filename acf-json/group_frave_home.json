@@ -33,7 +33,7 @@
             "label": "Título principal",
             "name": "frave_home_hero_title",
             "type": "textarea",
-            "instructions": "Rodea con asteriscos la palabra que quieras resaltar, por ejemplo: Tres líneas para *tus productos*. En la portada se muestra sobre fondo naranja.",
+            "instructions": "Rodea con asteriscos lo que quieras resaltar, por ejemplo: Tres líneas para *tus productos* (en la portada, sobre fondo naranja). Para que la portada alterne palabras, sepáralas con | dentro de los asteriscos: Fragancias y sabores que *conectan con|distinguen a|elevan|dan vida a* tu marca. La primera es la que leen los lectores de pantalla y la que queda fija.",
             "required": 0,
             "default_value": "",
             "wrapper": {
@@ -52,6 +52,24 @@
             "name": "frave_home_hero_text",
             "type": "textarea",
             "instructions": "",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "rows": 3,
+            "new_lines": "",
+            "placeholder": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_frave_home_hero_facts",
+            "label": "Datos de confianza",
+            "name": "frave_home_hero_facts",
+            "type": "textarea",
+            "instructions": "Uno por línea, bajo los botones (por ejemplo: +500 referencias). Vacío: los del tema.",
             "required": 0,
             "default_value": "",
             "wrapper": {
@@ -918,5 +936,5 @@
     "active": true,
     "description": "Textos, vídeo y secciones de la portada. Los campos vacíos muestran el texto por defecto del tema.",
     "show_in_rest": 0,
-    "modified": 1791698128
+    "modified": 1792685231
 }

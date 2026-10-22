@@ -44,13 +44,34 @@ test.describe('portada', () => {
   test('el hero presenta el título, las dos acciones y el vídeo con su imagen fija', async ({ page }) => {
     await page.goto('/');
     const hero = page.locator('.home-hero');
-    await expect(hero.locator('h1 .pill')).toBeVisible();
+    // Screen readers get one stable sentence; the alternating words are hidden from them.
+    await expect(hero.locator('h1 .screen-reader-text')).toHaveText('Fragancias y sabores que conectan con tu marca');
+    await expect(hero.locator('h1 [aria-hidden="true"] .hero-rotator__word')).toHaveCount(4);
+    await expect(hero.locator('.home-hero__facts li')).toHaveCount(3);
     await expect(hero.locator('a.btn--dark')).toHaveAttribute('href', /post_type=product|\/catalogo\//);
 
     const video = hero.locator('video[data-hero-video]');
     await expect(video).toHaveAttribute('poster', /\.(jpe?g|webp)/);
     await expect(video).toHaveAttribute('aria-hidden', 'true');
     expect(await video.locator('source').count()).toBeGreaterThan(0);
+  });
+
+  test('las palabras del título se alternan y el botón también las pausa', async ({ page }) => {
+    await page.goto('/');
+    const active = page.locator('.hero-rotator__word.is-active');
+    await expect(active).toHaveText('conectan con');
+    await expect(active).toHaveText('distinguen a', { timeout: 6000 });
+    await expect(page.locator('.home-hero')).toHaveClass(/is-ambient/);
+
+    const toggle = page.locator('[data-hero-toggle]');
+    await expect(toggle).toHaveAttribute('aria-label', 'Pausar la animación');
+    await toggle.click();
+    await expect(page.locator('.home-hero')).toHaveClass(/is-paused/);
+    const word = await active.textContent();
+    await page.waitForTimeout(3200);
+    await expect(active).toHaveText(word);
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-label', 'Pausar la animación');
   });
 
   test('la animación se puede pausar y el botón cambia según su estado', async ({ page }) => {
@@ -76,6 +97,10 @@ test.describe('portada', () => {
     const state = await page.locator('[data-hero-video]').evaluate((video) => ({ paused: video.paused, time: video.currentTime }));
     expect(state).toEqual({ paused: true, time: 0 });
     await expect(page.locator('[data-hero-toggle]')).toBeHidden();
+    // The title stays on its first word and the waves stay still.
+    await page.waitForTimeout(2000);
+    await expect(page.locator('.hero-rotator__word.is-active')).toHaveText('conectan con');
+    await expect(page.locator('.home-hero')).not.toHaveClass(/is-ambient/);
     await context.close();
   });
 

@@ -79,7 +79,7 @@ La portada (`front-page.php`, `template-parts/home/`) tiene estas secciones:
 7. **Tendencias:** solo con entradas publicadas fuera de la categoría por defecto.
 8. **Dónde estamos:** solo con dirección en el Personalizador; el mapa de Google se carga al pedirlo.
 
-Todos los textos, el vídeo y su imagen fija se editan en el grupo ACF **Inicio Frave** de la página de portada. Una palabra entre `*asteriscos*` se resalta: en el hero sobre fondo naranja, en las demás secciones en negrita. Los campos vacíos muestran los textos por defecto de `inc/home.php`; sin ACF, también. El vídeo por defecto está en `assets/media/` (MP4 y WebM sin sonido, más el último fotograma en JPG). Si el administrador de ACF ofrece **Sincronización disponible** para «Inicio Frave», sincronízalo para editar los campos nuevos.
+Todos los textos, el vídeo y su imagen fija se editan en el grupo ACF **Inicio Frave** de la página de portada. Una palabra entre `*asteriscos*` se resalta: en el hero sobre fondo naranja, en las demás secciones en negrita. En el título del hero, varias palabras separadas por `|` dentro de los asteriscos se alternan en el mismo lugar sobre las ondas de aroma (`*conectan con|distinguen a|elevan|dan vida a*`); la primera es la que leen los lectores de pantalla y la que queda fija. Bajo los botones van los **datos de confianza**, uno por línea. Los campos vacíos muestran los textos por defecto de `inc/home.php`; sin ACF, también. El vídeo por defecto está en `assets/media/` (MP4 y WebM sin sonido, más el último fotograma en JPG). Si el administrador de ACF ofrece **Sincronización disponible** para «Inicio Frave», sincronízalo para editar los campos nuevos.
 
 ### Páginas de línea
 

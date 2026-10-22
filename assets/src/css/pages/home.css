@@ -2,7 +2,8 @@
  * Home page (front-page.php, template-parts/home/).
  *
  * The hero sits on the warm beige of its video (#e9d6c0): on that background the eyebrow
- * uses #a83200 (4.9:1) and the lead #4a4642 (6.6:1), as primary and muted fall to 4:1.
+ * uses #a83200 (4.9:1) and the lead #4a4642 (6.6:1), as primary and muted fall to 4:1. The
+ * alternating title words are large bold text in #c43b00 (4.1:1, over the 3:1 of large text).
  */
 @layer components {
   /* ---------- Hero ---------- */
@@ -28,6 +29,8 @@
   }
 
   .home-hero__copy {
+    position: relative;
+    isolation: isolate;
     max-width: 40rem;
     pointer-events: auto;
   }
@@ -39,7 +42,153 @@
   .home-hero__title {
     margin: 0 0 1.5rem;
     color: var(--color-ink);
-    font-size: clamp(2.75rem, 5.4vw, 5.25rem);
+    font-size: clamp(2.6rem, 4.6vw, 4.6rem);
+    line-height: 1.04;
+  }
+
+  /*
+   * Words that take turns: stacked in one grid cell, so the box keeps the width of the
+   * longest and nothing around it moves. Only the active one shows, with or without JS.
+   */
+  .hero-rotator {
+    display: inline-grid;
+    justify-items: start;
+    color: #c43b00;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+
+  .hero-rotator__word {
+    grid-area: 1 / 1;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(0.4em);
+    transition:
+      opacity 0.45s ease,
+      transform 0.6s var(--ease-out);
+  }
+
+  .hero-rotator__word.is-active {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-rotator__word.is-leaving {
+    opacity: 0;
+    transform: translateY(-0.4em);
+  }
+
+  /*
+   * Aroma waves behind the title: rings around the brand's drop. Still, three faint rings;
+   * while the hero plays (.is-ambient) they spread out from the drop, and when it ends they
+   * fade and the still rings come back (.is-settling).
+   */
+  .home-hero__waves {
+    position: absolute;
+    z-index: -1;
+    /* The drop sits in the free space right of «tu marca». */
+    top: 30%;
+    left: 72%;
+    width: min(36rem, 120vw);
+    aspect-ratio: 1;
+    pointer-events: none;
+    translate: -50% -50%;
+    transition: opacity 1s ease;
+  }
+
+  .home-hero__waves span {
+    position: absolute;
+    inset: 0;
+    border: 1.5px solid rgb(252 76 2 / 55%);
+    border-radius: 50%;
+  }
+
+  .home-hero__waves span:nth-child(1) {
+    opacity: 0.75;
+    transform: scale(0.42);
+  }
+
+  .home-hero__waves span:nth-child(2) {
+    opacity: 0.45;
+    transform: scale(0.7);
+  }
+
+  .home-hero__waves span:nth-child(3) {
+    opacity: 0.22;
+    transform: scale(0.98);
+  }
+
+  .home-hero.is-ambient .home-hero__waves span {
+    animation: hero-wave 7.5s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+  }
+
+  .home-hero.is-ambient .home-hero__waves span:nth-child(2) {
+    animation-delay: 2.5s;
+  }
+
+  .home-hero.is-ambient .home-hero__waves span:nth-child(3) {
+    animation-delay: 5s;
+  }
+
+  .home-hero.is-paused .home-hero__waves span {
+    animation-play-state: paused;
+  }
+
+  .home-hero.is-settling .home-hero__waves {
+    opacity: 0;
+  }
+
+  .home-hero__drop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 9%;
+    fill: none;
+    stroke: #c43b00;
+    stroke-width: 3;
+    opacity: 0.35;
+    translate: -50% -50%;
+  }
+
+  @keyframes hero-wave {
+    0% {
+      opacity: 0;
+      transform: scale(0.18);
+    }
+
+    15% {
+      opacity: 0.85;
+    }
+
+    100% {
+      opacity: 0;
+      transform: scale(1.12);
+    }
+  }
+
+  .home-hero__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 1.5rem;
+    margin: 1.75rem 0 0;
+    padding: 0;
+    color: #4a4642;
+    font-size: 0.92rem;
+    font-weight: 700;
+    list-style: none;
+  }
+
+  .home-hero__facts li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .home-hero__facts .icon {
+    width: 1.05rem;
+    height: 1.05rem;
+    color: #a83200;
+    stroke-width: 2.2;
   }
 
   .home-hero__lead {
@@ -96,6 +245,11 @@
   }
 
   @media (min-width: 64rem) {
+    .home-hero__waves {
+      top: 40%;
+      left: 70%;
+    }
+
     /* Pinned: "Nuestras soluciones" slides over it (both live in .home-intro). */
     .home-hero {
       position: sticky;
@@ -116,7 +270,7 @@
     }
 
     .home-hero__copy {
-      max-width: min(42vw, 40rem);
+      max-width: min(44vw, 42rem);
     }
 
     /* The video fills the left side; its right edge melts into the beige behind the copy. */
@@ -571,6 +725,16 @@
     .home-location__grid {
       grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
       align-items: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-rotator__word {
+      transition: none;
+    }
+
+    .home-hero.is-ambient .home-hero__waves span {
+      animation: none;
     }
   }
 }
