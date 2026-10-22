@@ -156,13 +156,18 @@
     color: #4a4642;
   }
 
+  /*
+   * Phones and tablets: the video is part of the background, not a card. It spans the full
+   * width under the copy, cropped to the fruit, and its top melts into the beige.
+   */
   .home-hero__media {
     position: relative;
     order: 2;
-    margin: 0 var(--site-gutter) calc(var(--radius-xl) + 2rem);
+    margin: -3rem 0 calc(var(--radius-xl) * 0.5);
     overflow: hidden;
-    aspect-ratio: 4 / 3;
-    border-radius: var(--radius-lg);
+    aspect-ratio: 1;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 30%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 30%);
   }
 
   .home-hero__video {
@@ -170,14 +175,27 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 20% 50%;
+    object-position: 14% 60%;
   }
 
-  /* Top right: the floating WhatsApp button holds the bottom right corner. */
+  @media (min-width: 40rem) and (max-width: 63.99rem) {
+    .home-hero__media {
+      aspect-ratio: 16 / 10;
+    }
+
+    .home-hero__video {
+      object-position: 18% 60%;
+    }
+  }
+
+  /*
+   * Right side, below the video's faded top (the mask would hide it there); the floating
+   * WhatsApp button holds the bottom right corner.
+   */
   .home-hero__toggle {
     position: absolute;
     z-index: 2;
-    top: 1rem;
+    top: 36%;
     right: 1rem;
     display: grid;
     width: 2.75rem;
@@ -244,6 +262,8 @@
       margin: 0;
       aspect-ratio: auto;
       border-radius: 0;
+      -webkit-mask-image: none;
+      mask-image: none;
     }
 
     .home-hero__media::after {
