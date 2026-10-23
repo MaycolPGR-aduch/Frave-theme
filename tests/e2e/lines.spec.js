@@ -122,6 +122,45 @@ test.describe('páginas de línea', () => {
     await expect(card.locator('[data-swap-caption]')).toBeHidden();
   });
 
+  test('en escritorio cada categoría es una banda: la imagen sigue a la vista mientras se recorren los tipos', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(FRAGANCIAS);
+    const bands = page.locator('#portafolio .line-group--band');
+    await expect(bands).toHaveCount(4);
+    // The bands span the screen and alternate sides.
+    const first = await bands.first().boundingBox();
+    expect(Math.round(first.width)).toBeGreaterThanOrEqual(1420);
+    const media = bands.nth(1).locator('.line-group__visual');
+    const text = bands.nth(1).locator('.line-group__body');
+    expect((await media.boundingBox()).x).toBeGreaterThan((await text.boundingBox()).x);
+
+    // Pointing at the last type of the longest band, its picture is on screen.
+    const last = bands.nth(3).locator('.type-link').last();
+    await last.scrollIntoViewIfNeeded();
+    await last.hover();
+    await expect(bands.nth(3).locator('.line-group__layer.is-active')).toHaveCount(1);
+    await expect(bands.nth(3).locator('.line-group__visual')).toBeInViewport({ ratio: 0.8 });
+  });
+
+  test('en el celular la imagen de la banda pasa sola por los tipos y se puede pausar', async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+    const page = await context.newPage();
+    await page.goto(FRAGANCIAS);
+    const band = page.locator('#portafolio .line-group--band').first();
+    await band.locator('.line-group__visual').scrollIntoViewIfNeeded();
+    await expect(band).toHaveClass(/is-cycling/);
+    await expect(band.locator('[data-swap-caption]')).toHaveText('Perfumería de diseñador', { timeout: 6000 });
+    await expect(band.locator('.type-link.is-active')).toHaveText(/Perfumería de diseñador/);
+
+    const toggle = band.locator('[data-swap-toggle]');
+    await toggle.click();
+    await expect(toggle).toHaveAttribute('aria-label', 'Reproducir las imágenes');
+    const caption = await band.locator('[data-swap-caption]').textContent();
+    await page.waitForTimeout(3000);
+    await expect(band.locator('[data-swap-caption]')).toHaveText(caption);
+    await context.close();
+  });
+
   test('cada subcategoría tiene su página de detalle, unida a su línea y a sus soluciones', async ({ page }) => {
     await page.goto(FRAGANCIAS);
     await page.locator('#portafolio .line-group').first().getByRole('link', { name: /Ver detalle/ }).click();

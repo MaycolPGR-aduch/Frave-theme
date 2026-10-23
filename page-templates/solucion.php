@@ -50,28 +50,29 @@ get_header();
 
 		if ( $frave_terms ) :
 			?>
-			<section class="section line-portfolio line-portfolio--groups" id="oferta" aria-labelledby="solution-offer-title">
+			<section class="section line-portfolio line-portfolio--bands" id="oferta" aria-labelledby="solution-offer-title">
 				<div class="container">
 					<div class="section-head" data-reveal="up">
 						<p class="eyebrow"><?php esc_html_e( 'Lo que te ofrecemos', 'frave' ); ?></p>
 						<h2 id="solution-offer-title"><?php echo frave_emphasis( __( 'De nuestras líneas, *para tu industria*', 'frave' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h2>
 					</div>
-					<ol class="line-groups" data-reveal-group>
-						<?php foreach ( $frave_terms as $frave_index => $frave_term ) : ?>
-							<?php
-							get_template_part(
-								'template-parts/components/term-card',
-								null,
-								array(
-									'term'      => $frave_term,
-									'number'    => $frave_index + 1,
-									'show_line' => true,
-								)
-							);
-							?>
-						<?php endforeach; ?>
-					</ol>
 				</div>
+				<ol class="line-groups line-groups--bands">
+					<?php foreach ( $frave_terms as $frave_index => $frave_term ) : ?>
+						<?php
+						get_template_part(
+							'template-parts/components/term-card',
+							null,
+							array(
+								'term'      => $frave_term,
+								'number'    => $frave_index + 1,
+								'show_line' => true,
+								'layout'    => 'band',
+							)
+						);
+						?>
+					<?php endforeach; ?>
+				</ol>
 			</section>
 			<?php
 		endif;

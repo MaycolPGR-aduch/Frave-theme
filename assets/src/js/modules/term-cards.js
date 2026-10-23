@@ -14,7 +14,14 @@
  *
  * The layers' images download only when the pointer or the focus reaches the card. While a
  * layer is still loading, the card picture stays visible underneath it.
+ *
+ * Bands on phones ([data-term-band]): while at least half of the band is on screen, the
+ * picture goes by itself through the card's picture and each subcategory (CYCLE_TIME each),
+ * marking the step ([data-swap-step]); the button [data-swap-toggle] pauses and resumes it
+ * (WCAG 2.2.2). Not with reduced motion, and not on wider screens, where the pointer leads.
  */
+const CYCLE_TIME = 2600;
+const PHONE = '(max-width: 63.99rem)';
 export function initializeTermCards() {
   document.querySelectorAll('[data-term-card]').forEach((card) => {
     const layers = [...card.querySelectorAll('[data-swap-layer]')];
@@ -55,5 +62,60 @@ export function initializeTermCards() {
     card.addEventListener('focusout', (event) => {
       if (!card.contains(event.relatedTarget)) show('');
     });
+
+    if (card.hasAttribute('data-term-band')) cycle(card, { load, show, layers, triggers });
   });
+}
+
+function cycle(card, { load, show, layers, triggers }) {
+  const steps = [...card.querySelectorAll('[data-swap-step]')];
+  const toggle = card.querySelector('[data-swap-toggle]');
+  if (!toggle || !steps.length) return;
+  if (!window.matchMedia(PHONE).matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // Step 0 is the card's own picture; then each layer, with the name of its subcategory.
+  const order = ['', ...layers.map((image) => image.dataset.swapLayer)];
+  const names = Object.fromEntries(triggers.map((trigger) => [trigger.dataset.swap, trigger.dataset.swapName]));
+  let step = 0;
+  let timer = 0;
+  let visible = false;
+  let paused = false;
+
+  const go = (index) => {
+    step = index;
+    show(order[step], names[order[step]] || '');
+    steps.forEach((element, i) => element.classList.toggle('is-on', i === step));
+  };
+  const run = () => {
+    if (timer || paused || !visible) return;
+    load();
+    timer = window.setInterval(() => go((step + 1) % order.length), CYCLE_TIME);
+  };
+  const stop = () => {
+    window.clearInterval(timer);
+    timer = 0;
+  };
+  const label = () => {
+    toggle.setAttribute('aria-label', paused ? toggle.dataset.labelPlay : toggle.dataset.labelPause);
+    toggle.querySelectorAll('[data-swap-icon]').forEach((icon) => {
+      icon.hidden = icon.dataset.swapIcon !== (paused ? 'play' : 'pause');
+    });
+  };
+
+  toggle.addEventListener('click', () => {
+    paused = !paused;
+    if (paused) stop();
+    else run();
+    label();
+  });
+
+  new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (visible) run();
+    else stop();
+  }, { threshold: 0.5 }).observe(card.querySelector('.line-group__visual') || card);
+
+  card.classList.add('is-cycling');
+  toggle.hidden = false;
+  go(0);
 }

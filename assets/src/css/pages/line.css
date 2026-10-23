@@ -281,6 +281,145 @@
     font-weight: 700;
   }
 
+  /*
+   * ---------- Portfolio in bands (line and solution pages) ----------
+   * One band per category across the screen: the picture on one half, which stays in view
+   * (sticky) while the pointer goes through the types, and the text on the other, aligned
+   * with the page content. Bands alternate sides and backgrounds. On phones the picture goes
+   * first, edge to edge, with a progress line and a pause button while it cycles.
+   */
+  .line-portfolio--bands {
+    padding-bottom: 0;
+  }
+
+  .line-portfolio .line-groups.line-groups--bands {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .line-group--band {
+    position: relative;
+    display: grid;
+    background: #fff;
+  }
+
+  .line-group--band:nth-child(even) {
+    background: var(--color-sand-soft);
+  }
+
+  .line-group__visual {
+    position: relative;
+  }
+
+  .line-group--band .line-group__media {
+    aspect-ratio: 3 / 2;
+  }
+
+  .line-group--band .line-group__body {
+    gap: 1rem;
+    padding: clamp(1.75rem, 5vw, 2.5rem) var(--site-gutter) clamp(2.5rem, 7vw, 3.5rem);
+  }
+
+  .line-group--band .line-group__title {
+    font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  }
+
+  .line-group--band .type-link {
+    padding-block: 0.5rem;
+    background: #fff;
+  }
+
+  /* Phones: progress of the picture's cycle and its pause button (term-cards.js). */
+  .line-group__steps {
+    position: absolute;
+    top: 0.9rem;
+    right: 3.9rem;
+    left: 0.9rem;
+    display: none;
+    gap: 0.3rem;
+  }
+
+  .line-group__steps span {
+    flex: 1;
+    height: 3px;
+    border-radius: 3px;
+    background: rgb(255 255 255 / 55%);
+    box-shadow: 0 1px 3px rgb(18 20 24 / 18%);
+    transition: background-color var(--duration) ease;
+  }
+
+  .line-group__steps span.is-on {
+    background: #fff;
+  }
+
+  .line-group--band.is-cycling .line-group__steps {
+    display: flex;
+  }
+
+  .line-group__toggle {
+    position: absolute;
+    top: 0.45rem;
+    right: 0.6rem;
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 90%);
+    color: var(--color-ink);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .line-group__toggle[hidden] {
+    display: none;
+  }
+
+  .line-group__toggle .icon {
+    width: 1.05rem;
+    height: 1.05rem;
+  }
+
+  @media (min-width: 64rem) {
+    .line-group--band {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .line-group--band:nth-child(even) .line-group__visual {
+      order: 2;
+    }
+
+    /* The picture keeps its 3:2 and never outgrows the screen; it stays while the text scrolls. */
+    .line-group--band .line-group__visual {
+      position: sticky;
+      top: calc(var(--header-height) + 0.75rem);
+    }
+
+    .line-group--band .line-group__media {
+      height: min(33.34vw, calc(100svh - var(--header-height) - 3rem));
+      aspect-ratio: auto;
+    }
+
+    /* The text lines up with the page content on the outer side. */
+    .line-group--band .line-group__body {
+      align-self: center;
+      max-width: 44rem;
+      padding: clamp(2.5rem, 4vw, 4rem) max(var(--site-gutter), calc(50vw - var(--container-max) / 2)) clamp(2.5rem, 4vw, 4rem) clamp(2.5rem, 4vw, 4.5rem);
+    }
+
+    .line-group--band:nth-child(even) .line-group__body {
+      justify-self: end;
+      padding-right: clamp(2.5rem, 4vw, 4.5rem);
+      padding-left: max(var(--site-gutter), calc(50vw - var(--container-max) / 2));
+    }
+
+    .line-group__toggle,
+    .line-group--band.is-cycling .line-group__steps {
+      display: none;
+    }
+  }
+
   /* ---------- Subcategories of a card: rows that call to action ---------- */
 
   .line-group__types-block {
