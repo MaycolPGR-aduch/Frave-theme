@@ -437,6 +437,86 @@
     box-shadow: 0 -1.5rem 3rem rgb(18 20 24 / 10%);
   }
 
+  /* ---------- FRAVE with a flower in each letter ---------- */
+
+  /* It takes over from "Nuestras líneas" as the panel that slides over the hero. */
+  .home-letters {
+    position: relative;
+    z-index: 1;
+    margin-top: calc(-1 * var(--radius-xl));
+    padding-block: clamp(4rem, 9vw, 7rem) clamp(1rem, 3vw, 2rem);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    background: #fff;
+    box-shadow: 0 -1.5rem 3rem rgb(18 20 24 / 10%);
+  }
+
+  .home-letters + .home-lines {
+    margin-top: 0;
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  /* The logo's letters cut the photos: only what falls inside them is seen. */
+  .home-letters__word {
+    position: relative;
+    width: min(100%, 72rem);
+    aspect-ratio: 1800 / 429;
+    margin-inline: auto;
+    -webkit-mask: var(--letters-mask) center / 100% 100% no-repeat;
+    mask: var(--letters-mask) center / 100% 100% no-repeat;
+  }
+
+  .home-letters__tile {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    background: var(--color-orange-soft);
+    clip-path: var(--tile-clip, none);
+  }
+
+  /* Taller than the letter, so the photo can drift (letters.js) without showing an edge. */
+  .home-letters__tile img {
+    position: absolute;
+    top: -14%;
+    left: 0;
+    width: 100%;
+    height: 128%;
+    max-width: none;
+    object-fit: cover;
+    translate: 0 calc(var(--letters-shift, 0) * var(--tile-dir, 1) * 8%);
+    scale: 1.04;
+    transition: scale 700ms var(--ease-out);
+  }
+
+  .home-letters__tile:hover img {
+    scale: 1.14;
+  }
+
+  /* On phones the word reaches the screen's edges, so the photos read better. */
+  @media (max-width: 47.99rem) {
+    .home-letters {
+      padding-top: 3.25rem;
+    }
+
+    .home-letters__word {
+      width: calc(100% + 1.5rem);
+      margin-inline: -0.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-letters__tile img {
+      translate: none;
+      transition: none;
+    }
+
+    .home-letters__tile:hover img {
+      scale: 1.04;
+    }
+  }
+
   .home-lines__carousel {
     --carousel-item: min(80%, 22rem);
   }

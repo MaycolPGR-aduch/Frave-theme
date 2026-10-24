@@ -143,3 +143,22 @@ test.describe('portada', () => {
     await expect(map.locator('iframe')).toHaveAttribute('src', /google\.com\/maps/);
   });
 });
+
+test.describe('FRAVE con flores en sus letras', () => {
+  test('va justo después del hero, con una foto por letra que se mueve al bajar', async ({ page }) => {
+    await page.goto('/');
+    // Right after the hero, before "Nuestras líneas".
+    const order = await page.locator('.home-intro > section').evaluateAll((sections) => sections.map((section) => [...section.classList].find((name) => name.startsWith('home-'))));
+    expect(order.slice(0, 3)).toEqual(['home-hero', 'home-letters', 'home-lines']);
+
+    const word = page.getByRole('img', { name: 'Frave', exact: true });
+    await expect(word.locator('.home-letters__tile img')).toHaveCount(5);
+    expect(await word.evaluate((element) => getComputedStyle(element).maskImage || getComputedStyle(element).webkitMaskImage)).toContain('frave-mascara.webp');
+    // Only the word: «Nuestras líneas» follows without another title.
+    await expect(page.locator('.home-letters :is(h2, p)')).toHaveCount(0);
+
+    await word.scrollIntoViewIfNeeded();
+    await page.evaluate(() => window.scrollBy(0, 200));
+    await expect(word).toHaveAttribute('style', /--letters-shift:/);
+  });
+});

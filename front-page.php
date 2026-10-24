@@ -1,7 +1,7 @@
 <?php
 /**
- * Home page. The hero stays in place on large screens while "Nuestras soluciones" rises
- * over it; the following sections scroll normally, and the last ones (articles and
+ * Home page. The hero stays in place on large screens while the FRAVE wordmark with flowers
+ * in its letters rises over it, followed by "Nuestras líneas"; the following sections scroll normally, and the last ones (articles and
  * location) share the beige backdrop. Copy: ACF group "Inicio Frave" (defaults in
  * inc/home.php).
  */
@@ -10,6 +10,7 @@ get_header();
 <main id="primary" class="site-main home">
 	<div class="home-intro">
 		<?php get_template_part( 'template-parts/home/hero' ); ?>
+		<?php get_template_part( 'template-parts/home/letters' ); ?>
 		<?php get_template_part( 'template-parts/home/lines' ); ?>
 	</div>
 	<?php get_template_part( 'template-parts/home/steps' ); ?>
