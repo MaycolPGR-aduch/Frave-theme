@@ -119,6 +119,7 @@ get_header();
 				'cards'   => frave_solution_cards( $frave_slug ),
 				'eyebrow' => __( 'Sigue explorando', 'frave' ),
 				'title'   => __( 'Otras *industrias*', 'frave' ),
+				'compact' => true,
 			)
 		);
 	endwhile;

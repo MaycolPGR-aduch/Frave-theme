@@ -16,6 +16,35 @@ test.describe('soluciones por industria', () => {
     await expect(page.locator('.solution-hero h1')).toContainText('carácter');
   });
 
+  test('las industrias son paneles: el señalado se abre con su resumen y sus líneas', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(HUB);
+    const panels = page.locator('#industrias .industry-panel');
+    await expect(panels.first()).toHaveClass(/is-open/);
+    const home = panels.filter({ hasText: 'Cuidado del hogar' });
+    await home.hover();
+    await expect(home).toHaveClass(/is-open/);
+    await expect(panels.first()).not.toHaveClass(/is-open/);
+    await expect(home.locator('.industry-panel__lines li')).toHaveText(['Fragancias']);
+    // Once it has grown, the open panel is the widest.
+    await expect.poll(async () => (await home.boundingBox()).width / (await panels.first().boundingBox()).width).toBeGreaterThan(2);
+  });
+
+  test('en el celular un toque abre la industria y el segundo lleva a su página', async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+    const page = await context.newPage();
+    await page.goto(HUB);
+    const home = page.locator('#industrias .industry-panel').filter({ hasText: 'Cuidado del hogar' });
+    await home.scrollIntoViewIfNeeded();
+    const url = page.url();
+    await home.tap();
+    await expect(home).toHaveClass(/is-open/);
+    expect(page.url()).toBe(url);
+    await home.tap();
+    await expect(page.locator('.solution-hero h1')).toContainText('Limpieza');
+    await context.close();
+  });
+
   test('una industria reúne lo que ofrece cada línea y su cotización', async ({ page }) => {
     const errors = collectPageErrors(page);
     await page.goto(PERFUMERY);

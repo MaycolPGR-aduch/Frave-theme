@@ -168,9 +168,10 @@ function frave_term_line_name( WP_Term $term ): string {
 }
 
 /**
- * Cards of the industries with a published page, for the hub and the closing links.
+ * Cards of the industries with a published page, for the hub and the closing links: also
+ * their picture (the hero's, without extension) and the product lines they draw on.
  *
- * @return array<int, array{slug: string, title: string, summary: string, icon: string, url: string}>
+ * @return array<int, array{slug: string, title: string, summary: string, icon: string, url: string, image: string, lines: string[]}>
  */
 function frave_solution_cards( string $except = '' ): array {
 	$cards = array();
@@ -179,12 +180,15 @@ function frave_solution_cards( string $except = '' ): array {
 			continue;
 		}
 		$solution = frave_solutions()[ $slug ];
+		$lines    = array_values( array_unique( array_map( 'frave_term_line_name', frave_solution_terms( $slug ) ) ) );
 		$cards[]  = array(
 			'slug'    => $slug,
 			'title'   => get_the_title( $page ),
 			'summary' => $solution['summary'],
 			'icon'    => $solution['icon'],
 			'url'     => (string) get_permalink( $page ),
+			'image'   => (string) preg_replace( '/\.webp$/', '', (string) ( $solution['image'] ?? '' ) ),
+			'lines'   => array_values( array_filter( $lines ) ),
 		);
 	}
 	return $cards;

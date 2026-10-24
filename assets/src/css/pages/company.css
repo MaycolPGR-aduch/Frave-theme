@@ -533,32 +533,241 @@
     object-position: 50% 50%;
   }
 
-  .solution-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-    gap: 1rem;
+  /*
+   * Industries as expanding panels (template-parts/solutions/cards.php, industry-panels.js).
+   * Phones and tablets: an accordion of strips; the open one shows its picture, summary and
+   * lines. Wide screens: the panels side by side, the open one wider. Text is white on a
+   * navy shade over the picture (never black).
+   */
+  .industry-panels {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .solution-card.card {
-    gap: 0.9rem;
+  .industry-panel {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-width: 0;
+    height: 5.5rem;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-navy);
+    color: #fff;
+    transition:
+      height var(--duration-slow) var(--ease-out),
+      flex-grow var(--duration-slow) var(--ease-out);
   }
 
-  .solution-card h3 {
-    margin: 0.5rem 0 0;
-    font-size: clamp(1.35rem, 2vw, 1.6rem);
-    font-weight: 300;
-    letter-spacing: -0.03em;
+  .industry-panel.is-open {
+    height: 25rem;
   }
 
-  .solution-card p {
+  .industry-panel__image {
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    width: 100%;
+    height: 100% !important; /* WooCommerce's unlayered img rule would set auto. */
+    object-fit: cover;
+    object-position: 50% 62%;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  /* A navy shade from the bottom, under the text; the picture stays clear above it. */
+  .industry-panel::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(to top, rgb(29 43 79 / 90%) 0%, rgb(29 43 79 / 55%) 32%, rgb(29 43 79 / 0%) 62%);
+  }
+
+  .industry-panel.is-open::before {
+    background: linear-gradient(to top, rgb(29 43 79 / 92%) 0%, rgb(29 43 79 / 62%) 40%, rgb(29 43 79 / 0%) 75%);
+  }
+
+  /* The closed strips of the accordion are short: an even veil keeps two-line names legible. */
+  @media (max-width: 63.99rem) {
+    .industry-panel:not(.is-open)::before {
+      background: rgb(29 43 79 / 62%);
+    }
+  }
+
+  .industry-panel__icon {
+    position: absolute;
+    top: 1.55rem;
+    left: 1.1rem;
+    display: grid;
+    width: 2.4rem;
+    height: 2.4rem;
+    place-items: center;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 92%);
+    color: var(--color-primary);
+  }
+
+  .industry-panel__icon .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .industry-panel__content {
+    padding: 1.15rem 1.25rem 1.3rem 4.3rem;
+    transition: padding var(--duration) var(--ease-out);
+  }
+
+  .industry-panel.is-open .industry-panel__content {
+    padding-left: 1.25rem;
+  }
+
+  .industry-panel__title {
     margin: 0;
-    color: var(--color-muted);
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
   }
 
-  .solution-card .link-arrow {
-    margin-top: auto;
+  /* The name is the link; it stretches over the whole panel. */
+  .industry-panel__link {
+    color: #fff !important; /* The unlayered link colour of theme.json would win. */
+    text-decoration: none;
+  }
+
+  .industry-panel__link::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+  }
+
+  .industry-panel:has(.industry-panel__link:focus-visible) {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .industry-panel__link:focus-visible {
+    outline: none;
+  }
+
+  /* Hidden by size, not by display: screen readers still read it in a closed panel. */
+  .industry-panel__more {
+    display: grid;
+    gap: 0.75rem;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition:
+      max-height var(--duration-slow) var(--ease-out),
+      opacity var(--duration) ease;
+  }
+
+  .industry-panel.is-open .industry-panel__more {
+    max-height: 16rem;
+    padding-top: 0.75rem;
+    opacity: 1;
+    transition-delay: 0s, 0.15s;
+  }
+
+  .industry-panel__summary {
+    max-width: 30rem;
+    margin: 0;
+    color: #e6eaf3;
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+
+  .industry-panel__lines {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .industry-panel__lines li {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 18%);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .industry-panel__go {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--color-orange-light);
+    font-weight: 700;
+  }
+
+  .industry-panel__go .icon {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  @media (min-width: 64rem) {
+    .industry-panels {
+      flex-direction: row;
+      gap: 0.75rem;
+      height: clamp(26rem, 62vh, 34rem);
+    }
+
+    .solution-list--compact .industry-panels {
+      height: clamp(20rem, 46vh, 26rem);
+    }
+
+    .industry-panel,
+    .industry-panel.is-open {
+      height: auto;
+    }
+
+    .industry-panel {
+      flex: 1 1 0;
+      border-radius: var(--radius-lg);
+    }
+
+    .industry-panel.is-open {
+      flex-grow: 3.2;
+    }
+
+    .industry-panel.is-open .industry-panel__image {
+      transform: scale(1.03);
+    }
+
+    .industry-panel__icon {
+      top: 1.25rem;
+      left: 1.25rem;
+    }
+
+    .industry-panel__content,
+    .industry-panel.is-open .industry-panel__content {
+      padding: 1.4rem 1.4rem 1.5rem;
+    }
+
+    .industry-panel__title {
+      font-size: 1.05rem;
+    }
+
+    .industry-panel.is-open .industry-panel__title {
+      font-size: 1.55rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .industry-panel,
+    .industry-panel__image,
+    .industry-panel__content,
+    .industry-panel__more {
+      transition: none;
+    }
   }
 }
