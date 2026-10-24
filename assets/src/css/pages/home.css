@@ -188,6 +188,81 @@
   }
 
   /*
+   * Phones: a compact copy, so the first screen also shows the fruit. Less room under the
+   * header, smaller buttons side by side and the three facts on one small line.
+   */
+  @media (max-width: 39.99rem) {
+    .home-hero__inner {
+      padding-block: 0.5rem 1rem;
+    }
+
+    .home-hero__title {
+      margin-bottom: 0.9rem;
+      font-size: clamp(2.15rem, 10.2vw, 2.6rem);
+    }
+
+    .home-hero__lead {
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .home-hero .btn-row {
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+    }
+
+    .home-hero .btn {
+      gap: 0.5rem;
+      min-height: 2.7rem;
+      padding: 0.3rem 0.35rem 0.3rem 1rem;
+      font-size: 0.82rem;
+    }
+
+    .home-hero .btn__icon {
+      width: 1.9rem;
+      height: 1.9rem;
+    }
+
+    .home-hero__facts {
+      flex-wrap: nowrap;
+      gap: 0.4rem;
+      margin-top: 1rem;
+      font-size: 0.68rem;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .home-hero__facts li {
+      gap: 0.15rem;
+    }
+
+    .home-hero__facts .icon {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+
+    /* The drop of the waves after «tu marca», the shortest line. */
+    .home-hero__waves {
+      top: 37%;
+      left: 72%;
+      width: min(30rem, 110vw);
+    }
+  }
+
+  /* The narrowest phones: dots instead of ticks, so the three facts keep one line. */
+  @media (max-width: 23.99rem) {
+    .home-hero__facts .icon {
+      display: none;
+    }
+
+    .home-hero__facts li + li::before {
+      color: #a83200;
+      content: "·";
+    }
+  }
+
+  /*
    * Phones with the portrait video (.home-hero--portrait): it fills the width at 9:16 and
    * rises under the copy, so the end of the text lies over its clean beige top and the fruit
    * lands below. Its top already has the page's beige; the mask only hides the seam.
