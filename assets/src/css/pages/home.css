@@ -676,14 +676,90 @@
 
   /* ---------- Razones ---------- */
 
-  .home-reasons__grid {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  /*
+   * The reasons as expanding panels: the panel styles are the industries' (company.css).
+   * Here only what differs: no link (the panel itself takes the focus) and, until there are
+   * pictures, a colour per reason from the palette with its icon as a large mark. White text
+   * reads 6:1 or more on every colour.
+   */
+  .reason-panel {
+    cursor: default;
   }
 
-  .home-reason h3 {
-    font-size: 1.3rem;
+  /* In the industries the white comes from the link; these titles have none. */
+  .reason-panel .industry-panel__title {
+    color: #fff;
+  }
+
+  .reason-panel:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .reason-panel--1 {
+    --panel-tone: var(--color-navy);
+  }
+
+  .reason-panel--2 {
+    --panel-tone: var(--color-sand-accent);
+  }
+
+  .reason-panel--3 {
+    --panel-tone: var(--color-sand-muted);
+  }
+
+  .reason-panel--4 {
+    --panel-tone: var(--color-navy-2);
+  }
+
+  /* company.css loads later: two classes so the colour wins over the industries' navy. */
+  .industry-panel.reason-panel--plain {
+    background:
+      radial-gradient(120% 70% at 85% 10%, rgb(255 255 255 / 16%), transparent 60%),
+      var(--panel-tone);
+  }
+
+  /* Without a picture the bottom shade only needs to be light. */
+  .industry-panel.reason-panel--plain::before,
+  .industry-panel.reason-panel--plain:not(.is-open)::before,
+  .industry-panel.reason-panel--plain.is-open::before {
+    background: linear-gradient(to top, rgb(29 43 79 / 28%), transparent 55%);
+  }
+
+  .reason-panel__mark {
+    position: absolute;
+    z-index: -1;
+    top: 18%;
+    right: -1.5rem;
+    width: 9rem;
+    color: rgb(255 255 255 / 12%);
+    transition:
+      transform var(--duration-slow) var(--ease-out),
+      color var(--duration) ease;
+  }
+
+  .reason-panel__mark .icon {
+    width: 100%;
+    height: auto;
+    stroke-width: 1.1;
+  }
+
+  .reason-panel.is-open .reason-panel__mark {
+    color: rgb(255 255 255 / 18%);
+    transform: scale(1.35) translateX(-1.5rem);
+  }
+
+  @media (max-width: 63.99rem) {
+    /* Closed strips of the accordion are short: the mark would only peek out. */
+    .reason-panel:not(.is-open) .reason-panel__mark {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reason-panel__mark {
+      transition: none;
+    }
   }
 
   /* ---------- Catálogo ---------- */

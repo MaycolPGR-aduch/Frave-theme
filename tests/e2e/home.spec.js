@@ -162,3 +162,20 @@ test.describe('FRAVE con flores en sus letras', () => {
     await expect(word).toHaveAttribute('style', /--letters-shift:/);
   });
 });
+
+test.describe('razones para elegirnos', () => {
+  test('son paneles que se expanden: el primero abierto y otro se abre al señalarlo', async ({ page }) => {
+    await page.goto('/');
+    const panels = page.locator('.home-reasons .reason-panel');
+    await expect(panels).toHaveCount(4);
+    await expect(panels.first()).toHaveClass(/is-open/);
+    await expect(panels.first().locator('.industry-panel__summary')).toBeVisible();
+
+    // Mouse on wide screens, a tap on phones; the keyboard reaches each panel too.
+    if (await page.locator('.menu-toggle').isVisible()) await panels.nth(2).click();
+    else await panels.nth(2).hover();
+    await expect(panels.nth(2)).toHaveClass(/is-open/);
+    await expect(panels.first()).not.toHaveClass(/is-open/);
+    await expect(panels.nth(2)).toHaveAttribute('tabindex', '0');
+  });
+});
