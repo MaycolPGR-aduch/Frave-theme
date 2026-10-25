@@ -678,12 +678,18 @@
 
   /*
    * The reasons as expanding panels: the panel styles are the industries' (company.css).
-   * Here only what differs: no link (the panel itself takes the focus) and, until there are
-   * pictures, a colour per reason from the palette with its icon as a large mark. White text
+   * Here only what differs: no link (the panel itself takes the focus), the framing of the
+   * photographs (assets/media/razones) and, without one, a colour per reason from the
+   * palette with its icon as a large mark. White text
    * reads 6:1 or more on every colour.
    */
   .reason-panel {
     cursor: default;
+  }
+
+  /* The objects of these photographs sit high: keep them in view when the panel is wide. */
+  .reason-panel .industry-panel__image {
+    object-position: 50% 30%;
   }
 
   /* In the industries the white comes from the link; these titles have none. */
