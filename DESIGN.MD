@@ -129,7 +129,7 @@ Duraciones y curvas en `--duration-fast` (160 ms), `--duration` (320 ms), `--dur
 | Nuestras soluciones | Blanco, sube sobre el hero con esquinas redondeadas | Tarjetas con marco de frasco; sin imagen, degradado de la línea con su icono. Carrusel en móvil, tres columnas en escritorio. |
 | Cómo trabajamos | Arena con órbita, pasos en tarjetas blancas | Introducción fija a la izquierda y pasos apilados a la derecha con números grandes en naranja. |
 | Destacados | Blanco | Cuatro tarjetas de producto. |
-| Razones | Superficie | Cuatro tarjetas con icono grande. |
+| Razones | Blanco | Paneles que se expanden con foto; sin textura de fondo, para no recargar. |
 | Catálogo | Panel arena redondeado | Buscador y accesos a las líneas en píldoras. |
 | Tendencias | Blanco | Tarjetas de entrada; sin imagen, el isotipo. |
 | Dónde estamos | Blanco | Canales con iconos y mapa bajo demanda. |

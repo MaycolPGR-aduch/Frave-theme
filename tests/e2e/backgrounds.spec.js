@@ -6,7 +6,6 @@ test.describe('imágenes de fondo de secciones', () => {
     const sections = [
       ['/?pagename=nosotros', '.company-essence', 'nosotros-esencia'],
       ['/', '.home-catalog__panel', 'catalogo'],
-      ['/', '.home-reasons', 'textura-luz-sombra'],
       ['/?pagename=fragancias', '.line-applications', 'aplicaciones-fragancias'],
       ['/?pagename=fragancias', '.line-families', 'textura-luz-sombra'],
     ];
@@ -20,5 +19,9 @@ test.describe('imágenes de fondo de secciones', () => {
     // The industries reuse the applications band without a photograph.
     await page.goto('/?pagename=soluciones/perfumeria');
     await expect(page.locator('.line-applications .section-bg')).toHaveCount(0);
+    // «Razones para elegirnos» stays white: its panels already carry photographs.
+    await page.goto('/');
+    await expect(page.locator('.home-reasons .section-bg')).toHaveCount(0);
+    await expect(page.locator('.home-reasons')).not.toHaveClass(/section--surface/);
   });
 });

@@ -4,7 +4,8 @@
  * industries (industry-panels.js): each one shows its picture, icon and title, and the open
  * one grows with its text. The reasons have no page, so a panel only opens. Pictures:
  * assets/media/razones/razon-{1-4}.webp (1080 × 1350) and -640.webp; until they exist, each
- * panel shows its own colour with its icon as a large mark.
+ * panel shows its own colour with its icon as a large mark. On white, without a background
+ * texture: the photographs of the panels are enough.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,20 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $frave_icons = frave_home_reason_icons();
 ?>
-<section class="section section--surface home-reasons has-section-bg" aria-labelledby="home-reasons-title">
-	<?php
-	get_template_part(
-		'template-parts/components/section-bg',
-		null,
-		array(
-			'image'  => 'textura-luz-sombra',
-			'width'  => 2400,
-			'height' => 1350,
-			'small'  => 1200,
-			'veil'   => 'surface',
-		)
-	);
-	?>
+<section class="section home-reasons" aria-labelledby="home-reasons-title">
 	<div class="container">
 		<div class="section-head section-head--center" data-reveal="up">
 			<p class="eyebrow"><?php echo esc_html( frave_home_text( 'frave_home_reasons_eyebrow' ) ); ?></p>
