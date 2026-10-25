@@ -20,9 +20,12 @@ function frave_is_filterable_catalog(): bool {
 	if ( ! class_exists( 'WooCommerce' ) || ! ( is_shop() || is_product_taxonomy() ) ) {
 		return false;
 	}
-	// A category without products has nothing to filter: its page invites to request a quote.
+	// A category or a collection without products has nothing to filter: its page invites to request a quote.
 	$term = get_queried_object();
 	if ( is_product_category() && $term instanceof WP_Term && frave_term_product_count( $term ) < 1 ) {
+		return false;
+	}
+	if ( is_tax( 'pa_coleccion' ) && $term instanceof WP_Term && $term->count < 1 ) {
 		return false;
 	}
 	return ! frave_catalog_is_empty_shop();
@@ -462,7 +465,7 @@ function frave_catalog_clear_url(): string {
  * @return array<int, object> Attribute taxonomies as returned by wc_get_attribute_taxonomies().
  */
 function frave_catalog_filter_attributes(): array {
-	$order      = array( 'familia-olfativa', 'perfil-de-sabor', 'aplicacion', 'presentacion', 'solubilidad', 'capacidad', 'material', 'cierre' );
+	$order      = array( 'coleccion', 'familia-olfativa', 'perfil-de-sabor', 'aplicacion', 'presentacion', 'solubilidad', 'capacidad', 'material', 'cierre' );
 	$attributes = array_values( wc_get_attribute_taxonomies() );
 	usort(
 		$attributes,

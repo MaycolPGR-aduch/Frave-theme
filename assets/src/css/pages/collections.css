@@ -1,0 +1,178 @@
+/*
+ * Collections (inc/collections.php): cards with the collection's picture, on its
+ * subcategory's page, on solution pages and in the hub /colecciones/; chips in the
+ * portfolio bands.
+ */
+@layer components {
+  .collection-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .collection-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: #fff;
+    transition:
+      translate var(--duration) var(--ease-out),
+      box-shadow var(--duration) var(--ease-out);
+  }
+
+  .collection-card:hover,
+  .collection-card:focus-within {
+    translate: 0 -4px;
+    box-shadow: var(--shadow-lift);
+  }
+
+  .collection-card__media {
+    aspect-ratio: 3 / 2;
+    border-radius: 0;
+    background: var(--color-sand);
+  }
+
+  .collection-card__media img {
+    height: 100% !important; /* WooCommerce's unlayered img rule would set auto. */
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .collection-card:hover .collection-card__media img {
+    transform: scale(1.04);
+  }
+
+  .collection-card__art {
+    display: grid;
+    height: 100%;
+    place-items: center;
+    color: var(--color-primary);
+  }
+
+  .collection-card__art .icon {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .collection-card__body {
+    display: grid;
+    flex: 1;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 0.55rem;
+    padding: 1.25rem 1.4rem 1.4rem;
+  }
+
+  .collection-card__eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .collection-card__title {
+    margin: 0;
+    font-size: 1.45rem;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+
+  /* The name is the link; it covers the whole card. */
+  .collection-card__link {
+    color: var(--color-ink) !important; /* The unlayered link colour of theme.json would win. */
+    text-decoration: none;
+  }
+
+  .collection-card__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .collection-card:has(.collection-card__link:focus-visible) {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .collection-card__link:focus-visible {
+    outline: none;
+  }
+
+  .collection-card__text {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+  }
+
+  .collection-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin: 0.4rem 0 0;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--color-line);
+    color: var(--color-muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+  }
+
+  /* Inside a catalog page (subcategory detail) and in the hub: groups without section padding. */
+  .collections--compact {
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+  }
+
+  .collections--compact .section-head {
+    margin-bottom: 1.75rem;
+  }
+
+  /* Inside WooCommerce's wrapper, where small headings are bold, keep the light display title. */
+  .collections .section-head h2 {
+    font-weight: 300;
+  }
+
+  .collections-hub .collections--compact:last-child {
+    margin-bottom: 0;
+  }
+
+  /* «Colecciones: Romero · Pitahaya…» in the portfolio bands and cards. */
+  .line-group__collections {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0;
+  }
+
+  .line-group__collections-label {
+    margin-right: 0.2rem;
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .collection-card,
+    .collection-card__media img {
+      transition: none;
+    }
+
+    .collection-card:hover,
+    .collection-card:focus-within {
+      translate: none;
+    }
+
+    .collection-card:hover .collection-card__media img {
+      transform: none;
+    }
+  }
+}

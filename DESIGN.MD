@@ -175,6 +175,7 @@ Imágenes de línea: horizontal 16:9 con el tercio izquierdo despejado y vertica
 
 - **Ficha:** a la izquierda, la foto sobre la superficie marfil (queda fija al bajar en escritorio); a la derecha, la línea y la subcategoría como texto superior enlazado, el título ligero, la descripción corta, los datos del producto como etiqueta en mayúsculas y valores en píldoras, la cotización sobre naranja suave y el código. Debajo, «Detalles del producto» y «También te puede interesar».
 - **Catálogo:** en una categoría con subcategorías, estas aparecen como píldoras sobre los productos, con su número de productos.
+- **Colecciones:** tarjeta blanca con la imagen 3:2 arriba (la de la colección o, mientras falte, la de su subcategoría), subcategoría en mayúsculas naranja (o «Colección» en la página de la propia subcategoría), nombre en Lato ligero, resumen y pie con «N aromas» o «Aromas a pedido» y «Ver la colección»; toda la tarjeta es el enlace y se eleva al señalarla. En las bandas del portafolio, las colecciones son píldoras bajo «Colecciones:». La página de una colección usa la banda de cabecera del catálogo con «Colección · subcategoría».
 - **Fotos:** cuadradas, fondo marfil liso, producto centrado con aire (ver [GUIA_CATALOGO.md](GUIA_CATALOGO.md)).
 
 ## Blog
@@ -205,6 +206,7 @@ Regla aprendida: el color de enlace global de `theme.json` no tiene capa y gana 
 | 2026-10-11 | Sistema corporativo (fase 2): tokens noche y naranja suave, Lato 300 en títulos, botones `.btn` con icono, píldoras y marcador, cabecera en cápsula flotante, submenús con iconos, banda de cabecera en páginas y catálogo, pie oscuro con llamada a la acción, formas de gota y frasco, isotipo, iconos de línea, tarjetas, cifras, carrusel, apilado, hero fijo con telón y pie que se descubre. Guía en `/?sistema-visual`. | Implementado; pendiente de aprobación de Frave |
 | 2026-10-15 | Sin negro, a pedido de Frave: secciones destacadas, banda de páginas y panel del catálogo en arena (`sand`, el beige de las fotos) con tinta y acentos en naranja oscuro; pie, botones oscuros y controles seleccionados en azul marino (`navy`), con textos de acento en naranja claro. Contrastes AA comprobados. | Implementado |
 
+| 2026-10-25 | Colecciones de fragancias: tarjetas con imagen 3:2, píldoras en las bandas del portafolio y centro /colecciones/ agrupado por subcategoría. Portadas propias: estudio arena con sombras de hojas, envases sin etiquetas y el frasco de muestra delante. | Implementado |
 | 2026-10-13 | Página de contacto rediseñada (cabecera con ventajas, formulario en bloques con opciones como píldoras, canales con WhatsApp destacado y confirmación con siguientes pasos); widget de WhatsApp como región propia. | Implementado |
 | 2026-10-13 | Redes sociales en cabecera, menú móvil y pie; entre 1024 y 1280 px la cabecera compacta logo, letra y espacios para que el menú quepa con sus flechas. | Implementado |
 | 2026-10-13 | Blog (tarjetas, artículo, compartir), redes sociales en el pie, menú de siete entradas que cabe desde 1024 px, enlace de salto legible y migas de la ficha subrayadas. | Implementado |

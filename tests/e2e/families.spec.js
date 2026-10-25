@@ -152,14 +152,14 @@ test.describe('pirámide olfativa', () => {
     const footerGuide = page.getByRole('navigation', { name: 'Guía de fragancias' });
     await expect(footerGuide.getByRole('link')).toHaveText(['Familias olfativas', 'Pirámide olfativa']);
 
-    // «Líneas» stays with the three lines; the guide hangs from «Catálogo».
+    // «Líneas» stays with the three lines; the collections and the guide hang from «Catálogo».
     const header = page.locator('.site-header');
     test.skip(await page.locator('.menu-toggle').isVisible(), 'En móvil el menú es un panel lateral.');
     // A menu assigned in Apariencia → Menús (its items have ids) replaces the theme's own.
     test.skip((await header.locator('[id^="menu-item-"]').count()) > 0, 'Menú asignado en Apariencia → Menús.');
     const catalog = header.locator('.menu-item-has-children').filter({ has: page.getByRole('link', { name: 'Catálogo', exact: true }) });
     await catalog.locator('[data-submenu-toggle]').click();
-    await expect(catalog.locator('.sub-menu a')).toHaveText([/Familias olfativas/, /Pirámide olfativa/]);
+    await expect(catalog.locator('.sub-menu a')).toHaveText([/Colecciones/, /Familias olfativas/, /Pirámide olfativa/]);
     await catalog.locator('.sub-menu').getByRole('link', { name: /Pirámide olfativa/ }).click();
     await expect(page.locator('.solution-hero h1')).toContainText('La pirámide olfativa');
   });

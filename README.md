@@ -116,8 +116,20 @@ La plantilla **Pirámide olfativa** (`page-templates/piramide-olfativa.php`, /fr
 - **Textos:** `inc/fragrance-pyramid.php`; la pirámide es `template-parts/components/fragrance-pyramid.php` con `assets/src/js/modules/tabs.js` (pestañas genéricas `[data-tabs]`).
 - **Imagen:** `assets/media/piramide/piramide-olfativa.webp` y `-640.webp` (prompt en `recursos-graficos/piramide-olfativa/PROMPT.md`); para compartir, `assets/media/og/piramide-olfativa.jpg`. Sin ellas, la página usa la imagen de la familia Oriental.
 - **Enlaces:** la página de Fragancias muestra la pirámide interactiva con «Ver la pirámide completa» (`template-parts/line/pyramid.php`); la guía de familias la enlaza en su introducción, y la banda de familias cierra la pirámide.
-- **Menú y pie de página:** el menú automático cuelga la guía de **Catálogo** (Familias olfativas y Pirámide olfativa), para que «Líneas» quede solo con las tres líneas; el pie suma la columna **Guía de fragancias** (`frave_fragrance_guide_links()`). Un menú asignado en *Apariencia → Menús* reemplaza al automático: ahí hay que añadir las dos páginas a mano.
+- **Menú y pie de página:** el menú automático cuelga de **Catálogo** las Colecciones y la guía (Familias olfativas y Pirámide olfativa), para que «Líneas» quede solo con las tres líneas; el pie suma la columna **Guía de fragancias** (`frave_fragrance_guide_links()`). Un menú asignado en *Apariencia → Menús* reemplaza al automático: ahí hay que añadir las dos páginas a mano.
 - **Crear las páginas de la guía:** `wp eval-file RUTA/bin/crear-guia-fragancias.php` (familias y pirámide; deja como están las que ya existen).
+
+### Colecciones
+
+Una **colección** agrupa los aromas pensados para un tipo de producto de una subcategoría (Romero, Mascotas, Detergentes…). Es un valor del atributo global **Colección** (`pa_coleccion`, con páginas propias), así que cada colección tiene su página (/coleccion/romero/) y sirve de filtro en el catálogo; los datos quedan en WooCommerce aunque cambie el tema.
+
+- **Dónde aparecen:** en la página de su subcategoría (tarjetas bajo los tipos), como «Colecciones:» en las bandas del portafolio de su línea, en las soluciones que usan su subcategoría, en el centro **Colecciones** (`page-templates/colecciones.php`, /colecciones/, agrupadas por subcategoría) y en el menú **Catálogo**.
+- **Página de la colección:** cabecera con «Colección · subcategoría», su descripción, enlace a la subcategoría y a sus soluciones, y su imagen; sin aromas todavía, invita a cotizar o escribir por WhatsApp en lugar de mostrar una lista vacía.
+- **Datos de cada colección** (*Productos → Atributos → Colección → configurar términos*): nombre, descripción, **Subcategoría** (campo del tema) y orden (arrastrando). Los aromas se asignan en cada producto, atributo «Colección».
+- **Imágenes:** `assets/media/colecciones/{slug}.webp` (1536 × 1024) y `{slug}-768.webp`; una colección sin imagen propia usa la de su subcategoría. Las nueve primeras están integradas (prompts en `recursos-graficos/colecciones/PROMPTS.md`).
+- **Una colección nueva:** basta con crear el término, elegir su subcategoría y asignarle productos; aparece sola en todos los lugares.
+- **Crear el atributo, las primeras nueve colecciones y el centro:** `wp eval-file RUTA/bin/crear-colecciones.php` y después `wp rewrite flush` (deja como están las que ya existen).
+- **Código:** `inc/collections.php`, `template-parts/components/collections.php` y `collection-card.php`, `assets/src/css/pages/collections.css`.
 
 ### Blog
 

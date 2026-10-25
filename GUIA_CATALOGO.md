@@ -36,13 +36,14 @@ Los atributos **globales** son los que aparecen en los filtros del catálogo y c
 | Solubilidad | Fragancias y sabores | Hidrosoluble, Liposoluble |
 | Capacidad | Envases | 30 ml, 50 ml, 100 ml, 120 ml… |
 | Material | Envases | Vidrio, PET, Polipropileno, Aluminio |
+| Colección | Fragancias | Shampoo y acondicionador, Mascarillas y cremas de peinar, Romero, Pitahaya e Hibiscus, Mascotas, Suavizantes y microcápsulas, Detergentes, Limpiadores de piso, Aromas para ambientación (cada una con su subcategoría; ver README → Colecciones) |
 | Cierre | Envases | Válvula atomizadora, Bomba dosificadora, Tapa rosca, Tapa a presión, Gotero |
 
 Reglas:
 
 - Escribe los valores **siempre igual** (mismas mayúsculas y unidades): `250 g`, no `250g` ni `250 G`. Cada variante distinta sería otro valor en los filtros.
 - **Presentación** y **Capacidad** se ordenan solas de menor a mayor (250 g, 500 g, 1 kg) si el valor empieza con la cantidad y una unidad conocida (mg, g, kg, ml, cc, l, oz).
-- Los filtros siguen este orden: familia olfativa o perfil de sabor, aplicación, presentación, solubilidad, capacidad, material y cierre. Cada sección aparece solo si algún producto de la vista usa ese atributo.
+- Los filtros siguen este orden: colección, familia olfativa o perfil de sabor, aplicación, presentación, solubilidad, capacidad, material y cierre. Cada sección aparece solo si algún producto de la vista usa ese atributo.
 - Para añadir un atributo nuevo, créalo en **Productos → Atributos** antes de importar. Un atributo solo informativo puede ocultarse de los filtros con el filtro de PHP `frave_catalog_filter_attributes`.
 
 ## Fotos de producto
@@ -104,9 +105,11 @@ Desde la carpeta del sitio, con el clon del tema en `~/repos/frave-theme`:
 ```bash
 wp eval-file ~/repos/frave-theme/bin/crear-lineas.php
 wp eval-file ~/repos/frave-theme/bin/crear-atributos.php
+wp eval-file ~/repos/frave-theme/bin/crear-colecciones.php
+wp rewrite flush
 ```
 
-Ambos se pueden repetir sin cambiar lo que ya existe. Después de una importación grande, vuelve a ejecutar `crear-atributos.php` para ordenar las presentaciones y capacidades que se hayan creado.
+Todos se pueden repetir sin cambiar lo que ya existe. Después de una importación grande, vuelve a ejecutar `crear-atributos.php` para ordenar las presentaciones y capacidades que se hayan creado.
 
 ## Prueba local
 

@@ -77,6 +77,20 @@ get_header();
 			<?php
 		endif;
 
+		// The collections of the subcategories this industry uses (inc/collections.php).
+		get_template_part(
+			'template-parts/components/collections',
+			null,
+			array(
+				'collections' => frave_collections( $frave_terms ),
+				'eyebrow'     => __( 'Colecciones', 'frave' ),
+				/* translators: %s: industry name. */
+				'title'       => sprintf( __( 'Colecciones para *%s*', 'frave' ), mb_strtolower( get_the_title() ) ),
+				'id'          => 'colecciones',
+				'more'        => frave_collections_url(),
+			)
+		);
+
 		if ( ! empty( frave_solutions()[ $frave_slug ]['families'] ) ) {
 			get_template_part( 'template-parts/components/family-wheel' );
 		}

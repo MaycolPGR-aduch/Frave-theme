@@ -108,7 +108,7 @@ function frave_primary_menu_fallback_items(): array {
 		$items[] = array(
 			'label'    => frave_catalog_mode() ? __( 'Catálogo', 'frave' ) : __( 'Tienda', 'frave' ),
 			'url'      => frave_catalog_shop_url(),
-			'children' => frave_fragrance_guide_links(),
+			'children' => frave_catalog_menu_links(),
 		);
 	}
 

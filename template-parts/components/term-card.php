@@ -1,8 +1,8 @@
 <?php
 /**
  * Card of a product subcategory (.line-group): picture, number, name, description, the
- * industries that use it, its own subcategories as a list of links, "Cotizar" and "Ver
- * detalle". The picture, the name, each subcategory and "Ver detalle" lead to the
+ * industries that use it, its own subcategories as a list of links, its collections as
+ * chips, "Cotizar" and "Ver detalle". The picture, the name, each subcategory and "Ver detalle" lead to the
  * category's detail page (inc/category-detail.php), with or without products. Pointing at
  * (or focusing) a subcategory swaps the picture for that subcategory's image
  * (term-cards.js). Used by line pages, solution pages and category pages.
@@ -41,6 +41,8 @@ $frave_image    = frave_term_image( $frave_term, $frave_sizes );
 $frave_line     = ! empty( $args['show_line'] ) && $frave_term->parent ? frave_term_line_name( $frave_term ) : '';
 // Solution pages already say the industry; elsewhere the card names the industries that use it.
 $frave_uses = '' === $frave_line ? frave_term_solutions_html( $frave_term, 'line-group__uses' ) : '';
+// Its collections and those of its subcategories (inc/collections.php).
+$frave_collections = function_exists( 'frave_collections' ) ? frave_collections( array( $frave_term ) ) : array();
 
 // One hidden layer per subcategory with an image, numbered from 1 (0 is the card's own).
 $frave_layers = array();
@@ -116,6 +118,14 @@ if ( '' !== $frave_image ) {
 					<?php endforeach; ?>
 				</ul>
 			</div>
+		<?php endif; ?>
+		<?php if ( $frave_collections ) : ?>
+			<p class="line-group__collections">
+				<span class="line-group__collections-label"><?php esc_html_e( 'Colecciones:', 'frave' ); ?></span>
+				<?php foreach ( $frave_collections as $frave_collection ) : ?>
+					<a class="line-chip line-chip--link" href="<?php echo esc_url( frave_collection_url( $frave_collection ) ); ?>"><?php echo esc_html( $frave_collection->name ); ?></a>
+				<?php endforeach; ?>
+			</p>
 		<?php endif; ?>
 		<div class="line-group__actions">
 			<?php if ( $frave_quote ) : ?>

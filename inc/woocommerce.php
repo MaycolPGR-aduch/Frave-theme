@@ -72,6 +72,20 @@ function frave_catalog_hero(): void {
 			$meta    = trim( $meta . ' ' . frave_term_solutions_html( $term, 'page-hero__solutions' ) );
 			$image   = frave_term_image( $term, '(max-width: 60rem) 90vw, 36vw' );
 			$actions = frave_detail_hero_actions( $term );
+		} elseif ( $term instanceof WP_Term && FRAVE_COLLECTION_TAXONOMY === $term->taxonomy ) {
+			// A collection: its subcategory, the industries that use it, its picture and a quote.
+			$category = frave_collection_category( $term );
+			$eyebrow  = __( 'Colección', 'frave' ) . ( $category ? ' · ' . $category->name : '' );
+			$meta     = $category ? trim(
+				sprintf(
+					'<a class="page-hero__line-link" href="%1$s">%2$s <span aria-hidden="true">→</span></a>',
+					esc_url( frave_term_detail_url( $category ) ),
+					/* translators: %s: subcategory name. */
+					esc_html( sprintf( __( 'Ver %s', 'frave' ), mb_strtolower( $category->name ) ) )
+				) . ' ' . frave_term_solutions_html( $category, 'page-hero__solutions' )
+			) : '';
+			$image   = frave_collection_image( $term, '(max-width: 60rem) 90vw, 36vw' );
+			$actions = $category ? frave_detail_hero_actions( $category ) : '';
 		}
 	} else {
 		$meta    = '';
