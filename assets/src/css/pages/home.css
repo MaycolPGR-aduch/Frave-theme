@@ -701,27 +701,8 @@
       var(--color-sand);
   }
 
-  .home-catalog__orbit {
-    top: -12rem;
-    right: -8rem;
-    width: 30rem;
-    height: 30rem;
-  }
 
-  .home-catalog__decor {
-    position: absolute;
-    z-index: -1;
-    right: 2rem;
-    bottom: -3rem;
-    width: 11rem;
-    color: rgb(168 50 0 / 8%);
-  }
 
-  .home-catalog__decor .isotype {
-    width: 100%;
-    height: auto;
-    stroke-width: 1.4;
-  }
 
   .home-catalog__copy h2 {
     margin: 0 0 1rem;

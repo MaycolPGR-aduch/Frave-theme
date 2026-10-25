@@ -43,6 +43,62 @@
     background: var(--color-surface);
   }
 
+  /*
+   * Background photograph under a veil (template-parts/components/section-bg.php). Sand veil:
+   * dense where the text sits on the left, lighter towards the objects on the right; on
+   * phones the text spans the width, so the veil is even. Surface and white veils only soften
+   * the light-and-shadow texture.
+   */
+  .has-section-bg {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+
+  .section-bg {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .section-bg > img {
+    width: 100%;
+    height: 100% !important; /* WooCommerce's unlayered img rule would set it to auto. */
+    max-width: none;
+    object-fit: cover;
+    object-position: var(--section-bg-position, 100% 50%);
+  }
+
+  .section-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .section-bg--sand::after {
+    background: rgb(241 230 216 / 84%);
+  }
+
+  .section-bg--surface::after {
+    background: rgb(246 244 241 / 35%);
+  }
+
+  .section-bg--white::after {
+    background: rgb(255 255 255 / 45%);
+  }
+
+  @media (min-width: 64rem) {
+    .section-bg--sand::after {
+      background: linear-gradient(90deg, rgb(241 230 216 / 94%) 0%, rgb(241 230 216 / 82%) 38%, rgb(241 230 216 / 35%) 72%, rgb(241 230 216 / 12%) 100%);
+    }
+
+    /* The applications list sits over the objects: they stay a hint. */
+    .line-applications .section-bg--sand::after {
+      background: linear-gradient(90deg, rgb(241 230 216 / 94%) 0%, rgb(241 230 216 / 85%) 40%, rgb(241 230 216 / 58%) 100%);
+    }
+  }
+
   /* A section that rises over the previous one with rounded top corners. */
   .section--overlap {
     position: relative;

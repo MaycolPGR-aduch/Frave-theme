@@ -166,27 +166,8 @@
     overflow: clip;
   }
 
-  .company-essence__orbit {
-    bottom: -20rem;
-    left: -14rem;
-    width: 40rem;
-    height: 40rem;
-  }
 
-  .company-essence__decor {
-    position: absolute;
-    top: 50%;
-    right: max(var(--site-gutter), calc(50% - 40rem));
-    width: clamp(8rem, 18vw, 15rem);
-    color: rgb(168 50 0 / 8%);
-    transform: translateY(-50%);
-  }
 
-  .company-essence__decor .isotype {
-    width: 100%;
-    height: auto;
-    stroke-width: 1.2;
-  }
 
   .company-essence__inner {
     position: relative;

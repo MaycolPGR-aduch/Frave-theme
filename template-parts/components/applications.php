@@ -7,6 +7,7 @@
  * - items: list of applications; nothing is printed without them.
  * - title: heading; *words* are highlighted.
  * - text:  optional lead.
+ * - image: optional background photograph in assets/media/fondos (see components/section-bg.php).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -19,6 +20,7 @@ if ( ! $frave_items ) {
 }
 $frave_title = (string) ( $args['title'] ?? '' );
 $frave_text  = (string) ( $args['text'] ?? '' );
+$frave_image = (string) ( $args['image'] ?? '' );
 
 // Each row repeats the words until it is wider than any screen.
 $frave_row = array_merge( $frave_items, $frave_items );
@@ -31,7 +33,12 @@ $frave_rows = array(
 	array_merge( array_slice( $frave_row, $frave_half ), array_slice( $frave_row, 0, $frave_half ) ),
 );
 ?>
-<section class="section section--sand line-applications" aria-labelledby="line-applications-title">
+<section class="section section--sand line-applications<?php echo '' !== $frave_image ? ' has-section-bg' : ''; ?>" aria-labelledby="line-applications-title">
+	<?php
+	if ( '' !== $frave_image ) {
+		get_template_part( 'template-parts/components/section-bg', null, array( 'image' => $frave_image ) );
+	}
+	?>
 	<div class="ticker" aria-hidden="true" data-ticker>
 		<?php foreach ( $frave_rows as $frave_row_index => $frave_words ) : ?>
 			<div class="ticker__row<?php echo 1 === $frave_row_index ? ' ticker__row--reverse' : ''; ?>">

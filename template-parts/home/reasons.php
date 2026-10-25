@@ -7,7 +7,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $frave_icons = frave_home_reason_icons();
 ?>
-<section class="section section--surface home-reasons" aria-labelledby="home-reasons-title">
+<section class="section section--surface home-reasons has-section-bg" aria-labelledby="home-reasons-title">
+	<?php
+	get_template_part(
+		'template-parts/components/section-bg',
+		null,
+		array(
+			'image'  => 'textura-luz-sombra',
+			'width'  => 2400,
+			'height' => 1350,
+			'small'  => 1200,
+			'veil'   => 'surface',
+		)
+	);
+	?>
 	<div class="container">
 		<div class="section-head section-head--center" data-reveal="up">
 			<p class="eyebrow"><?php echo esc_html( frave_home_text( 'frave_home_reasons_eyebrow' ) ); ?></p>

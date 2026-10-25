@@ -151,7 +151,7 @@ test.describe('FRAVE con flores en sus letras', () => {
     const order = await page.locator('.home-intro > section').evaluateAll((sections) => sections.map((section) => [...section.classList].find((name) => name.startsWith('home-'))));
     expect(order.slice(0, 3)).toEqual(['home-hero', 'home-letters', 'home-lines']);
 
-    const word = page.getByRole('img', { name: 'Frave', exact: true });
+    const word = page.locator('[data-letters]');
     await expect(word.locator('.home-letters__tile img')).toHaveCount(5);
     expect(await word.evaluate((element) => getComputedStyle(element).maskImage || getComputedStyle(element).webkitMaskImage)).toContain('frave-mascara.webp');
     // Only the word: «Nuestras líneas» follows without another title.

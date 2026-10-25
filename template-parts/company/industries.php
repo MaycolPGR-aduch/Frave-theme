@@ -7,7 +7,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $frave_lines = frave_product_lines();
 ?>
-<section class="section company-industries" aria-labelledby="company-industries-title">
+<section class="section company-industries has-section-bg" aria-labelledby="company-industries-title">
+	<?php
+	get_template_part(
+		'template-parts/components/section-bg',
+		null,
+		array(
+			'image'  => 'textura-luz-sombra',
+			'width'  => 2400,
+			'height' => 1350,
+			'small'  => 1200,
+			'veil'   => 'white',
+		)
+	);
+	?>
 	<div class="container">
 		<div class="section-head" data-reveal="up">
 			<p class="eyebrow"><?php esc_html_e( 'A quién servimos', 'frave' ); ?></p>

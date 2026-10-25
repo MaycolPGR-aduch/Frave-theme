@@ -14,7 +14,20 @@ if ( '' === $frave_guide ) {
 	return;
 }
 ?>
-<section class="section line-families" aria-labelledby="line-families-title">
+<section class="section line-families has-section-bg" aria-labelledby="line-families-title">
+	<?php
+	get_template_part(
+		'template-parts/components/section-bg',
+		null,
+		array(
+			'image'  => 'textura-luz-sombra',
+			'width'  => 2400,
+			'height' => 1350,
+			'small'  => 1200,
+			'veil'   => 'white',
+		)
+	);
+	?>
 	<div class="container">
 		<div class="section-head section-head--split" data-reveal="up">
 			<p class="eyebrow"><?php esc_html_e( 'Guía de fragancias', 'frave' ); ?></p>
