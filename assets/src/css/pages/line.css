@@ -97,26 +97,30 @@
       max-width: 30rem;
     }
 
-    /* The landscape image fills the hero; its left side is the clean ivory behind the copy. */
-    /* On wide screens it starts near the centered copy, so the subject stays beside the text. */
+    /*
+     * The landscape image sits on the right at about two thirds of the width, whole (not
+     * cropped), and melts into the tone on its left, top and bottom edges; its clean left
+     * side passes behind the copy.
+     */
     .line-hero__media {
       position: absolute;
       z-index: -1;
-      inset: 0 0 0 max(0px, calc((100% - 90rem) / 2));
+      inset: var(--header-height) 0 var(--radius-xl) max(0px, calc((100% - 90rem) / 2));
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       margin: 0;
     }
 
     .line-hero__media img {
-      height: 100%;
-      object-fit: cover;
-      object-position: 35% 50%;
-      -webkit-mask-image: none;
-      mask-image: none;
-    }
-
-    /* Its arrangement starts further left: crop the right edge instead of the left. */
-    .line-hero--sabores .line-hero__media img {
-      object-position: 0% 50%;
+      width: min(100%, 62vw, 72rem);
+      height: auto;
+      max-height: 100%;
+      object-fit: contain;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 24%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, #000 24%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
     }
 
     .line-hero__media::after {
