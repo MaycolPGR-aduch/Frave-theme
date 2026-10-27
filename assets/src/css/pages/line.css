@@ -98,7 +98,7 @@
     }
 
     /*
-     * The landscape image sits on the right at about two thirds of the width, whole (not
+     * The landscape image sits on the right at about three quarters of the width, whole (not
      * cropped), and melts into the tone on its left, top and bottom edges; its clean left
      * side passes behind the copy.
      */
@@ -113,7 +113,7 @@
     }
 
     .line-hero__media img {
-      width: min(100%, 62vw, 72rem);
+      width: min(100%, 72vw, 84rem);
       height: auto;
       max-height: 100%;
       object-fit: contain;
