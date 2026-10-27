@@ -101,10 +101,10 @@ Tema `frave`:
 Sitio (base de datos, local y producción):
 
 - [x] Local: página «Catálogo», categorías Sabores, Fragancias y Envases, contacto publicado y menús nuevos (`.local-wordpress/seed-sitio-corporativo.php`).
-- [ ] Producción: página de la tienda renombrada a «Catálogo» (`/catalogo/`).
-- [ ] Producción: categorías `sabores`, `fragancias` y `envases`.
-- [ ] Producción: página de contacto revisada y publicada (sin ella no aparecen «Solicitar asesoría» ni «Solicitar cotización»).
-- [ ] Producción: número de WhatsApp Business en *Apariencia → Personalizar → Contacto*.
+- [x] Producción: página de la tienda renombrada a «Catálogo» (`/catalogo/`).
+- [x] Producción: categorías `sabores`, `fragancias` y `envases`.
+- [x] Producción: página de contacto revisada y publicada (sin ella no aparecen «Solicitar asesoría» ni «Solicitar cotización»).
+- [x] Producción: número de WhatsApp Business en *Apariencia → Personalizar → Contacto*. *(verificado el 27-10: WhatsApp, contacto, catálogo y categorías activos en frave.pe)*
 - [ ] Producción: menú principal asignado (opcional: mientras no haya uno, el tema muestra el de respaldo con la misma estructura).
 
 #### Publicar la fase 1
