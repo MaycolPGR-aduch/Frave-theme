@@ -122,7 +122,8 @@
     list-style: none;
   }
 
-  @media (min-width: 48rem) {
+  /* Side by side only where the second and third cards keep room for their notes. */
+  @media (min-width: 75rem) {
     .top-podium {
       grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
     }
@@ -134,7 +135,7 @@
 
   .top-card {
     display: grid;
-    grid-template-columns: 7.5rem minmax(0, 1fr);
+    grid-template-columns: minmax(8rem, 36%) minmax(0, 1fr);
     overflow: hidden;
     border: 1px solid var(--color-sand-line);
     border-radius: var(--radius-card);
@@ -161,6 +162,7 @@
     width: 100%;
     height: 100% !important; /* WooCommerce's unlayered img rule would set auto. */
     object-fit: cover;
+    object-position: 50% 45%;
   }
 
   .top-card__body {

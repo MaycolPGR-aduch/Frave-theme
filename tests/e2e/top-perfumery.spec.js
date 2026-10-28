@@ -17,6 +17,8 @@ test.describe('top de perfumería', () => {
     const men = top.locator('#top-panel-hombre');
     await expect(men.locator('.top-card__name')).toHaveText(['Invictus', 'Stronger With You Intense', 'Le Male Elixir']);
     await expect(men.locator('.top-card--1 .top-card__notes dt')).toHaveText(['Salida', 'Corazón', 'Fondo']);
+    // Each perfume has its own picture (assets/media/top/{slug}).
+    await expect(men.locator('.top-card--1 img')).toHaveAttribute('src', /media\/top\/invictus/);
     // Drafts (still to confirm) do not show.
     await expect(top).not.toContainText('Born in Roma');
     await expect(top.locator('#top-panel-mujer')).toBeHidden();
