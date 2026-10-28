@@ -25,6 +25,7 @@
 @import "./pages/families.css";
 @import "./pages/pyramid.css";
 @import "./pages/collections.css";
+@import "./pages/top-perfumery.css";
 @source "../../../**/*.php";
 @source "../js/**/*.js";
 @source not "../../../tests";

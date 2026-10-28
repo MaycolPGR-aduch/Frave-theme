@@ -91,6 +91,11 @@ get_header();
 			)
 		);
 
+		// The perfumery tops of the subcategories this industry uses (inc/top-perfumery.php).
+		if ( $frave_terms ) {
+			get_template_part( 'template-parts/components/top-perfumery-band', null, array( 'within' => $frave_terms ) );
+		}
+
 		if ( ! empty( frave_solutions()[ $frave_slug ]['families'] ) ) {
 			get_template_part( 'template-parts/components/family-wheel' );
 		}

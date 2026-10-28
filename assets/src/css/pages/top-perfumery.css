@@ -1,0 +1,447 @@
+/*
+ * Top de perfumería (inc/top-perfumery.php): on a perfumery subcategory, a light sand panel
+ * with tabs per audience, a podium for the first three and rows for the rest; on the
+ * Fragancias line and the Perfumería solution, a band with one card per subcategory.
+ */
+@layer components {
+  .top-perfumery {
+    display: grid;
+    gap: 1.75rem;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-sand-soft);
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+  }
+
+  .top-perfumery__head {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 46rem;
+  }
+
+  .top-perfumery__head .eyebrow {
+    margin: 0;
+  }
+
+  /* Inside WooCommerce's wrapper, where small headings are bold, keep the light display title. */
+  .top-perfumery h2,
+  .top-band h2 {
+    margin: 0;
+    font-weight: 300;
+  }
+
+  .top-perfumery__lead {
+    margin: 0;
+    color: var(--color-sand-muted);
+    font-size: 1.08rem;
+  }
+
+  .top-perfumery__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Before tabs.js (or without JavaScript) every list shows, named by its audience. */
+  .top-perfumery[data-tabs]:not(.is-ready) .top-perfumery__tabs,
+  .top-perfumery.is-ready .top-perfumery__audience {
+    display: none;
+  }
+
+  .top-perfumery__tab {
+    padding: 0.55rem 1.3rem;
+    border: 1px solid var(--color-sand-line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      background-color var(--duration-fast) ease,
+      border-color var(--duration-fast) ease;
+  }
+
+  .top-perfumery__tab:hover {
+    border-color: var(--color-primary);
+  }
+
+  .top-perfumery__tab[aria-selected="true"] {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .top-perfumery__tab:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .top-perfumery__panel {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /* The other audiences, hidden by tabs.js. */
+  .top-perfumery__panel[hidden] {
+    display: none;
+  }
+
+  .top-perfumery__audience {
+    margin: 0;
+    color: var(--color-sand-accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .top-perfumery__panel + .top-perfumery__panel {
+    margin-top: 1rem;
+  }
+
+  .top-perfumery.is-ready .top-perfumery__panel + .top-perfumery__panel {
+    margin-top: 0;
+  }
+
+  .top-perfumery__note {
+    margin: 0;
+    color: var(--color-sand-muted);
+    font-size: 0.82rem;
+  }
+
+  /* ---------- Podium ---------- */
+
+  .top-podium {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .top-podium {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    }
+
+    .top-card--1 {
+      grid-row: span 2;
+    }
+  }
+
+  .top-card {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    overflow: hidden;
+    border: 1px solid var(--color-sand-line);
+    border-radius: var(--radius-card);
+    background: #fff;
+  }
+
+  .top-card--1 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .top-card__media {
+    position: relative;
+    min-height: 100%;
+    background: var(--family-tone, var(--color-sand));
+  }
+
+  .top-card--1 .top-card__media {
+    aspect-ratio: 4 / 3;
+  }
+
+  .top-card__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100% !important; /* WooCommerce's unlayered img rule would set auto. */
+    object-fit: cover;
+  }
+
+  .top-card__body {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-content: start;
+    gap: 0.35rem 0.9rem;
+    padding: 1.1rem 1.25rem 1.2rem;
+  }
+
+  .top-card--1 .top-card__body {
+    padding: 1.4rem 1.6rem 1.6rem;
+  }
+
+  .top-card__body > :not(.top-card__rank) {
+    grid-column: 2;
+    margin: 0;
+  }
+
+  .top-card__rank {
+    grid-row: span 2;
+    color: var(--color-primary);
+    font-size: 2.4rem;
+    font-weight: 300;
+    font-variant-numeric: tabular-nums;
+    line-height: 0.9;
+  }
+
+  .top-card--1 .top-card__rank {
+    font-size: 4.5rem;
+  }
+
+  .top-card__name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .top-card--1 .top-card__name {
+    font-size: 1.6rem;
+  }
+
+  .top-card__house {
+    color: var(--color-muted);
+    font-size: 0.92rem;
+  }
+
+  .top-card .top-card__family {
+    justify-self: start;
+    margin-top: 0.3rem;
+    padding: 0.25rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .top-card__notes {
+    display: grid;
+    gap: 0.2rem;
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+  }
+
+  .top-card__notes div {
+    display: grid;
+    grid-template-columns: 4.6rem minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .top-card__notes dt {
+    color: var(--color-sand-accent);
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    line-height: 1.9;
+    text-transform: uppercase;
+  }
+
+  .top-card__notes dd {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  .top-card__reason {
+    color: var(--color-sand-muted);
+    font-size: 0.95rem;
+  }
+
+  .top-card__cta {
+    justify-self: start;
+    margin-top: 0.5rem;
+    font-size: 0.92rem;
+  }
+
+  /* ---------- From the fourth on ---------- */
+
+  .top-rows {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    border-radius: var(--radius-card);
+    background: #fff;
+    list-style: none;
+  }
+
+  .top-row {
+    display: grid;
+    grid-template-columns: 2.5rem 3.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.7rem 1.1rem;
+  }
+
+  .top-row + .top-row {
+    border-top: 1px solid var(--color-sand-line);
+  }
+
+  .top-row__rank {
+    color: var(--color-primary);
+    font-size: 1.6rem;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  .top-row__media {
+    position: relative;
+    width: 3.5rem;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background: var(--color-sand);
+  }
+
+  .top-row__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100% !important;
+    object-fit: cover;
+  }
+
+  .top-row__text {
+    display: grid;
+  }
+
+  .top-row__meta {
+    color: var(--color-muted);
+    font-size: 0.88rem;
+  }
+
+  .top-row__cta {
+    font-size: 0.9rem;
+  }
+
+  /* Phones: every card with its picture on top (2 and 3 lower), so the notes have room. */
+  @media (max-width: 47.99rem) {
+    .top-card {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .top-card__media {
+      aspect-ratio: 16 / 9;
+    }
+
+    .top-card--1 .top-card__media {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  @media (max-width: 30rem) {
+    .top-row {
+      grid-template-columns: 2rem 3rem minmax(0, 1fr);
+    }
+
+    .top-row__cta {
+      grid-column: 3;
+    }
+  }
+
+  /* ---------- Band (Fragancias, Perfumería) ---------- */
+
+  .top-band {
+    background: var(--color-sand-soft);
+  }
+
+  .top-band__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .top-band__card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--color-sand-line);
+    border-radius: var(--radius-card);
+    background: #fff;
+  }
+
+  .top-band__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--color-sand);
+  }
+
+  .top-band__media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100% !important;
+    object-fit: cover;
+  }
+
+  .top-band__body {
+    display: grid;
+    flex: 1;
+    grid-template-rows: auto 1fr auto;
+    gap: 0.9rem;
+    padding: 1.3rem 1.4rem 1.4rem;
+  }
+
+  .top-band__title {
+    margin: 0;
+    font-size: 1.35rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  .top-band__leaders {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .top-band__leaders li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 0.8rem;
+  }
+
+  .top-band__leaders li > span:last-child {
+    display: grid;
+  }
+
+  .top-band__rank {
+    color: var(--color-primary);
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .top-band__audience {
+    color: var(--color-sand-accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .top-band__house {
+    color: var(--color-muted);
+    font-size: 0.88rem;
+  }
+
+  .top-band__link {
+    justify-self: start;
+  }
+
+  .top-band .top-perfumery__note {
+    margin-top: 1.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .top-perfumery__tab {
+      transition: none;
+    }
+  }
+}

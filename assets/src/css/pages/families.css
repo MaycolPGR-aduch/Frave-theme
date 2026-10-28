@@ -481,6 +481,11 @@
     border-top: 1px solid rgb(255 255 255 / 12%);
   }
 
+  /* At least 24 px tall (WCAG 2.5.8, target size). */
+  .family-wheel__actions .link-arrow {
+    min-height: 1.5rem;
+  }
+
   .family-wheel .link-arrow {
     color: var(--color-orange-light);
   }

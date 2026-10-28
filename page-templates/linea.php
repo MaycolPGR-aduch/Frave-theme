@@ -28,6 +28,10 @@ get_header();
 		</div>
 		<?php
 		get_template_part( 'template-parts/line/portfolio', null, $frave_line );
+		// The perfumery tops of the line's subcategories (inc/top-perfumery.php), if any.
+		if ( $frave_line['term'] ) {
+			get_template_part( 'template-parts/components/top-perfumery-band', null, array( 'within' => array( $frave_line['term'] ) ) );
+		}
 		get_template_part( 'template-parts/line/families', null, $frave_line );
 		get_template_part( 'template-parts/line/pyramid', null, $frave_line );
 		get_template_part( 'template-parts/line/gallery', null, $frave_line );

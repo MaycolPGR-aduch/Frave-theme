@@ -131,6 +131,18 @@ Una **colección** agrupa los aromas pensados para un tipo de producto de una su
 - **Crear el atributo, las primeras nueve colecciones y el centro:** `wp eval-file RUTA/bin/crear-colecciones.php` y después `wp rewrite flush` (deja como están las que ya existen).
 - **Código:** `inc/collections.php`, `template-parts/components/collections.php` y `collection-card.php`, `assets/src/css/pages/collections.css`.
 
+### Top de perfumería
+
+Los perfumes que marcan tendencia en cada subcategoría de perfumería (diseñador, nicho y árabe), mostrados **como inspiración**: lo que el cliente puede crear con las esencias de Frave, nunca como productos en venta. No son productos de WooCommerce, así que no aparecen en el catálogo ni en los filtros.
+
+- **Dónde aparecen:** justo después de la cabecera de su subcategoría (pestañas Hombre · Mujer · Unisex cuando hay más de un público, podio para los tres primeros y filas para el resto), y como banda en Fragancias y en Soluciones → Perfumería (el primero de cada público, o los tres primeros si hay un solo público, con «Ver el top»).
+- **«Quiero crear este perfil»** abre el formulario de contacto con la línea y el mensaje escritos (`?perfil=`, filtro `frave_peru_contact_prefill` del plugin) y se cuenta en *Mensajes → Medición* con el lugar `top-perfumeria`.
+- **Datos** (*Top perfumería* en el panel): el título es el nombre del perfume; casa, subcategoría, para quién, familia olfativa y notas de salida, corazón y fondo; «Por qué es tendencia» (extracto, se ve en el primer puesto); y el puesto (campo «Orden», 1 = primero). Solo se muestran las referencias publicadas.
+- **Imágenes:** la imagen destacada, o `assets/media/top/{slug}.webp` (1080 × 1080) y `{slug}-540.webp`, o mientras tanto la de su familia olfativa. Prompts en `recursos-graficos/top-perfumeria/PROMPTS.md`: el frasco de muestra con los ingredientes de sus notas, nunca el frasco del perfume original.
+- **Aviso:** cada top cierra con «Marcas citadas como referencia del mercado; pertenecen a sus titulares».
+- **Crear las primeras referencias:** `wp eval-file RUTA/bin/crear-top-perfumeria.php` (publica las confirmadas y deja como borrador las que Frave debe confirmar; no toca las que ya existen).
+- **Código:** `inc/top-perfumery.php`, `template-parts/components/top-perfumery.php` y `top-perfumery-band.php`, `assets/src/css/pages/top-perfumery.css`.
+
 ### Blog
 
 La página de entradas (Ajustes → Lectura) muestra los temas (categorías con artículos), el último artículo destacado y los demás en tarjetas. Cada artículo tiene migas de pan, categoría, fecha y tiempo de lectura, la imagen destacada, el texto con los enlaces para compartir al lado (debajo en móvil) y «Sigue leyendo» con artículos del mismo tema.

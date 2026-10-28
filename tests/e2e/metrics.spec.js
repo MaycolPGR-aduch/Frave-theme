@@ -42,6 +42,17 @@ test.describe('medición de contactos', () => {
     expect(events[0]).toMatchObject({ type: 'quote', source: 'main', status: 204 });
   });
 
+  test('un clic en el top de perfumería se cuenta con su lugar', async ({ page }) => {
+    const events = await captureEvents(page);
+    await page.goto('/?product_cat=perfumeria-disenador');
+    const cta = page.locator('#top-perfumeria .top-card__cta').first();
+    test.skip((await cta.count()) === 0 || (await cta.getAttribute('target')) === '_blank', 'Sin top o sin página de contacto.');
+    await page.evaluate(() => document.addEventListener('click', (event) => event.preventDefault()));
+    await cta.click();
+    await expect.poll(() => events.length).toBe(1);
+    expect(events[0]).toMatchObject({ type: 'quote', source: 'top-perfumeria', status: 204 });
+  });
+
   test('la ruta solo acepta clics de los tipos conocidos', async ({ request }) => {
     const route = '/?rest_route=/frave-peru/v1/evento';
     expect((await request.post(route, { data: JSON.stringify({ type: 'form' }) })).status()).toBe(400);
