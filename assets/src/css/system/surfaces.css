@@ -374,11 +374,39 @@
   }
 
   /*
-   * Hero with an image (catalog categories): text and image side by side on wide screens.
-   * On phones the image is left out so the products stay close to the top.
+   * Hero with an image (catalog categories and collections): text and image side by side on
+   * wide screens. On phones and tablets the image follows the title, between it and the
+   * description, so the band keeps its picture.
    */
-  .page-hero__media {
-    display: none;
+  @media (max-width: 59.99rem) {
+    .page-hero__layout {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      justify-items: start;
+      gap: 1.1rem;
+    }
+
+    .page-hero--media .page-hero__inner {
+      display: contents;
+    }
+
+    .page-hero__media {
+      order: 1;
+      width: 100%;
+      max-width: 36rem;
+      aspect-ratio: 3 / 2;
+      border-radius: 1.25rem;
+      box-shadow: 0 1.25rem 2.5rem rgb(92 82 72 / 20%);
+    }
+
+    .page-hero__media > img {
+      height: 100% !important; /* WooCommerce's unlayered ".woocommerce img { height: auto }" otherwise wins. */
+    }
+
+    .page-hero--media .page-hero__inner > :is(.page-hero__lead, .page-hero__meta, .page-hero__actions, .page-hero__facts, .page-hero__search) {
+      order: 2;
+    }
   }
 
   @media (min-width: 60rem) {

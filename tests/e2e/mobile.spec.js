@@ -72,6 +72,17 @@ test.describe('móvil', () => {
     expect(box.y).toBeGreaterThanOrEqual(0);
   });
 
+  test('la cabecera de una categoría muestra su imagen bajo el título', async ({ page }) => {
+    await page.goto('/?product_cat=perfumeria-disenador');
+    const media = page.locator('.page-hero__media');
+    await expect(media).toBeVisible();
+    const title = await page.locator('.page-hero h1').boundingBox();
+    const image = await media.boundingBox();
+    const lead = await page.locator('.page-hero__lead').boundingBox();
+    expect(image.y).toBeGreaterThan(title.y + title.height - 1);
+    expect(lead.y).toBeGreaterThan(image.y + image.height - 1);
+  });
+
   test('la página no se desborda horizontalmente', async ({ page }) => {
     for (const path of ['/', SHOP, '/?pagename=contacto', '/?pagename=fragancias', '/?pagename=nosotros', '/?pagename=servicios', '/?pagename=soluciones', '/?pagename=soluciones/perfumeria']) {
       await page.goto(path);
