@@ -45,7 +45,7 @@ test.describe('medición de contactos', () => {
   test('un clic en el top de perfumería se cuenta con su lugar', async ({ page }) => {
     const events = await captureEvents(page);
     await page.goto('/?product_cat=perfumeria-disenador');
-    const cta = page.locator('#top-perfumeria .top-card__cta').first();
+    const cta = page.locator('#top-perfumeria .top-item.is-open .top-item__cta').first();
     test.skip((await cta.count()) === 0 || (await cta.getAttribute('target')) === '_blank', 'Sin top o sin página de contacto.');
     await page.evaluate(() => document.addEventListener('click', (event) => event.preventDefault()));
     await cta.click();

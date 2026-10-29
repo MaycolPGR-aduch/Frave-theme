@@ -15,16 +15,19 @@ test.describe('top de perfumería', () => {
     await expect(top.getByRole('tab')).toHaveText(['Hombre', 'Mujer']);
 
     const men = top.locator('#top-panel-hombre');
-    await expect(men.locator('.top-card__name')).toHaveText(['Invictus', 'Stronger With You Intense', 'Le Male Elixir']);
-    await expect(men.locator('.top-card--1 .top-card__notes dt')).toHaveText(['Salida', 'Corazón', 'Fondo']);
-    // Each perfume has its own picture (assets/media/top/{slug}).
-    await expect(men.locator('.top-card--1 img')).toHaveAttribute('src', /media\/top\/invictus/);
+    await expect(men.locator('.top-item__name')).toHaveText(['Invictus', 'Stronger With You Intense', 'Le Male Elixir']);
+    // The first panel starts open, with its notes and its own picture (assets/media/top/{slug}).
+    const first = men.locator('.top-item').first();
+    await expect(first.locator('.top-item__toggle')).toHaveAttribute('aria-expanded', 'true');
+    await expect(first.locator('.top-item__notes dt')).toHaveText(['Salida', 'Corazón', 'Fondo']);
+    await expect(first.locator('.top-item__media img')).toHaveAttribute('src', /media\/top\/invictus/);
+    await expect(men.locator('.top-item').nth(1).locator('.top-item__cta')).not.toBeInViewport();
     // Drafts (still to confirm) do not show.
     await expect(top).not.toContainText('Born in Roma');
     await expect(top.locator('#top-panel-mujer')).toBeHidden();
 
     await top.getByRole('tab', { name: 'Mujer' }).click();
-    await expect(top.locator('#top-panel-mujer .top-card__name').first()).toHaveText('N°5');
+    await expect(top.locator('#top-panel-mujer .top-item__name').first()).toHaveText('N°5');
     await expect(men).toBeHidden();
     await expect(top.locator('.top-perfumery__note')).toContainText('referencia del mercado');
     expect(errors).toEqual([]);
@@ -34,12 +37,33 @@ test.describe('top de perfumería', () => {
     await page.goto('/?product_cat=perfumeria-exclusiva');
     const top = page.locator('#top-perfumeria');
     await expect(top.getByRole('tab')).toHaveCount(0);
-    await expect(top.locator('.top-card__name')).toHaveText(['Imagination', 'Ombré Leather', 'Baccarat Rouge 540']);
+    await expect(top.locator('.top-item__name')).toHaveText(['Imagination', 'Ombré Leather', 'Baccarat Rouge 540']);
+  });
+
+  test('un panel se abre a la vez: con el ratón al señalarlo y en el celular con un toque', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto(DESIGNER);
+    const items = page.locator('#top-panel-hombre .top-item');
+    await items.nth(2).hover();
+    await expect(items.nth(2)).toHaveClass(/is-open/);
+    await expect(items.first()).not.toHaveClass(/is-open/);
+    await expect(items.nth(2).locator('.top-item__toggle')).toHaveAttribute('aria-expanded', 'true');
+    // Closed panels keep their links out of the keyboard's way.
+    await expect(items.first().locator('.top-item__panel')).toHaveJSProperty('inert', true);
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.reload();
+    await items.nth(1).locator('.top-item__toggle').click();
+    await expect(items.nth(1)).toHaveClass(/is-open/);
+    await expect(items.nth(1).locator('.top-item__cta')).toBeVisible();
+    // A second tap closes it.
+    await items.nth(1).locator('.top-item__toggle').click();
+    await expect(items.nth(1).locator('.top-item__toggle')).toHaveAttribute('aria-expanded', 'false');
   });
 
   test('«Quiero crear este perfil» abre el formulario con el perfil escrito', async ({ page }) => {
     await page.goto(DESIGNER);
-    const cta = page.locator('#top-panel-hombre .top-card--1 .top-card__cta');
+    const cta = page.locator('#top-panel-hombre .top-item').first().locator('.top-item__cta');
     test.skip((await cta.getAttribute('target')) === '_blank', 'Sin página de contacto: el perfil va por WhatsApp.');
     await cta.click();
     await expect(page.locator('#frave-contact-message')).toHaveValue(/perfil similar a Invictus \(Paco Rabanne\)/);

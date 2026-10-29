@@ -21,6 +21,7 @@ import { initializeStacks } from './modules/stack.js';
 import { initializeTabs } from './modules/tabs.js';
 import { initializeTermCards } from './modules/term-cards.js';
 import { initializeTickers } from './modules/ticker.js';
+import { initializeTopPanels } from './modules/top-panels.js';
 import { initializeWhatsAppChat } from './modules/whatsapp-chat.js';
 
 document.documentElement.classList.add('js');
@@ -36,6 +37,7 @@ initializeTermCards();
 initializeFamilyWheels();
 initializeTabs();
 initializeIndustryPanels();
+initializeTopPanels();
 initializeCounters();
 initializeHeroVideo();
 initializeLetters();

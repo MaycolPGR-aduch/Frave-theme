@@ -1,7 +1,8 @@
 /*
  * Top de perfumería (inc/top-perfumery.php): on a perfumery subcategory, a light sand panel
- * with tabs per audience, a podium for the first three and rows for the rest; on the
- * Fragancias line and the Perfumería solution, a band with one card per subcategory.
+ * with tabs per audience and the ranking as stacked panels (top-panels.js) that open
+ * downward; on the Fragancias line and the Perfumería solution, a band with one card per
+ * subcategory.
  */
 @layer components {
   .top-perfumery {
@@ -112,232 +113,318 @@
     font-size: 0.82rem;
   }
 
-  /* ---------- Podium ---------- */
+  /* ---------- Panels (top-panels.js) ---------- */
 
-  .top-podium {
+  /* Phones and tablets: an accordion; each panel opens downward with its picture. */
+  .top-panels {
     display: grid;
-    gap: 1rem;
+    gap: 0.75rem;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  /* Side by side only where the second and third cards keep room for their notes. */
-  @media (min-width: 75rem) {
-    .top-podium {
-      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-    }
-
-    .top-card--1 {
-      grid-row: span 2;
-    }
-  }
-
-  .top-card {
-    display: grid;
-    grid-template-columns: minmax(8rem, 36%) minmax(0, 1fr);
+  .top-item {
     overflow: hidden;
     border: 1px solid var(--color-sand-line);
     border-radius: var(--radius-card);
     background: #fff;
+    transition:
+      border-color var(--duration) ease,
+      box-shadow var(--duration-slow) var(--ease-out);
   }
 
-  .top-card--1 {
-    grid-template-columns: minmax(0, 1fr);
+  .top-item.is-open {
+    border-color: color-mix(in srgb, var(--color-primary) 40%, var(--color-sand-line));
+    box-shadow: 0 1.25rem 2.75rem rgb(29 43 79 / 10%);
   }
 
-  .top-card__media {
+  .top-item__heading {
+    margin: 0;
+    font: inherit;
+  }
+
+  .top-item__toggle {
+    display: grid;
+    grid-template-columns: 2.5rem 3.5rem minmax(0, 1fr) 1.5rem;
+    align-items: center;
+    gap: 0.85rem;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 0;
+    background: none;
+    color: var(--color-ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .top-item__toggle:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: -3px;
+  }
+
+  .top-item__rank {
+    color: var(--color-primary);
+    font-size: 2rem;
+    font-weight: 300;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    text-align: center;
+    transition: font-size var(--duration-slow) var(--ease-out);
+  }
+
+  .top-item__thumb {
     position: relative;
-    min-height: 100%;
+    width: 3.5rem;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 0.8rem;
     background: var(--family-tone, var(--color-sand));
   }
 
-  .top-card--1 .top-card__media {
-    aspect-ratio: 4 / 3;
-  }
-
-  .top-card__media img {
+  .top-item__thumb img,
+  .top-item__media img {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100% !important; /* WooCommerce's unlayered img rule would set auto. */
     object-fit: cover;
-    object-position: 50% 45%;
   }
 
-  .top-card__body {
+  .top-item__title {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    align-content: start;
-    gap: 0.35rem 0.9rem;
-    padding: 1.1rem 1.25rem 1.2rem;
   }
 
-  .top-card--1 .top-card__body {
-    padding: 1.4rem 1.6rem 1.6rem;
-  }
-
-  .top-card__body > :not(.top-card__rank) {
-    grid-column: 2;
-    margin: 0;
-  }
-
-  .top-card__rank {
-    grid-row: span 2;
-    color: var(--color-primary);
-    font-size: 2.4rem;
-    font-weight: 300;
-    font-variant-numeric: tabular-nums;
-    line-height: 0.9;
-  }
-
-  .top-card--1 .top-card__rank {
-    font-size: 4.5rem;
-  }
-
-  .top-card__name {
-    font-size: 1.2rem;
+  .top-item__name {
+    font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: -0.01em;
-    line-height: 1.2;
+    line-height: 1.25;
+    transition: font-size var(--duration-slow) var(--ease-out);
   }
 
-  .top-card--1 .top-card__name {
-    font-size: 1.6rem;
-  }
-
-  .top-card__house {
+  .top-item__house {
     color: var(--color-muted);
-    font-size: 0.92rem;
-  }
-
-  .top-card .top-card__family {
-    justify-self: start;
-    margin-top: 0.3rem;
-    padding: 0.25rem 0.8rem;
-    font-size: 0.8rem;
-  }
-
-  .top-card__notes {
-    display: grid;
-    gap: 0.2rem;
-    margin-top: 0.4rem;
     font-size: 0.9rem;
   }
 
-  .top-card__notes div {
-    display: grid;
-    grid-template-columns: 4.6rem minmax(0, 1fr);
-    gap: 0.5rem;
+  .top-item__chevron .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-primary);
+    transition: transform var(--duration-slow) var(--ease-out);
   }
 
-  .top-card__notes dt {
+  .top-item.is-open .top-item__chevron .icon {
+    transform: rotate(180deg);
+  }
+
+  /* The panel's height eases from 0 to its content (grid rows 0fr → 1fr). */
+  .top-item__panel {
+    display: grid;
+    grid-template-rows: 1fr;
+  }
+
+  .top-panels.is-ready .top-item__panel {
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .top-panels.is-ready .top-item.is-open .top-item__panel {
+    grid-template-rows: 1fr;
+  }
+
+  .top-item__inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .top-item__media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    margin: 0 1rem;
+    overflow: hidden;
+    border-radius: 0.9rem;
+    background: var(--family-tone, var(--color-sand));
+  }
+
+  .top-item__details {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.1rem 1.15rem 1.35rem;
+  }
+
+  /* Opening: the picture settles from a gentle zoom and the details rise one after another. */
+  .top-panels.is-ready .top-item__media img {
+    opacity: 0;
+    transform: scale(1.12);
+    transition:
+      opacity 500ms ease,
+      transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .top-panels.is-ready .top-item.is-open .top-item__media img {
+    opacity: 1;
+    transform: none;
+    transition-delay: 120ms;
+  }
+
+  .top-panels.is-ready .top-item__details > * {
+    opacity: 0;
+    transform: translateY(0.9rem);
+    transition:
+      opacity 300ms ease,
+      transform 300ms ease;
+  }
+
+  .top-panels.is-ready .top-item.is-open .top-item__details > * {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 500ms ease,
+      transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .top-panels.is-ready .top-item.is-open .top-item__details > :nth-child(1) {
+    transition-delay: 220ms;
+  }
+
+  .top-panels.is-ready .top-item.is-open .top-item__details > :nth-child(2) {
+    transition-delay: 300ms;
+  }
+
+  .top-panels.is-ready .top-item.is-open .top-item__details > :nth-child(3) {
+    transition-delay: 380ms;
+  }
+
+  .top-panels.is-ready .top-item.is-open .top-item__details > :nth-child(4) {
+    transition-delay: 460ms;
+  }
+
+  .top-item .top-item__family {
+    justify-self: start;
+    padding: 0.3rem 0.85rem;
+    background: var(--family-tone, var(--color-sand));
+    font-size: 0.82rem;
+  }
+
+  .top-item__notes {
+    display: grid;
+    gap: 0.3rem;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .top-item__notes div {
+    display: grid;
+    grid-template-columns: 5rem minmax(0, 1fr);
+    gap: 0.6rem;
+  }
+
+  .top-item__notes dt {
     color: var(--color-sand-accent);
     font-size: 0.74rem;
     font-weight: 700;
     letter-spacing: 0.1em;
-    line-height: 1.9;
+    line-height: 1.95;
     text-transform: uppercase;
   }
 
-  .top-card__notes dd {
+  .top-item__notes dd {
     margin: 0;
-    color: var(--color-ink);
   }
 
-  .top-card__reason {
+  .top-item__reason {
+    margin: 0;
     color: var(--color-sand-muted);
-    font-size: 0.95rem;
   }
 
-  .top-card__cta {
+  .top-item__cta {
     justify-self: start;
-    margin-top: 0.5rem;
-    font-size: 0.92rem;
   }
 
-  /* ---------- From the fourth on ---------- */
-
-  .top-rows {
-    display: grid;
-    margin: 0;
-    padding: 0;
-    border-radius: var(--radius-card);
-    background: #fff;
-    list-style: none;
-  }
-
-  .top-row {
-    display: grid;
-    grid-template-columns: 2.5rem 3.5rem minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 0.9rem;
-    padding: 0.7rem 1.1rem;
-  }
-
-  .top-row + .top-row {
-    border-top: 1px solid var(--color-sand-line);
-  }
-
-  .top-row__rank {
-    color: var(--color-primary);
-    font-size: 1.6rem;
-    font-weight: 300;
-    text-align: center;
-  }
-
-  .top-row__media {
-    position: relative;
-    width: 3.5rem;
-    aspect-ratio: 1;
-    overflow: hidden;
-    border-radius: 0.75rem;
-    background: var(--color-sand);
-  }
-
-  .top-row__media img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100% !important;
-    object-fit: cover;
-  }
-
-  .top-row__text {
-    display: grid;
-  }
-
-  .top-row__meta {
-    color: var(--color-muted);
-    font-size: 0.88rem;
-  }
-
-  .top-row__cta {
-    font-size: 0.9rem;
-  }
-
-  /* Phones: every card with its picture on top (2 and 3 lower), so the notes have room. */
-  @media (max-width: 47.99rem) {
-    .top-card {
-      grid-template-columns: minmax(0, 1fr);
+  /*
+   * Wide screens: the panels fill a fixed height and the one the mouse points at grows
+   * downward (flex-grow), with the text on the left and the picture on the right.
+   */
+  @media (min-width: 64rem) {
+    .top-panels {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      height: calc(var(--count, 3) * 5.35rem + 23rem);
     }
 
-    .top-card__media {
-      aspect-ratio: 16 / 9;
+    .top-item {
+      display: grid;
+      flex: 0 0 4.75rem;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+      grid-template-rows: 4.75rem minmax(0, 1fr);
+      min-height: 0;
+      transition:
+        flex-grow 750ms cubic-bezier(0.22, 1, 0.36, 1),
+        border-color var(--duration) ease,
+        box-shadow var(--duration-slow) var(--ease-out);
     }
 
-    .top-card--1 .top-card__media {
-      aspect-ratio: 4 / 3;
-    }
-  }
-
-  @media (max-width: 30rem) {
-    .top-row {
-      grid-template-columns: 2rem 3rem minmax(0, 1fr);
+    .top-item.is-open {
+      flex-grow: 1;
     }
 
-    .top-row__cta {
-      grid-column: 3;
+    .top-item__heading {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .top-item__toggle {
+      grid-template-columns: 3.5rem minmax(0, 1fr);
+      height: 100%;
+      padding: 0 1.5rem;
+    }
+
+    .top-item__thumb,
+    .top-item__chevron {
+      display: none;
+    }
+
+    .top-item.is-open .top-item__rank {
+      font-size: 3rem;
+    }
+
+    .top-item.is-open .top-item__name {
+      font-size: 1.35rem;
+    }
+
+    /* The panel's parts join the item's grid. */
+    .top-item__panel,
+    .top-panels.is-ready .top-item__panel,
+    .top-item__inner {
+      display: contents;
+    }
+
+    .top-item__media {
+      grid-column: 2;
+      grid-row: 1 / -1;
+      aspect-ratio: auto;
+      margin: 0;
+      border-radius: 0;
+    }
+
+    /* Closed panels show a band of their picture. */
+    .top-panels.is-ready .top-item__media img {
+      opacity: 1;
+      transform: scale(1.06);
+      transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .top-item__details {
+      grid-column: 1;
+      grid-row: 2;
+      align-content: start;
+      min-height: 0;
+      overflow: hidden;
+      padding: 0.25rem 1.75rem 1.5rem 5rem;
     }
   }
 
@@ -442,8 +529,21 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .top-perfumery__tab {
+    .top-perfumery__tab,
+    .top-item,
+    .top-item__rank,
+    .top-item__name,
+    .top-item__chevron .icon,
+    .top-panels.is-ready .top-item__panel,
+    .top-panels.is-ready .top-item__media img,
+    .top-panels.is-ready .top-item__details > *,
+    .top-panels.is-ready .top-item.is-open .top-item__details > * {
       transition: none;
+    }
+
+    .top-panels.is-ready .top-item__media img,
+    .top-panels.is-ready .top-item__details > * {
+      transform: none;
     }
   }
 }
