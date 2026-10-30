@@ -78,7 +78,7 @@ El énfasis dentro de un título se hace con `<strong>` (700), con `.pill` (pala
 ## Espacio, radios y sombras
 
 - Contenedor de 80rem con márgenes fluidos (`--site-gutter`). Las páginas interiores alinean su contenido con el logo y limitan la lectura a 58rem.
-- Secciones con `--section-space` = `clamp(4.5rem, 9vw, 8rem)`.
+- Secciones con `--section-space` = `clamp(2.75rem, 6vw, 5.5rem)` (44 a 88 px por lado; hasta el 01-11 era de 72 a 128 px).
 - Radios: `--radius-sm` 0,75rem, `--radius-md` 1,25rem (tarjetas), `--radius-lg` 2rem (marcos), `--radius-xl` hasta 3,25rem (bandas y secciones superpuestas).
 - Sombras: `--shadow-soft` (reposo), `--shadow-lift` (tarjeta al pasar el puntero, cabecera al hacer scroll), `--shadow-header`.
 

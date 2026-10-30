@@ -1174,6 +1174,23 @@
     height: 1.2rem;
   }
 
+  /* Phones: four note icons fit the narrow card (after the rules above, so it wins). */
+  @media (max-width: 39.99rem) {
+    .world-art__notes {
+      gap: 0.2rem;
+    }
+
+    .world-art__notes span {
+      width: 1.55rem;
+      height: 1.55rem;
+    }
+
+    .world-art__notes .note-icon {
+      width: 0.95rem;
+      height: 0.95rem;
+    }
+  }
+
   /* ---------- Catalog panel: figures and the whole catalog ---------- */
 
   .home-catalog__figures {

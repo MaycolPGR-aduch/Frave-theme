@@ -93,7 +93,8 @@
     --duration-fast: 160ms;
     --duration: 320ms;
     --duration-slow: 750ms;
-    --section-space: clamp(4.5rem, 9vw, 8rem);
+    /* Each side of a section: 44 px on phones to 88 px on wide screens (was 72 to 128). */
+    --section-space: clamp(2.75rem, 6vw, 5.5rem);
     --text-display: clamp(3rem, 7vw, 6.25rem);
     --text-h1: clamp(2.6rem, 5.4vw, 4.6rem);
     --text-h2: clamp(2.1rem, 4vw, 3.4rem);
