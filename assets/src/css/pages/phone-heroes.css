@@ -1,0 +1,157 @@
+/*
+ * The first screen on phones: every hero (company, solution, line and interior pages) shows
+ * its whole first band, as the home hero does. Less room under the header, a smaller title
+ * and lead, the two buttons side by side and smaller, and the picture smaller and higher.
+ * Imported after the pages, so these rules win over each page's own.
+ */
+@layer components {
+  @media (max-width: 39.99rem) {
+    /* ---------- Buttons side by side ---------- */
+
+    :is(.company-hero, .line-hero, .page-hero) .btn-row {
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+    }
+
+    :is(.company-hero, .line-hero, .page-hero) .btn-row .btn {
+      flex: 0 1 auto;
+      gap: 0.45rem;
+      min-width: 0;
+      min-height: 2.75rem;
+      padding: 0.3rem 0.35rem 0.3rem 0.95rem;
+      font-size: 0.8rem;
+      line-height: 1.15;
+      text-align: left;
+    }
+
+    :is(.company-hero, .line-hero, .page-hero) .btn-row .btn__icon {
+      flex: none;
+      width: 1.85rem;
+      height: 1.85rem;
+    }
+
+    /* ---------- Company and solution heroes ---------- */
+
+    .company-hero {
+      padding-top: calc(var(--header-height) + 1.25rem);
+      padding-bottom: calc(var(--radius-xl) + 1.5rem);
+    }
+
+    .company-hero__grid {
+      gap: 1.5rem;
+    }
+
+    .company-hero__title {
+      margin-bottom: 0.85rem;
+      font-size: clamp(2.05rem, 9.4vw, 2.45rem);
+    }
+
+    .company-hero__lead {
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    /* The picture (drop, arch or word cloud) smaller, right under the buttons. */
+    .company-hero .hero-visual,
+    .solution-hero .hero-visual {
+      width: min(64%, 15.5rem);
+    }
+
+    /* Servicios: the word cloud of Peru, narrower (it is tall). */
+    .company-hero .word-cloud {
+      width: min(50%, 12.5rem);
+    }
+
+    /* ---------- Line heroes ---------- */
+
+    .line-hero__inner {
+      padding-block: 1.25rem 0;
+    }
+
+    .line-hero__title {
+      margin-bottom: 0.85rem;
+      font-size: clamp(2.05rem, 9.4vw, 2.45rem);
+    }
+
+    .line-hero__lead {
+      margin-bottom: 1.25rem;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    /* The portrait picture shorter: its ingredients, not its empty top. */
+    .line-hero__media {
+      margin-top: -2.5rem;
+    }
+
+    .line-hero__media img {
+      height: min(112vw, 22rem);
+      object-fit: cover;
+      object-position: 50% 78%;
+    }
+
+    /* ---------- Interior pages, catalog and collections ---------- */
+
+    .page-hero {
+      padding-block: calc(var(--header-height) + 1.25rem) 1.75rem;
+    }
+
+    .page-hero__inner,
+    .page-hero__layout {
+      gap: 0.85rem;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(2rem, 9vw, 2.4rem);
+    }
+
+    .page-hero__lead,
+    .page-hero__lead p {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .page-hero__media {
+      aspect-ratio: 16 / 9;
+    }
+
+    /* A long description shows four lines and «Leer más» (assets/src/js/modules/clamp.js). */
+    .page-hero__lead.is-clampable:not(.is-expanded) {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      line-clamp: 4;
+    }
+
+    .page-hero__lead.is-clampable:not(.is-expanded) p {
+      display: inline;
+    }
+
+    .page-hero__search {
+      margin-top: 0.25rem;
+    }
+  }
+
+  /* «Leer más» of a clamped text (shown only when the text is cut). */
+  .clamp-toggle {
+    display: none;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-primary);
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  @media (max-width: 39.99rem) {
+    .clamp-toggle.is-needed {
+      display: inline-flex;
+      order: 2;
+      margin-top: -0.5rem;
+    }
+  }
+}

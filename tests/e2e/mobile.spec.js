@@ -83,6 +83,31 @@ test.describe('móvil', () => {
     expect(lead.y).toBeGreaterThan(image.y + image.height - 1);
   });
 
+  test('la primera pantalla muestra la cabecera completa con los botones lado a lado', async ({ page }) => {
+    for (const url of ['/?pagename=soluciones', '/?pagename=nosotros', '/?pagename=fragancias', '/?pagename=soluciones/perfumeria']) {
+      await page.goto(url);
+      const hero = page.locator('.company-hero, .line-hero').first();
+      const box = await hero.boundingBox();
+      const viewport = page.viewportSize();
+      expect(box.y + box.height, url).toBeLessThanOrEqual(viewport.height + 2);
+      const buttons = hero.locator('.btn-row .btn');
+      if ((await buttons.count()) > 1) {
+        const [first, second] = [await buttons.nth(0).boundingBox(), await buttons.nth(1).boundingBox()];
+        expect(Math.abs(first.y - second.y), url).toBeLessThan(2);
+      }
+    }
+  });
+
+  test('una descripción larga muestra «Leer más» y se despliega', async ({ page }) => {
+    await page.goto('/?product_cat=perfumeria-disenador');
+    const more = page.locator('.page-hero .clamp-toggle');
+    await expect(more).toBeVisible();
+    await expect(more).toHaveText('Leer más');
+    await more.click();
+    await expect(more).toHaveText('Leer menos');
+    await expect(more).toHaveAttribute('aria-expanded', 'true');
+  });
+
   test('la página no se desborda horizontalmente', async ({ page }) => {
     for (const path of ['/', SHOP, '/?pagename=contacto', '/?pagename=fragancias', '/?pagename=nosotros', '/?pagename=servicios', '/?pagename=soluciones', '/?pagename=soluciones/perfumeria']) {
       await page.goto(path);

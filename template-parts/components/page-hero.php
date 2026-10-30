@@ -55,7 +55,7 @@ $frave_hero_media = '' !== $frave_hero['image'];
 		<?php endif; ?>
 		<h1><?php echo wp_kses_post( $frave_hero['title'] ); ?></h1>
 		<?php if ( '' !== trim( wp_strip_all_tags( (string) $frave_hero['lead'] ) ) ) : ?>
-			<div class="page-hero__lead"><?php echo wp_kses_post( wpautop( $frave_hero['lead'] ) ); ?></div>
+			<div class="page-hero__lead" data-clamp><?php echo wp_kses_post( wpautop( $frave_hero['lead'] ) ); ?></div>
 		<?php endif; ?>
 		<?php if ( '' !== $frave_hero['meta'] ) : ?>
 			<p class="page-hero__meta"><?php echo wp_kses_post( $frave_hero['meta'] ); ?></p>
