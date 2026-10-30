@@ -1,7 +1,9 @@
 <?php
 /**
  * Home page. The hero stays in place on large screens while the FRAVE wordmark with flowers
- * in its letters rises over it, followed by "Nuestras líneas"; the following sections scroll normally, and the last ones (articles and
+ * in its letters rises over it, followed by "Nuestras líneas"; then the industries, how Frave
+ * works, the collections, the fragrance guide, the reasons, the catalog and the featured
+ * products scroll normally, and the last ones (articles and
  * location) share the beige backdrop. Copy: ACF group "Inicio Frave" (defaults in
  * inc/home.php).
  */
@@ -13,10 +15,14 @@ get_header();
 		<?php get_template_part( 'template-parts/home/letters' ); ?>
 		<?php get_template_part( 'template-parts/home/lines' ); ?>
 	</div>
+	<?php get_template_part( 'template-parts/home/solutions' ); ?>
 	<?php get_template_part( 'template-parts/home/steps' ); ?>
-	<?php get_template_part( 'template-parts/home/featured' ); ?>
+	<?php get_template_part( 'template-parts/home/collections' ); ?>
+	<?php get_template_part( 'template-parts/home/fragrance-world' ); ?>
 	<?php get_template_part( 'template-parts/home/reasons' ); ?>
 	<?php get_template_part( 'template-parts/home/catalog-cta' ); ?>
+	<?php // Only with products: without them the catalog above already invites to explore. ?>
+	<?php get_template_part( 'template-parts/home/featured' ); ?>
 	<?php
 	// Closing sections over the warm backdrop of the hero video, without the fruit.
 	ob_start();

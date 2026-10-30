@@ -72,12 +72,15 @@ La portada (`front-page.php`, `template-parts/home/`) tiene estas secciones:
 
 1. **Hero** con vídeo a pantalla completa. En celulares usa una versión vertical (`hero-frutas-v2-movil.*`, armada a partir del horizontal) de fondo detrás del final del texto; en tableta, el horizontal a todo el ancho bajo el texto. Cada pantalla descarga solo su vídeo y su imagen fija. Si se elige otro vídeo en ACF, se usa ese en todas las pantallas. Se reproduce una vez y se queda en el último fotograma; tiene botón de pausa. Con movimiento reducido o ahorro de datos se muestra la imagen fija. En escritorio queda fijo mientras sube la sección siguiente.
 2. **Nuestras líneas:** Sabores, Fragancias y Envases en tarjetas con forma de frasco que llevan a su página de línea. Usa la imagen de cada categoría de producto o, sin ella, la del tema.
-3. **Cómo trabajamos:** tres pasos que se apilan al hacer scroll.
-4. **Productos destacados:** la estrella de WooCommerce.
-5. **Razones para elegirnos:** cuatro tarjetas con icono.
-6. **Catálogo:** buscador y accesos a cada línea.
-7. **Tendencias:** solo con entradas publicadas fuera de la categoría por defecto.
-8. **Dónde estamos:** solo con dirección en el Personalizador; el mapa de Google se carga al pedirlo.
+3. **Soluciones por industria** (`home/solutions.php`): «¿En qué industria estás?», las industrias con página como paneles que se despliegan (los de /soluciones/), con enlace a cada solución.
+4. **Cómo trabajamos:** tres pasos que se apilan al hacer scroll.
+5. **Colecciones** (`home/collections.php`): todas las colecciones en una fila deslizable y «Ver todas las colecciones». Sin colecciones no aparece.
+6. **El mundo de las fragancias** (`home/fragrance-world.php`): cuatro accesos con un pequeño dibujo (anillo de las familias, pirámide, ranking del top e íconos de notas) a la guía de familias, la pirámide, el top de perfumería y las notas de la perfumería árabe. Cada acceso aparece si su página existe.
+7. **Razones para elegirnos:** paneles que se despliegan.
+8. **Catálogo:** buscador, accesos a cada línea y a las colecciones, las cifras del catálogo y «Ver el catálogo completo».
+9. **Productos destacados:** la estrella de WooCommerce; solo cuando hay productos.
+10. **Tendencias:** solo con entradas publicadas fuera de la categoría por defecto.
+11. **Dónde estamos:** solo con dirección en el Personalizador; el mapa de Google se carga al pedirlo.
 
 Todos los textos, el vídeo y su imagen fija se editan en el grupo ACF **Inicio Frave** de la página de portada. Una palabra entre `*asteriscos*` se resalta: en el hero sobre fondo naranja, en las demás secciones en negrita. En el título del hero, varias palabras separadas por `|` dentro de los asteriscos se alternan en el mismo lugar sobre las ondas de aroma (`*conectan con|distinguen a|elevan|dan vida a*`); la primera es la que leen los lectores de pantalla y la que queda fija. Bajo los botones van los **datos de confianza**, uno por línea. Los campos vacíos muestran los textos por defecto de `inc/home.php`; sin ACF, también. El vídeo por defecto está en `assets/media/` (MP4 y WebM sin sonido, más el último fotograma en JPG). Si el administrador de ACF ofrece **Sincronización disponible** para «Inicio Frave», sincronízalo para editar los campos nuevos.
 

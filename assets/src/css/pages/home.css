@@ -974,3 +974,224 @@
     }
   }
 }
+
+/*
+ * New home sections (01-11): the collections row (pages/catalog.css draws the cards), «El
+ * mundo de las fragancias» with its four drawn ways in, and the catalog panel's figures.
+ */
+@layer components {
+  .home-collections .section-head {
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  /* ---------- El mundo de las fragancias ---------- */
+
+  .home-world__panel {
+    padding: clamp(1.75rem, 5vw, 3.5rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-sand-soft);
+  }
+
+  .home-world .section-head {
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .world-ways {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Phones: two by two, so the four ways fit in one look. */
+  @media (max-width: 39.99rem) {
+    .world-ways {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+  }
+
+  .world-way {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 0.55rem;
+    padding: 1.1rem 1.15rem 1.25rem;
+    border: 1px solid var(--color-sand-line);
+    border-radius: var(--radius-card);
+    background: #fff;
+    transition:
+      translate var(--duration) var(--ease-out),
+      box-shadow var(--duration) var(--ease-out);
+  }
+
+  .world-way:hover,
+  .world-way:focus-within {
+    translate: 0 -4px;
+    box-shadow: var(--shadow-lift);
+  }
+
+  .world-way:has(a:focus-visible) {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .world-way__art {
+    display: grid;
+    height: 5.5rem;
+    margin-bottom: 0.35rem;
+    place-items: center;
+    border-radius: 1rem;
+    background: var(--color-sand-soft);
+  }
+
+  .world-way__title {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  /* The title is the link; it covers the whole card. */
+  .world-way__title a {
+    color: var(--color-ink) !important; /* The unlayered link colour of theme.json would win. */
+    text-decoration: none;
+  }
+
+  .world-way__title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .world-way__title a:focus-visible {
+    outline: none;
+  }
+
+  .world-way__text {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.92rem;
+  }
+
+  .world-way__link {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 39.99rem) {
+    .world-way {
+      padding: 0.85rem;
+    }
+
+    .world-way__art {
+      height: 4.25rem;
+    }
+
+    .world-way__title {
+      font-size: 1rem;
+    }
+
+    .world-way__text {
+      font-size: 0.84rem;
+    }
+  }
+
+  /* The drawings. */
+  .world-art__wheel {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 50%;
+    -webkit-mask: radial-gradient(circle, transparent 38%, #000 39%);
+    mask: radial-gradient(circle, transparent 38%, #000 39%);
+  }
+
+  .world-art__pyramid {
+    display: grid;
+    justify-items: center;
+    gap: 2px;
+  }
+
+  .world-art__pyramid span {
+    display: block;
+    width: 4rem;
+    height: 1.05rem;
+    background: var(--level-tone);
+  }
+
+  .world-art__pyramid span:nth-child(1) {
+    clip-path: polygon(50% 0, 66% 100%, 34% 100%);
+  }
+
+  .world-art__pyramid span:nth-child(2) {
+    clip-path: polygon(34% 0, 66% 0, 83% 100%, 17% 100%);
+  }
+
+  .world-art__pyramid span:nth-child(3) {
+    clip-path: polygon(17% 0, 83% 0, 100% 100%, 0 100%);
+  }
+
+  .world-art__rank {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    color: var(--color-primary);
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .world-art__rank span:nth-child(1) {
+    font-size: 2.6rem;
+  }
+
+  .world-art__rank span:nth-child(2) {
+    font-size: 1.9rem;
+    opacity: 0.75;
+  }
+
+  .world-art__rank span:nth-child(3) {
+    font-size: 1.5rem;
+    opacity: 0.55;
+  }
+
+  .world-art__notes {
+    display: flex;
+    gap: 0.3rem;
+  }
+
+  .world-art__notes span {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-sand-accent);
+  }
+
+  .world-art__notes .note-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  /* ---------- Catalog panel: figures and the whole catalog ---------- */
+
+  .home-catalog__figures {
+    margin-top: 1rem;
+  }
+
+  .home-catalog__all {
+    margin-top: 0.75rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .world-way {
+      transition: none;
+    }
+
+    .world-way:hover,
+    .world-way:focus-within {
+      translate: none;
+    }
+  }
+}

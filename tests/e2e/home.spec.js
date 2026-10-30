@@ -179,3 +179,35 @@ test.describe('razones para elegirnos', () => {
     await expect(panels.nth(2)).toHaveAttribute('tabindex', '0');
   });
 });
+
+test.describe('la portada presenta todo lo que hace Frave', () => {
+  test('después de las líneas: industrias, colecciones, guía de fragancias y catálogo', async ({ page }) => {
+    await page.goto('/');
+    // The industries, as expanding panels leading to each solution.
+    const industries = page.locator('.home #industrias');
+    await expect(industries.locator('h2')).toHaveText('¿En qué industria estás?');
+    await expect(industries.locator('[data-panel]')).toHaveCount(5);
+
+    const collections = page.locator('.home-collections');
+    await expect(collections.locator('.collection-card').first()).toBeVisible();
+    await expect(collections.getByRole('link', { name: 'Ver todas las colecciones' })).toBeVisible();
+
+    const world = page.locator('.home-world');
+    await expect(world.locator('.world-way__title')).toHaveText(['Familias olfativas', 'Pirámide olfativa', 'Top de perfumería', 'Notas e ingredientes']);
+    await expect(world.getByRole('link', { name: 'Notas e ingredientes' })).toHaveAttribute('href', /#ingredientes$/);
+
+    const catalog = page.locator('.home-catalog');
+    await expect(catalog.locator('.home-catalog__figures')).toContainText('colecciones');
+    await expect(catalog.getByRole('link', { name: 'Ver el catálogo completo' })).toBeVisible();
+
+    // In that order, after the lines.
+    const order = await page.evaluate(() => ['.home-lines', '.home #industrias', '.home-steps', '.home-collections', '.home-world', '.home-reasons', '.home-catalog'].map((selector) => document.querySelector(selector)?.getBoundingClientRect().top + window.scrollY));
+    expect(order).toEqual([...order].sort((a, b) => a - b));
+  });
+
+  test('una guía de la portada lleva a su página', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('.home-world').getByRole('link', { name: 'Pirámide olfativa' }).click();
+    await expect(page.locator('h1')).toContainText('pirámide olfativa');
+  });
+});
