@@ -17,8 +17,6 @@
  * - number:    position shown above the name.
  * - show_line: show the line it belongs to (solution pages mix lines).
  * - layout:    card (default) or band.
- * - collections: list its collections as chips (default true; the catalog page leaves them
- *   out, so the three line cards stay alike).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -44,7 +42,7 @@ $frave_line     = ! empty( $args['show_line'] ) && $frave_term->parent ? frave_t
 // Solution pages already say the industry; elsewhere the card names the industries that use it.
 $frave_uses = '' === $frave_line ? frave_term_solutions_html( $frave_term, 'line-group__uses' ) : '';
 // Its collections and those of its subcategories (inc/collections.php).
-$frave_collections = ( $args['collections'] ?? true ) && function_exists( 'frave_collections' ) ? frave_collections( array( $frave_term ) ) : array();
+$frave_collections = function_exists( 'frave_collections' ) ? frave_collections( array( $frave_term ) ) : array();
 
 // One hidden layer per subcategory with an image, numbered from 1 (0 is the card's own).
 $frave_layers = array();

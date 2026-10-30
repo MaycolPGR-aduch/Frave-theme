@@ -96,26 +96,21 @@ function frave_catalog_is_empty_shop(): bool {
 
 /**
  * Above the products (or the invitation to quote), on the first unfiltered page: a
- * category's subcategories as cards with their image, description, types and quote; on
- * the catalog page, the product lines.
+ * category's subcategories as cards with their image, description, types and quote. The
+ * catalog page has its own index of the lines (inc/catalog-overview.php).
  */
 function frave_detail_types(): void {
 	if ( is_paged() || frave_catalog_active_filter_count() > 0 ) {
 		return;
 	}
 	$term = frave_detail_term();
-	if ( $term ) {
-		$parent  = $term->term_id;
-		$eyebrow = __( 'Tipos', 'frave' );
-		/* translators: %s: category name. */
-		$title = sprintf( __( 'Explora %s', 'frave' ), $term->name );
-	} elseif ( function_exists( 'is_shop' ) && is_shop() && ! is_search() ) {
-		$parent  = 0;
-		$eyebrow = __( 'Catálogo', 'frave' );
-		$title   = __( 'Nuestras líneas', 'frave' );
-	} else {
+	if ( ! $term ) {
 		return;
 	}
+	$parent  = $term->term_id;
+	$eyebrow = __( 'Tipos', 'frave' );
+	/* translators: %s: category name. */
+	$title    = sprintf( __( 'Explora %s', 'frave' ), $term->name );
 	$children = get_terms(
 		array(
 			'taxonomy'   => 'product_cat',
@@ -141,10 +136,8 @@ function frave_detail_types(): void {
 					'template-parts/components/term-card',
 					null,
 					array(
-						'term'        => $frave_child,
-						'number'      => $frave_index + 1,
-						// The catalog page shows the lines alike; their collections have their own page.
-						'collections' => 0 !== $parent,
+						'term'   => $frave_child,
+						'number' => $frave_index + 1,
 					)
 				);
 			}

@@ -1,0 +1,382 @@
+/*
+ * The catalog page as a summary (inc/catalog-overview.php, template-parts/catalog/): the
+ * hero's shortcuts and figures, the bar of anchors, the index of the lines, the collections
+ * in a row, the perfumery tops as a panel, applications by industry, aromas, the heading of
+ * the products and the closing.
+ */
+@layer components {
+  /* ---------- Hero: shortcuts and figures ---------- */
+
+  .page-hero__extra {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 0.4rem;
+  }
+
+  .catalog-shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .catalog-shortcuts__link {
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--color-sand-line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink) !important; /* The unlayered link colour of theme.json would win. */
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: border-color var(--duration-fast) ease;
+  }
+
+  .catalog-shortcuts__link:hover {
+    border-color: var(--color-primary);
+  }
+
+  .catalog-figures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+    margin: 0;
+    padding: 0;
+    color: var(--color-sand-muted);
+    font-size: 0.9rem;
+    list-style: none;
+  }
+
+  .catalog-figures strong {
+    color: var(--color-ink);
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  /* ---------- Blocks ---------- */
+
+  .catalog-block {
+    margin-bottom: clamp(3rem, 7vw, 5rem);
+    scroll-margin-top: calc(var(--header-height) + 4rem);
+  }
+
+  /* Inside WooCommerce's wrapper, where small headings are bold, keep the light display titles. */
+  .catalog-block .section-head h2,
+  .catalog-closing h2 {
+    font-weight: 300;
+  }
+
+  .catalog-block .section-head {
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  /* Wide screens: a bar of anchors under the header while the page is read. */
+  .catalog-anchors {
+    display: none;
+  }
+
+  @media (min-width: 64rem) {
+    .catalog-anchors {
+      position: sticky;
+      z-index: 5;
+      top: calc(var(--header-height) + 0.5rem);
+      display: flex;
+      justify-content: center;
+      gap: 0.35rem;
+      width: max-content;
+      max-width: 100%;
+      margin: 0 auto clamp(2.5rem, 5vw, 3.5rem);
+      padding: 0.35rem;
+      border: 1px solid var(--color-sand-line);
+      border-radius: 999px;
+      background: rgb(255 255 255 / 94%);
+      box-shadow: 0 0.75rem 2rem rgb(29 43 79 / 8%);
+      backdrop-filter: blur(8px);
+    }
+
+    .catalog-anchors a {
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      color: var(--color-ink) !important;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .catalog-anchors a:hover,
+    .catalog-anchors a:focus-visible {
+      background: var(--color-orange-soft);
+    }
+  }
+
+  /* ---------- Index of the lines ---------- */
+
+  .catalog-index {
+    display: grid;
+    gap: 1rem;
+  }
+
+  /*
+   * Wide screens: a line whose categories have types (Fragancias) spans the width with its
+   * groups side by side; the others share the next row.
+   */
+  @media (min-width: 64rem) {
+    .catalog-index {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .catalog-index__line--wide {
+      grid-column: 1 / -1;
+    }
+
+    .catalog-index__line--wide .catalog-index__list {
+      grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+      align-items: start;
+      gap: 1rem 1.5rem;
+    }
+
+    .catalog-index__line--wide .catalog-index__group.has-types {
+      margin-top: 0;
+    }
+  }
+
+  .catalog-index__line {
+    display: grid;
+    gap: 1rem;
+    padding: 1.4rem 1.5rem;
+    border: 1px solid var(--color-sand-line);
+    border-radius: var(--radius-card);
+    background: #fff;
+  }
+
+  .catalog-index__title {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    font-size: 1.45rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  .catalog-index__title a {
+    color: var(--color-ink) !important;
+    text-decoration: none;
+  }
+
+  .catalog-index__icon {
+    display: grid;
+    width: 2.6rem;
+    height: 2.6rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-orange-soft);
+    color: var(--color-primary);
+  }
+
+  .catalog-index__icon .icon {
+    width: 1.3rem;
+    height: 1.3rem;
+  }
+
+  .catalog-index__list,
+  .catalog-index__list ul {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .catalog-index__group > a {
+    color: var(--color-ink) !important;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .catalog-index__group.has-types {
+    margin-top: 0.45rem;
+  }
+
+  .catalog-index__group ul {
+    margin: 0.25rem 0 0 0.25rem;
+    padding-left: 0.9rem;
+    border-left: 2px solid var(--color-sand-line);
+  }
+
+  .catalog-index__list ul a {
+    color: var(--color-muted) !important;
+    text-decoration: none;
+  }
+
+  .catalog-index__list a:hover {
+    color: var(--color-primary) !important;
+  }
+
+  .catalog-index__count {
+    margin-left: 0.35rem;
+    padding: 0.05rem 0.5rem;
+    border-radius: 999px;
+    background: var(--color-sand-soft);
+    color: var(--color-sand-accent);
+    font-size: 0.74rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .catalog-index__more {
+    justify-self: start;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--color-line);
+    width: 100%;
+  }
+
+  /* ---------- Collections in a row that scrolls ---------- */
+
+  .collection-cards.catalog-collections {
+    grid-auto-columns: minmax(16rem, 19rem);
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    overflow-x: auto;
+    padding: 0.25rem 0.25rem 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-color: var(--color-sand-line) transparent;
+  }
+
+  .catalog-collections .collection-card {
+    scroll-snap-align: start;
+  }
+
+  /* ---------- Perfumery tops inside the page ---------- */
+
+  .top-band--embedded {
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border-radius: var(--radius-xl);
+  }
+
+  /* ---------- Applications by industry ---------- */
+
+  .catalog-uses {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* The five industries in one row on large screens. */
+  @media (min-width: 75rem) {
+    .catalog-uses {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  .catalog-uses__item {
+    display: grid;
+    align-content: start;
+    gap: 0.85rem;
+    padding: 1.2rem 1.3rem;
+    border: 1px solid var(--color-sand-line);
+    border-radius: var(--radius-card);
+    background: #fff;
+  }
+
+  .catalog-uses__title {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--color-ink) !important;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .catalog-uses__title > .icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: var(--color-primary);
+  }
+
+  .catalog-uses__icon {
+    display: grid;
+    width: 2.4rem;
+    height: 2.4rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-sand-soft);
+    color: var(--color-sand-accent);
+  }
+
+  .catalog-uses__icon .icon {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+
+  .catalog-uses__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+  }
+
+  /* ---------- Aromas ---------- */
+
+  .catalog-families,
+  .catalog-notes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .catalog-notes__label {
+    margin: 1.75rem 0 0.75rem;
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .catalog-notes .note-chip {
+    color: var(--color-ink) !important;
+    text-decoration: none;
+  }
+
+  /* ---------- Products and closing ---------- */
+
+  .catalog-products-head {
+    margin-bottom: 0;
+  }
+
+  .catalog-closing {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem 2rem;
+    margin-top: clamp(3rem, 7vw, 5rem);
+    padding: clamp(1.5rem, 4vw, 2.75rem);
+    border-radius: var(--radius-xl);
+    background: var(--color-sand);
+  }
+
+  .catalog-closing h2 {
+    margin: 0 0 0.4rem;
+    font-size: clamp(1.6rem, 3vw, 2.3rem);
+  }
+
+  .catalog-closing p {
+    margin: 0;
+    color: var(--color-sand-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .catalog-shortcuts__link {
+      transition: none;
+    }
+  }
+}

@@ -14,6 +14,7 @@
  * - facts:      optional list of [ icon, text ] shown as small highlights under the lead.
  * - image:      optional <img> HTML, already escaped, shown beside the text on wide screens.
  * - actions:    optional buttons, already escaped HTML, under the meta line.
+ * - extra:      optional HTML, already escaped, after the search (the catalog's shortcuts).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -33,6 +34,7 @@ $frave_hero       = wp_parse_args(
 		'facts'      => array(),
 		'image'      => '',
 		'actions'    => '',
+		'extra'      => '',
 	)
 );
 $frave_hero_media = '' !== $frave_hero['image'];
@@ -74,6 +76,9 @@ $frave_hero_media = '' !== $frave_hero['image'];
 			<div class="page-hero__search">
 				<?php get_template_part( 'template-parts/components/product-search-form' ); ?>
 			</div>
+		<?php endif; ?>
+		<?php if ( '' !== $frave_hero['extra'] ) : ?>
+			<div class="page-hero__extra"><?php echo $frave_hero['extra']; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped by the caller. ?></div>
 		<?php endif; ?>
 	</div>
 	<?php if ( $frave_hero_media ) : ?>

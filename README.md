@@ -144,6 +144,17 @@ Los perfumes que marcan tendencia en cada subcategoría de perfumería (diseñad
 - **Crear las primeras referencias:** `wp eval-file RUTA/bin/crear-top-perfumeria.php` (publica las confirmadas y deja como borrador las que Frave debe confirmar; no toca las que ya existen).
 - **Código:** `inc/top-perfumery.php`, `template-parts/components/top-perfumery.php` y `top-perfumery-band.php`, `assets/src/css/pages/top-perfumery.css`, `assets/src/js/modules/top-panels.js`.
 
+### Catálogo como resumen
+
+La página del catálogo (/catalogo/) resume todo lo que ofrece Frave antes de los productos, con lo que ya tiene el sitio, así que se llena sola a medida que se suman categorías, colecciones, referencias y productos:
+
+- **Cabecera:** «Todo lo que Frave ofrece», buscador, accesos (las líneas, Colecciones, Top de perfumería, Por aroma) y cifras (líneas, categorías, colecciones, notas olfativas).
+- **Barra de anclas** fija en escritorio: Líneas · Colecciones · Top de perfumería · Por aplicación · Por aroma · Productos.
+- **Índice de líneas:** cada línea con todas sus categorías y tipos, y cuántas colecciones tiene cada uno; la línea con tipos (Fragancias) ocupa el ancho.
+- **Colecciones** en una fila que se desliza, el **top de perfumería**, **«¿Qué fabricas?»** (las industrias con sus aplicaciones), **«Busca por aroma»** (las nueve familias y las notas destacadas, que llevan a las notas de su estilo), **«Todos los productos»** con sus filtros y un cierre «¿No encuentras lo que buscas?» en lugar de la llamada del pie.
+- Con una búsqueda, un filtro o en la página 2 se muestra solo el listado.
+- **Código:** `inc/catalog-overview.php`, `template-parts/catalog/overview.php` y `closing.php`, `assets/src/css/pages/catalog.css`.
+
 ### Notas de la perfumería
 
 Cada subcategoría de perfumería (diseñador, nicho, árabe) muestra, después de su top, **las notas que la caracterizan** como una pirámide: una franja por nivel (salida, corazón y fondo, con los tonos de la pirámide olfativa) y las notas como fichas con un ícono de línea propio. Al tocar una nota se ve su ficha: nivel, familia (enlace a la guía), qué aporta y en qué perfumes del top aparece. El filtro **«Sellos del estilo»** deja solo las notas características del estilo (oud, rosa de Taif, azafrán, incienso… en la árabe), que se muestran aunque ningún perfume del top las lleve.

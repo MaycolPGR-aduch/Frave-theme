@@ -5,7 +5,8 @@
  * each audience (or the first three when there is one audience) and a link to the whole
  * top on the subcategory's page. Nothing without published references.
  *
- * Arguments: within (WP_Term[]: only the subcategories one of them or below them).
+ * Arguments: within (WP_Term[]: only the subcategories one of them or below them) and
+ * embedded (inside another page's container, as on the catalog: a panel, not a section).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -18,8 +19,9 @@ if ( ! $frave_categories ) {
 }
 $frave_audiences = frave_top_audiences();
 ?>
-<section class="section top-band" aria-labelledby="top-band-title" data-frave-place="top-perfumeria">
-	<div class="container">
+<?php $frave_embedded = ! empty( $args['embedded'] ); ?>
+<section class="<?php echo $frave_embedded ? 'top-band top-band--embedded' : 'section top-band'; ?>" aria-labelledby="top-band-title" data-frave-place="top-perfumeria">
+	<div class="<?php echo $frave_embedded ? 'top-band__inner' : 'container'; ?>">
 		<div class="section-head" data-reveal="up">
 			<p class="eyebrow"><?php esc_html_e( 'Top de perfumería', 'frave' ); ?></p>
 			<h2 id="top-band-title"><?php echo frave_emphasis( __( 'Los perfumes que *marcan tendencia*', 'frave' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h2>

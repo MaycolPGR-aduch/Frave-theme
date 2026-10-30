@@ -92,19 +92,27 @@ function frave_catalog_hero(): void {
 		$shop    = get_post( wc_get_page_id( 'shop' ) );
 		$eyebrow = __( 'NUESTROS PRODUCTOS', 'frave' );
 		$lead    = $shop instanceof WP_Post && '' !== trim( $shop->post_content ) ? $shop->post_content : __( 'Explora nuestras líneas de sabores, fragancias y envases, y solicita una cotización de lo que necesites.', 'frave' );
+		// The catalog page as a summary (inc/catalog-overview.php): a title, shortcuts and figures.
+		if ( frave_is_catalog_overview() ) {
+			$eyebrow = __( 'Catálogo', 'frave' );
+			$title   = __( 'Todo lo que <strong>Frave</strong> ofrece', 'frave' );
+			$lead    = $shop instanceof WP_Post && '' !== trim( $shop->post_content ) ? $shop->post_content : __( 'Fragancias, sabores y envases para tu marca: explora por línea, colección, aplicación o aroma.', 'frave' );
+			$extra   = frave_catalog_hero_extra();
+		}
 	}
 	get_template_part(
 		'template-parts/components/page-hero',
 		null,
 		array(
 			'eyebrow'    => $eyebrow,
-			'title'      => woocommerce_page_title( false ),
+			'title'      => $title ?? woocommerce_page_title( false ),
 			'lead'       => $lead,
 			'meta'       => $meta,
 			'breadcrumb' => true,
 			'search'     => true,
 			'image'      => $image,
 			'actions'    => $actions,
+			'extra'      => $extra ?? '',
 		)
 	);
 }
