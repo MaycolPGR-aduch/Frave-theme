@@ -22,7 +22,9 @@ function frave_is_catalog_overview(): bool {
 }
 
 /**
- * The product lines (top-level categories, without WooCommerce's «Sin categorizar»).
+ * The product lines: the top-level categories with a line page (Fragancias, Sabores,
+ * Envases), or, while none has one, every top-level category but WooCommerce's
+ * «Sin categorizar». Other top-level categories are not lines.
  *
  * @return WP_Term[]
  */
@@ -35,7 +37,11 @@ function frave_catalog_lines(): array {
 			'exclude'    => array( (int) get_option( 'default_product_cat' ) ),
 		)
 	);
-	return is_wp_error( $lines ) ? array() : $lines;
+	if ( is_wp_error( $lines ) ) {
+		return array();
+	}
+	$with_page = array_values( array_filter( $lines, static fn( WP_Term $line ): bool => null !== frave_line_page( $line->slug ) ) );
+	return $with_page ? $with_page : $lines;
 }
 
 /**
