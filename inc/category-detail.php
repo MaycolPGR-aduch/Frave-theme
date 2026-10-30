@@ -141,8 +141,10 @@ function frave_detail_types(): void {
 					'template-parts/components/term-card',
 					null,
 					array(
-						'term'   => $frave_child,
-						'number' => $frave_index + 1,
+						'term'        => $frave_child,
+						'number'      => $frave_index + 1,
+						// The catalog page shows the lines alike; their collections have their own page.
+						'collections' => 0 !== $parent,
 					)
 				);
 			}

@@ -577,6 +577,20 @@
     border-top: 1px solid var(--color-line);
   }
 
+  /*
+   * Cards side by side (catalog and category pages): the content flows from the top and only
+   * the actions line up at the bottom, instead of a gap under the description of the
+   * shorter cards.
+   */
+  .line-group:not(.line-group--band) .line-group__body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .line-group:not(.line-group--band) .line-group__actions {
+    margin-top: auto;
+  }
+
   .link-arrow--muted {
     color: var(--color-ink) !important;
   }
