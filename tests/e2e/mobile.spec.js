@@ -83,13 +83,17 @@ test.describe('móvil', () => {
     expect(lead.y).toBeGreaterThan(image.y + image.height - 1);
   });
 
-  test('la primera pantalla muestra la cabecera completa con los botones lado a lado', async ({ page }) => {
+  test('la primera pantalla muestra el texto, los botones lado a lado y la imagen de la cabecera', async ({ page }) => {
     for (const url of ['/?pagename=soluciones', '/?pagename=nosotros', '/?pagename=fragancias', '/?pagename=soluciones/perfumeria']) {
       await page.goto(url);
       const hero = page.locator('.company-hero, .line-hero').first();
-      const box = await hero.boundingBox();
       const viewport = page.viewportSize();
-      expect(box.y + box.height, url).toBeLessThanOrEqual(viewport.height + 2);
+      // The copy and its buttons fit, and the picture already shows (the store's header,
+      // with cart and account, is taller: the picture may continue below the fold).
+      const row = await hero.locator('.btn-row').boundingBox();
+      expect(row.y + row.height, url).toBeLessThanOrEqual(viewport.height);
+      const picture = await hero.locator('.hero-visual, .word-cloud, .line-hero__media').first().boundingBox();
+      expect(picture.y, url).toBeLessThan(viewport.height - 120);
       const buttons = hero.locator('.btn-row .btn');
       if ((await buttons.count()) > 1) {
         const [first, second] = [await buttons.nth(0).boundingBox(), await buttons.nth(1).boundingBox()];
