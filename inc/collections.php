@@ -7,7 +7,13 @@
  * - its subcategory: term meta frave_category, chosen in Productos → Atributos → Colección;
  * - its order: term meta order (the attribute's custom order);
  * - its picture: assets/media/colecciones/{slug}.webp (1536 × 1024) and {slug}-768.webp,
- *   or meanwhile its subcategory's picture.
+ *   or meanwhile its subcategory's picture;
+ * - its ingredients: term meta frave_notes, names of the notes library
+ *   (inc/fragrance-notes.php) separated by commas, edited in Productos → Atributos → Colección.
+ *
+ * A collection's page shows its ingredients as cards and on the olfactory pyramid
+ * (template-parts/components/collection-profile.php), its products when it has them, the
+ * other collections of its subcategory and a closing call to action.
  *
  * They appear on their subcategory's detail page, in the portfolio bands of the line, on the
  * solution pages that use their subcategory, in the hub /colecciones/ (template
@@ -80,6 +86,29 @@ function frave_collection_term(): ?WP_Term {
 	}
 	$term = get_queried_object();
 	return $term instanceof WP_Term ? $term : null;
+}
+
+/**
+ * The ingredients of a collection, as notes of the library, in their order. The term meta
+ * frave_notes holds note names (or their aliases or slugs) separated by commas; unknown
+ * names are skipped.
+ *
+ * @return array<string, array{name: string, family: string, level: string, text: string, icon: string}>
+ */
+function frave_collection_notes( WP_Term $collection ): array {
+	$notes = frave_fragrance_notes();
+	$found = array();
+	foreach ( explode( ',', (string) get_term_meta( $collection->term_id, 'frave_notes', true ) ) as $text ) {
+		$text = trim( $text );
+		if ( '' === $text ) {
+			continue;
+		}
+		$slug = isset( $notes[ $text ] ) ? $text : frave_note_slug( $text );
+		if ( '' !== $slug && ! isset( $found[ $slug ] ) ) {
+			$found[ $slug ] = $notes[ $slug ];
+		}
+	}
+	return $found;
 }
 
 /** Address of a collection's page. */
@@ -161,46 +190,95 @@ function frave_detail_collections(): void {
 add_action( 'woocommerce_before_shop_loop', 'frave_detail_collections', 0 );
 add_action( 'woocommerce_no_products_found', 'frave_detail_collections', 0 );
 
-/** A collection without products yet: its page invites to request a quote, without filters. */
-function frave_collection_setup_empty(): void {
+/** The ingredients of the collection's page, before its products (or in their place). */
+function frave_collection_page_profile(): void {
 	$collection = frave_collection_term();
-	if ( $collection && $collection->count < 1 ) {
-		remove_action( 'woocommerce_no_products_found', 'wc_no_products_found' );
-		add_action( 'woocommerce_no_products_found', 'frave_collection_empty_state' );
+	if ( ! $collection || is_paged() || frave_catalog_active_filter_count() > 0 ) {
+		return;
 	}
+	get_template_part( 'template-parts/components/collection-profile', null, array( 'collection' => $collection ) );
 }
-add_action( 'wp', 'frave_collection_setup_empty' );
+add_action( 'woocommerce_before_shop_loop', 'frave_collection_page_profile', 1 );
+add_action( 'woocommerce_no_products_found', 'frave_collection_page_profile', 1 );
 
-function frave_collection_empty_state(): void {
+/**
+ * The end of a collection's page: the other collections of its subcategory (or else of its
+ * line) and the quote panel. A collection without products yet shows them in place of
+ * WooCommerce's «No products» notice, and its page has no filters.
+ */
+function frave_collection_setup_page(): void {
 	$collection = frave_collection_term();
 	if ( ! $collection ) {
 		return;
 	}
+	if ( $collection->count < 1 ) {
+		remove_action( 'woocommerce_no_products_found', 'wc_no_products_found' );
+		add_action( 'woocommerce_no_products_found', 'frave_collection_page_closing', 20 );
+	} else {
+		add_action( 'woocommerce_after_shop_loop', 'frave_collection_page_closing', 20 );
+	}
+}
+add_action( 'wp', 'frave_collection_setup_page' );
+
+/**
+ * Other collections near one: those of its subcategory or, without them, of its line.
+ *
+ * @return array{0: WP_Term[], 1: ?WP_Term} The collections and the category they share.
+ */
+function frave_collection_neighbours( WP_Term $collection ): array {
+	$category = frave_collection_category( $collection );
+	if ( ! $category ) {
+		return array( array(), null );
+	}
+	$others = static fn( array $items ): array => array_values( array_filter( $items, static fn( WP_Term $item ): bool => $item->term_id !== $collection->term_id ) );
+	$near   = $others( frave_collections( array( $category ) ) );
+	if ( $near ) {
+		return array( $near, $category );
+	}
+	$ancestors = get_ancestors( $category->term_id, 'product_cat', 'taxonomy' );
+	$line      = $ancestors ? get_term( (int) end( $ancestors ), 'product_cat' ) : null;
+	return $line instanceof WP_Term ? array( array_slice( $others( frave_collections( array( $line ) ) ), 0, 6 ), $line ) : array( array(), null );
+}
+
+function frave_collection_page_closing(): void {
+	$collection = frave_collection_term();
+	if ( ! $collection ) {
+		return;
+	}
+	list( $others, $shared ) = frave_collection_neighbours( $collection );
+	if ( $others && $shared ) {
+		$same = frave_collection_category( $collection )?->term_id === $shared->term_id;
+		get_template_part(
+			'template-parts/components/collections',
+			null,
+			array(
+				'collections'   => $others,
+				'eyebrow'       => __( 'Sigue explorando', 'frave' ),
+				/* translators: %s: subcategory or line name. */
+				'title'         => sprintf( $same ? __( 'Otras colecciones de *%s*', 'frave' ) : __( 'Más colecciones de *%s*', 'frave' ), $shared->name ),
+				'id'            => 'otras-colecciones',
+				'compact'       => true,
+				'show_category' => ! $same,
+				'more'          => frave_collections_url(),
+			)
+		);
+	}
 	$quote = frave_collection_quote_link( $collection );
-	/* translators: %s: collection name. */
-	$whatsapp = frave_whatsapp_url( sprintf( __( 'Hola, quisiera información y una cotización de la colección %s.', 'frave' ), $collection->name ) );
-	?>
-	<div class="category-empty card">
-		<span class="icon-tile icon-tile--lg"><?php echo frave_icon( 'fragrance' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></span>
-		<div class="category-empty__copy">
-			<?php /* translators: %s: collection name. */ ?>
-			<h2><?php echo esc_html( sprintf( __( 'Estamos preparando los aromas de %s', 'frave' ), $collection->name ) ); ?></h2>
-			<p><?php esc_html_e( 'Cuéntanos tu producto y te enviamos las fragancias de esta colección con sus características.', 'frave' ); ?></p>
-		</div>
-		<div class="category-empty__actions">
-			<?php if ( $quote && empty( $quote['external'] ) ) : ?>
-				<?php frave_button( __( 'Solicitar cotización', 'frave' ), $quote['url'] ); ?>
-			<?php endif; ?>
-			<?php if ( $whatsapp ) : ?>
-				<a class="btn btn--whatsapp" href="<?php echo esc_url( $whatsapp ); ?>" target="_blank" rel="noopener" data-frave-whatsapp="collection">
-					<span><?php esc_html_e( 'Escríbenos por WhatsApp', 'frave' ); ?></span>
-					<span class="screen-reader-text"><?php esc_html_e( '(se abre en una nueva pestaña)', 'frave' ); ?></span>
-					<?php echo frave_whatsapp_icon(); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?>
-				</a>
-			<?php endif; ?>
-		</div>
-	</div>
-	<?php
+	get_template_part(
+		'template-parts/components/cta-panel',
+		null,
+		array(
+			/* translators: %s: collection name. */
+			'title'    => sprintf( __( '¿Te interesa la colección *%s*?', 'frave' ), $collection->name ),
+			'text'     => $collection->count < 1
+				? __( 'Estamos preparando sus aromas en el catálogo. Cuéntanos tu producto y te enviamos las fragancias de esta colección con sus características.', 'frave' )
+				: __( 'Cuéntanos tu producto y te ayudamos a elegir entre los aromas de esta colección.', 'frave' ),
+			'action'   => $quote,
+			/* translators: %s: collection name. */
+			'whatsapp' => $quote && empty( $quote['external'] ) ? frave_whatsapp_url( sprintf( __( 'Hola, quisiera información y una cotización de la colección %s.', 'frave' ), $collection->name ) ) : '',
+			'bare'     => true,
+		)
+	);
 }
 
 /**
@@ -224,9 +302,9 @@ function frave_collection_breadcrumb( array $crumbs ): array {
 }
 add_filter( 'woocommerce_get_breadcrumb', 'frave_collection_breadcrumb' );
 
-/** The hub closes with its own call to action instead of the footer's. */
+/** The hub and each collection close with their own call to action instead of the footer's. */
 function frave_collections_hide_footer_cta( bool $show ): bool {
-	return is_page_template( FRAVE_TEMPLATE_COLLECTIONS ) ? false : $show;
+	return is_page_template( FRAVE_TEMPLATE_COLLECTIONS ) || frave_collection_term() ? false : $show;
 }
 add_filter( 'frave_show_footer_cta', 'frave_collections_hide_footer_cta' );
 
@@ -281,3 +359,40 @@ function frave_collection_save_category( int $term_id ): void {
 }
 add_action( 'created_' . FRAVE_COLLECTION_TAXONOMY, 'frave_collection_save_category' );
 add_action( 'edited_' . FRAVE_COLLECTION_TAXONOMY, 'frave_collection_save_category' );
+
+/** The ingredients of a collection, on its add and edit screens. */
+function frave_collection_notes_field( $term = null ): void {
+	$value = $term instanceof WP_Term ? (string) get_term_meta( $term->term_id, 'frave_notes', true ) : '';
+	$help  = __( 'Separados por comas, por ejemplo «Lavanda, Algodón fresco, Avena». Se muestran como tarjetas y en la pirámide olfativa de la colección; un nombre que no está en la biblioteca de notas no se muestra.', 'frave' );
+	$input = sprintf( '<input type="text" name="frave_notes" id="frave-collection-notes" value="%s">', esc_attr( $value ) );
+	if ( $term instanceof WP_Term ) {
+		printf(
+			'<tr class="form-field"><th scope="row"><label for="frave-collection-notes">%1$s</label></th><td>%2$s<p class="description">%3$s</p></td></tr>',
+			esc_html__( 'Ingredientes', 'frave' ),
+			$input, // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above.
+			esc_html( $help )
+		);
+		return;
+	}
+	printf(
+		'<div class="form-field"><label for="frave-collection-notes">%1$s</label>%2$s<p>%3$s</p></div>',
+		esc_html__( 'Ingredientes', 'frave' ),
+		$input, // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above.
+		esc_html( $help )
+	);
+}
+add_action( FRAVE_COLLECTION_TAXONOMY . '_add_form_fields', 'frave_collection_notes_field', 20 );
+add_action( FRAVE_COLLECTION_TAXONOMY . '_edit_form_fields', 'frave_collection_notes_field', 20 );
+
+/** Saved with the same nonce and permission as the subcategory. */
+function frave_collection_save_notes( int $term_id ): void {
+	if ( ! isset( $_POST['frave_collection_category_nonce'], $_POST['frave_notes'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['frave_collection_category_nonce'] ) ), 'frave_collection_category' ) ) {
+		return;
+	}
+	if ( ! current_user_can( 'manage_product_terms' ) ) { // phpcs:ignore WordPress.WP.Capabilities.Unknown -- WooCommerce's capability for product terms.
+		return;
+	}
+	update_term_meta( $term_id, 'frave_notes', sanitize_text_field( wp_unslash( $_POST['frave_notes'] ) ) );
+}
+add_action( 'created_' . FRAVE_COLLECTION_TAXONOMY, 'frave_collection_save_notes' );
+add_action( 'edited_' . FRAVE_COLLECTION_TAXONOMY, 'frave_collection_save_notes' );

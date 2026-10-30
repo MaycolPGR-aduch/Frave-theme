@@ -73,6 +73,17 @@ function frave_note_icon_shapes(): array {
 		'cardamom'       => '<path d="M12 3c3.5 2.5 5 6 5 9.5S15 20 12 21c-3-1-5-4-5-8.5S8.5 5.5 12 3z"/><path d="M12 3v18M9.5 7.5c.5 4 .5 8 0 11M14.5 7.5c-.5 4-.5 8 0 11"/>',
 		'pepper'         => '<circle cx="8" cy="9" r="3"/><circle cx="15.5" cy="8" r="3"/><circle cx="11.5" cy="15.5" r="3"/><circle cx="18" cy="15" r="2.5"/><circle cx="5" cy="16" r="2"/>',
 		'saffron'        => '<path d="M12 21v-6"/><path d="M12 15c-3 0-5-2.5-5-6 2 0 3.5 1 5 3 1.5-2 3-3 5-3 0 3.5-2 6-5 6z"/><path d="M12 12 9.5 4M12 12l2.5-8M12 12V3"/>',
+		'cherry-blossom' => '<circle cx="12" cy="7.4" r="3"/><circle cx="16.4" cy="10.6" r="3"/><circle cx="14.7" cy="15.7" r="3"/><circle cx="9.3" cy="15.7" r="3"/><circle cx="7.6" cy="10.6" r="3"/><circle cx="12" cy="12" r="1.2"/>',
+		'hibiscus'       => '<ellipse cx="12" cy="7.2" rx="3.3" ry="4.4"/><ellipse cx="12" cy="7.2" rx="3.3" ry="4.4" transform="rotate(72 12 12)"/><ellipse cx="12" cy="7.2" rx="3.3" ry="4.4" transform="rotate(144 12 12)"/><ellipse cx="12" cy="7.2" rx="3.3" ry="4.4" transform="rotate(216 12 12)"/><ellipse cx="12" cy="7.2" rx="3.3" ry="4.4" transform="rotate(288 12 12)"/><path d="M12 12l6.5-6.5"/><circle cx="19.3" cy="4.7" r="1.1"/>',
+		'powder'         => '<circle cx="12" cy="13" r="7.5"/><path d="M8.3 10.6c2.2-1.8 5.2-1.8 7.4 0"/><path d="M4.5 4.5h.01M8 3h.01M19.5 5h.01M17 2.8h.01"/>',
+		'peach'          => '<path d="M12 7c-4.2-1.5-8 1.5-8 6.2C4 17.8 7.6 21 12 21s8-3.2 8-7.8C20 8.5 16.2 5.5 12 7z"/><path d="M12 7.5c1.6 3.4 1.6 9 0 13"/><path d="M12 7c.6-2.2 2.2-3.6 4.5-4-.3 2.2-1.9 3.6-4.5 4z"/>',
+		'dragonfruit'    => '<ellipse cx="12" cy="13.5" rx="6.2" ry="7.5"/><path d="M8.2 8.5C6.6 7.6 5.6 6 5.5 4.3c1.6.1 3.1 1.1 4 2.6M15.8 8.5c1.6-.9 2.6-2.5 2.7-4.2-1.6.1-3.1 1.1-4 2.6M12 6c-.2-1.6.3-3.1 1.4-4.2"/><path d="M8.5 14.5c-1-.5-2.2-.5-3.2.1M15.5 14.5c1-.5 2.2-.5 3.2.1M12 18.5c-.8-.6-1.8-.8-2.8-.5"/>',
+		'watermelon'     => '<path d="M3 9a9 9 0 0 0 18 0z"/><path d="M5.6 9a6.4 6.4 0 0 0 12.8 0"/><path d="M9 11.5h.01M12 13.2h.01M15 11.5h.01M10.5 15h.01M13.5 15h.01"/>',
+		'grapes'         => '<circle cx="8" cy="9" r="2.3"/><circle cx="12.5" cy="9" r="2.3"/><circle cx="17" cy="9" r="2.3"/><circle cx="10.2" cy="13.2" r="2.3"/><circle cx="14.8" cy="13.2" r="2.3"/><circle cx="12.5" cy="17.4" r="2.3"/><path d="M12.5 6.7V3.2M12.5 4.4c1.5-1.4 3.5-1.4 4.6 0"/>',
+		'rosemary'       => '<path d="M12 21.5V3.5"/><path d="M12 6 9.2 4.2M12 6l2.8-1.8M12 9.4 8.8 7.4M12 9.4l3.2-2M12 12.8 8.6 10.7M12 12.8l3.4-2.1M12 16.2 8.8 14.2M12 16.2l3.2-2"/>',
+		'aloe'           => '<path d="M12 21c-1-5.5-1-11.5 0-17.5 1 6 1 12 0 17.5z"/><path d="M12 21c-3.2-3-5.3-8-6-13.5 3.4 3 5.4 8 6 13.5zM12 21c3.2-3 5.3-8 6-13.5-3.4 3-5.4 8-6 13.5z"/><path d="M12 21c-4-.8-7-2.8-9-6 4 0 7 2.2 9 6zM12 21c4-.8 7-2.8 9-6-4 0-7 2.2-9 6z"/>',
+		'cotton'         => '<circle cx="12" cy="8.6" r="3.4"/><circle cx="8.1" cy="11.6" r="3.1"/><circle cx="15.9" cy="11.6" r="3.1"/><circle cx="12" cy="13.4" r="3"/><path d="M8.6 15.8c1 2.8 2.1 4.3 3.4 5.7 1.3-1.4 2.4-2.9 3.4-5.7M12 21.5v-5"/>',
+		'oats'           => '<path d="M12 21.5V9.5"/><ellipse cx="12" cy="5.2" rx="1.6" ry="2.6"/><ellipse cx="9.4" cy="9" rx="1.6" ry="2.6" transform="rotate(-30 9.4 9)"/><ellipse cx="14.6" cy="11" rx="1.6" ry="2.6" transform="rotate(30 14.6 11)"/><ellipse cx="9.4" cy="13" rx="1.6" ry="2.6" transform="rotate(-30 9.4 13)"/><ellipse cx="14.6" cy="15" rx="1.6" ry="2.6" transform="rotate(30 14.6 15)"/>',
 	);
 }
 

@@ -124,12 +124,13 @@ La plantilla **Pirámide olfativa** (`page-templates/piramide-olfativa.php`, /fr
 Una **colección** agrupa los aromas pensados para un tipo de producto de una subcategoría (Romero, Mascotas, Detergentes…). Es un valor del atributo global **Colección** (`pa_coleccion`, con páginas propias), así que cada colección tiene su página (/coleccion/romero/) y sirve de filtro en el catálogo; los datos quedan en WooCommerce aunque cambie el tema.
 
 - **Dónde aparecen:** en la página de su subcategoría (tarjetas bajo los tipos), como «Colecciones:» en las bandas del portafolio de su línea, en las soluciones que usan su subcategoría, en el centro **Colecciones** (`page-templates/colecciones.php`, /colecciones/, agrupadas por subcategoría) y en el menú **Catálogo**.
-- **Página de la colección:** cabecera con «Colección · subcategoría», su descripción, enlace a la subcategoría y a sus soluciones, y su imagen; sin aromas todavía, invita a cotizar o escribir por WhatsApp en lugar de mostrar una lista vacía.
+- **Página de la colección:** cabecera con «Colección · subcategoría», su descripción, enlace a la subcategoría y a sus soluciones, y su imagen; **«Los aromas de…»**, una tarjeta por ingrediente con su ícono y el color de su familia que se da vuelta (al señalarla, enfocarla o tocarla) con su descripción, su nivel y su familia en la guía; **«Cómo se percibe»**, los ingredientes en la pirámide olfativa (desde dos) y las familias de la colección; sus productos cuando los tenga; **otras colecciones** de su subcategoría (o de su línea) y un **cierre de cotización** con WhatsApp.
+- **Ingredientes de cada colección:** campo **Ingredientes** del término (nombres de la biblioteca de notas de `inc/fragrance-notes.php` separados por comas, por ejemplo «Lavanda, Algodón fresco, Avena»); un nombre que no está en la biblioteca no se muestra. `bin/crear-colecciones.php` los llena en las colecciones que no tienen.
 - **Datos de cada colección** (*Productos → Atributos → Colección → configurar términos*): nombre, descripción, **Subcategoría** (campo del tema) y orden (arrastrando). Los aromas se asignan en cada producto, atributo «Colección».
 - **Imágenes:** `assets/media/colecciones/{slug}.webp` (1536 × 1024) y `{slug}-768.webp`; una colección sin imagen propia usa la de su subcategoría. Las nueve primeras están integradas (prompts en `recursos-graficos/colecciones/PROMPTS.md`).
 - **Una colección nueva:** basta con crear el término, elegir su subcategoría y asignarle productos; aparece sola en todos los lugares.
 - **Crear el atributo, las primeras nueve colecciones y el centro:** `wp eval-file RUTA/bin/crear-colecciones.php` y después `wp rewrite flush` (deja como están las que ya existen).
-- **Código:** `inc/collections.php`, `template-parts/components/collections.php` y `collection-card.php`, `assets/src/css/pages/collections.css`.
+- **Código:** `inc/collections.php`, `template-parts/components/collections.php`, `collection-card.php` y `collection-profile.php`, `assets/src/js/modules/note-cards.js`, `assets/src/css/pages/collections.css`.
 
 ### Top de perfumería
 

@@ -42,7 +42,7 @@ test.describe('colecciones de fragancias', () => {
     await expect(page.locator('.page-hero h1')).toHaveText('Romero');
   });
 
-  test('la página de una colección sin aromas invita a cotizar', async ({ page }) => {
+  test('la página de una colección presenta sus ingredientes, otras colecciones y la cotización', async ({ page }) => {
     const errors = collectPageErrors(page);
     await page.goto(ROSEMARY);
     await expectNoPhpErrors(page);
@@ -54,11 +54,37 @@ test.describe('colecciones de fragancias', () => {
     await expect(page.locator('.page-hero__line-link')).toContainText('Ver cuidado del cabello');
     await expect(page.locator('.page-hero__solutions a')).toHaveText(['Cosmética y cuidado personal']);
 
-    const empty = page.locator('.category-empty');
-    await expect(empty.locator('h2')).toHaveText('Estamos preparando los aromas de Romero');
-    await expect(empty.locator('[data-frave-whatsapp="collection"]')).toHaveAttribute('href', /Romero/);
+    // Its ingredient, with its family; a single one has no pyramid.
+    await expect(page.locator('.note-card__name')).toHaveText(['Romero']);
+    await expect(page.locator('.note-card__family')).toHaveText(['Aromática']);
+    await expect(page.locator('.profile-tier')).toHaveCount(0);
+    await expect(page.locator('.profile-families .family-chip')).toHaveText(['Aromática']);
+
+    // Without aromas yet: the other collections of its subcategory and the quote panel, no filters.
+    await expect(page.locator('#otras-colecciones .collection-card')).toHaveCount(3);
+    await expect(page.locator('.cta-panel--bare h2')).toHaveText('¿Te interesa la colección Romero?');
+    await expect(page.locator('.cta-panel--bare [data-frave-whatsapp]')).toHaveAttribute('href', /Romero/);
     await expect(page.locator('.catalog-filters')).toHaveCount(0);
+    await expect(page.locator('.site-footer__cta')).toHaveCount(0);
     expect(errors).toEqual([]);
+  });
+
+  test('los ingredientes se dan vuelta y se ordenan en la pirámide olfativa', async ({ page }) => {
+    await page.goto('/?pa_coleccion=lavavajillas');
+    const cards = page.locator('.note-card');
+    await expect(cards.locator('.note-card__name')).toHaveText(['Limón', 'Lima', 'Manzana', 'Uva', 'Tutti frutti', 'Avena', 'Sandía']);
+    // The back of a card: its level, description and family in the guide.
+    await expect(cards.first().locator('.note-card__level')).toHaveText('Nota de salida');
+    await expect(cards.first().locator('.note-card__link')).toHaveAttribute('href', /#familia-citrica$/);
+    await cards.first().focus();
+    await expect(cards.first().locator('.note-card__inner')).toHaveCSS('transform', /matrix3d/);
+
+    const tiers = page.locator('.profile-tier');
+    await expect(tiers).toHaveCount(3);
+    await expect(tiers.first()).toContainText('Salida');
+    await expect(tiers.first().locator('li')).toContainText(['Limón', 'Lima', 'Uva', 'Sandía']);
+    await expect(tiers.last().locator('li')).toHaveText(['Avena']);
+    await expect(page.locator('.profile-families .family-chip')).toHaveText(['Cítrica', 'Frutal', 'Gourmand']);
   });
 
   test('las bandas de Fragancias y las soluciones nombran sus colecciones', async ({ page }) => {

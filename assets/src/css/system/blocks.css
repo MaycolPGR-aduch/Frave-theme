@@ -155,7 +155,7 @@
 
   .cta-panel__media img {
     width: 100%;
-    height: 100%;
+    height: 100% !important; /* On catalog pages WooCommerce's unlayered img rule would set auto. */
     object-fit: cover;
   }
 

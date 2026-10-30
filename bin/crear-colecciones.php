@@ -9,7 +9,8 @@
  *   wp eval-file ~/repos/frave-theme/bin/crear-colecciones.php
  *   wp rewrite flush
  *
- * Safe to run again: existing collections keep their name, description and subcategory. A
+ * Safe to run again: existing collections keep their name, description, subcategory and
+ * ingredients (a collection without ingredients gets those of the list). A
  * collection added to the list takes its place in it: the ones after it move down one place.
  * The aromas (products) are assigned to a collection in each product, attribute «Colección».
  */
@@ -18,18 +19,18 @@ if ( ! defined( 'WP_CLI' ) || ! WP_CLI ) {
 	exit( 'Run with WP-CLI only.' );
 }
 
-// slug => [ name, subcategory slug, description ].
+// slug => [ name, subcategory slug, description, ingredients (notes of inc/fragrance-notes.php) ].
 $frave_collections_list = array(
-	'shampoo-y-acondicionador'       => array( 'Shampoo y acondicionador', 'cuidado-del-cabello', 'Fragancias florales, cítricas y aromáticas para shampoos y acondicionadores: perfuman durante el lavado y acompañan al cabello después. Flor rosada, flor blanca, lima y lavanda.' ),
-	'mascarillas-y-cremas-de-peinar' => array( 'Mascarillas y cremas de peinar', 'cuidado-del-cabello', 'Fragancias para mascarillas, cremas de peinar y tratamientos capilares, pensadas para integrarse en emulsiones: jazmín, argán, aloe y flores rosadas.' ),
-	'romero'                         => array( 'Romero', 'cuidado-del-cabello', 'Fragancia herbal y fresca de romero para shampoo, acondicionador, cremas de peinar y perfume capilar: una misma firma aromática para toda una línea capilar.' ),
-	'pitahaya-e-hibiscus'            => array( 'Pitahaya e Hibiscus', 'cuidado-del-cabello', 'Fragancia frutal y floral de pitahaya e hibisco para shampoo, acondicionador, cremas de peinar y perfume capilar, con un carácter tropical y luminoso.' ),
-	'mascotas'                       => array( 'Mascotas', 'cuidado-de-mascotas', 'Fragancias suaves para shampoos, colonias y productos de higiene para mascotas: algodón fresco, talco, florales ligeros, avena, lavanda y frutales.' ),
-	'suavizantes-y-microcapsulas'    => array( 'Suavizantes y microcápsulas', 'cuidado-textil', 'Fragancias para suavizantes y microcápsulas que refuerzan la sensación de ropa limpia y perduran en las prendas después del lavado.' ),
-	'detergentes'                    => array( 'Detergentes', 'cuidado-textil', 'Fragancias para detergentes líquidos que transmiten limpieza desde que se abre el envase hasta la ropa seca.' ),
-	'limpiadores-de-piso'            => array( 'Limpiadores de piso', 'cuidado-de-superficies', 'Fragancias para limpiadores y desinfectantes multiusos de piso: frutales, florales y aromáticas que dejan el ambiente perfumado después de limpiar.' ),
-	'lavavajillas'                   => array( 'Lavavajillas', 'cocina-y-lavavajillas', 'Fragancias para lavavajillas líquidos que acompañan el poder de limpieza y dejan un aroma agradable en manos y vajilla: limón, lima-limón, manzana, chicle-uva (tutti frutti), avena y sandía.' ),
-	'aromas-para-ambientacion'       => array( 'Aromas para ambientación', 'ambientacion', 'Fragancias para difusores de varitas, sprays, aerosoles y velas: brisa cítrica, vainilla, algodón fresco, lavanda, sándalo y cedro.' ),
+	'shampoo-y-acondicionador'       => array( 'Shampoo y acondicionador', 'cuidado-del-cabello', 'Fragancias florales, cítricas y aromáticas para shampoos y acondicionadores: perfuman durante el lavado y acompañan al cabello después. Flor rosada, flor blanca, lima y lavanda.', 'Flores rosadas, Flores blancas, Lima, Lavanda' ),
+	'mascarillas-y-cremas-de-peinar' => array( 'Mascarillas y cremas de peinar', 'cuidado-del-cabello', 'Fragancias para mascarillas, cremas de peinar y tratamientos capilares, pensadas para integrarse en emulsiones: jazmín, argán, aloe y flores rosadas.', 'Jazmín, Argán, Aloe vera, Flores rosadas' ),
+	'romero'                         => array( 'Romero', 'cuidado-del-cabello', 'Fragancia herbal y fresca de romero para shampoo, acondicionador, cremas de peinar y perfume capilar: una misma firma aromática para toda una línea capilar.', 'Romero' ),
+	'pitahaya-e-hibiscus'            => array( 'Pitahaya e Hibiscus', 'cuidado-del-cabello', 'Fragancia frutal y floral de pitahaya e hibisco para shampoo, acondicionador, cremas de peinar y perfume capilar, con un carácter tropical y luminoso.', 'Pitahaya, Hibisco' ),
+	'mascotas'                       => array( 'Mascotas', 'cuidado-de-mascotas', 'Fragancias suaves para shampoos, colonias y productos de higiene para mascotas: algodón fresco, talco, florales ligeros, avena, lavanda y frutales.', 'Algodón fresco, Talco, Flores blancas, Avena, Lavanda, Durazno' ),
+	'suavizantes-y-microcapsulas'    => array( 'Suavizantes y microcápsulas', 'cuidado-textil', 'Fragancias para suavizantes y microcápsulas que refuerzan la sensación de ropa limpia y perduran en las prendas después del lavado.', '' ),
+	'detergentes'                    => array( 'Detergentes', 'cuidado-textil', 'Fragancias para detergentes líquidos que transmiten limpieza desde que se abre el envase hasta la ropa seca.', '' ),
+	'limpiadores-de-piso'            => array( 'Limpiadores de piso', 'cuidado-de-superficies', 'Fragancias para limpiadores y desinfectantes multiusos de piso: frutales, florales y aromáticas que dejan el ambiente perfumado después de limpiar.', 'Manzana, Canela, Lavanda, Rosa, Talco, Sandía' ),
+	'lavavajillas'                   => array( 'Lavavajillas', 'cocina-y-lavavajillas', 'Fragancias para lavavajillas líquidos que acompañan el poder de limpieza y dejan un aroma agradable en manos y vajilla: limón, lima-limón, manzana, chicle-uva (tutti frutti), avena y sandía.', 'Limón, Lima, Manzana, Uva, Tutti frutti, Avena, Sandía' ),
+	'aromas-para-ambientacion'       => array( 'Aromas para ambientación', 'ambientacion', 'Fragancias para difusores de varitas, sprays, aerosoles y velas: brisa cítrica, vainilla, algodón fresco, lavanda, sándalo y cedro.', 'Brisa cítrica, Vainilla, Algodón fresco, Lavanda, Sándalo, Cedro' ),
 );
 
 /* ---------- The attribute «Colección», with its own pages ---------- */
@@ -88,7 +89,7 @@ if ( ! taxonomy_exists( 'pa_coleccion' ) ) {
 /* ---------- The collections ---------- */
 
 $frave_order = 0;
-foreach ( $frave_collections_list as $frave_slug => list( $frave_name, $frave_category_slug, $frave_description ) ) {
+foreach ( $frave_collections_list as $frave_slug => list( $frave_name, $frave_category_slug, $frave_description, $frave_notes ) ) {
 	$frave_category = get_term_by( 'slug', $frave_category_slug, 'product_cat' );
 	$frave_term     = get_term_by( 'slug', $frave_slug, 'pa_coleccion' );
 	if ( $frave_term instanceof WP_Term ) {
@@ -125,6 +126,9 @@ foreach ( $frave_collections_list as $frave_slug => list( $frave_name, $frave_ca
 		WP_CLI::log( "Colección creada: {$frave_name}" );
 	}
 	++$frave_order;
+	if ( '' !== $frave_notes && '' === (string) get_term_meta( $frave_term_id, 'frave_notes', true ) ) {
+		update_term_meta( $frave_term_id, 'frave_notes', $frave_notes );
+	}
 	if ( ! get_term_meta( $frave_term_id, 'frave_category', true ) ) {
 		if ( $frave_category instanceof WP_Term ) {
 			update_term_meta( $frave_term_id, 'frave_category', (int) $frave_category->term_id );

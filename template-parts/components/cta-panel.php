@@ -8,6 +8,8 @@
  * - text:     optional lead.
  * - action:   [ url, external ] of the main button (contact form or WhatsApp).
  * - whatsapp: optional WhatsApp URL for a second button, when the main one is the form.
+ * - bare:     true to print only the panel, inside a page that already has its container
+ *             (a catalog page).
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -21,16 +23,20 @@ $frave_panel  = wp_parse_args(
 		'text'     => '',
 		'action'   => null,
 		'whatsapp' => '',
+		'bare'     => false,
 	)
 );
 $frave_action = $frave_panel['action'];
 if ( ! $frave_action ) {
 	return;
 }
+$frave_bare = ! empty( $frave_panel['bare'] );
 ?>
+<?php if ( ! $frave_bare ) : ?>
 <section class="section cta-section" aria-labelledby="cta-panel-title">
 	<div class="container">
-		<div class="cta-panel" data-reveal="up">
+<?php endif; ?>
+		<div class="cta-panel<?php echo $frave_bare ? ' cta-panel--bare' : ''; ?>" data-reveal="up"<?php echo $frave_bare ? ' role="region" aria-labelledby="cta-panel-title"' : ''; ?>>
 			<picture class="cta-panel__media" aria-hidden="true">
 				<source media="(min-width: 48rem)" srcset="<?php echo esc_url( frave_asset_url( 'assets/media/contacto/contacto-escritorio.webp' ) ); ?>" width="2164" height="727">
 				<img src="<?php echo esc_url( frave_asset_url( 'assets/media/contacto/contacto-movil.webp' ) ); ?>" width="1122" height="1402" alt="" loading="lazy" decoding="async">
@@ -59,5 +65,7 @@ if ( ! $frave_action ) {
 				</div>
 			</div>
 		</div>
+<?php if ( ! $frave_bare ) : ?>
 	</div>
 </section>
+<?php endif; ?>
