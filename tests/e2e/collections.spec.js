@@ -71,6 +71,7 @@ test.describe('colecciones de fragancias', () => {
 
   test('los ingredientes se dan vuelta y se ordenan en la pirámide olfativa', async ({ page }) => {
     await page.goto('/?pa_coleccion=lavavajillas');
+    await expect(page.locator('.page-hero img')).toHaveAttribute('src', /colecciones\/lavavajillas/);
     const cards = page.locator('.note-card');
     await expect(cards.locator('.note-card__name')).toHaveText(['Limón', 'Lima', 'Manzana', 'Uva', 'Tutti frutti', 'Avena', 'Sandía']);
     // The back of a card: its level, description and family in the guide.
