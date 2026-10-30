@@ -1,7 +1,8 @@
 <?php
 /**
  * List of posts of the blog, a category or another post archive: topics, the latest post
- * as a wide card on the first page of the blog, the rest in a grid and the pagination.
+ * as a wide card on the first page of the blog, the rest in a grid (with the fragrance guide
+ * card after the second one, on first pages) and the pagination.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -12,6 +13,7 @@ $frave_is_blog  = is_home();
 $frave_featured = $frave_is_blog && ! is_paged();
 $frave_topics   = frave_blog_categories();
 $frave_current  = is_category() ? get_queried_object_id() : 0;
+$frave_promo    = ! is_paged() && ( $frave_is_blog || is_category() ) && frave_fragrance_guide_links();
 
 if ( $frave_is_blog ) {
 	$frave_hero = array(
@@ -72,7 +74,11 @@ if ( $frave_is_blog ) {
 						$frave_index = 0;
 						while ( have_posts() ) :
 							the_post();
-							?>
+							if ( $frave_promo && 2 === $frave_index ) :
+								$frave_promo = false;
+								?>
+								<li><?php get_template_part( 'template-parts/blog/guide-promo' ); ?></li>
+							<?php endif; ?>
 							<li>
 								<?php
 								get_template_part(
@@ -81,12 +87,16 @@ if ( $frave_is_blog ) {
 									array(
 										'post'    => get_post(),
 										'heading' => 'h2',
-										'eager'   => ! $frave_featured && 0 === $frave_index++,
+										'eager'   => ! $frave_featured && 0 === $frave_index,
 									)
 								);
+								++$frave_index;
 								?>
 							</li>
 						<?php endwhile; ?>
+						<?php if ( $frave_promo ) : ?>
+							<li><?php get_template_part( 'template-parts/blog/guide-promo' ); ?></li>
+						<?php endif; ?>
 					</ul>
 				<?php endif; ?>
 				<?php

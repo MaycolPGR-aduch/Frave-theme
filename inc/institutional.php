@@ -35,8 +35,9 @@ function frave_heading_anchor( string $text, array &$used ): string {
 	return $anchor;
 }
 
+/** Pages whose second-level headings get anchors: FAQ, legal pages and blog articles. */
 function frave_page_has_index(): bool {
-	return is_page_template( FRAVE_TEMPLATE_FAQ ) || is_page_template( FRAVE_TEMPLATE_LEGAL );
+	return is_page_template( FRAVE_TEMPLATE_FAQ ) || is_page_template( FRAVE_TEMPLATE_LEGAL ) || is_singular( 'post' );
 }
 
 /**
@@ -90,15 +91,15 @@ function frave_heading_ids( string $content, array $block ): string {
 }
 add_filter( 'render_block_core/heading', 'frave_heading_ids', 10, 2 );
 
-/** "En esta página" index; printed only when there are at least three sections. */
-function frave_page_index( WP_Post $post ): void {
+/** "En esta página" index (or $title); printed only when there are at least three sections. */
+function frave_page_index( WP_Post $post, string $title = '' ): void {
 	$sections = frave_page_sections( $post );
 	if ( count( $sections ) < 3 ) {
 		return;
 	}
 	?>
 	<nav class="page-index" aria-labelledby="page-index-title">
-		<h2 class="page-index__title" id="page-index-title"><?php esc_html_e( 'En esta página', 'frave' ); ?></h2>
+		<h2 class="page-index__title" id="page-index-title"><?php echo esc_html( '' !== $title ? $title : __( 'En esta página', 'frave' ) ); ?></h2>
 		<ol>
 			<?php foreach ( $sections as $section ) : ?>
 				<li><a href="#<?php echo esc_attr( $section['anchor'] ); ?>"><?php echo esc_html( $section['text'] ); ?></a></li>

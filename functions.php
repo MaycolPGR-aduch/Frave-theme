@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FRAVE_VERSION', '1.40.1' );
+define( 'FRAVE_VERSION', '1.41.0' );
 define( 'FRAVE_THEME_DIR', get_template_directory() );
 define( 'FRAVE_THEME_URI', get_template_directory_uri() );
 

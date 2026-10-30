@@ -1,7 +1,9 @@
 <?php
 /**
  * Article of the blog: breadcrumb, category, reading time, the cover image, the text with
- * share links beside it (below it on phones), tags and «Sigue leyendo».
+ * its index («En este artículo», from three sections), a quote box in the middle (from four)
+ * and share links beside it (below it on phones), the technical team's signature, tags,
+ * «Para tu producto» (its collections and line) and «Sigue leyendo».
  */
 get_header();
 ?>
@@ -47,7 +49,9 @@ get_header();
 						<?php if ( has_excerpt() ) : ?>
 							<p class="article__lead"><?php echo esc_html( get_the_excerpt() ); ?></p>
 						<?php endif; ?>
+						<?php frave_page_index( get_post(), __( 'En este artículo', 'frave' ) ); ?>
 						<?php the_content(); ?>
+						<?php get_template_part( 'template-parts/blog/author' ); ?>
 					</div>
 					<div class="article__aside">
 						<?php get_template_part( 'template-parts/blog/share' ); ?>
@@ -66,6 +70,8 @@ get_header();
 				<?php endif; ?>
 			</div>
 		</article>
+
+		<?php get_template_part( 'template-parts/blog/product-links' ); ?>
 
 		<?php if ( $frave_related ) : ?>
 			<section class="section section--surface article-related" aria-labelledby="article-related-title">

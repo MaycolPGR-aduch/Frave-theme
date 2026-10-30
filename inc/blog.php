@@ -317,3 +317,87 @@ function frave_blog_page_excerpts(): void {
 	add_post_type_support( 'page', 'excerpt' );
 }
 add_action( 'init', 'frave_blog_page_excerpts' );
+
+/* ---------- Articles: tips, a quote mid-article and links to the product ---------- */
+
+/**
+ * «Consejo» style for the group block: a tinted box for tips in the articles. The starter
+ * articles write it with a line that starts with «> » (bin/crear-blog.php).
+ */
+function frave_blog_block_styles(): void {
+	register_block_style(
+		'core/group',
+		array(
+			'name'  => 'frave-tip',
+			'label' => __( 'Consejo', 'frave' ),
+		)
+	);
+}
+add_action( 'init', 'frave_blog_block_styles' );
+
+/**
+ * The product line an article is about: its post meta frave_line (fragancias, sabores or
+ * envases), or ''.
+ */
+function frave_post_line( $post = null ): string {
+	$post = get_post( $post );
+	return $post ? sanitize_key( (string) get_post_meta( $post->ID, 'frave_line', true ) ) : '';
+}
+
+/**
+ * A quote box in the middle of a long article: before its middle second-level heading, when
+ * it has at least four. The request names the article's line when it has one.
+ */
+function frave_article_quote_box( string $content, array $block ): string {
+	static $seen = 0;
+	if ( ! is_singular( 'post' ) || ! in_the_loop() || 2 !== (int) ( $block['attrs']['level'] ?? 2 ) ) {
+		return $content;
+	}
+	$count = count( frave_page_sections( get_post() ) );
+	++$seen;
+	if ( $count < 4 || (int) ceil( $count / 2 ) + 1 !== $seen ) {
+		return $content;
+	}
+	ob_start();
+	get_template_part( 'template-parts/blog/quote-box', null, array( 'line' => frave_post_line() ) );
+	return (string) ob_get_clean() . $content;
+}
+add_filter( 'render_block_core/heading', 'frave_article_quote_box', 20, 2 );
+
+/**
+ * What an article leads to: the collections it names (post meta frave_collections, slugs
+ * separated by commas) and pages of its line (the line, and for Fragancias the families guide
+ * and the pyramid).
+ *
+ * @return array{collections: WP_Term[], links: array<int, array{label: string, url: string, icon: string}>}
+ */
+function frave_post_product_links( $post = null ): array {
+	$post        = get_post( $post );
+	$collections = array();
+	if ( $post && function_exists( 'frave_collections' ) ) {
+		$wanted = array_filter( array_map( 'sanitize_title', explode( ',', (string) get_post_meta( $post->ID, 'frave_collections', true ) ) ) );
+		foreach ( frave_collections() as $collection ) {
+			if ( in_array( $collection->slug, $wanted, true ) ) {
+				$collections[] = $collection;
+			}
+		}
+	}
+	$links = array();
+	$line  = frave_post_line( $post );
+	if ( '' !== $line && '' !== frave_line_url( $line ) ) {
+		$term    = frave_line_term( $line );
+		$links[] = array(
+			/* translators: %s: product line name. */
+			'label' => sprintf( __( 'Línea %s', 'frave' ), $term ? $term->name : ucfirst( $line ) ),
+			'url'   => frave_line_url( $line ),
+			'icon'  => frave_product_line_icon( $line ),
+		);
+	}
+	if ( 'fragancias' === $line && function_exists( 'frave_fragrance_guide_links' ) ) {
+		$links = array_merge( $links, frave_fragrance_guide_links() );
+	}
+	return array(
+		'collections' => $collections,
+		'links'       => $links,
+	);
+}

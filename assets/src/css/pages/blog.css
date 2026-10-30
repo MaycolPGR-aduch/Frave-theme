@@ -321,19 +321,43 @@
     font-size: 0.95rem;
   }
 
+  /* !important: the core table block styles are not layered and draw black borders. */
   .article__body th,
   .article__body td {
-    padding: 0.65rem 0.75rem;
-    border-bottom: 1px solid var(--color-line);
+    padding: 0.7rem 0.9rem;
+    border: 0 !important;
+    border-bottom: 1px solid var(--color-line) !important;
     text-align: left;
+    vertical-align: top;
+  }
+
+  .article__body thead {
+    border: 0 !important;
   }
 
   .article__body th {
+    background: var(--color-sand-soft);
     color: var(--color-ink);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .article__body td:first-child {
+    color: var(--color-ink);
+    font-weight: 600;
   }
 
   .article__body .wp-block-table {
     overflow-x: auto;
+    margin: 2rem 0;
+    border: 1px solid var(--color-sand-line);
+    border-radius: var(--radius-md);
+  }
+
+  .article__body .wp-block-table tr:last-child td {
+    border-bottom: 0 !important;
   }
 
   .article__tags {
@@ -444,5 +468,218 @@
     .share__button {
       width: 100%;
     }
+  }
+
+  /* ---------- Article: index, tips, quote box, signature and «Para tu producto» ---------- */
+
+  /* The index heading is an h2 of the article body: keep it as a small label. */
+  .article__body .page-index {
+    margin: 0.5rem 0 2.25rem;
+  }
+
+  .article__body .page-index__title {
+    margin: 0 0 0.6rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .article__body .page-index li + li {
+    margin-top: 0;
+  }
+
+  /* «Consejo»: the group block style registered in inc/blog.php. */
+  .article__body .is-style-frave-tip {
+    position: relative;
+    margin: 2rem 0;
+    padding: 1.25rem 1.4rem 1.25rem 3.6rem;
+    border-radius: var(--radius-card);
+    background: var(--color-orange-soft);
+  }
+
+  .article__body .is-style-frave-tip::before {
+    content: "";
+    position: absolute;
+    top: 1.35rem;
+    left: 1.3rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--color-primary);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+
+  .article__body .is-style-frave-tip p {
+    margin: 0;
+    color: var(--color-ink);
+  }
+
+  .article__body .is-style-frave-tip p + p {
+    margin-top: 0.6rem;
+  }
+
+  .article-quote {
+    display: grid;
+    gap: 1rem;
+    margin: 2.5rem 0;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    border: 1px solid var(--color-sand-line);
+    border-radius: var(--radius-lg);
+    background: var(--color-sand-soft);
+  }
+
+  .article-quote__icon {
+    display: grid;
+    width: 2.75rem;
+    height: 2.75rem;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-primary);
+  }
+
+  .article-quote__icon .icon {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .article-quote__title {
+    margin: 0 0 0.35rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .article-quote__text {
+    margin: 0;
+    color: var(--color-sand-muted);
+  }
+
+  .article-quote__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+  }
+
+  .article-quote .link-arrow {
+    color: var(--color-sand-accent) !important;
+  }
+
+  @media (min-width: 48rem) {
+    .article-quote {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .article-quote__actions {
+      grid-column: 2;
+    }
+  }
+
+  .article-author {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    margin-top: 3rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-line);
+  }
+
+  .article-author__mark {
+    flex: none;
+    display: grid;
+    width: 3.25rem;
+    height: 3.25rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--color-orange-soft);
+    color: var(--color-primary);
+  }
+
+  .article-author__mark .isotype {
+    width: 1.8rem;
+    height: auto;
+  }
+
+  .article-author__name {
+    margin: 0 0 0.25rem;
+    font-weight: 700;
+  }
+
+  .article-author__text {
+    margin: 0 0 0.5rem;
+    color: var(--color-muted);
+    font-size: 0.95rem;
+  }
+
+  /* Right after the article, whose section already leaves its space. */
+  .article-product {
+    padding-top: 0;
+  }
+
+  .article-product__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0 0 2rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .article-product__links:last-child {
+    margin-bottom: 0;
+  }
+
+  .blog-promo {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: clamp(1.5rem, 3vw, 2rem);
+    border: 1px solid var(--color-sand-line);
+    background: var(--color-orange-soft);
+  }
+
+  .blog-promo__art {
+    display: grid;
+    width: 3rem;
+    height: 3rem;
+    place-items: center;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--color-primary);
+  }
+
+  .blog-promo__art .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .blog-promo .eyebrow {
+    margin: 0.5rem 0 0;
+  }
+
+  .blog-promo__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+  }
+
+  .blog-promo__text {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .blog-promo__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: auto 0 0;
+    padding: 0.75rem 0 0;
+    list-style: none;
+  }
+
+  .blog-promo__links .line-chip {
+    background: #fff;
   }
 }

@@ -69,6 +69,49 @@ test.describe('blog', () => {
     expect(errors).toEqual([]);
   });
 
+  test('el blog intercala la guía de fragancias entre los artículos', async ({ page }) => {
+    await page.goto(await blogUrl(page));
+    const promo = page.locator('.blog-grid .blog-promo');
+    await expect(promo).toHaveCount(1);
+    await expect(promo.locator('a')).toHaveText(['Familias olfativas', 'Pirámide olfativa']);
+    // After the second card of the grid.
+    expect(await page.locator('.blog-grid > li').nth(2).locator('.blog-promo').count()).toBe(1);
+  });
+
+  test('un artículo largo tiene índice, consejo, tabla, asesoría, firma y enlaces a su línea', async ({ page }) => {
+    const errors = collectPageErrors(page);
+    await page.goto(await blogUrl(page));
+    await page.locator('.post-tile .card__link', { hasText: 'Propiedades organolépticas' }).click();
+    await expectNoPhpErrors(page);
+
+    const index = page.locator('.article__body .page-index');
+    await expect(index.locator('.page-index__title')).toHaveText('En este artículo');
+    const first = index.locator('a').first();
+    const anchor = (await first.getAttribute('href')).slice(1);
+    await expect(page.locator(`.article__body h2[id="${anchor}"]`)).toHaveText((await first.textContent()).trim());
+
+    await expect(page.locator('.article__body .is-style-frave-tip')).toContainText('Consejo:');
+    await expect(page.locator('.article__body .wp-block-table th').first()).toHaveText('Sentido');
+    // The quote box sits between two sections, never before the first one.
+    const quote = page.locator('.article__body .article-quote');
+    await expect(quote).toHaveCount(1);
+    await expect(quote.locator('a[data-frave-whatsapp="article"]')).toBeVisible();
+    expect(await quote.evaluate((box) => [...box.parentElement.children].slice(0, [...box.parentElement.children].indexOf(box)).some((el) => el.matches('h2[id]')))).toBe(true);
+    await expect(quote.locator('+ h2')).toHaveCount(1);
+    await expect(page.locator('.article-author')).toContainText('Equipo técnico Frave');
+    await expect(page.locator('.article-product .article-product__links a')).toContainText(['Línea Sabores']);
+    expect(errors).toEqual([]);
+  });
+
+  test('un artículo de una colección la enlaza en «Para tu producto»', async ({ page }) => {
+    await page.goto(await blogUrl(page));
+    await page.locator('.post-tile .card__link', { hasText: 'Colección Lavavajillas' }).click();
+    const product = page.locator('.article-product');
+    await expect(product.locator('.article-product__links a')).toContainText(['Línea Fragancias', 'Familias olfativas', 'Pirámide olfativa']);
+    await expect(product.locator('.collection-card')).toHaveCount(1);
+    await expect(product.locator('.collection-card')).toContainText('Lavavajillas');
+  });
+
   test('«Copiar enlace» copia la dirección del artículo', async ({ page, context, browserName }) => {
     test.skip(browserName !== 'chromium', 'Permisos del portapapeles solo en Chromium.');
     await context.grantPermissions(['clipboard-read', 'clipboard-write']);
