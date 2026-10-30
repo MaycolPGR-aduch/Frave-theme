@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { collectPageErrors, expectNoPhpErrors } from './helpers.js';
 
-// bin/crear-colecciones.php (run by the CI seed) creates the attribute «Colección», its nine
+// bin/crear-colecciones.php (run by the CI seed) creates the attribute «Colección», its ten
 // first collections (without aromas yet) and the hub /colecciones/.
 const HUB = '/?pagename=colecciones';
 const HAIR = '/?product_cat=cuidado-del-cabello';
@@ -14,9 +14,9 @@ test.describe('colecciones de fragancias', () => {
     await expectNoPhpErrors(page);
     await expect(page.locator('.page-hero h1')).toHaveText('Colecciones');
 
-    await expect(page.locator('.collections-hub .collection-card')).toHaveCount(9);
+    await expect(page.locator('.collections-hub .collection-card')).toHaveCount(10);
     await expect(page.locator('.collections-hub .collections h2')).toHaveText([
-      'Cuidado del cabello', 'Cuidado de mascotas', 'Cuidado textil', 'Cuidado de superficies', 'Ambientación',
+      'Cuidado del cabello', 'Cuidado de mascotas', 'Cuidado textil', 'Cuidado de superficies', 'Cocina y lavavajillas', 'Ambientación',
     ]);
     const hair = page.locator('#colecciones-cuidado-del-cabello');
     await expect(hair.locator('.collection-card__title')).toHaveText([
@@ -75,5 +75,18 @@ test.describe('colecciones de fragancias', () => {
     await expect(section.locator('.collection-card__eyebrow').first()).toHaveText('Cuidado del cabello');
     await section.getByRole('link', { name: 'Ver todas las colecciones' }).click();
     await expect(page.locator('.page-hero h1')).toHaveText('Colecciones');
+  });
+
+  test('la colección Lavavajillas está en su subcategoría y en Cuidado del hogar', async ({ page }) => {
+    await page.goto('/?product_cat=cocina-y-lavavajillas');
+    const section = page.locator('#colecciones');
+    await expect(section.locator('.collection-card__title')).toHaveText(['Lavavajillas']);
+    await section.locator('.collection-card', { hasText: 'Lavavajillas' }).locator('.collection-card__media').click({ force: true });
+    await expect(page.locator('.page-hero h1')).toHaveText('Lavavajillas');
+    await expect(page.locator('.page-hero .eyebrow')).toContainText('Colección · Cocina y lavavajillas');
+    await expect(page.locator('.page-hero')).toContainText('chicle-uva (tutti frutti)');
+
+    await page.goto('/?pagename=soluciones/cuidado-del-hogar');
+    await expect(page.locator('#colecciones .collection-card__title')).toContainText(['Lavavajillas']);
   });
 });

@@ -26,6 +26,7 @@
 @import "./pages/pyramid.css";
 @import "./pages/collections.css";
 @import "./pages/top-perfumery.css";
+@import "./pages/notes.css";
 @import "./pages/phone-heroes.css";
 @source "../../../**/*.php";
 @source "../js/**/*.js";

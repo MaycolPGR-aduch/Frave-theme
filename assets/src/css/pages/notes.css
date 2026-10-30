@@ -1,0 +1,381 @@
+/*
+ * Notes of a perfumery subcategory (template-parts/components/fragrance-notes.php): a white
+ * panel with the pyramid of notes (one band per level, tinted with the level's tone of the
+ * olfactory pyramid) and the card of the chosen note, beside it on wide screens.
+ */
+@layer components {
+  .notes-section {
+    display: grid;
+    gap: 1.75rem;
+    margin-bottom: clamp(2.5rem, 6vw, 4rem);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid var(--color-sand-line);
+    border-radius: var(--radius-xl);
+    background: #fff;
+    scroll-margin-top: calc(var(--header-height) + 1rem);
+  }
+
+  .notes-section__head {
+    display: grid;
+    gap: 0.75rem;
+    max-width: 46rem;
+  }
+
+  .notes-section__head .eyebrow {
+    margin: 0;
+  }
+
+  /* Inside WooCommerce's wrapper, where small headings are bold, keep the light display title. */
+  .notes-section h2 {
+    margin: 0;
+    font-weight: 300;
+  }
+
+  .notes-section__lead {
+    margin: 0;
+    color: var(--color-sand-muted);
+    font-size: 1.05rem;
+  }
+
+  /* ---------- Filter ---------- */
+
+  .notes-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+  }
+
+  .notes-section:not(.is-ready) .notes-filter {
+    display: none;
+  }
+
+  .notes-filter__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1.15rem;
+    border: 1px solid var(--color-sand-line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .notes-filter__button[aria-pressed="true"] {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .notes-filter__button[aria-pressed="true"] .notes-seal-mark {
+    background: #fff;
+  }
+
+  .notes-filter__button:focus-visible,
+  .note-chip:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  /* The hallmark: a small orange diamond. */
+  .notes-seal-mark {
+    flex: none;
+    width: 0.55rem;
+    height: 0.55rem;
+    background: var(--color-primary);
+    transform: rotate(45deg);
+  }
+
+  /* ---------- Pyramid ---------- */
+
+  .notes-layout {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .notes-pyramid {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .notes-tier {
+    display: grid;
+    gap: 0.85rem;
+    padding: 1rem 1.1rem;
+    border-radius: 1.25rem;
+    background: color-mix(in srgb, var(--level-tone) 55%, #fff);
+  }
+
+  .notes-tier__label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+    color: var(--color-ink);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .notes-tier__label small {
+    display: block;
+    color: var(--color-sand-muted);
+    font-size: 0.78rem;
+    font-weight: 400;
+  }
+
+  /* One slice of the pyramid per level: the tip, the middle and the base. */
+  .notes-tier__shape {
+    flex: none;
+    width: 2.6rem;
+    height: 2rem;
+    background: var(--level-accent);
+  }
+
+  .notes-tier--top .notes-tier__shape {
+    clip-path: polygon(50% 0, 70% 100%, 30% 100%);
+  }
+
+  .notes-tier--heart .notes-tier__shape {
+    clip-path: polygon(30% 0, 70% 0, 85% 100%, 15% 100%);
+  }
+
+  .notes-tier--base .notes-tier__shape {
+    clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
+  }
+
+  .notes-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .notes-section.is-seals .notes-chips__item:not(.is-seal),
+  .notes-section.is-seals .notes-tier:not(.has-seal) {
+    display: none;
+  }
+
+  .note-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.75rem;
+    padding: 0.25rem 0.9rem 0.25rem 0.3rem;
+    border: 1px solid rgb(29 43 79 / 10%);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      border-color var(--duration-fast) ease,
+      box-shadow var(--duration) var(--ease-out),
+      transform var(--duration) var(--ease-out);
+  }
+
+  .note-chip:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+  }
+
+  .note-chip[aria-pressed="true"] {
+    border-color: var(--color-primary);
+    background: var(--color-orange-soft);
+    box-shadow: 0 0.5rem 1.25rem rgb(196 59 0 / 14%);
+  }
+
+  .note-chip__icon {
+    display: grid;
+    width: 2.1rem;
+    height: 2.1rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--family-tone, var(--color-sand));
+    color: var(--color-sand-accent);
+  }
+
+  .note-icon {
+    width: 1.35rem;
+    height: 1.35rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+  }
+
+  /* ---------- Card of the chosen note ---------- */
+
+  .notes-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 1.1rem;
+    padding: 1.4rem 1.5rem;
+    border-radius: 1.25rem;
+    background: var(--color-sand-soft);
+    scroll-margin: 1rem;
+  }
+
+  /* Phones: the icon above the text, so the text has the card's width. */
+  @media (max-width: 39.99rem) {
+    .notes-card {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .notes-card__icon {
+    display: grid;
+    width: 4.25rem;
+    height: 4.25rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--family-tone, var(--color-sand));
+    color: var(--color-sand-accent);
+  }
+
+  .notes-card__icon .note-icon {
+    width: 2.4rem;
+    height: 2.4rem;
+    stroke-width: 1.3;
+  }
+
+  .notes-card__body {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .notes-card__body > * {
+    margin: 0;
+  }
+
+  .notes-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+    color: var(--color-sand-accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .notes-card__meta a {
+    color: var(--color-sand-accent) !important; /* The unlayered link colour of theme.json would win. */
+  }
+
+  .notes-card__seal {
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: #fff;
+    letter-spacing: 0.06em;
+  }
+
+  .notes-card__seal[hidden] {
+    display: none;
+  }
+
+  .notes-card__name {
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+  }
+
+  .notes-card__text {
+    color: var(--color-ink);
+  }
+
+  .notes-card__perfumes {
+    color: var(--color-sand-muted);
+    font-size: 0.92rem;
+  }
+
+  .notes-card__perfumes[hidden] {
+    display: none;
+  }
+
+  .notes-card.is-changing .notes-card__icon {
+    animation: notes-pop 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .notes-card.is-changing .notes-card__body {
+    animation: notes-rise 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes notes-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.7) rotate(-12deg);
+    }
+  }
+
+  @keyframes notes-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.6rem);
+    }
+  }
+
+  .notes-section__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    color: var(--color-sand-muted);
+    font-size: 0.88rem;
+  }
+
+  .notes-section__foot p {
+    margin: 0;
+    max-width: 40rem;
+  }
+
+  /* Wide screens: the label beside each band, and the card beside the pyramid, in view. */
+  @media (min-width: 64rem) {
+    .notes-layout {
+      grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .notes-tier {
+      grid-template-columns: 10.5rem minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .notes-tier__label {
+      padding-top: 0.35rem;
+    }
+
+    .notes-card {
+      position: sticky;
+      top: calc(var(--header-height) + 1rem);
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .note-chip {
+      transition: none;
+    }
+
+    .note-chip:hover {
+      transform: none;
+    }
+
+    .notes-card.is-changing .notes-card__icon,
+    .notes-card.is-changing .notes-card__body {
+      animation: none;
+    }
+  }
+}

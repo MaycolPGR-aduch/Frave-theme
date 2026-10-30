@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'FRAVE_VERSION', '1.35.0' );
+define( 'FRAVE_VERSION', '1.36.0' );
 define( 'FRAVE_THEME_DIR', get_template_directory() );
 define( 'FRAVE_THEME_URI', get_template_directory_uri() );
 
@@ -33,6 +33,8 @@ require_once FRAVE_THEME_DIR . '/inc/fragrance-families.php';
 require_once FRAVE_THEME_DIR . '/inc/fragrance-pyramid.php';
 require_once FRAVE_THEME_DIR . '/inc/collections.php';
 require_once FRAVE_THEME_DIR . '/inc/top-perfumery.php';
+require_once FRAVE_THEME_DIR . '/inc/fragrance-notes.php';
+require_once FRAVE_THEME_DIR . '/inc/fragrance-note-icons.php';
 require_once FRAVE_THEME_DIR . '/inc/category-detail.php';
 require_once FRAVE_THEME_DIR . '/inc/blog.php';
 require_once FRAVE_THEME_DIR . '/inc/seo.php';

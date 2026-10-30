@@ -9,7 +9,8 @@
  *   wp eval-file ~/repos/frave-theme/bin/crear-colecciones.php
  *   wp rewrite flush
  *
- * Safe to run again: existing collections keep their name, description and subcategory.
+ * Safe to run again: existing collections keep their name, description and subcategory. A
+ * collection added to the list takes its place in it: the ones after it move down one place.
  * The aromas (products) are assigned to a collection in each product, attribute «Colección».
  */
 
@@ -27,6 +28,7 @@ $frave_collections_list = array(
 	'suavizantes-y-microcapsulas'    => array( 'Suavizantes y microcápsulas', 'cuidado-textil', 'Fragancias para suavizantes y microcápsulas que refuerzan la sensación de ropa limpia y perduran en las prendas después del lavado.' ),
 	'detergentes'                    => array( 'Detergentes', 'cuidado-textil', 'Fragancias para detergentes líquidos que transmiten limpieza desde que se abre el envase hasta la ropa seca.' ),
 	'limpiadores-de-piso'            => array( 'Limpiadores de piso', 'cuidado-de-superficies', 'Fragancias para limpiadores y desinfectantes multiusos de piso: frutales, florales y aromáticas que dejan el ambiente perfumado después de limpiar.' ),
+	'lavavajillas'                   => array( 'Lavavajillas', 'cocina-y-lavavajillas', 'Fragancias para lavavajillas líquidos que acompañan el poder de limpieza y dejan un aroma agradable en manos y vajilla: limón, lima-limón, manzana, chicle-uva (tutti frutti), avena y sandía.' ),
 	'aromas-para-ambientacion'       => array( 'Aromas para ambientación', 'ambientacion', 'Fragancias para difusores de varitas, sprays, aerosoles y velas: brisa cítrica, vainilla, algodón fresco, lavanda, sándalo y cedro.' ),
 );
 
@@ -93,6 +95,19 @@ foreach ( $frave_collections_list as $frave_slug => list( $frave_name, $frave_ca
 		WP_CLI::log( "La colección «{$frave_term->name}» ya existe." );
 		$frave_term_id = (int) $frave_term->term_id;
 	} else {
+		// Make room for it: the existing collections from its place on move down one place.
+		$frave_existing = get_terms(
+			array(
+				'taxonomy'   => 'pa_coleccion',
+				'hide_empty' => false,
+			)
+		);
+		foreach ( is_array( $frave_existing ) ? $frave_existing : array() as $frave_other ) {
+			$frave_other_order = (int) get_term_meta( $frave_other->term_id, 'order', true );
+			if ( $frave_other_order >= $frave_order ) {
+				update_term_meta( $frave_other->term_id, 'order', $frave_other_order + 1 );
+			}
+		}
 		$frave_new = wp_insert_term(
 			$frave_name,
 			'pa_coleccion',

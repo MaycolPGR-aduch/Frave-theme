@@ -143,6 +143,15 @@ Los perfumes que marcan tendencia en cada subcategoría de perfumería (diseñad
 - **Crear las primeras referencias:** `wp eval-file RUTA/bin/crear-top-perfumeria.php` (publica las confirmadas y deja como borrador las que Frave debe confirmar; no toca las que ya existen).
 - **Código:** `inc/top-perfumery.php`, `template-parts/components/top-perfumery.php` y `top-perfumery-band.php`, `assets/src/css/pages/top-perfumery.css`, `assets/src/js/modules/top-panels.js`.
 
+### Notas de la perfumería
+
+Cada subcategoría de perfumería (diseñador, nicho, árabe) muestra, después de su top, **las notas que la caracterizan** como una pirámide: una franja por nivel (salida, corazón y fondo, con los tonos de la pirámide olfativa) y las notas como fichas con un ícono de línea propio. Al tocar una nota se ve su ficha: nivel, familia (enlace a la guía), qué aporta y en qué perfumes del top aparece. El filtro **«Sellos del estilo»** deja solo las notas características del estilo (oud, rosa de Taif, azafrán, incienso… en la árabe), que se muestran aunque ningún perfume del top las lleve.
+
+- **Datos:** `inc/fragrance-notes.php`: 70 notas con nombre, familia, nivel habitual, descripción y los nombres con que se escriben en el top (para reconocer «café arábica» como café). Las notas de cada subcategoría salen solas de las notas de sus perfumes publicados del top, en el nivel donde más aparecen; los sellos se definen en `frave_style_seals()` (filtrable).
+- **Íconos:** `inc/fragrance-note-icons.php`, 61 dibujos de 24 × 24 en trazo, que toman el color del texto.
+- **Código:** `template-parts/components/fragrance-notes.php`, `assets/src/js/modules/notes.js`, `assets/src/css/pages/notes.css`.
+- Recopilación de todas las notas y sus fuentes: `INGREDIENTES_FRAGANCIAS.md` (fuera del repositorio).
+
 ### Blog
 
 La página de entradas (Ajustes → Lectura) muestra los temas (categorías con artículos), el último artículo destacado y los demás en tarjetas. Cada artículo tiene migas de pan, categoría, fecha y tiempo de lectura, la imagen destacada, el texto con los enlaces para compartir al lado (debajo en móvil) y «Sigue leyendo» con artículos del mismo tema.
