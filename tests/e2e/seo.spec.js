@@ -28,6 +28,17 @@ test.describe('metadatos y privacidad del sitio', () => {
     expect(index).not.toContain('sitemap=users');
   });
 
+  test('las categorías y colecciones están en el mapa del sitio aunque no tengan productos', async ({ request }) => {
+    const index = await (await request.get('/?sitemap=index')).text();
+    expect(index).toContain('product_cat');
+    expect(index).toContain('pa_coleccion');
+    const categories = await (await request.get('/?sitemap=taxonomies&sitemap-subtype=product_cat')).text();
+    expect(categories).toContain('perfumeria-arabe');
+    expect(categories).not.toMatch(/sin-categorizar|uncategorized/);
+    const collections = await (await request.get('/?sitemap=taxonomies&sitemap-subtype=pa_coleccion')).text();
+    expect(collections).toContain('lavavajillas');
+  });
+
   test('en modo catálogo el carrito y la cuenta no están en el mapa del sitio', async ({ page, request }) => {
     test.skip(!(await isCatalogMode(page)), 'Con la tienda activa esas páginas sí se usan.');
     const pages = await (await request.get('/?sitemap=posts&sitemap-subtype=page')).text();

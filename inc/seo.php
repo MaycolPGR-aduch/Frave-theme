@@ -179,6 +179,22 @@ function frave_seo_search_robots( array $robots ): array {
 }
 add_filter( 'wp_robots', 'frave_seo_search_robots' );
 
+/**
+ * Categories and collections in the sitemap while they have no products: WordPress leaves
+ * empty terms out, but their pages already present the category or collection (types,
+ * tops, notes, quote). WooCommerce's «Sin categorizar» stays out.
+ */
+function frave_seo_sitemap_terms( array $args, string $taxonomy ): array {
+	if ( 'product_cat' === $taxonomy || ( defined( 'FRAVE_COLLECTION_TAXONOMY' ) && FRAVE_COLLECTION_TAXONOMY === $taxonomy ) ) {
+		$args['hide_empty'] = false;
+	}
+	if ( 'product_cat' === $taxonomy ) {
+		$args['exclude'] = array( (int) get_option( 'default_product_cat' ) );
+	}
+	return $args;
+}
+add_filter( 'wp_sitemaps_taxonomies_query_args', 'frave_seo_sitemap_terms', 10, 2 );
+
 /** The company, for the structured data: name, logo, contact details and social profiles. */
 function frave_schema_organization(): array {
 	$channels     = frave_contact_channels();
