@@ -5,7 +5,8 @@
  *
  * A product line (Sabores, Fragancias, Envases): hero with the line image, introduction
  * and highlights, the portfolio of subcategories, the olfactory families and pyramid
- * (Fragancias), an inspiration gallery (Sabores), applications, the line's products, the
+ * (Fragancias), an inspiration gallery (Sabores), applications, the organoleptic properties
+ * (Sabores), the line's products, the
  * other lines and a closing call to action. Copy and images: inc/lines.php and the ACF
  * group "Línea Frave".
  */
@@ -36,6 +37,7 @@ get_header();
 		get_template_part( 'template-parts/line/pyramid', null, $frave_line );
 		get_template_part( 'template-parts/line/gallery', null, $frave_line );
 		get_template_part( 'template-parts/line/applications', null, $frave_line );
+		get_template_part( 'template-parts/line/senses', null, $frave_line );
 		get_template_part( 'template-parts/line/products', null, $frave_line );
 		if ( '' !== trim( get_the_content() ) ) :
 			?>

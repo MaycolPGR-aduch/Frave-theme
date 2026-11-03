@@ -101,6 +101,23 @@ test.describe('páginas de línea', () => {
     }
   });
 
+  test('Sabores explica sus propiedades organolépticas por sentido', async ({ page }) => {
+    await page.goto('/?pagename=sabores');
+    const senses = page.locator('.line-senses');
+    await expect(senses.locator('h2')).toContainText('todos los sentidos');
+    await expect(senses.locator('.line-sense__sense')).toHaveText(['Vista', 'Olfato', 'Gusto', 'Tacto y oído']);
+    // With the article published, each card opens its section.
+    const links = senses.locator('.line-sense a');
+    if (await links.count()) {
+      await expect(links.nth(2)).toHaveAttribute('href', /#gusto-los-sabores-basicos$/);
+    }
+    // The page never scrolls sideways, even with the cards sliding on phones.
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+
+    await page.goto('/?pagename=fragancias');
+    await expect(page.locator('.line-senses')).toHaveCount(0);
+  });
+
   test('la portada lleva de cada línea a su página', async ({ page }) => {
     await page.goto('/');
     const card = page.locator('.home-lines .line-card--fragancias');

@@ -442,9 +442,7 @@ function frave_line_properties( string $slug ): array {
 	if ( ! $lines ) {
 		return array();
 	}
-	$copy  = frave_line_copy( $slug );
-	$post  = '' !== ( $copy['properties_post'] ?? '' ) ? get_page_by_path( $copy['properties_post'], OBJECT, 'post' ) : null;
-	$url   = $post instanceof WP_Post && 'publish' === $post->post_status ? (string) get_permalink( $post ) : '';
+	$url   = frave_line_properties_article( $slug );
 	$cards = array();
 	foreach ( $lines as $line ) {
 		$parts   = array_map( 'trim', explode( '|', $line, 2 ) );
@@ -455,6 +453,13 @@ function frave_line_properties( string $slug ): array {
 		);
 	}
 	return $cards;
+}
+
+/** Address of the line's article on its properties (properties_post) while published, or ''. */
+function frave_line_properties_article( string $slug ): string {
+	$copy = frave_line_copy( $slug );
+	$post = '' !== ( $copy['properties_post'] ?? '' ) ? get_page_by_path( $copy['properties_post'], OBJECT, 'post' ) : null;
+	return $post instanceof WP_Post && 'publish' === $post->post_status ? (string) get_permalink( $post ) : '';
 }
 
 /** The other lines that have somewhere to go, for the closing cross-links. */
