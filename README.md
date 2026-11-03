@@ -77,7 +77,7 @@ La portada (`front-page.php`, `template-parts/home/`) tiene estas secciones:
 5. **Colecciones** (`home/collections.php`): todas las colecciones en una fila deslizable y «Ver todas las colecciones». Sin colecciones no aparece.
 6. **El mundo de las fragancias** (`home/fragrance-world.php`): cuatro accesos con un pequeño dibujo (anillo de las familias, pirámide, ranking del top e íconos de notas) a la guía de familias, la pirámide, el top de perfumería y las notas de la perfumería árabe. Cada acceso aparece si su página existe.
 7. **Razones para elegirnos:** paneles que se despliegan.
-8. **Catálogo:** buscador, accesos a cada línea y a las colecciones, las cifras del catálogo y «Ver el catálogo completo».
+8. **Catálogo:** buscador, accesos a cada línea y a las colecciones y «Ver el catálogo completo» (sin cifras: la oferta de Frave es abierta).
 9. **Productos destacados:** la estrella de WooCommerce; solo cuando hay productos.
 10. **Tendencias:** solo con entradas publicadas fuera de la categoría por defecto.
 11. **Dónde estamos:** solo con dirección en el Personalizador; el mapa de Google se carga al pedirlo.
@@ -151,7 +151,7 @@ Los perfumes que marcan tendencia en cada subcategoría de perfumería (diseñad
 
 La página del catálogo (/catalogo/) resume todo lo que ofrece Frave antes de los productos, con lo que ya tiene el sitio, así que se llena sola a medida que se suman categorías, colecciones, referencias y productos:
 
-- **Cabecera:** «Todo lo que Frave ofrece», buscador, accesos (las líneas, Colecciones, Top de perfumería, Por aroma) y cifras (líneas, categorías, colecciones, notas olfativas).
+- **Cabecera:** «Todo lo que Frave ofrece», buscador y accesos (las líneas, Colecciones, Top de perfumería, Por aroma). Sin cifras.
 - **Barra de anclas** fija en escritorio: Líneas · Colecciones · Top de perfumería · Por aplicación · Por aroma · Productos.
 - **Índice de líneas:** cada línea con todas sus categorías y tipos, y cuántas colecciones tiene cada uno; la línea con tipos (Fragancias) ocupa el ancho.
 - **Colecciones** en una fila que se desliza, el **top de perfumería**, **«¿Qué fabricas?»** (las industrias con sus aplicaciones), **«Busca por aroma»** (las nueve familias y las notas destacadas, que llevan a las notas de su estilo), **«Todos los productos»** con sus filtros y un cierre «¿No encuentras lo que buscas?» en lugar de la llamada del pie.

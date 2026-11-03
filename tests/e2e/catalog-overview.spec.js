@@ -10,8 +10,8 @@ test.describe('catálogo como resumen', () => {
     const hero = page.locator('.page-hero');
     await expect(hero.locator('h1')).toHaveText('Todo lo que Frave ofrece');
     await expect(hero.locator('.catalog-shortcuts a', { hasText: 'Colecciones' })).toHaveAttribute('href', '#catalogo-colecciones');
-    await expect(hero.locator('.catalog-figures')).toContainText('líneas');
-    await expect(hero.locator('.catalog-figures')).toContainText('categorías');
+    // No figures: Frave's range is open-ended, so the catalog never counts it.
+    await expect(page.locator('.catalog-figures')).toHaveCount(0);
     expect(errors).toEqual([]);
   });
 
@@ -29,7 +29,7 @@ test.describe('catálogo como resumen', () => {
     await expect(index.locator('.catalog-index__title')).toHaveText(['Fragancias', 'Sabores', 'Envases']);
     await expect(index.locator('.catalog-index__line--wide .catalog-index__title')).toHaveText('Fragancias');
     await expect(index.getByRole('link', { name: 'Perfumería árabe' })).toBeVisible();
-    await expect(index.locator('.catalog-index__count').first()).toContainText('colecci');
+    await expect(index.locator('.catalog-index__count')).toHaveCount(0);
 
     await expect(page.locator('#catalogo-colecciones .collection-card').first()).toBeVisible();
     await expect(page.locator('#catalogo-top .top-band__card')).toHaveCount(3);

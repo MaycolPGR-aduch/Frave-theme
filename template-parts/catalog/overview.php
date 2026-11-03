@@ -71,26 +71,14 @@ $frave_anchors[] = array( __( 'Productos', 'frave' ), '#productos' );
 				</h3>
 				<ul class="catalog-index__list">
 					<?php foreach ( $frave_groups as $frave_group ) : ?>
-						<?php
-						$frave_types = frave_catalog_children( $frave_group );
-						$frave_count = function_exists( 'frave_collections' ) ? count( frave_collections( array( $frave_group ) ) ) : 0;
-						?>
+						<?php $frave_types = frave_catalog_children( $frave_group ); ?>
 						<li class="catalog-index__group<?php echo $frave_types ? ' has-types' : ''; ?>">
 							<a href="<?php echo esc_url( frave_term_detail_url( $frave_group ) ); ?>"><?php echo esc_html( $frave_group->name ); ?></a>
-							<?php if ( ! $frave_types && $frave_count > 0 ) : ?>
-								<?php /* translators: %d: number of collections. */ ?>
-								<span class="catalog-index__count"><?php echo esc_html( sprintf( _n( '%d colección', '%d colecciones', $frave_count, 'frave' ), $frave_count ) ); ?></span>
-							<?php endif; ?>
 							<?php if ( $frave_types ) : ?>
 								<ul>
 									<?php foreach ( $frave_types as $frave_type ) : ?>
-										<?php $frave_count = function_exists( 'frave_collections' ) ? count( frave_collections( array( $frave_type ) ) ) : 0; ?>
 										<li>
 											<a href="<?php echo esc_url( frave_term_detail_url( $frave_type ) ); ?>"><?php echo esc_html( $frave_type->name ); ?></a>
-											<?php if ( $frave_count > 0 ) : ?>
-												<?php /* translators: %d: number of collections. */ ?>
-												<span class="catalog-index__count"><?php echo esc_html( sprintf( _n( '%d colección', '%d colecciones', $frave_count, 'frave' ), $frave_count ) ); ?></span>
-											<?php endif; ?>
 										</li>
 									<?php endforeach; ?>
 								</ul>

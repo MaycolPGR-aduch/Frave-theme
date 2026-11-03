@@ -529,13 +529,11 @@ function frave_catalog_render_category_tree( array $tree ): void {
 			continue;
 		}
 		printf(
-			'<li><a class="catalog-categories__link%1$s" href="%2$s"%3$s><span>%4$s</span><span class="catalog-categories__count">%5$s<span class="screen-reader-text"> %6$s</span></span></a>',
+			'<li><a class="catalog-categories__link%1$s" href="%2$s"%3$s><span>%4$s</span></a>',
 			$node['current'] ? ' is-current' : '',
 			esc_url( $link ),
 			$node['current'] ? ' aria-current="page"' : '',
-			esc_html( $term->name ),
-			esc_html( number_format_i18n( $term->count ) ),
-			esc_html( _n( 'producto', 'productos', $term->count, 'frave' ) )
+			esc_html( $term->name )
 		);
 		frave_catalog_render_category_tree( $node['children'] );
 		echo '</li>';
@@ -638,10 +636,9 @@ function frave_catalog_subcategory_chips(): void {
 			continue;
 		}
 		printf(
-			'<li><a class="line-chip line-chip--link" href="%1$s">%2$s <span class="catalog-subcategories__count">%3$s</span></a></li>',
+			'<li><a class="line-chip line-chip--link" href="%1$s">%2$s</a></li>',
 			esc_url( $link ),
-			esc_html( $child->name ),
-			esc_html( number_format_i18n( frave_term_product_count( $child ) ) )
+			esc_html( $child->name )
 		);
 	}
 	echo '</ul></nav>';

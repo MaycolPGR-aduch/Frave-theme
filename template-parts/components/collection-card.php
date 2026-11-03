@@ -33,12 +33,8 @@ $frave_text       = wp_trim_words( wp_strip_all_tags( $frave_collection->descrip
 		<?php endif; ?>
 		<p class="collection-card__meta">
 			<?php
-			echo esc_html(
-				$frave_collection->count > 0
-					/* translators: %d: number of aromas (products) in the collection. */
-					? sprintf( _n( '%d aroma', '%d aromas', $frave_collection->count, 'frave' ), $frave_collection->count )
-					: __( 'Aromas a pedido', 'frave' )
-			);
+			// Whether it has aromas, never how many: Frave's range is open-ended.
+			echo esc_html( $frave_collection->count > 0 ? __( 'Aromas disponibles', 'frave' ) : __( 'Aromas a pedido', 'frave' ) );
 			?>
 			<span class="link-arrow" aria-hidden="true"><?php esc_html_e( 'Ver la colección', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></span>
 		</p>

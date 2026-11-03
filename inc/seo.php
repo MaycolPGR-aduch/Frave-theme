@@ -2,7 +2,9 @@
 /**
  * Search and sharing metadata while no SEO plugin is active: a meta description and Open
  * Graph tags (the preview WhatsApp, Facebook or LinkedIn show for a shared link), built from
- * each page's own copy or its excerpt; canonical addresses for listings; and structured
+ * each page's own copy or its excerpt; search titles (inc/seo-titles.php); canonical
+ * addresses for listings; the product lines' catalog pages kept out of the results in
+ * favour of their line pages; and structured
  * data (Organization, WebSite, BlogPosting, BreadcrumbList) for search engines. A known SEO
  * plugin takes over all of it as soon as it is active. Also a default favicon (the isotype)
  * until a site icon is set in the Customizer.
@@ -87,6 +89,12 @@ function frave_seo_data(): array {
 	$queried = get_queried_object();
 	if ( is_page() && $queried instanceof WP_Post && has_excerpt( $queried ) ) {
 		$description = $queried->post_excerpt;
+	}
+
+	// A short or missing text gives way to the description written for search (inc/seo-titles.php).
+	$entry = frave_seo_entry();
+	if ( isset( $entry['description'] ) && mb_strlen( trim( wp_strip_all_tags( $description ) ) ) < 110 ) {
+		$description = $entry['description'];
 	}
 
 	if ( '' === trim( wp_strip_all_tags( $description ) ) ) {
@@ -180,16 +188,74 @@ function frave_seo_search_robots( array $robots ): array {
 add_filter( 'wp_robots', 'frave_seo_search_robots' );
 
 /**
+ * The search title: the page's entry in frave_seo_entries(), or the custom field
+ * frave_seo_title of a page or post. A long article title drops « – Frave» so that search
+ * results show the title whole. The home keeps its own.
+ *
+ * @param array<string, string> $parts
+ * @return array<string, string>
+ */
+function frave_seo_document_title( array $parts ): array {
+	if ( frave_seo_plugin_active() || is_front_page() ) {
+		return $parts;
+	}
+	$custom = is_singular() ? trim( (string) get_post_meta( get_queried_object_id(), 'frave_seo_title', true ) ) : '';
+	$entry  = frave_seo_entry();
+	if ( '' !== $custom ) {
+		$parts['title'] = $custom;
+	} elseif ( null !== $entry ) {
+		$parts['title'] = $entry['title'];
+	}
+	if ( is_singular( 'post' ) && isset( $parts['title'], $parts['site'] ) && mb_strlen( $parts['title'] . $parts['site'] ) > 58 ) {
+		unset( $parts['site'] );
+	}
+	return $parts;
+}
+add_filter( 'document_title_parts', 'frave_seo_document_title' );
+
+/**
+ * Top-level categories with a line page (Fragancias, Sabores, Envases): the line page is
+ * the one to rank, so the category's catalog stays out of search results and the sitemap,
+ * while its products remain reachable through it.
+ *
+ * @return int[]
+ */
+function frave_seo_line_category_ids(): array {
+	$terms = get_terms(
+		array(
+			'taxonomy'   => 'product_cat',
+			'parent'     => 0,
+			'hide_empty' => false,
+		)
+	);
+	if ( is_wp_error( $terms ) ) {
+		return array();
+	}
+	$lines = array_filter( $terms, static fn( WP_Term $term ): bool => null !== frave_line_page( $term->slug ) );
+	return array_map( static fn( WP_Term $term ): int => $term->term_id, array_values( $lines ) );
+}
+
+function frave_seo_line_category_robots( array $robots ): array {
+	if ( is_tax( 'product_cat' ) && in_array( get_queried_object_id(), frave_seo_line_category_ids(), true ) ) {
+		$robots['noindex'] = true;
+		$robots['follow']  = true;
+	}
+	return $robots;
+}
+add_filter( 'wp_robots', 'frave_seo_line_category_robots' );
+
+/**
  * Categories and collections in the sitemap while they have no products: WordPress leaves
  * empty terms out, but their pages already present the category or collection (types,
- * tops, notes, quote). WooCommerce's «Sin categorizar» stays out.
+ * tops, notes, quote). WooCommerce's «Sin categorizar» and the lines' own categories
+ * (frave_seo_line_category_ids) stay out.
  */
 function frave_seo_sitemap_terms( array $args, string $taxonomy ): array {
 	if ( 'product_cat' === $taxonomy || ( defined( 'FRAVE_COLLECTION_TAXONOMY' ) && FRAVE_COLLECTION_TAXONOMY === $taxonomy ) ) {
 		$args['hide_empty'] = false;
 	}
 	if ( 'product_cat' === $taxonomy ) {
-		$args['exclude'] = array( (int) get_option( 'default_product_cat' ) );
+		$args['exclude'] = array_merge( array( (int) get_option( 'default_product_cat' ) ), frave_seo_line_category_ids() );
 	}
 	return $args;
 }

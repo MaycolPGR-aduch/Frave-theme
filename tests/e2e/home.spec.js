@@ -197,7 +197,8 @@ test.describe('la portada presenta todo lo que hace Frave', () => {
     await expect(world.getByRole('link', { name: 'Notas e ingredientes' })).toHaveAttribute('href', /#ingredientes$/);
 
     const catalog = page.locator('.home-catalog');
-    await expect(catalog.locator('.home-catalog__figures')).toContainText('colecciones');
+    // No figures: Frave's range is open-ended.
+    await expect(catalog.locator('.catalog-figures')).toHaveCount(0);
     await expect(catalog.getByRole('link', { name: 'Ver el catálogo completo' })).toBeVisible();
 
     // In that order, after the lines.

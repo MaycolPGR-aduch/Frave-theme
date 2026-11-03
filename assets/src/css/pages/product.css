@@ -188,9 +188,4 @@
     padding: 0;
     list-style: none;
   }
-
-  .catalog-subcategories__count {
-    color: var(--color-muted);
-    font-weight: 400;
-  }
 }

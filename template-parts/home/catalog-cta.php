@@ -1,8 +1,8 @@
 <?php
 /**
  * Catalog invitation: a sand panel over blurred sample shelves, with the product search,
- * quick links to each line and the collections, the catalog's figures (lines, categories,
- * collections, notes) and a link to the whole catalog.
+ * quick links to each line and the collections, and a link to the whole catalog. No figures:
+ * Frave's range is open-ended.
  */
 
 if ( ! defined( 'ABSPATH' ) || ! class_exists( 'WooCommerce' ) ) {
@@ -49,13 +49,6 @@ if ( ! defined( 'ABSPATH' ) || ! class_exists( 'WooCommerce' ) ) {
 						</li>
 					<?php endif; ?>
 				</ul>
-				<?php if ( function_exists( 'frave_catalog_figures' ) ) : ?>
-					<ul class="catalog-figures home-catalog__figures">
-						<?php foreach ( frave_catalog_figures() as list( $frave_number, $frave_label ) ) : ?>
-							<li><strong><?php echo esc_html( number_format_i18n( $frave_number ) ); ?></strong> <?php echo esc_html( $frave_label ); ?></li>
-						<?php endforeach; ?>
-					</ul>
-				<?php endif; ?>
 				<a class="link-arrow home-catalog__all" href="<?php echo esc_url( frave_catalog_shop_url() ); ?>"><?php esc_html_e( 'Ver el catálogo completo', 'frave' ); ?><?php echo frave_icon( 'arrow-right' ); // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG. ?></a>
 			</div>
 		</div>

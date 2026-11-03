@@ -39,6 +39,35 @@ test.describe('metadatos y privacidad del sitio', () => {
     expect(collections).toContain('lavavajillas');
   });
 
+  test('los títulos dicen lo que ofrece cada página y la portada conserva el suyo', async ({ page }) => {
+    const titles = [
+      ['/?pagename=fragancias', /^Fragancias para perfumería, cosmética y hogar – /],
+      ['/?product_cat=cuidado-textil', /^Fragancias para detergentes y suavizantes – /],
+      ['/?pa_coleccion=romero', /^Colección Romero: /],
+    ];
+    for (const [path, title] of titles) {
+      await page.goto(path);
+      await expect(page, path).toHaveTitle(title);
+    }
+    await page.goto('/');
+    await expect(page).toHaveTitle(/^Frave/);
+  });
+
+  test('una descripción corta se reemplaza por la escrita para buscadores', async ({ page }) => {
+    await page.goto('/?product_cat=valvulas');
+    const description = await page.locator('meta[name="description"]').getAttribute('content');
+    expect(description?.length).toBeGreaterThan(110);
+  });
+
+  test('la categoría de una línea cede su lugar en Google a la página de la línea', async ({ page, request }) => {
+    await page.goto('/?product_cat=fragancias');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', /noindex/);
+    const categories = await (await request.get('/?sitemap=taxonomies&sitemap-subtype=product_cat')).text();
+    expect(categories).not.toMatch(/(product_cat=|categoria-producto\/)fragancias\/?<\/loc>/);
+    await page.goto('/?product_cat=perfumeria-arabe');
+    await expect(page.locator('meta[name="robots"]')).not.toHaveAttribute('content', /noindex/);
+  });
+
   test('en modo catálogo el carrito y la cuenta no están en el mapa del sitio', async ({ page, request }) => {
     test.skip(!(await isCatalogMode(page)), 'Con la tienda activa esas páginas sí se usan.');
     const pages = await (await request.get('/?sitemap=posts&sitemap-subtype=page')).text();

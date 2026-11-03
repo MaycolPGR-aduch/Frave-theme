@@ -1682,7 +1682,6 @@
     font-weight: 700;
   }
 
-  .catalog-categories__count,
   .catalog-option__count {
     color: var(--color-muted);
     font-size: 0.85rem;

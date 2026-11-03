@@ -1,7 +1,7 @@
 <?php
 /**
  * The catalog page (/catalogo/) as a summary of everything Frave offers, before the
- * products: the hero gains shortcuts and figures, then a bar of anchors (wide screens),
+ * products: the hero gains shortcuts, then a bar of anchors (wide screens),
  * the index of the lines (every category and type, with its collections and products),
  * the collections, the perfumery tops, «¿Qué fabricas?» (applications by industry),
  * «Busca por aroma» (olfactory families and featured notes), the products with their
@@ -60,31 +60,10 @@ function frave_catalog_children( WP_Term $term ): array {
 	return is_wp_error( $children ) ? array() : $children;
 }
 
-/** Figures of the hero: lines, categories, collections and notes. @return array<int, array{int, string}> */
-function frave_catalog_figures(): array {
-	$lines       = frave_catalog_lines();
-	$categories  = (int) wp_count_terms(
-		array(
-			'taxonomy'   => 'product_cat',
-			'hide_empty' => false,
-			'exclude'    => array( (int) get_option( 'default_product_cat' ) ),
-		)
-	);
-	$figures     = array(
-		array( count( $lines ), _n( 'línea', 'líneas', count( $lines ), 'frave' ) ),
-		array( max( 0, $categories - count( $lines ) ), __( 'categorías', 'frave' ) ),
-	);
-	$collections = function_exists( 'frave_collections' ) ? count( frave_collections() ) : 0;
-	if ( $collections > 0 ) {
-		$figures[] = array( $collections, _n( 'colección', 'colecciones', $collections, 'frave' ) );
-	}
-	if ( function_exists( 'frave_fragrance_notes' ) ) {
-		$figures[] = array( count( frave_fragrance_notes() ), __( 'notas olfativas', 'frave' ) );
-	}
-	return array_values( array_filter( $figures, static fn( array $figure ): bool => $figure[0] > 0 ) );
-}
-
-/** What the hero adds on the catalog page: shortcuts and figures (escaped HTML). */
+/**
+ * What the hero adds on the catalog page: shortcuts (escaped HTML). No figures: Frave's
+ * range is open-ended, so the site never counts lines, categories, collections or notes.
+ */
 function frave_catalog_hero_extra(): string {
 	$links = array();
 	foreach ( frave_catalog_lines() as $line ) {
@@ -109,11 +88,6 @@ function frave_catalog_hero_extra(): string {
 			<a class="catalog-shortcuts__link" href="<?php echo esc_url( $frave_url ); ?>"><?php echo esc_html( $frave_label ); ?></a>
 		<?php endforeach; ?>
 	</nav>
-	<ul class="catalog-figures">
-		<?php foreach ( frave_catalog_figures() as list( $frave_number, $frave_label ) ) : ?>
-			<li><strong><?php echo esc_html( number_format_i18n( $frave_number ) ); ?></strong> <?php echo esc_html( $frave_label ); ?></li>
-		<?php endforeach; ?>
-	</ul>
 	<?php
 	return (string) ob_get_clean();
 }

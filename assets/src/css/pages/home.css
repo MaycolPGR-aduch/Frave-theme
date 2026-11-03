@@ -1191,14 +1191,10 @@
     }
   }
 
-  /* ---------- Catalog panel: figures and the whole catalog ---------- */
-
-  .home-catalog__figures {
-    margin-top: 1rem;
-  }
+  /* ---------- Catalog panel: the whole catalog ---------- */
 
   .home-catalog__all {
-    margin-top: 0.75rem;
+    margin-top: 1rem;
   }
 
   @media (prefers-reduced-motion: reduce) {

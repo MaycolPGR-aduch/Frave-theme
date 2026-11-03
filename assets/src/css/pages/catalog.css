@@ -35,23 +35,6 @@
     border-color: var(--color-primary);
   }
 
-  .catalog-figures {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem 1.5rem;
-    margin: 0;
-    padding: 0;
-    color: var(--color-sand-muted);
-    font-size: 0.9rem;
-    list-style: none;
-  }
-
-  .catalog-figures strong {
-    color: var(--color-ink);
-    font-size: 1.3rem;
-    font-weight: 700;
-  }
-
   /* ---------- Blocks ---------- */
 
   .catalog-block {
@@ -210,17 +193,6 @@
 
   .catalog-index__list a:hover {
     color: var(--color-primary) !important;
-  }
-
-  .catalog-index__count {
-    margin-left: 0.35rem;
-    padding: 0.05rem 0.5rem;
-    border-radius: 999px;
-    background: var(--color-sand-soft);
-    color: var(--color-sand-accent);
-    font-size: 0.74rem;
-    font-weight: 700;
-    white-space: nowrap;
   }
 
   .catalog-index__more {
