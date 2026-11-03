@@ -55,6 +55,26 @@ function frave_theme_image( string $base, int $width, int $height, int $small, a
 }
 
 /**
+ * Picture of the hero of a page without one of its own (Catálogo, Colecciones, Blog):
+ * assets/media/portadas/{name}.webp, 1200 × 800 with a 600 px version, loaded at once
+ * because it is the first image of the page. '' while the file is missing.
+ */
+function frave_page_cover( string $name, string $alt ): string {
+	return frave_theme_image(
+		'assets/media/portadas/' . $name,
+		1200,
+		800,
+		600,
+		array(
+			'alt'           => $alt,
+			'sizes'         => '(max-width: 60rem) 90vw, 36vw',
+			'loading'       => 'eager',
+			'fetchpriority' => 'high',
+		)
+	);
+}
+
+/**
  * Render a design system button (.btn) with its arrow icon. Variants: btn--primary,
  * btn--dark, btn--light, btn--outline, plus btn--sm.
  */

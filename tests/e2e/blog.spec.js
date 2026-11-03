@@ -28,6 +28,7 @@ test.describe('blog', () => {
     await expectNoPhpErrors(page);
 
     await expect(page.locator('.breadcrumb [aria-current="page"]')).toHaveText('Blog');
+    await expect(page.locator('.page-hero__media img')).toHaveAttribute('src', /portadas\/blog\.webp/);
     await expect(page.locator('.blog-featured .post-tile--featured')).toHaveCount(1);
     await expect(page.locator('.blog-grid .post-tile').first()).toBeVisible();
     // WordPress's sample post stays out.

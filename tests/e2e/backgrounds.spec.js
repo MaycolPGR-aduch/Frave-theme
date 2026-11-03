@@ -24,4 +24,13 @@ test.describe('imágenes de fondo de secciones', () => {
     await expect(page.locator('.home-reasons .section-bg')).toHaveCount(0);
     await expect(page.locator('.home-reasons')).not.toHaveClass(/section--surface/);
   });
+
+  test('el catálogo y las colecciones llevan su imagen de portada', async ({ page }) => {
+    for (const [path, name] of [['/?post_type=product', 'catalogo'], ['/?pagename=colecciones', 'colecciones']]) {
+      await page.goto(path);
+      const image = page.locator('.page-hero__media img');
+      await expect(image, path).toHaveAttribute('src', new RegExp(`portadas/${name}[.]webp`));
+      await expect(image, path).toHaveAttribute('alt', /.+/);
+    }
+  });
 });

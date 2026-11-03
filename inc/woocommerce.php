@@ -89,6 +89,7 @@ function frave_catalog_hero(): void {
 		}
 	} else {
 		$meta    = '';
+		$image   = frave_page_cover( 'catalogo', __( 'Frascos de esencias, ingredientes para sabores y envases de perfumería y ambientación.', 'frave' ) );
 		$shop    = get_post( wc_get_page_id( 'shop' ) );
 		$eyebrow = __( 'NUESTROS PRODUCTOS', 'frave' );
 		$lead    = $shop instanceof WP_Post && '' !== trim( $shop->post_content ) ? $shop->post_content : __( 'Explora nuestras líneas de sabores, fragancias y envases, y solicita una cotización de lo que necesites.', 'frave' );

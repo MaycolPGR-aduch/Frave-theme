@@ -404,7 +404,7 @@
       height: 100% !important; /* WooCommerce's unlayered ".woocommerce img { height: auto }" otherwise wins. */
     }
 
-    .page-hero--media .page-hero__inner > :is(.page-hero__lead, .page-hero__meta, .page-hero__actions, .page-hero__facts, .page-hero__search) {
+    .page-hero--media .page-hero__inner > :is(.page-hero__lead, .page-hero__meta, .page-hero__actions, .page-hero__facts, .page-hero__search, .page-hero__extra) {
       order: 2;
     }
   }

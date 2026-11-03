@@ -34,6 +34,11 @@ if ( $frave_is_blog ) {
 		'lead'    => get_the_archive_description(),
 	);
 }
+
+// The blog and its topics share the workbench picture.
+if ( $frave_is_blog || is_category() ) {
+	$frave_hero['image'] = frave_page_cover( 'blog', __( 'Cuaderno y tiras de olfacción con instrumentos e ingredientes para evaluar aromas y sabores.', 'frave' ) );
+}
 ?>
 <main id="primary" class="site-main blog-page">
 	<?php get_template_part( 'template-parts/components/page-hero', null, $frave_hero + array( 'trail' => true ) ); ?>

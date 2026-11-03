@@ -23,6 +23,7 @@ get_header();
 				'eyebrow' => __( 'Catálogo', 'frave' ),
 				'title'   => get_the_title(),
 				'lead'    => $frave_lead,
+				'image'   => frave_page_cover( 'colecciones', __( 'Productos de cuidado personal y del hogar con una muestra de esencia y notas aromáticas naturales.', 'frave' ) ),
 			)
 		);
 
