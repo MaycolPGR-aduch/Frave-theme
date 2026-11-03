@@ -85,6 +85,22 @@ test.describe('páginas de línea', () => {
     await expect(page.locator('.line-gallery')).toHaveCount(0);
   });
 
+  test('Sabores desliza sus aplicaciones y presenta sus propiedades organolépticas', async ({ page }) => {
+    await page.goto('/?pagename=sabores');
+    const band = page.locator('.line-applications');
+    await expect(band.locator('h2')).toHaveText('Propiedades que dan carácter a tus recetas');
+    // The sliding words keep the applications; the cards are the properties.
+    await expect(band.locator('.ticker')).toContainText('Panetón');
+    const cards = band.locator('.line-applications__list li');
+    await expect(cards.first()).toHaveText('Color y aspecto');
+    await expect(cards.filter({ hasText: 'Panetón' })).toHaveCount(0);
+    // With the article published, each card opens its section.
+    const links = band.locator('.line-applications__list a');
+    if (await links.count()) {
+      await expect(links.first()).toHaveAttribute('href', /#vista-color-y-aspecto$/);
+    }
+  });
+
   test('la portada lleva de cada línea a su página', async ({ page }) => {
     await page.goto('/');
     const card = page.locator('.home-lines .line-card--fragancias');

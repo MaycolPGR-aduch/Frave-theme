@@ -33,9 +33,11 @@ function frave_line_defaults(): array {
 			'highlight_3_text'   => __( 'Abastecimiento constante para que tu producción avance.', 'frave' ),
 			'portfolio_title'    => __( 'Sabores para *cada industria*', 'frave' ),
 			'portfolio_text'     => __( 'Explora nuestras categorías de aromas y encuentra el punto de partida para tu producto.', 'frave' ),
-			'applications_title' => __( 'Perfiles que dan carácter a *tus recetas*', 'frave' ),
-			'applications_text'  => __( 'Algunos de los sabores y aplicaciones con los que acompañamos a la industria de alimentos y bebidas.', 'frave' ),
+			'applications_title' => __( 'Propiedades que dan carácter a *tus recetas*', 'frave' ),
+			'applications_text'  => __( 'Las propiedades organolépticas con las que diseñamos cada sabor: cómo se ve, cómo huele, cómo sabe y cómo se siente en la boca.', 'frave' ),
 			'applications'       => __( "Manzana\nMaracuyá\nFresa\nVainilla\nPanetón\nCafé\nTé\nBebidas\nProductos lácteos\nConfitería\nPanadería\nSalados\nCuidado bucal", 'frave' ),
+			'properties'         => __( "Color y aspecto | vista-color-y-aspecto\nBrillo | vista-color-y-aspecto\nAroma | olfato-el-aroma\nAroma retronasal | olfato-el-aroma\nSabores básicos | gusto-los-sabores-basicos\nDulce y salado | gusto-los-sabores-basicos\nÁcido y amargo | gusto-los-sabores-basicos\nUmami | gusto-los-sabores-basicos\nFrescor y picor | gusto-los-sabores-basicos\nTextura | tacto-y-oido-la-textura\nCremosidad | tacto-y-oido-la-textura\nLo crocante | tacto-y-oido-la-textura\nEvaluación sensorial | como-usarlas-al-desarrollar-un-producto", 'frave' ),
+			'properties_post'    => 'propiedades-organolepticas-de-los-alimentos',
 			'cta_title'          => __( '¿Desarrollas un *nuevo sabor*?', 'frave' ),
 			'cta_text'           => __( 'Cuéntanos sobre tu producto y te recomendamos las alternativas de nuestro portafolio.', 'frave' ),
 			'icons'              => array( 'lab', 'sparkle', 'leaf' ),
@@ -101,6 +103,8 @@ function frave_line_generic_defaults( string $name, string $description ): array
 		'applications_title' => '',
 		'applications_text'  => '',
 		'applications'       => '',
+		'properties'         => '',
+		'properties_post'    => '',
 		/* translators: %s: product line name. */
 		'cta_title'          => sprintf( __( '¿Te interesa nuestra línea de %s?', 'frave' ), $name ),
 		'cta_text'           => __( 'Cuéntanos sobre tu proyecto y te preparamos una cotización.', 'frave' ),
@@ -422,6 +426,35 @@ function frave_split_figure( string $title ): ?array {
 		'suffix' => $match[3],
 		'label'  => $match[4],
 	);
+}
+
+/**
+ * The cards of the applications band when the line lists properties instead (Sabores: the
+ * organoleptic properties). Each line of the field is «Name | section»: the section is the
+ * anchor of a heading in the line's article (properties_post), so every card opens that part
+ * of the article; without the article published, the cards are plain. Empty: no properties,
+ * and the band lists the applications as usual.
+ *
+ * @return array<int, array{label: string, url: string}>
+ */
+function frave_line_properties( string $slug ): array {
+	$lines = frave_lines_of( frave_line_text( 'properties', $slug ) );
+	if ( ! $lines ) {
+		return array();
+	}
+	$copy  = frave_line_copy( $slug );
+	$post  = '' !== ( $copy['properties_post'] ?? '' ) ? get_page_by_path( $copy['properties_post'], OBJECT, 'post' ) : null;
+	$url   = $post instanceof WP_Post && 'publish' === $post->post_status ? (string) get_permalink( $post ) : '';
+	$cards = array();
+	foreach ( $lines as $line ) {
+		$parts   = array_map( 'trim', explode( '|', $line, 2 ) );
+		$section = sanitize_title( $parts[1] ?? '' );
+		$cards[] = array(
+			'label' => $parts[0],
+			'url'   => '' !== $url ? $url . ( '' !== $section ? '#' . $section : '' ) : '',
+		);
+	}
+	return $cards;
 }
 
 /** The other lines that have somewhere to go, for the closing cross-links. */

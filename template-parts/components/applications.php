@@ -4,7 +4,10 @@
  * (decorative, ticker.js) and the same applications as a readable list.
  *
  * Arguments:
- * - items: list of applications; nothing is printed without them.
+ * - items:  list of applications, each a name or [ label, url ] (a card that links);
+ *           nothing is printed without them.
+ * - ticker: optional names for the sliding words, when they are not the cards (Sabores
+ *           slides its applications and lists its properties).
  * - title: heading; *words* are highlighted.
  * - text:  optional lead.
  * - image: optional background photograph in assets/media/fondos (see components/section-bg.php).
@@ -18,16 +21,25 @@ $frave_items = array_values( array_filter( $args['items'] ?? array() ) );
 if ( ! $frave_items ) {
 	return;
 }
+$frave_items = array_map(
+	static fn( $item ): array => is_array( $item ) ? $item + array( 'url' => '' ) : array(
+		'label' => (string) $item,
+		'url'   => '',
+	),
+	$frave_items
+);
+$frave_words = array_values( array_filter( $args['ticker'] ?? array() ) );
+$frave_words = $frave_words ? $frave_words : array_column( $frave_items, 'label' );
 $frave_title = (string) ( $args['title'] ?? '' );
 $frave_text  = (string) ( $args['text'] ?? '' );
 $frave_image = (string) ( $args['image'] ?? '' );
 
 // Each row repeats the words until it is wider than any screen.
-$frave_row = array_merge( $frave_items, $frave_items );
+$frave_row = array_merge( $frave_words, $frave_words );
 if ( count( $frave_row ) < 16 ) {
-	$frave_row = array_merge( $frave_row, $frave_items );
+	$frave_row = array_merge( $frave_row, $frave_words );
 }
-$frave_half = (int) ceil( count( $frave_items ) / 2 );
+$frave_half = (int) ceil( count( $frave_words ) / 2 );
 $frave_rows = array(
 	$frave_row,
 	array_merge( array_slice( $frave_row, $frave_half ), array_slice( $frave_row, 0, $frave_half ) ),
@@ -40,9 +52,9 @@ $frave_rows = array(
 	}
 	?>
 	<div class="ticker" aria-hidden="true" data-ticker>
-		<?php foreach ( $frave_rows as $frave_row_index => $frave_words ) : ?>
+		<?php foreach ( $frave_rows as $frave_row_index => $frave_row_words ) : ?>
 			<div class="ticker__row<?php echo 1 === $frave_row_index ? ' ticker__row--reverse' : ''; ?>">
-				<?php foreach ( $frave_words as $frave_word ) : ?>
+				<?php foreach ( $frave_row_words as $frave_word ) : ?>
 					<span class="ticker__word"><?php echo esc_html( $frave_word ); ?></span><span class="ticker__sep"></span>
 				<?php endforeach; ?>
 			</div>
@@ -59,7 +71,11 @@ $frave_rows = array(
 		</div>
 		<ul class="line-applications__list" data-reveal-group>
 			<?php foreach ( $frave_items as $frave_item ) : ?>
-				<li><?php echo esc_html( $frave_item ); ?></li>
+				<?php if ( '' !== $frave_item['url'] ) : ?>
+					<li class="has-link"><a href="<?php echo esc_url( $frave_item['url'] ); ?>"><?php echo esc_html( $frave_item['label'] ); ?></a></li>
+				<?php else : ?>
+					<li><?php echo esc_html( $frave_item['label'] ); ?></li>
+				<?php endif; ?>
 			<?php endforeach; ?>
 		</ul>
 	</div>

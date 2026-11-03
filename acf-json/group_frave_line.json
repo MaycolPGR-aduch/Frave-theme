@@ -366,6 +366,24 @@
             "new_lines": ""
         },
         {
+            "key": "field_frave_line_properties",
+            "label": "Propiedades",
+            "name": "frave_line_properties",
+            "type": "textarea",
+            "instructions": "Opcional. Una por línea, como «Nombre | sección»: reemplazan a las aplicaciones en las tarjetas (la banda de palabras sigue mostrando las aplicaciones) y cada tarjeta abre esa sección del artículo de la línea. Vacío: el texto por defecto (en Sabores, las propiedades organolépticas); un guion (-): sin propiedades, las tarjetas muestran las aplicaciones.",
+            "required": 0,
+            "default_value": "",
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 8,
+            "new_lines": ""
+        },
+        {
             "key": "field_frave_line_tab_22",
             "label": "Cierre",
             "name": "",
@@ -430,5 +448,5 @@
     "active": true,
     "description": "Textos e imágenes de una página de línea. Los campos vacíos muestran el texto por defecto de la línea, visible en gris dentro de cada campo.",
     "show_in_rest": 0,
-    "modified": 1791783941
+    "modified": 1793724376
 }
