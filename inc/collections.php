@@ -270,9 +270,7 @@ function frave_collection_page_closing(): void {
 		array(
 			/* translators: %s: collection name. */
 			'title'    => sprintf( __( '¿Te interesa la colección *%s*?', 'frave' ), $collection->name ),
-			'text'     => $collection->count < 1
-				? __( 'Estamos preparando sus aromas en el catálogo. Cuéntanos tu producto y te enviamos las fragancias de esta colección con sus características.', 'frave' )
-				: __( 'Cuéntanos tu producto y te ayudamos a elegir entre los aromas de esta colección.', 'frave' ),
+			'text'     => __( 'Cuéntanos tu producto y te enviamos las fragancias de esta colección con sus características.', 'frave' ),
 			'action'   => $quote,
 			/* translators: %s: collection name. */
 			'whatsapp' => $quote && empty( $quote['external'] ) ? frave_whatsapp_url( sprintf( __( 'Hola, quisiera información y una cotización de la colección %s.', 'frave' ), $collection->name ) ) : '',

@@ -38,7 +38,9 @@ if ( $frave_solutions ) {
 	$frave_anchors[] = array( __( 'Por aplicación', 'frave' ), '#catalogo-aplicaciones' );
 }
 $frave_anchors[] = array( __( 'Por aroma', 'frave' ), '#catalogo-aromas' );
-$frave_anchors[] = array( __( 'Productos', 'frave' ), '#productos' );
+if ( ! frave_catalog_is_empty_shop() ) {
+	$frave_anchors[] = array( __( 'Productos', 'frave' ), '#productos' );
+}
 ?>
 <nav class="catalog-anchors" aria-label="<?php esc_attr_e( 'En esta página', 'frave' ); ?>">
 	<?php foreach ( $frave_anchors as list( $frave_label, $frave_url ) ) : ?>
@@ -182,9 +184,11 @@ $frave_anchors[] = array( __( 'Productos', 'frave' ), '#productos' );
 	<?php endif; ?>
 </section>
 
-<div class="catalog-block catalog-products-head" id="productos">
-	<div class="section-head">
-		<p class="eyebrow"><?php esc_html_e( 'Productos', 'frave' ); ?></p>
-		<h2><?php echo frave_emphasis( __( 'Todos los *productos*', 'frave' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h2>
+<?php if ( ! frave_catalog_is_empty_shop() ) : ?>
+	<div class="catalog-block catalog-products-head" id="productos">
+		<div class="section-head">
+			<p class="eyebrow"><?php esc_html_e( 'Productos', 'frave' ); ?></p>
+			<h2><?php echo frave_emphasis( __( 'Todos los *productos*', 'frave' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in the helper. ?></h2>
+		</div>
 	</div>
-</div>
+<?php endif; ?>

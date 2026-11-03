@@ -44,7 +44,7 @@ get_header();
 		<div class="section collections-hub">
 			<div class="container">
 				<?php if ( ! $frave_groups ) : ?>
-					<p class="lead"><?php esc_html_e( 'Muy pronto presentaremos aquí nuestras colecciones.', 'frave' ); ?></p>
+					<p class="lead"><?php esc_html_e( 'Cuéntanos tu producto y te recomendamos las fragancias que mejor le van.', 'frave' ); ?></p>
 				<?php endif; ?>
 				<?php foreach ( $frave_groups as $frave_group ) : ?>
 					<?php

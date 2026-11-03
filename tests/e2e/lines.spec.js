@@ -207,14 +207,18 @@ test.describe('páginas de línea', () => {
     await expect(page.locator('.page-hero h1')).toHaveText('Perfumería de diseñador');
   });
 
-  test('sin productos, la página de detalle invita a cotizar en lugar de mostrar una lista vacía', async ({ page }) => {
+  test('sin productos, la página de detalle no muestra avisos ni una lista vacía', async ({ page }) => {
     await page.goto('/?product_cat=perfumeria-disenador');
     await expectNoPhpErrors(page);
-    const empty = page.locator('.category-empty');
-    test.skip((await empty.count()) === 0, 'Esta subcategoría ya tiene productos.');
-    await expect(empty.locator('h2')).toContainText('Perfumería de diseñador');
+    test.skip((await page.locator('ul.products li').count()) > 0, 'Esta subcategoría ya tiene productos.');
+    // The site is finished: no «Estamos preparando…» and no «No se encontraron productos».
+    await expect(page.locator('main')).not.toContainText('Estamos preparando');
+    await expect(page.locator('.woocommerce-info')).toHaveCount(0);
     await expect(page.locator('.catalog-filters')).toHaveCount(0);
     await expect(page.locator('.page-hero__actions a')).toContainText('Solicitar cotización');
+
+    await page.goto('/?pa_coleccion=romero');
+    await expect(page.locator('main')).not.toContainText('Estamos preparando');
   });
 
   test('el menú agrupa las líneas', async ({ page }) => {
