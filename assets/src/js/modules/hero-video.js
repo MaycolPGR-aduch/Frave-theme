@@ -5,13 +5,16 @@
  * moving content that lasts more than five seconds needs a way to stop it).
  *
  * With reduced motion nothing moves and the poster stays. The video also stays as its
- * poster on slow connections or with data saving on, and its download starts after the
- * page has loaded, so it does not compete with the poster, fonts and styles. Phones swap in
- * the portrait version first (data-portrait: its media query and sources), so each screen
- * downloads only one video.
+ * poster on 2G connections or with data saving on, and its download starts after the page
+ * has loaded, so it does not compete with the poster, fonts and styles. Phones swap in the
+ * portrait version first (data-portrait: its media query and sources), so each screen
+ * downloads only one video. The video shows only once it plays (CSS), so a phone that
+ * refuses to play it keeps the poster; and a video the browser paused while the page was
+ * in the background (phones do) goes on when the visitor comes back.
  */
 const WORD_TIME = 2600;
 const ROUNDS = 2;
+const PLAY_WAIT = 4000;
 
 export function initializeHeroVideo() {
   const hero = document.querySelector('[data-hero]');
@@ -23,7 +26,8 @@ export function initializeHeroVideo() {
   const icons = toggle ? Array.from(toggle.querySelectorAll('[data-hero-icon]')) : [];
 
   const saveData = navigator.connection?.saveData === true;
-  const slow = /(^|-)(2g|3g)$/.test(navigator.connection?.effectiveType || '');
+  // Only 2G: many phones on 4G report "3g", and the video (under 0.5 MB) loads after the page.
+  const slow = /(^|-)2g$/.test(navigator.connection?.effectiveType || '');
   const playsVideo = Boolean(video) && !saveData && !slow;
   const steps = words.length > 1 ? words.length * ROUNDS : 0;
 
@@ -117,6 +121,15 @@ export function initializeHeroVideo() {
     });
     video.addEventListener('pause', setState);
     video.addEventListener('ended', setState);
+
+    // Phones pause the video when the page goes to the background (or the screen locks)
+    // and do not resume it; without this it stayed frozen halfway.
+    const resumeOnReturn = () => {
+      if (document.visibilityState !== 'visible' || paused) return;
+      if (video.classList.contains('is-playing') && video.paused && !video.ended) video.play().catch(() => {});
+    };
+    document.addEventListener('visibilitychange', resumeOnReturn);
+    window.addEventListener('pageshow', resumeOnReturn);
   }
 
   toggle?.addEventListener('click', () => {
@@ -142,13 +155,23 @@ export function initializeHeroVideo() {
     video.load();
   };
 
-  // Browsers may refuse to autoplay even muted video (power saving); the poster stays then.
+  // It starts once the browser expects to play it through without stopping to load (on a
+  // slow phone connection it used to freeze halfway), or after a few seconds anyway: some
+  // phones load nothing until play() is called. Browsers may still refuse to autoplay even
+  // muted video (power saving); the poster stays then.
   const start = () => {
     startAmbient();
     if (!playsVideo) return;
     usePortraitSources();
     video.preload = 'auto';
-    video.play().catch(() => {});
+    let started = false;
+    const play = () => {
+      if (started || paused) return;
+      started = true;
+      video.play().catch(() => {});
+    };
+    video.addEventListener('canplaythrough', play, { once: true });
+    window.setTimeout(play, PLAY_WAIT);
   };
   if (document.readyState === 'complete') start();
   else window.addEventListener('load', start, { once: true });

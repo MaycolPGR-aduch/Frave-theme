@@ -188,6 +188,20 @@
   }
 
   /*
+   * Hidden until it actually plays (hero-video.js adds is-playing): when a phone refuses to
+   * play it (iPhone in Low Power Mode, battery saver), the still stays instead of the
+   * video's first frame, frozen over it.
+   */
+  .home-hero__video {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .home-hero__video.is-playing {
+    opacity: 1;
+  }
+
+  /*
    * Phones: a compact copy, so the first screen also shows the fruit. Less room under the
    * header, smaller buttons side by side and the three facts on one small line.
    */

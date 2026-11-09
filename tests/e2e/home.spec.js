@@ -64,6 +64,8 @@ test.describe('portada', () => {
     await expect.poll(() => still.evaluate((image) => image.currentSrc)).toMatch(/movil-poster/);
     const portrait = JSON.parse((await page.locator('[data-hero-video]').getAttribute('data-portrait')) ?? '{}');
     expect(portrait.sources.map((source) => source.src).join(' ')).toMatch(/hero-frutas-v2-movil\.(webm|mp4)/);
+    // MP4 first: phones decode it in hardware (WebM froze on iPhones).
+    expect(portrait.sources[0].type).toBe('video/mp4');
 
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto('/');
@@ -101,6 +103,36 @@ test.describe('portada', () => {
     await toggle.click();
     await expect(toggle).toHaveAttribute('aria-label', /Reproducir|Ver de nuevo/);
     expect(await page.locator('[data-hero-video]').evaluate((video) => video.paused)).toBe(true);
+  });
+
+  test('si el teléfono no deja reproducir el vídeo, queda la imagen fija y no un cuadro congelado', async ({ page }) => {
+    // As an iPhone in Low Power Mode: play() is refused.
+    await page.addInitScript(() => {
+      HTMLMediaElement.prototype.play = () => Promise.reject(new DOMException('Bloqueado', 'NotAllowedError'));
+    });
+    await page.goto('/');
+    await page.waitForTimeout(5000);
+    const video = page.locator('[data-hero-video]');
+    await expect(video).not.toHaveClass(/is-playing/);
+    expect(await video.evaluate((element) => getComputedStyle(element).opacity)).toBe('0');
+    await expect(page.locator('.home-hero__still img')).toBeVisible();
+  });
+
+  test('el vídeo sigue cuando el visitante vuelve a la página', async ({ page }) => {
+    await page.goto('/');
+    const video = page.locator('[data-hero-video]');
+    try {
+      await expect(video).toHaveClass(/is-playing/, { timeout: 10000 });
+    } catch {
+      test.skip(true, 'El navegador no reprodujo el vídeo.');
+    }
+    // Phones pause it when the page goes to the background.
+    await video.evaluate((element) => {
+      element.currentTime = 1;
+      element.pause();
+    });
+    await page.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+    await expect.poll(() => video.evaluate((element) => element.paused)).toBe(false);
   });
 
   test('con movimiento reducido el vídeo no se reproduce y queda la imagen fija', async ({ browser }) => {

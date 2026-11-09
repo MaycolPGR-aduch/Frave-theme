@@ -163,7 +163,9 @@ function frave_plain( string $text ): string {
 /**
  * Hero video: the files chosen in ACF, or the theme's defaults (assets/media). With the
  * defaults, phones get a portrait version too (FRAVE_HERO_PORTRAIT_QUERY): the same fruit
- * fall in the lower half of a 9:16 frame, made from the landscape video.
+ * fall in the lower half of a 9:16 frame, made from the landscape video. MP4 (H.264) goes
+ * first: every phone decodes it in hardware, while recent iPhones accept the WebM (VP9) and
+ * may decode it in software, which made the video stutter or freeze there.
  *
  * @return array{sources: array<int, array{src: string, type: string}>, poster: string, portrait: array{sources: array<int, array{src: string, type: string}>, poster: string}|null}
  */
@@ -184,12 +186,12 @@ function frave_home_hero_media(): array {
 	} else {
 		$sources = array(
 			array(
-				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2.webm' ),
-				'type' => 'video/webm',
-			),
-			array(
 				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2.mp4' ),
 				'type' => 'video/mp4',
+			),
+			array(
+				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2.webm' ),
+				'type' => 'video/webm',
 			),
 		);
 	}
@@ -197,12 +199,12 @@ function frave_home_hero_media(): array {
 	$portrait = '' === $video_url ? array(
 		'sources' => array(
 			array(
-				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2-movil.webm' ),
-				'type' => 'video/webm',
-			),
-			array(
 				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2-movil.mp4' ),
 				'type' => 'video/mp4',
+			),
+			array(
+				'src'  => frave_asset_url( 'assets/media/hero-frutas-v2-movil.webm' ),
+				'type' => 'video/webm',
 			),
 		),
 		'poster'  => frave_asset_url( 'assets/media/hero-frutas-v2-movil-poster.jpg' ),
